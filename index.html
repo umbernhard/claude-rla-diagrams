@@ -219,6 +219,7 @@ select { width: auto; }
           <div class="seg" role="group" aria-labelledby="truthLbl">
             <button id="truthRep" type="button" aria-pressed="true">As reported</button>
             <button id="truthTie" type="button" aria-pressed="false">A tie</button>
+            <button id="truthFlip" type="button" aria-pressed="false">Flipped</button>
           </div></div>
       </div>
       <p id="err" class="err" hidden></p>
@@ -237,7 +238,7 @@ select { width: auto; }
 
   <section class="figure" aria-labelledby="simTitle">
     <h2 id="simTitle">Run it many times</h2>
-    <p class="caption">One audit walks one path. Running a thousand shows how often the audit stops early. If the ballots are really a tie, every early stop confirms the wrong winner, so that rate is the risk, and it should stay under α. Switch "Ballots really are" in the election settings to try both.</p>
+    <p class="caption">One audit walks one path. Running a thousand shows how often the audit stops early. If the ballots are really a tie, every early stop confirms the wrong winner, so that rate is the risk, and it should stay under α. Switch "Ballots really are" in the election settings to try all three, including a flipped result, where the audit has to escalate to a full hand count to correct it.</p>
     <div class="actions"><button id="simRun" type="button">Run 1,000 audits</button></div>
     <div id="simOut" class="simout" aria-live="polite">Not run yet.</div>
   </section>
@@ -303,16 +304,20 @@ select { width: auto; }
     for (const k of ballots) { if (k === 1) a++; else if (k === 2) b++; else continue; pts[2 * i] = a; pts[2 * i + 1] = b; i++; }
     return pts;
   }
+  // true vote counts behind the ballots: as reported, a tie, or the reported totals swapped
+  const trueCounts = () => S.truth === 'rep' ? [S.VA, S.VB] : S.truth === 'tie' ? [S.TA, S.TB] : [S.VB, S.VA];
+  // Once a sample is impossible under the reported result, the ratio is 0 for good (log = -Infinity);
+  // once it is impossible under the tie (and still possible as reported), the ratio is infinite.
   function stepLLR(kind, a, b) {
-    if (kind === 1) return S.TA - a <= 0 ? Infinity : Math.log((S.VA - a) / (S.TA - a));
-    if (kind === 2) return S.TB - b <= 0 ? Infinity : Math.log((S.VB - b) / (S.TB - b));
+    if (kind === 1) return S.VA - a <= 0 ? -Infinity : S.TA - a <= 0 ? Infinity : Math.log((S.VA - a) / (S.TA - a));
+    if (kind === 2) return S.VB - b <= 0 ? -Infinity : S.TB - b <= 0 ? Infinity : Math.log((S.VB - b) / (S.TB - b));
     return 0;
   }
 
   function reshuffle(keepOthers) {
     stopAudit();
     if (!readInputs()) { render(); return; }
-    const A = S.truth === 'rep' ? S.VA : S.TA, B = S.truth === 'rep' ? S.VB : S.TB;
+    const [A, B] = trueCounts();
     S.ballots = makeBallots(A, B, S.U);
     S.truePath = pathOf(S.ballots);
     Object.assign(S, { m: 0, a: 0, b: 0, u: 0, sample: [[0, 0]], llr: [0], bravo: [0], stopAt: null });
@@ -323,7 +328,7 @@ select { width: auto; }
     const p = S.VA / S.V;
     for (let i = 0; i < k && S.m < S.N; i++) {
       const kind = S.ballots[S.m];
-      S.llr.push(S.llr[S.m] + stepLLR(kind, S.a, S.b));
+      const prev = S.llr[S.m]; S.llr.push(prev === -Infinity ? -Infinity : prev + stepLLR(kind, S.a, S.b));
       S.bravo.push(S.bravo[S.m] + (kind === 1 ? Math.log(2 * p) : kind === 2 ? Math.log(2 - 2 * p) : 0));
       if (kind === 1) S.a++; else if (kind === 2) S.b++; else S.u++;
       S.m++; S.sample.push([S.a, S.b]);
@@ -335,7 +340,7 @@ select { width: auto; }
     if (S.timer) { stopAudit(); return; }
     if (S.stopAt !== null || S.m >= S.N) reshuffle(true);
     $('play').textContent = 'Pause';
-    S.timer = setInterval(() => { drawBallots(reduce ? 4 : 1); if (S.stopAt !== null || S.m >= S.N) stopAudit(); render(); }, reduce ? 80 : 40);
+    S.timer = setInterval(() => { drawBallots(reduce ? 4 : Math.max(1, Math.floor(S.m / 40))); if (S.stopAt !== null || S.m >= S.N) stopAudit(); render(); }, reduce ? 80 : 40);
   }
 
   // ------------------------------------------------------------- copy per stage
@@ -564,7 +569,7 @@ select { width: auto; }
           const zr = share(S.VA, S.VB, S.a, S.b), zt = share(S.TA, S.TB, S.a, S.b);
           const unit = H * lift / D, wt = zOf(zt), wr = zOf(zr), wStop = wt + thresh() * unit;
           const x = base[0] + 18, y = w => Pw(S.a, S.b, w)[1];
-          const done = zt === 0 || Math.log(zr / zt) >= thresh();
+          const done = zr > 0 && (zt === 0 || Math.log(zr / zt) >= thresh());
           // bracket: how big the gap has to get
           ctx.strokeStyle = rgba(C.good, .9); ctx.lineWidth = 1.5;
           ctx.beginPath(); ctx.moveTo(x - 5, y(wt)); ctx.lineTo(x + 5, y(wt)); ctx.moveTo(x, y(wt)); ctx.lineTo(x, y(wStop)); ctx.moveTo(x - 5, y(wStop)); ctx.lineTo(x + 5, y(wStop)); ctx.stroke();
@@ -577,7 +582,7 @@ select { width: auto; }
           // dotted guides from each bar top across to the bracket
           ctx.setLineDash([2, 3]); ctx.lineWidth = 1; ctx.strokeStyle = C.ink3;
           ctx.beginPath(); ctx.moveTo(base[0] - 4, y(wr)); ctx.lineTo(x, y(wr)); ctx.moveTo(base[0] + 4, y(wt)); ctx.lineTo(x, y(wt)); ctx.stroke(); ctx.setLineDash([]);
-          const ratio = zt === 0 ? '∞' : (zr / zt >= 100 ? Math.round(zr / zt).toLocaleString() : (zr / zt).toFixed(1));
+          const ratio = zr === 0 ? '0' : zt === 0 ? '∞' : (zr / zt >= 100 ? Math.round(zr / zt).toLocaleString() : (zr / zt).toFixed(1));
           ctx.fillStyle = done ? C.good : C.ink; ctx.textBaseline = 'middle'; ctx.fillText(`gap ×${ratio}`, x + 9, y((wt + Math.min(wTop, wStop)) / 2));
         }
       }
@@ -597,9 +602,10 @@ select { width: auto; }
     const pad = { l: 44, r: 12, t: 14, b: 34 }, pw = w - pad.l - pad.r, ph = h - pad.t - pad.b;
     const T = thresh();
     const xMax = S.zoom === 'full' ? S.N : Math.min(S.N, Math.max(60, Math.ceil(Math.max(S.m, 1) * 1.25)));
-    const fin = v => Number.isFinite(v) ? v : T * 1.6;
+    const fin = v => v === Infinity ? T * 1.6 : v === -Infinity ? NaN : v;
     let yMin = -2, yMax = T * 1.6;
-    for (let i = 0; i <= S.m; i++) { yMin = Math.min(yMin, fin(S.llr[i]), S.bravo[i]); yMax = Math.max(yMax, fin(S.llr[i]), S.bravo[i]); }
+    for (let i = 0; i <= S.m; i++) { const f = fin(S.llr[i]); if (!isNaN(f)) { yMin = Math.min(yMin, f); yMax = Math.max(yMax, f); } yMin = Math.min(yMin, S.bravo[i]); yMax = Math.max(yMax, S.bravo[i]); }
+    yMin = Math.max(yMin, -60);
     yMin = Math.floor(yMin); yMax = Math.ceil(yMax);
     const X = k => pad.l + k / xMax * pw, Y = v => pad.t + ph - (v - yMin) / (yMax - yMin) * ph;
     llrGeom = { pad, pw, xMax };
@@ -619,7 +625,7 @@ select { width: auto; }
     ctx.fillStyle = C.good; ctx.textAlign = 'left'; ctx.textBaseline = 'bottom'; ctx.fillText(`stop: log(1/α) = ${T.toFixed(2)}`, pad.l + 6, Y(T) - 4);
     ctx.save(); ctx.beginPath(); ctx.rect(pad.l, pad.t, pw, ph); ctx.clip();
     const line = (arr, col, dash) => { ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.setLineDash(dash);
-      ctx.beginPath(); for (let i = 0; i <= S.m; i++) { const y = Y(fin(arr[i])); i ? ctx.lineTo(X(i), y) : ctx.moveTo(X(i), y); } ctx.stroke(); ctx.setLineDash([]); };
+      ctx.beginPath(); for (let i = 0; i <= S.m; i++) { const f = fin(arr[i]), y = isNaN(f) ? Y(yMin) : Y(Math.max(f, yMin)); i ? ctx.lineTo(X(i), y) : ctx.moveTo(X(i), y); } ctx.stroke(); ctx.setLineDash([]); };
     line(S.bravo, C.ink3, [5, 4]); line(S.llr, C.path, []);
     if (S.stopAt !== null && S.stopAt <= xMax) { const v = fin(S.llr[S.stopAt]);
       ctx.fillStyle = C.panel; ctx.beginPath(); ctx.arc(X(S.stopAt), Y(v), 6, 0, 7); ctx.fill();
@@ -631,7 +637,10 @@ select { width: auto; }
     $('rM').textContent = S.m.toLocaleString(); $('rA').textContent = S.a; $('rB').textContent = S.b; $('rU').textContent = S.u;
     const st = $('status');
     if (S.stopAt !== null) { st.className = 'pill go'; st.textContent = `Outcome confirmed after ${S.stopAt} ballots`; }
-    else if (S.m >= S.N) { st.className = 'pill wait'; st.textContent = 'Full hand count'; }
+    else if (S.m >= S.N) {
+      st.className = 'pill wait';
+      st.textContent = S.a > S.b ? `Full hand count: Alice won ${S.a}–${S.b}` : S.b > S.a ? `Full hand count: Bob won ${S.b}–${S.a}, outcome corrected` : `Full hand count: a ${S.a}–${S.b} tie`;
+    }
     else if (S.m === 0) { st.className = 'pill wait'; st.textContent = 'No ballots drawn'; }
     else { st.className = 'pill wait'; st.textContent = 'Keep sampling'; }
     const hEl = $('heights');
@@ -640,7 +649,7 @@ select { width: auto; }
       const zr = share(S.VA, S.VB, S.a, S.b);
       let txt = `Height where the sample stands: <b class="rep">${pc(zr)}</b> of reported paths`;
       if (S.stage >= 4) {
-        const zt = share(S.TA, S.TB, S.a, S.b), ratio = zt === 0 ? Infinity : zr / zt;
+        const zt = share(S.TA, S.TB, S.a, S.b), ratio = zr === 0 ? 0 : zt === 0 ? Infinity : zr / zt;
         txt += ` vs <b class="tie">${pc(zt)}</b> of tie paths → ratio <b>${Number.isFinite(ratio) ? (ratio >= 100 ? Math.round(ratio).toLocaleString() : ratio.toFixed(2)) : '∞'}×</b> (stop at ${Math.round(1 / S.alpha)}×)`;
       }
       hEl.innerHTML = txt; hEl.hidden = false;
@@ -676,17 +685,19 @@ select { width: auto; }
     if (!readInputs()) return;
     const runs = 1000, T = thresh(), stops = []; let confirmed = 0; $('simOut').textContent = 'Running…';
     setTimeout(() => {
-      const A = S.truth === 'rep' ? S.VA : S.TA, B = S.truth === 'rep' ? S.VB : S.TB;
+      const [A, B] = trueCounts();
       for (let r = 0; r < runs; r++) {
         const bal = makeBallots(A, B, S.U); let a = 0, b = 0, L = 0, k = 0;
-        for (; k < S.N; k++) { const kind = bal[k]; L += stepLLR(kind, a, b); if (kind === 1) a++; else if (kind === 2) b++; if (L >= T) { k++; break; } }
+        for (; k < S.N; k++) { const kind = bal[k]; if (L !== -Infinity) L += stepLLR(kind, a, b); if (kind === 1) a++; else if (kind === 2) b++; if (L >= T) { k++; break; } }
         if (L >= T) { confirmed++; stops.push(k); }
       }
       stops.sort((x, y) => x - y);
       const pct = (100 * confirmed / runs).toFixed(1), med = stops.length ? stops[Math.floor(stops.length / 2)] : null;
       $('simOut').innerHTML = S.truth === 'rep'
         ? `Ballots match the reported result. <b>${pct}%</b> of audits confirmed Alice before a full hand count` + (med !== null ? `, after a median of <b>${med}</b> ballots.` : '.')
-        : `Ballots are really a tie. <b>${pct}%</b> of audits wrongly confirmed Alice (risk limit α = ${S.alpha}). The rest went to a full hand count, which finds the true result.`;
+        : S.truth === 'tie'
+          ? `Ballots are really a tie. <b>${pct}%</b> of audits wrongly confirmed Alice (risk limit α = ${S.alpha}). The rest went to a full hand count, which finds the true result.`
+          : `The reported result is flipped: Bob really won ${S.VA}–${S.VB}. <b>${pct}%</b> of audits wrongly confirmed Alice. The other <b>${(100 - +pct).toFixed(1)}%</b> never reached the stopping line, so they went to a full hand count, which found Bob's win and corrected the outcome.`;
     }, 20);
   }
 
@@ -698,8 +709,10 @@ select { width: auto; }
   $('logH').addEventListener('click', () => { S.logH = !S.logH; $('logH').setAttribute('aria-pressed', String(S.logH)); setStage(S.stage); });
   ['vA', 'vB', 'vU', 'alpha'].forEach(id => $(id).addEventListener('change', () => { reshuffle(false); setStage(S.stage); }));
   const pick = (on, off, key, val) => { $(on).setAttribute('aria-pressed', 'true'); $(off).setAttribute('aria-pressed', 'false'); S[key] = val; };
-  $('truthRep').addEventListener('click', () => { pick('truthRep', 'truthTie', 'truth', 'rep'); reshuffle(true); });
-  $('truthTie').addEventListener('click', () => { pick('truthTie', 'truthRep', 'truth', 'tie'); reshuffle(true); });
+  const pickTruth = t => { for (const [id, v] of [['truthRep', 'rep'], ['truthTie', 'tie'], ['truthFlip', 'flip']]) $(id).setAttribute('aria-pressed', String(v === t)); S.truth = t; reshuffle(true); };
+  $('truthRep').addEventListener('click', () => pickTruth('rep'));
+  $('truthTie').addEventListener('click', () => pickTruth('tie'));
+  $('truthFlip').addEventListener('click', () => pickTruth('flip'));
   $('zSample').addEventListener('click', () => { pick('zSample', 'zFull', 'zoom', 'sample'); render(); });
   $('zFull').addEventListener('click', () => { pick('zFull', 'zSample', 'zoom', 'full'); render(); });
   $('simRun').addEventListener('click', simulate);
