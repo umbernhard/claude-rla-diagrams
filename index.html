@@ -72,6 +72,8 @@ button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-v
 
 .stage-text { min-height: 4.8em; }
 h3.sub { font: 500 .72rem/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); margin: .25rem 0 0; }
+.tally { display: grid; gap: .5rem; border-top: 1px solid var(--rule); padding-top: .75rem; }
+.tally p { margin: 0; }
 .chips { display: flex; flex-wrap: wrap; gap: .4rem; }
 .order { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); cursor: pointer; }
 .order[aria-pressed=true] { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
@@ -207,6 +209,11 @@ select { width: auto; }
       <span>Alice <b id="rA">0</b> · Bob <b id="rB">0</b> · invalid <b id="rU">0</b></span>
     </div>
     <div id="heights" class="heights" hidden></div>
+    <div class="tally" aria-live="polite">
+      <p id="tally" class="heights"></p>
+      <p class="caption">Each time an audit finishes, it's added to this tally. The audit either confirms Alice or escalates to a full hand count. Keep pressing <b>Run audit</b> for fresh shuffles. If the ballots really are a tie, every confirmation is a mistake, and over many audits the share of mistakes settles at or below the risk limit α. In the default 600–400 election with α = 0.10, about 1 audit in 11 goes wrong, so ten runs show at least one failure more often than not. If the result is flipped, mistakes almost never happen: the evidence runs the wrong way, and the audit keeps going until a full hand count finds Bob's win. The tally starts over when you change the election settings.</p>
+      <div class="actions"><button id="tallyClear" type="button">Clear tally</button></div>
+    </div>
     <details class="settings">
       <summary>Election settings</summary>
       <div class="fields">
@@ -320,9 +327,22 @@ select { width: auto; }
     const [A, B] = trueCounts();
     S.ballots = makeBallots(A, B, S.U);
     S.truePath = pathOf(S.ballots);
-    Object.assign(S, { m: 0, a: 0, b: 0, u: 0, sample: [[0, 0]], llr: [0], bravo: [0], stopAt: null });
+    Object.assign(S, { m: 0, a: 0, b: 0, u: 0, sample: [[0, 0]], llr: [0], bravo: [0], stopAt: null, counted: false });
     if (!keepOthers) { S.others = []; for (let i = 0; i < 150; i++) S.others.push(pathOf(makeBallots(S.VA, S.VB, 0))); }
     render();
+  }
+  const TALLY = { key: '', runs: 0, confirmed: 0, full: 0, stops: [] };
+  const tallyKey = () => [S.VA, S.VB, S.U, S.alpha, S.truth].join('|');
+  function clearTally() { Object.assign(TALLY, { key: tallyKey(), runs: 0, confirmed: 0, full: 0, stops: [] }); }
+  function drawTally() {
+    if (TALLY.key !== tallyKey()) clearTally();
+    const truth = { rep: 'match the reported result', tie: 'are really a tie', flip: `are really flipped (Bob won ${S.VA}–${S.VB})` }[S.truth];
+    const wrong = S.truth !== 'rep';
+    const rate = TALLY.runs ? ` (${(100 * TALLY.confirmed / TALLY.runs).toFixed(0)}%)` : '';
+    const med = TALLY.stops.length ? ` · median stop <b>${[...TALLY.stops].sort((x, y) => x - y)[Math.floor(TALLY.stops.length / 2)]}</b> ballots` : '';
+    $('tally').innerHTML = `Ballots ${truth}, α = ${S.alpha}: audits run <b>${TALLY.runs}</b> · ` +
+      (wrong ? `wrongly confirmed Alice <b class="tie">${TALLY.confirmed}</b>${rate}` : `confirmed Alice <b class="rep">${TALLY.confirmed}</b>${rate}${med}`) +
+      ` · full hand counts <b>${TALLY.full}</b>`;
   }
   function drawBallots(k) {
     const p = S.VA / S.V;
@@ -333,6 +353,11 @@ select { width: auto; }
       if (kind === 1) S.a++; else if (kind === 2) S.b++; else S.u++;
       S.m++; S.sample.push([S.a, S.b]);
       if (S.stopAt === null && S.llr[S.m] >= thresh()) S.stopAt = S.m;
+    }
+    // record each finished audit once: it either confirmed Alice or went to a full hand count
+    if (!S.counted && (S.stopAt !== null || S.m >= S.N)) {
+      S.counted = true; TALLY.runs++;
+      if (S.stopAt !== null) { TALLY.confirmed++; TALLY.stops.push(S.stopAt); } else TALLY.full++;
     }
   }
   function stopAudit() { if (S.timer) { clearInterval(S.timer); S.timer = null; } $('play').textContent = (S.m && S.stopAt === null && S.m < S.N) ? 'Resume audit' : 'Run audit'; }
@@ -655,7 +680,7 @@ select { width: auto; }
       hEl.innerHTML = txt; hEl.hidden = false;
     } else hEl.hidden = true;
   }
-  function render() { drawScene(); drawLLR(); drawReadout(); }
+  function render() { drawScene(); drawLLR(); drawReadout(); drawTally(); }
 
   // ------------------------------------------------------------- interaction
   (() => { // drag to turn the 3D view
@@ -706,6 +731,7 @@ select { width: auto; }
   $('play').addEventListener('click', play);
   $('draw10').addEventListener('click', () => { stopAudit(); drawBallots(10); render(); });
   $('reset').addEventListener('click', () => reshuffle(true));
+  $('tallyClear').addEventListener('click', () => { clearTally(); drawTally(); });
   $('logH').addEventListener('click', () => { S.logH = !S.logH; $('logH').setAttribute('aria-pressed', String(S.logH)); setStage(S.stage); });
   ['vA', 'vB', 'vU', 'alpha'].forEach(id => $(id).addEventListener('change', () => { reshuffle(false); setStage(S.stage); }));
   const pick = (on, off, key, val) => { $(on).setAttribute('aria-pressed', 'true'); $(off).setAttribute('aria-pressed', 'false'); S[key] = val; };
