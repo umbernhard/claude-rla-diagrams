@@ -811,18 +811,24 @@ select { width: auto; }
         for (const t of towers) {
           const x0 = t.a + t.off - t.hw, x1 = t.a + t.off + t.hw, y0 = t.b - t.hw, y1 = t.b + t.hw;
           const c = [[x0, y0], [x1, y0], [x1, y1], [x0, y1]];
+          // opacity follows the camera: solid, shaded blocks when tilted; translucent layers looking straight down
+          const op = 1 - Math.max(0, Math.min(1, (v.phi - 35) / 50));
           const cube = (z0, z1, wgt) => {
             ctx.globalAlpha = t.alpha;
-            for (let i = 0; i < 4; i++) { // side faces, faint
-              const p = c[i], q = c[(i + 1) % 4], quad = [P(p[0], p[1], z0), P(q[0], q[1], z0), P(q[0], q[1], z1), P(p[0], p[1], z1)];
-              ctx.beginPath(); quad.forEach((r, j) => j ? ctx.lineTo(r[0], r[1]) : ctx.moveTo(r[0], r[1])); ctx.closePath();
-              ctx.fillStyle = rgba(t.col, .06 * wgt); ctx.fill();
+            const faces = [0, 1, 2, 3].map(i => { const p = c[i], q = c[(i + 1) % 4];
+              const quad = [P(p[0], p[1], z0), P(q[0], q[1], z0), P(q[0], q[1], z1), P(p[0], p[1], z1)];
+              return { i, quad, d: quad.reduce((s, r) => s + r[2], 0) / 4 }; });
+            faces.sort((x, y) => y.d - x.d);
+            for (const f of faces) { // back faces first so the front ones cover them when solid
+              ctx.beginPath(); f.quad.forEach((r, j) => j ? ctx.lineTo(r[0], r[1]) : ctx.moveTo(r[0], r[1])); ctx.closePath();
+              ctx.fillStyle = rgba(t.col, (.06 + .86 * op) * wgt); ctx.fill();
+              if (op > .01) { ctx.fillStyle = `rgba(0,0,0,${((f.i % 2 ? .28 : .14) * op * wgt).toFixed(3)})`; ctx.fill(); }
             }
             const top = c.map(p => P(p[0], p[1], z1)); // the layer that builds up the overhead density
             ctx.beginPath(); top.forEach((r, j) => j ? ctx.lineTo(r[0], r[1]) : ctx.moveTo(r[0], r[1])); ctx.closePath();
-            ctx.fillStyle = rgba(t.col, .17 * wgt); ctx.fill();
+            ctx.fillStyle = rgba(t.col, (.17 + .75 * op) * wgt); ctx.fill();
             ctx.strokeStyle = rgba(t.col, .7 * wgt); ctx.lineWidth = 1; ctx.stroke();
-            ctx.strokeStyle = rgba(t.col, .45 * wgt);
+            ctx.strokeStyle = rgba(t.col, .45 * (1 - .85 * op) * wgt); // edges would show through solid faces
             for (const p of c) line(P(p[0], p[1], z0), P(p[0], p[1], z1));
             ctx.globalAlpha = 1;
           };
