@@ -248,8 +248,8 @@ select { width: auto; }
     <div id="heights" class="heights" hidden></div>
     <div class="tally" aria-live="polite">
       <p id="tally" class="heights"></p>
-      <p class="caption">Each time an audit finishes, it's added to this tally. The audit either confirms Alice or escalates to a full hand count. Keep pressing <b>Run audit</b> for fresh shuffles. If the ballots really are a tie, every confirmation is a mistake, and over many audits the share of mistakes settles at or below the risk limit α. In the default 600–400 election with α = 0.10, about 1 audit in 11 goes wrong, so ten runs show at least one failure more often than not. If the result is flipped, mistakes almost never happen: the evidence runs the wrong way, and the audit keeps going until a full hand count finds Bob's win. The tally starts over when you change the election settings.</p>
-      <div class="actions"><button id="tallyClear" type="button">Clear tally</button></div>
+      <p class="caption">Each time an audit finishes, it's added to this tally. The audit either confirms Alice or escalates to a full hand count. Keep pressing <b>Run audit</b> for fresh shuffles, or add a thousand at once. If the ballots really are a tie, every confirmation is a mistake, and over many audits the share of mistakes settles at or below the risk limit α. In the default 600–400 election with α = 0.10, about 1 audit in 11 goes wrong, so ten runs show at least one failure more often than not. If the result is flipped, mistakes almost never happen: the evidence runs the wrong way, and the audit keeps going until a full hand count finds Bob's win. The tally starts over when you change the election settings.</p>
+      <div class="actions"><button id="simRun" type="button">Run 1,000 audits at once</button><button id="tallyClear" type="button">Clear tally</button></div>
     </div>
   </section>
 
@@ -263,12 +263,6 @@ select { width: auto; }
     <p class="caption">This is the ratio from step 4, tracked ballot by ballot on a log scale. Each Alice ballot multiplies it by (Alice ballots left in the reported election) ÷ (Alice ballots left in the tie), Bob ballots do the same with Bob's counts, and invalid ballots leave it alone. The audit stops when it reaches log(1/α). The dashed line is BRAVO's version, (2p)<sup>a</sup>(2−2p)<sup>b</sup>, which treats each ballot as if it were drawn with replacement.<sup class="fn"><a href="#fn2" id="fnref2" aria-label="Note 2">2</a></sup></p>
   </section>
 
-  <section class="figure" aria-labelledby="simTitle">
-    <h2 id="simTitle">Run it many times</h2>
-    <p class="caption">One audit walks one path. Running a thousand shows how often the audit stops early. If the ballots are really a tie, every early stop confirms the wrong winner, so that rate is the risk, and it should stay under α. Switch "Ballots really are" in the election settings to try all three, including a flipped result, where the audit has to escalate to a full hand count to correct it.</p>
-    <div class="actions"><button id="simRun" type="button">Run 1,000 audits</button></div>
-    <div id="simOut" class="simout" aria-live="polite">Not run yet.</div>
-  </section>
 
   <section class="prose notes" aria-labelledby="notesTitle">
     <h2 id="notesTitle">Notes</h2>
@@ -737,23 +731,21 @@ select { width: auto; }
     cv.addEventListener('pointermove', move); cv.addEventListener('pointerdown', move); cv.addEventListener('pointerleave', () => tip.hidden = true);
   })();
 
-  function simulate() {
+  // run many audits at once and add them to the same tally as single runs
+  function simulate(runs = 1000) {
     if (!readInputs()) return;
-    const runs = 1000, T = thresh(), stops = []; let confirmed = 0; $('simOut').textContent = 'Running…';
+    if (TALLY.key !== tallyKey()) clearTally();
+    const btn = $('simRun'); btn.disabled = true; btn.textContent = 'Running…';
     setTimeout(() => {
-      const [A, B] = trueCounts();
+      const T = thresh(), [A, B] = trueCounts();
       for (let r = 0; r < runs; r++) {
         const bal = makeBallots(A, B, S.U); let a = 0, b = 0, L = 0, k = 0;
         for (; k < S.N; k++) { const kind = bal[k]; if (L !== -Infinity) L += stepLLR(kind, a, b); if (kind === 1) a++; else if (kind === 2) b++; if (L >= T) { k++; break; } }
-        if (L >= T) { confirmed++; stops.push(k); }
+        TALLY.runs++;
+        if (L >= T) { TALLY.confirmed++; TALLY.stops.push(k); } else TALLY.full++;
       }
-      stops.sort((x, y) => x - y);
-      const pct = (100 * confirmed / runs).toFixed(1), med = stops.length ? stops[Math.floor(stops.length / 2)] : null;
-      $('simOut').innerHTML = S.truth === 'rep'
-        ? `Ballots match the reported result. <b>${pct}%</b> of audits confirmed Alice before a full hand count` + (med !== null ? `, after a median of <b>${med}</b> ballots.` : '.')
-        : S.truth === 'tie'
-          ? `Ballots are really a tie. <b>${pct}%</b> of audits wrongly confirmed Alice (risk limit α = ${S.alpha}). The rest went to a full hand count, which finds the true result.`
-          : `The reported result is flipped: Bob really won ${S.VA}–${S.VB}. <b>${pct}%</b> of audits wrongly confirmed Alice. The other <b>${(100 - +pct).toFixed(1)}%</b> never reached the stopping line, so they went to a full hand count, which found Bob's win and corrected the outcome.`;
+      btn.disabled = false; btn.textContent = 'Run 1,000 audits at once';
+      drawTally();
     }, 20);
   }
 
@@ -772,7 +764,7 @@ select { width: auto; }
   $('truthFlip').addEventListener('click', () => pickTruth('flip'));
   $('zSample').addEventListener('click', () => { pick('zSample', 'zFull', 'zoom', 'sample'); render(); });
   $('zFull').addEventListener('click', () => { pick('zFull', 'zSample', 'zoom', 'full'); render(); });
-  $('simRun').addEventListener('click', simulate);
+  $('simRun').addEventListener('click', () => simulate());
   new ResizeObserver(() => { render(); FAN.draw(); SM.draw(); }).observe(document.querySelector('.wrap'));
   const recolor = () => { C = css(); render(); FAN.draw(); SM.draw(); };
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', recolor);
