@@ -127,12 +127,12 @@ select { width: auto; }
   <section class="figure" aria-labelledby="fanTitle">
     <div class="row">
       <h2 id="fanTitle">Before any audit: every possible election</h2>
-      <div class="seg" role="group" aria-label="How to weight the possible elections">
-        <button id="wSeq" type="button" aria-pressed="true">Every sequence equal</button>
-        <button id="wRes" type="button" aria-pressed="false">Every result equal</button>
-      </div>
     </div>
-    <p class="lead">Let's start with a small election to make things easy for now: six ballots, each for Alice or Bob. The first ballot can be for Alice or for Bob: two possibilities. Each of those can be followed by an Alice or a Bob ballot, which makes four, and every further ballot doubles the count again. Six ballots give 2 × 2 × 2 × 2 × 2 × 2 = 2<sup>6</sup> = 64 possible sequences, from AAAAAA to BBBBBB. Before we've read a single ballot, any sequence of ballots, and therefore any outcome, is possible. Read ballots one at a time and watch which possible outcomes survive. The two buttons above decide how much each possible outcome counts, and they tell two quite different stories about what a sample can teach us.</p>
+    <p class="lead">Let's start with a small election to make things easy for now: six ballots, each for Alice or Bob. The first ballot can be for Alice or for Bob: two possibilities. Each of those can be followed by an Alice or a Bob ballot, which makes four, and every further ballot doubles the count again. Six ballots give 2 × 2 × 2 × 2 × 2 × 2 = 2<sup>6</sup> = 64 possible sequences, from AAAAAA to BBBBBB. Before we've read a single ballot, any sequence of ballots, and therefore any outcome, is possible. Read ballots one at a time and watch which possible outcomes survive. The two buttons below decide how much each possible outcome counts, and they tell two quite different stories about what a sample can teach us.</p>
+    <div><div class="seg" role="group" aria-label="How to weight the possible elections">
+      <button id="wSeq" type="button" aria-pressed="true">Every sequence equal</button>
+      <button id="wRes" type="button" aria-pressed="false">Every result equal</button>
+    </div></div>
     <div class="stage-text" aria-live="polite"><p id="fanText"></p></div>
     <div class="canvas-box"><canvas id="fan" class="rotatable" role="img" aria-label="All possible six-ballot elections stacked on the outcome plane"></canvas><span class="hint">drag to turn</span></div>
     <h3 class="sub">Possible final results</h3>
