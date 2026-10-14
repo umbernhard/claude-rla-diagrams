@@ -33,7 +33,25 @@ Last updated 2026-10-13. This work builds on `Old/Geometry of Post-election Audi
 - The overlap depends only on k and shrinks as the sample grows. For 600 / 400 vs a 500 / 500 tie it is about 90% after 1 ballot, 52% after 40, and 35% after 80.
 - This gives a precise statement: an audit can only stop quickly once the bells have mostly separated.
 
+## Before any audit: every possible election
+
+Stack every sequence of N ballots, not just the orderings of one result. Then reading a ballot rules out every sequence that started differently, halving the count each time. What happens to the possible futures depends on how the sequences are weighted:
+
+1. **Every sequence equal.** The weight through (a, b) is C(a+b, a) · 2^(N−a−b), which fans out from the origin along the tie line. Final results are Binomial(N, ½), peaked at a tie. The unread ballots stay independent coin flips, so the final result is the sample plus Binomial(N−k, ½). The sample only uses up ballots; it never says how the rest lean. This is the permutation notebook's model, and it is why that approach needs nearly a full count.
+2. **Every result equal** (then every ordering within a result): the old triangle-area model. Given a sample with a Alice and b Bob votes in k ballots, the posterior over the final Alice count F is ∝ C(N−k, F−a)/C(N, F). The sample does shift the future toward what was seen. This is a Bayesian audit with a uniform prior.
+3. **The RLA** uses neither weighting. It compares two fixed super diagrams (reported vs. tie) through P(sample | result), never P(result | sample).
+
+For six ballots, the chance that Alice won (final count > 3) works out as:
+
+| Ballots read | Every sequence equal | Every result equal |
+|---|---|---|
+| none | 34% | 43% |
+| A | 50% | 71% |
+| A, A, A | 88% | 97% |
+
 ## Page design (current version)
+
+**Every possible election (first section).** Six ballots, 64 sequences. There are buttons to read an Alice or Bob ballot, a toggle between weightings 1 and 2, lattice points shaded and labeled by the weight through them (ruled-out points shown empty), and a bar chart of possible final results.
 
 **Six-ballot example.** Alice 4, Bob 2, compared with a 3–3 tie: 15 vs 20 orderings. The example uses 6 ballots rather than 5 because 5 ballots can't tie.
 

@@ -70,6 +70,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-v
 .actions { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
 
 .stage-text { min-height: 4.8em; }
+h3.sub { font: 500 .72rem/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); margin: .25rem 0 0; }
 .chips { display: flex; flex-wrap: wrap; gap: .4rem; }
 .order { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); cursor: pointer; }
 .order[aria-pressed=true] { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
@@ -116,6 +117,33 @@ select { width: auto; }
     <h1>Super diagrams for ballot polling</h1>
     <p>Lay an election's ballots out in some order and you can draw them as a path: one step right for each Alice ballot, one step up for each Bob ballot. Invalid ballots don't move the path. A ballot polling audit reads the first few steps of the real path and asks which result it is heading toward.</p>
   </header>
+
+  <section class="figure" aria-labelledby="fanTitle">
+    <div class="row">
+      <h2 id="fanTitle">Before any audit: every possible election</h2>
+      <div class="seg" role="group" aria-label="How to weight the possible elections">
+        <button id="wSeq" type="button" aria-pressed="true">Every sequence equal</button>
+        <button id="wRes" type="button" aria-pressed="false">Every result equal</button>
+      </div>
+    </div>
+    <div class="stage-text" aria-live="polite"><p id="fanText"></p></div>
+    <div class="canvas-box"><canvas id="fan" role="img" aria-label="All possible six-ballot elections stacked on the outcome plane"></canvas></div>
+    <h3 class="sub">Possible final results</h3>
+    <div class="canvas-box"><canvas id="fanBars" role="img" aria-label="Chance of each final result given the ballots read so far"></canvas></div>
+    <div class="legend">
+      <span class="key"><span class="sw rep"></span>Alice wins</span>
+      <span class="key"><span class="sw ovl"></span>tie or Bob wins</span>
+    </div>
+    <div class="row">
+      <div class="actions">
+        <button id="fanA" class="primary" type="button">Read an Alice ballot</button>
+        <button id="fanB" class="primary" type="button">Read a Bob ballot</button>
+        <button id="fanUndo" type="button">Undo</button>
+        <button id="fanReset" type="button">Start over</button>
+      </div>
+    </div>
+    <div id="fanOut" class="heights" aria-live="polite"></div>
+  </section>
 
   <section class="figure" aria-labelledby="smTitle">
     <h2 id="smTitle">Start small: six ballots</h2>
@@ -226,6 +254,8 @@ select { width: auto; }
   let C = css();
   const rgba = (hex, a) => { let h = hex.replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join('');
     const v = parseInt(h, 16); return `rgba(${(v >> 16) & 255},${(v >> 8) & 255},${v & 255},${a})`; };
+  const mixHex = (h1, h2, t) => { const p = h => { h = h.replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join(''); const v = parseInt(h, 16); return [(v >> 16) & 255, (v >> 8) & 255, v & 255]; };
+    const a = p(h1), b = p(h2); return `rgb(${a.map((x, i) => Math.round(x * t + b[i] * (1 - t))).join(',')})`; };
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ------------------------------------------------------------- math
@@ -646,10 +676,122 @@ select { width: auto; }
   $('zSample').addEventListener('click', () => { pick('zSample', 'zFull', 'zoom', 'sample'); render(); });
   $('zFull').addEventListener('click', () => { pick('zFull', 'zSample', 'zoom', 'full'); render(); });
   $('simRun').addEventListener('click', simulate);
-  new ResizeObserver(() => render()).observe(document.querySelector('.wrap'));
-  const recolor = () => { C = css(); render(); };
+  new ResizeObserver(() => { render(); FAN.draw(); SM.draw(); }).observe(document.querySelector('.wrap'));
+  const recolor = () => { C = css(); render(); FAN.draw(); SM.draw(); };
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', recolor);
   new MutationObserver(recolor).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  // ============================================================ every possible six-ballot election
+  const FAN = (() => {
+    const N = 6, HALF = N / 2, ALL = 1 << N;
+    const choose = (n, k) => { if (k < 0 || k > n) return 0; let r = 1; for (let i = 1; i <= k; i++) r = r * (n - k + i) / i; return Math.round(r); };
+    const pop = x => { let c = 0; while (x) { c += x & 1; x >>= 1; } return c; };
+    const st = { mode: 'seq', read: [] }; // read: 1 = Alice, 0 = Bob
+
+    // Every sequence of N ballots is a path. Weight each one, keep those that start with what we've read,
+    // and add up how much weight passes through each point and ends at each final result.
+    function compute() {
+      const k = st.read.length, pts = new Map(), finals = new Array(N + 1).fill(0);
+      let W = 0, nSeq = 0;
+      for (let s = 0; s < ALL; s++) {
+        let ok = true; for (let i = 0; i < k; i++) if (((s >> i) & 1) !== st.read[i]) { ok = false; break; }
+        if (!ok) continue;
+        const F = pop(s), w = st.mode === 'seq' ? 1 : 1 / ((N + 1) * choose(N, F));
+        W += w; nSeq++; finals[F] += w;
+        let a = 0, b = 0; const add = () => { const key = a + ',' + b; pts.set(key, (pts.get(key) || 0) + w); };
+        add(); for (let i = 0; i < N; i++) { if ((s >> i) & 1) a++; else b++; add(); }
+      }
+      for (const [key, v] of pts) pts.set(key, v / W);
+      return { pts, finals: finals.map(v => v / W), nSeq, W };
+    }
+    const here = () => { const a = st.read.reduce((s, x) => s + x, 0); return [a, st.read.length - a]; };
+    const pc = x => x === 0 ? '0%' : x < .001 ? '<0.1%' : (x * 100 < 10 ? (x * 100).toFixed(1) : Math.round(x * 100)) + '%';
+
+    function words(r) {
+      const k = st.read.length, [a, b] = here(), left = N - k;
+      const seen = k ? `After reading ${st.read.map(x => x ? 'A' : 'B').join(', ')}, ` : '';
+      if (st.mode === 'seq') {
+        if (!k) return `Six ballots, each for Alice or Bob, make ${ALL} possible sequences. Stack them all and the numbers count the sequences passing through each point. The stack fans out from the origin and is thickest along the tie line, so the most common final result is a 3–3 tie.`;
+        return `${seen}only ${r.nSeq} of the ${ALL} sequences are still possible: every ballot we read halves them. But the ${left} unread ballot${left === 1 ? ' is' : 's are'} still coin flips, so the fan of possible futures spreads evenly from where the sample stands. The final result is what we've read plus an even split of the rest; the sample never tells us how the unread ballots lean.`;
+      }
+      if (!k) return `Now give each of the 7 possible results (Alice 0 through 6) the same weight, shared evenly among its orderings. The numbers are the share of that weight passing through each point. With nothing read, every final result is equally likely, so the stack fans out evenly instead of crowding the tie line.`;
+      return `${seen}results with more ${a >= b ? 'Alice' : 'Bob'} votes have more orderings that start this way, so they gain weight. Unlike the even-sequence picture, the sample now tells us something about the unread ballots: the fan of futures leans the way the sample leans. This is the reasoning behind a Bayesian audit.`;
+    }
+
+    function drawFan(r) {
+      const cv = $('fan'); const { ctx, w, h } = setup(cv, 0.8, 480);
+      const pad = { l: 40, r: 14, t: 14, b: 40 }, pw = w - pad.l - pad.r, ph = h - pad.t - pad.b;
+      const cell = Math.min(pw, ph) / (N + 0.8), ox = pad.l + cell * .4, oy = pad.t + ph - cell * .4;
+      const X = a => ox + a * cell, Y = b => oy - b * cell;
+      ctx.font = '11px ' + C.mono; ctx.lineCap = 'round';
+      // frame: axes, hypotenuse, tie line
+      ctx.strokeStyle = C.ink3; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(X(0), Y(N)); ctx.lineTo(X(0), Y(0)); ctx.lineTo(X(N), Y(0)); ctx.lineTo(X(0), Y(N)); ctx.stroke();
+      ctx.setLineDash([5, 4]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(HALF), Y(HALF)); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = C.ink3;
+      for (let i = 0; i <= N; i++) { ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(i, X(i), Y(0) + cell * .38 + 4);
+        ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(i, X(0) - cell * .38 - 5, Y(i)); }
+      ctx.fillStyle = C.ink2; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.fillText('Alice ballots →', pad.l + pw / 2, h - 4);
+      ctx.save(); ctx.translate(12, pad.t + ph / 2); ctx.rotate(-Math.PI / 2); ctx.fillText('Bob ballots →', 0, 0); ctx.restore();
+      // the path read so far
+      const [ha, hb] = here();
+      if (st.read.length) {
+        ctx.strokeStyle = C.path; ctx.lineWidth = 4; ctx.beginPath(); let a = 0, b = 0; ctx.moveTo(X(0), Y(0));
+        for (const x of st.read) { x ? a++ : b++; ctx.lineTo(X(a), Y(b)); } ctx.stroke();
+      }
+      // every point: shaded by the share of weight through it; points ruled out by the sample are left empty
+      const sz = cell * .7;
+      for (let a = 0; a <= N; a++) for (let b = 0; a + b <= N; b++) {
+        const s = r.pts.get(a + ',' + b) || 0, x = X(a) - sz / 2, y = Y(b) - sz / 2;
+        if (s === 0) { ctx.strokeStyle = C.rule; ctx.lineWidth = 1; ctx.setLineDash([3, 3]); ctx.strokeRect(x, y, sz, sz); ctx.setLineDash([]); continue; }
+        const alpha = .1 + .85 * Math.sqrt(s);
+        ctx.fillStyle = C.panel; ctx.fillRect(x, y, sz, sz);
+        ctx.fillStyle = rgba(C.rep, alpha); ctx.fillRect(x, y, sz, sz);
+        if (a === ha && b === hb && st.read.length) { ctx.strokeStyle = C.path; ctx.lineWidth = 2.5; ctx.strokeRect(x, y, sz, sz); }
+        ctx.fillStyle = alpha > .55 ? C.panel : C.ink; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.font = (sz > 34 ? 12 : 10) + 'px ' + C.mono;
+        ctx.fillText(st.mode === 'seq' ? String(Math.round(s * r.W)) : pc(s), X(a), Y(b) + .5);
+      }
+    }
+
+    function drawBars(r) {
+      const cv = $('fanBars'); const { ctx, w, h } = setup(cv, 0.34, 220);
+      const pad = { l: 40, r: 14, t: 18, b: 34 }, pw = w - pad.l - pad.r, ph = h - pad.t - pad.b;
+      const yMax = Math.max(.35, ...r.finals) * 1.08, bw = pw / (N + 1);
+      const Y = v => pad.t + ph - v / yMax * ph;
+      ctx.font = '11px ' + C.mono;
+      for (const v of [0, .25, .5, .75, 1]) { if (v > yMax) break;
+        ctx.strokeStyle = v ? C.grid : C.ink3; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(pad.l, Y(v)); ctx.lineTo(pad.l + pw, Y(v)); ctx.stroke();
+        ctx.fillStyle = C.ink3; ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(Math.round(v * 100) + '%', pad.l - 6, Y(v)); }
+      for (let F = 0; F <= N; F++) {
+        const x = pad.l + F * bw + bw * .18, wd = bw * .64, v = r.finals[F];
+        ctx.fillStyle = F > HALF ? C.rep : mixHex(C.ink, C.panel, .35);
+        if (v > 0) { const y = Y(v), rr = Math.min(4, wd / 2, Y(0) - y);
+          ctx.beginPath(); ctx.moveTo(x, Y(0)); ctx.lineTo(x, y + rr); ctx.quadraticCurveTo(x, y, x + rr, y); ctx.lineTo(x + wd - rr, y); ctx.quadraticCurveTo(x + wd, y, x + wd, y + rr); ctx.lineTo(x + wd, Y(0)); ctx.closePath(); ctx.fill();
+          ctx.fillStyle = C.ink; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.fillText(pc(v), x + wd / 2, y - 3); }
+        ctx.fillStyle = C.ink2; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(`${F}–${N - F}`, x + wd / 2, Y(0) + 6);
+      }
+      ctx.fillStyle = C.ink3; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.fillText('final result, Alice–Bob', pad.l + pw / 2, h - 3);
+    }
+
+    function draw() {
+      const r = compute();
+      drawFan(r); drawBars(r);
+      $('fanText').innerHTML = words(r);
+      const win = r.finals.slice(HALF + 1).reduce((s, v) => s + v, 0), tie = r.finals[HALF];
+      $('fanOut').innerHTML = `Sequences still possible: <b>${r.nSeq}</b> of ${ALL} · chance Alice won: <b class="rep">${pc(win)}</b> · tie: <b>${pc(tie)}</b>`;
+      $('fanA').disabled = $('fanB').disabled = st.read.length >= N;
+      $('fanUndo').disabled = !st.read.length;
+    }
+    $('fanA').addEventListener('click', () => { if (st.read.length < N) st.read.push(1); draw(); });
+    $('fanB').addEventListener('click', () => { if (st.read.length < N) st.read.push(0); draw(); });
+    $('fanUndo').addEventListener('click', () => { st.read.pop(); draw(); });
+    $('fanReset').addEventListener('click', () => { st.read = []; draw(); });
+    const pickW = (on, off, mode) => { $(on).setAttribute('aria-pressed', 'true'); $(off).setAttribute('aria-pressed', 'false'); st.mode = mode; draw(); };
+    $('wSeq').addEventListener('click', () => pickW('wSeq', 'wRes', 'seq'));
+    $('wRes').addEventListener('click', () => pickW('wRes', 'wSeq', 'res'));
+    return { draw, st, compute };
+  })();
 
   // ============================================================ six-ballot election
   const SM = (() => {
@@ -870,5 +1012,6 @@ select { width: auto; }
   reshuffle(false);
   setStage(1);
   SM.setStage(1);
+  FAN.draw();
 })();
 </script>
