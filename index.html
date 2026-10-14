@@ -791,7 +791,7 @@ select { width: auto; }
         return `${seen}only ${r.nSeq} of the ${ALL} sequences are still possible: every ballot we read halves them. But the ${left} unread ballot${left === 1 ? ' is' : 's are'} still coin flips, so the fan of possible futures spreads evenly from where the sample stands. The final result is what we've read plus an even split of the rest; the sample never tells us how the unread ballots lean.`;
       }
       if (!k) return `Now give each of the 7 possible results, from Alice receiving 0 votes through Alice receiving all 6, the same weight, shared evenly among its sequences. Each tower's height is the share of that weight passing through its point. With nothing read, every final result is equally likely, so the stack fans out evenly instead of crowding the tie line.`;
-      return `${seen}results with more ${a >= b ? 'Alice' : 'Bob'} votes have more sequences that start this way, so they gain weight. Unlike the even-sequence picture, the sample now tells us something about the unread ballots: the fan of futures leans the way the sample leans. This is the reasoning behind a Bayesian audit.`;
+      return `${seen}results with more ${a >= b ? 'Alice' : 'Bob'} votes have more sequences that start this way, so they gain weight. Unlike the even-sequence picture, the sample now tells us something about the unread ballots: the fan of futures leans the way the sample leans.`;
     }
 
     // 3D stack: each point is a tower whose height is the share of weight passing through it.
