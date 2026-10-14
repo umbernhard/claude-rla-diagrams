@@ -121,7 +121,7 @@ select { width: auto; }
     <div class="eyebrow">Risk-limiting audits from the ground up · Ballot polling</div>
     <h1>Super diagrams for ballot polling</h1>
     <p>After an election, how do we know the votes were counted correctly? A <strong>risk-limiting audit</strong> checks by reading a random sample of the paper ballots by hand. If the sample agrees strongly enough with the reported winner, the audit stops. If it doesn't, the audit keeps going, all the way to a full hand count if it has to. The <strong>risk limit</strong> is the largest chance we're willing to accept that a wrong outcome slips through and an audit ends before counting all the ballots.</p>
-    <p>This page builds up the reasoning behind one kind of audit, a <strong>ballot polling</strong> audit, from a single picture. Lay an election's ballots out in some order and you can draw them as a path: one step right for each Alice ballot, one step up for each Bob ballot. Invalid ballots don't move the path. Stack every possible path on top of each other and you get a landscape. An audit is a walk across that landscape, one ballot at a time.</p>
+    <p>This page builds up the reasoning behind one kind of audit, a <strong>ballot polling</strong> audit, from a single picture. Lay an election's ballots out in some order and you can draw them as a path: one step right for each Alice ballot, one step up for each Bob ballot. <strong>Invalid ballots</strong>, ones that don't contain a vote for either candidate, don't move the path. Stack every possible path on top of each other and you get a landscape. An audit is a walk across that landscape, one ballot at a time.</p>
   </header>
 
   <section class="figure" aria-labelledby="fanTitle">
