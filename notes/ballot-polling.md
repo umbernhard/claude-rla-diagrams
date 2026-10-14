@@ -101,3 +101,9 @@ For six ballots, the chance that Alice won (final count > 3) works out as:
 - How to handle the null with invalid ballots in general. The current choice keeps the reported invalid count.
 - Whether to link this page from the rlamath notebooks.
 - A notebook writing up the "height ratio = likelihood ratio" derivation, next to "Foundations of ballot polling".
+
+## References
+
+- M. Lindeman, P. B. Stark and V. S. Yates, "BRAVO: Ballot-polling Risk-limiting Audits to Verify Outcomes," EVT/WOTE '12, 2012. https://www.usenix.org/conference/evtwote12/workshop-program/presentation/lindeman
+- A. Wald, "Sequential Tests of Statistical Hypotheses," Annals of Mathematical Statistics 16(2), 1945 (the SPRT).
+- J. Ville, Étude critique de la notion de collectif, Gauthier-Villars, 1939 (Ville's inequality: a nonnegative martingale starting at 1 reaches 1/α with probability at most α).
