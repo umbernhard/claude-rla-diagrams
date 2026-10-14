@@ -217,7 +217,7 @@ select { width: auto; }
     <div class="stage-text" aria-live="polite"><h3 id="stTitle"></h3><p id="stBody"></p></div>
     <div class="canvas-box">
       <canvas id="scene" role="img" aria-label="Outcome plane with ballot sequences drawn as paths"></canvas>
-      <div id="sceneNote" class="scene-note" hidden><p>No ballots read yet. Press <b>Run audit</b> or <b>Draw 10 ballots</b>, and the bells will appear behind the sample as it reaches them.</p></div>
+      <div id="sceneNote" class="scene-note" hidden><p>No ballots read yet. Press <b>Run audit</b> or <b>Draw 10 ballots</b>, and the distributions will appear behind the sample as it reaches them.</p></div>
       <span id="hint" class="hint" hidden>drag to turn</span>
     </div>
     <div class="legend" id="legend"></div>
@@ -409,7 +409,7 @@ select { width: auto; }
     return {
       1: ['One sequence', `Here is one shuffle of the ballots, drawn as a path. However the ballots are shuffled, the path always ends at the result: ${R}, the blue arrow. The audit reads this path from the start, one ballot at a time.`],
       2: ['Many sequences', `There are ${nPaths} different paths that end at ${R}. Here are 150 of them, picked at random. They all start at zero and end at the result, and most of them hug the straight line between.`],
-      3: ['Stack them up', `Tilt the picture and raise each point by the share of paths that pass through it. Every slice across the ridge is the same bell curve: the normal distribution. The ridge is tallest at the two ends, where every path squeezes through the same point, and lowest and widest in the middle.${S.logH ? ' With log heights on, each bell becomes a parabola, because the log of a normal curve is quadratic.' : ''}`],
+      3: ['Stack them up', `Tilt the picture and raise each point by the share of paths that pass through it. Every slice across the ridge is the same bell curve: the normal distribution. The ridge is tallest at the two ends, where every path squeezes through the same point, and lowest and widest in the middle.${S.logH ? ' With log heights on, each distribution becomes a parabola, because the log of a normal curve is quadratic.' : ''}`],
       4: ['Compare with a tie', `The orange ridge is the same picture for a tie. The audit stands where its sample has reached and compares the two heights there. If the blue ridge is ${k} times taller than the orange one, a sample like this is ${k} times more likely if Alice really won, and the audit can stop. Turn on Log heights to see the ratio as a distance: the audit stops once the gap between the two heights at the sample fills the green bracket, however small the risk limit.`],
     }[S.stage];
   }
@@ -589,7 +589,7 @@ select { width: auto; }
       ctx.strokeStyle = style; ctx.lineWidth = wdt; ctx.beginPath();
       curve(run, idx).forEach((q, i) => i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); ctx.stroke();
     };
-    // in step 4's sample zoom, only draw the bells the sample has already passed through
+    // in step 4's sample zoom, only draw the distributions the sample has already passed through
     const upToSample = S.stage === 4 && S.zoom === 'sample';
     const order = slices.filter(s => s.pts.length && (!upToSample || (sampleK > 0 && s.k <= sampleK))).map(s => ({ s, depth: P(s.pts[Math.floor(s.pts.length / 2)][0], s.pts[Math.floor(s.pts.length / 2)][1], 0)[2] }));
     order.sort((x, y) => y.depth - x.depth);
