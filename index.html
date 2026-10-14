@@ -294,6 +294,26 @@ select { width: auto; }
     const v = parseInt(h, 16); return `rgba(${(v >> 16) & 255},${(v >> 8) & 255},${v & 255},${a})`; };
   const mixHex = (h1, h2, t) => { const p = h => { h = h.replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join(''); const v = parseInt(h, 16); return [(v >> 16) & 255, (v >> 8) & 255, v & 255]; };
     const a = p(h1), b = p(h2); return `rgb(${a.map((x, i) => Math.round(x * t + b[i] * (1 - t))).join(',')})`; };
+  // Axis labels that stay attached to their axis in any view: ticks sit just outside the floor along the
+  // axis's outward normal, and the title is rotated to run along the axis (flipped so it never reads upside down).
+  function axisFrame(P, from, to, inside) {
+    const p0 = P(...from), p1 = P(...to), c = P(...inside);
+    let dx = p1[0] - p0[0], dy = p1[1] - p0[1]; const len = Math.hypot(dx, dy);
+    let n = [0, 1];
+    if (len > 1e-6) { dx /= len; dy /= len; n = [-dy, dx]; }
+    const mid = [(p0[0] + p1[0]) / 2, (p0[1] + p1[1]) / 2];
+    if ((mid[0] - c[0]) * n[0] + (mid[1] - c[1]) * n[1] < 0) n = [-n[0], -n[1]];
+    let ang = len > 1e-6 ? Math.atan2(dy, dx) : 0, flip = false;
+    if (ang > Math.PI / 2) { ang -= Math.PI; flip = true; } else if (ang < -Math.PI / 2) { ang += Math.PI; flip = true; }
+    return { n, ang, flip };
+  }
+  function tickLabel(ctx, f, q, off, text) {
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, q[0] + f.n[0] * off, q[1] + f.n[1] * off);
+  }
+  function axisTitle(ctx, f, q, off, base) {
+    ctx.save(); ctx.translate(q[0] + f.n[0] * off, q[1] + f.n[1] * off); ctx.rotate(f.ang);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(f.flip ? '← ' + base : base + ' →', 0, 0); ctx.restore();
+  }
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ------------------------------------------------------------- math
@@ -522,18 +542,19 @@ select { width: auto; }
     // floor: grid, edges, ticks
     ctx.font = '11px ' + C.mono;
     const step = niceStep(ext, 5);
+    const fA = axisFrame(P, [0, 0], [ext, 0], [ext / 2, ext / 2]), fB = axisFrame(P, [0, 0], [0, ext], [ext / 2, ext / 2]);
     ctx.lineWidth = 1;
     for (let v = 0; v <= ext + 1e-9; v += step) {
       ctx.strokeStyle = C.grid;
       let p0 = P(v, 0), p1 = P(v, ext); ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(p1[0], p1[1]); ctx.stroke();
       p0 = P(0, v); p1 = P(ext, v); ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(p1[0], p1[1]); ctx.stroke();
       ctx.fillStyle = C.ink3;
-      const ta = P(v, 0); ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(fmtN(v), ta[0], ta[1] + 5);
-      const tb = P(0, v); ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(fmtN(v), tb[0] - 6, tb[1]);
+      tickLabel(ctx, fA, P(v, 0), 13, fmtN(v));
+      tickLabel(ctx, fB, P(0, v), 16, fmtN(v));
     }
     ctx.fillStyle = C.ink2;
-    { const q = P(ext / 2, 0); ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText('Alice votes →', q[0], q[1] + 20); }
-    { const q = P(0, ext / 2); ctx.save(); ctx.translate(q[0] - 34, q[1]); ctx.rotate(-Math.PI / 2); ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.fillText('Bob votes →', 0, 0); ctx.restore(); }
+    axisTitle(ctx, fA, P(ext / 2, 0), 30, 'Alice votes');
+    axisTitle(ctx, fB, P(0, ext / 2), 34, 'Bob votes');
     // axes and the a + b = N edge, tie line
     ctx.strokeStyle = C.ink3; ctx.lineWidth = 1.5;
     const seg = (a0, b0, a1, b1) => { const p = P(a0, b0), q = P(a1, b1); ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke(); };
@@ -859,10 +880,9 @@ select { width: auto; }
       ctx.strokeStyle = C.ink3; ctx.lineWidth = 1.5; line(P(0, 0), P(N, 0)); line(P(0, 0), P(0, N)); line(P(N, 0), P(0, N));
       ctx.setLineDash([5, 4]); ctx.lineWidth = 1; line(P(0, 0), P(HALF, HALF)); ctx.setLineDash([]);
       ctx.fillStyle = C.ink3;
-      for (let i = 0; i <= N; i++) { let q = P(i, 0); ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(i, q[0], q[1] + 10);
-        q = P(0, i); ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(i, q[0] - 10, q[1]); }
-      ctx.fillStyle = C.ink2; { const q = P(N / 2, 0); ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText('Alice ballots →', q[0], q[1] + 24); }
-      { const q = P(0, N / 2); ctx.save(); ctx.translate(q[0] - 24, q[1]); ctx.rotate(-Math.PI / 2); ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.fillText('Bob ballots →', 0, 0); ctx.restore(); }
+      const fA = axisFrame(P, [0, 0], [N, 0], [N / 3, N / 3]), fB = axisFrame(P, [0, 0], [0, N], [N / 3, N / 3]);
+      for (let i = 0; i <= N; i++) { tickLabel(ctx, fA, P(i, 0), 16, i); tickLabel(ctx, fB, P(0, i), 16, i); }
+      ctx.fillStyle = C.ink2; axisTitle(ctx, fA, P(N / 2, 0), 32, 'Alice ballots'); axisTitle(ctx, fB, P(0, N / 2), 32, 'Bob ballots');
 
       // points the sample has ruled out: empty dashed squares on the floor
       const hw = .32, [ha, hb] = here();
@@ -1038,10 +1058,9 @@ select { width: auto; }
       ctx.strokeStyle = C.ink3; ctx.lineWidth = 1.5; line(P(0, 0), P(G + .4, 0)); line(P(0, 0), P(0, G + .4));
       ctx.setLineDash([5, 4]); ctx.lineWidth = 1; line(P(0, 0), P(3.4, 3.4)); ctx.setLineDash([]);
       ctx.fillStyle = C.ink3;
-      for (let i = 0; i <= G; i++) { let p = P(i, 0); ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(i, p[0], p[1] + 8);
-        p = P(0, i); ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(i, p[0] - 9, p[1]); }
-      ctx.fillStyle = C.ink2; { const p = P(G / 2, 0); ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText('Alice ballots →', p[0], p[1] + 24); }
-      { const p = P(0, G / 2); ctx.save(); ctx.translate(p[0] - 26, p[1]); ctx.rotate(-Math.PI / 2); ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.fillText('Bob ballots →', 0, 0); ctx.restore(); }
+      const fA = axisFrame(P, [0, 0], [G, 0], [G / 2, G / 2]), fB = axisFrame(P, [0, 0], [0, G], [G / 2, G / 2]);
+      for (let i = 0; i <= G; i++) { tickLabel(ctx, fA, P(i, 0), 15, i); tickLabel(ctx, fB, P(0, i), 15, i); }
+      ctx.fillStyle = C.ink2; axisTitle(ctx, fA, P(G / 2, 0), 32, 'Alice ballots'); axisTitle(ctx, fB, P(0, G / 2), 32, 'Bob ballots');
 
       const arrowPath = (p, col, wdt, alpha = 1) => {
         ctx.globalAlpha = alpha; ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = wdt;
