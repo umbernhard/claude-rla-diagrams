@@ -83,7 +83,8 @@ h3.sub { font: 500 .72rem/1 var(--f-mono); letter-spacing: .06em; text-transform
 .legend { display: flex; flex-wrap: wrap; gap: .4rem 1rem; font-size: .85rem; }
 .canvas-box { position: relative; width: 100%; }
 canvas { display: block; width: 100%; }
-#scene { touch-action: pan-y; }
+#scene, #fan, #small { touch-action: pan-y; }
+#fan.rotatable, #small.rotatable { cursor: grab; }
 #scene.rotatable { cursor: grab; }
 .hint { font: 400 .78rem/1.3 var(--f-mono); color: var(--ink-3); position: absolute; right: .25rem; bottom: .25rem; pointer-events: none; }
 
@@ -127,7 +128,7 @@ select { width: auto; }
       </div>
     </div>
     <div class="stage-text" aria-live="polite"><p id="fanText"></p></div>
-    <div class="canvas-box"><canvas id="fan" role="img" aria-label="All possible six-ballot elections stacked on the outcome plane"></canvas></div>
+    <div class="canvas-box"><canvas id="fan" class="rotatable" role="img" aria-label="All possible six-ballot elections stacked on the outcome plane"></canvas><span class="hint">drag to turn</span></div>
     <h3 class="sub">Possible final results</h3>
     <div class="canvas-box"><canvas id="fanBars" role="img" aria-label="Chance of each final result given the ballots read so far"></canvas></div>
     <div class="legend">
@@ -140,6 +141,7 @@ select { width: auto; }
         <button id="fanB" class="primary" type="button">Read a Bob ballot</button>
         <button id="fanUndo" type="button">Undo</button>
         <button id="fanReset" type="button">Start over</button>
+        <button id="fanTop" type="button">Top view</button>
       </div>
     </div>
     <div id="fanOut" class="heights" aria-live="polite"></div>
@@ -711,46 +713,83 @@ select { width: auto; }
       const k = st.read.length, [a, b] = here(), left = N - k;
       const seen = k ? `After reading ${st.read.map(x => x ? 'A' : 'B').join(', ')}, ` : '';
       if (st.mode === 'seq') {
-        if (!k) return `Six ballots, each for Alice or Bob, make ${ALL} possible sequences. Stack them all and the numbers count the sequences passing through each point. The stack fans out from the origin and is thickest along the tie line, so the most common final result is a 3–3 tie.`;
+        if (!k) return `Six ballots, each for Alice or Bob, make ${ALL} possible sequences. Stack them all: each tower is as tall as the share of sequences that pass through its point, and the number counts them. Every sequence starts at the origin, so that tower holds all 64. From there the stack fans out and stays tallest along the tie line, so the most common final result is a 3–3 tie. Use Top view to see the same stack as a density map.`;
         return `${seen}only ${r.nSeq} of the ${ALL} sequences are still possible: every ballot we read halves them. But the ${left} unread ballot${left === 1 ? ' is' : 's are'} still coin flips, so the fan of possible futures spreads evenly from where the sample stands. The final result is what we've read plus an even split of the rest; the sample never tells us how the unread ballots lean.`;
       }
-      if (!k) return `Now give each of the 7 possible results (Alice 0 through 6) the same weight, shared evenly among its orderings. The numbers are the share of that weight passing through each point. With nothing read, every final result is equally likely, so the stack fans out evenly instead of crowding the tie line.`;
+      if (!k) return `Now give each of the 7 possible results (Alice 0 through 6) the same weight, shared evenly among its orderings. Each tower's height is the share of that weight passing through its point. With nothing read, every final result is equally likely, so the stack fans out evenly instead of crowding the tie line.`;
       return `${seen}results with more ${a >= b ? 'Alice' : 'Bob'} votes have more orderings that start this way, so they gain weight. Unlike the even-sequence picture, the sample now tells us something about the unread ballots: the fan of futures leans the way the sample leans. This is the reasoning behind a Bayesian audit.`;
     }
 
+    // 3D stack: each point is a tower whose height is the share of weight passing through it.
+    // Tilted, the towers are solid; looking straight down they turn translucent and read as a density map.
+    let raf = null, turned = false;
+    const VIEW = { tilted: { theta: 36, phi: 32 }, top: { theta: 0, phi: 90 } };
+    st.view = { ...VIEW.tilted }; st.top = false;
+    function animateView(goal) {
+      if (raf) cancelAnimationFrame(raf);
+      const from = { ...st.view }, t0 = performance.now(), dur = reduce ? 0 : 900;
+      const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      const tick = now => { const t = dur ? Math.min(1, (now - t0) / dur) : 1, e = ease(t);
+        for (const k of ['theta', 'phi']) st.view[k] = from[k] + (goal[k] - from[k]) * e;
+        draw(); raf = t < 1 ? requestAnimationFrame(tick) : null; };
+      raf = requestAnimationFrame(tick);
+    }
     function drawFan(r) {
-      const cv = $('fan'); const { ctx, w, h } = setup(cv, 0.8, 480);
-      const pad = { l: 40, r: 14, t: 14, b: 40 }, pw = w - pad.l - pad.r, ph = h - pad.t - pad.b;
-      const cell = Math.min(pw, ph) / (N + 0.8), ox = pad.l + cell * .4, oy = pad.t + ph - cell * .4;
-      const X = a => ox + a * cell, Y = b => oy - b * cell;
-      ctx.font = '11px ' + C.mono; ctx.lineCap = 'round';
-      // frame: axes, hypotenuse, tie line
-      ctx.strokeStyle = C.ink3; ctx.lineWidth = 1.5;
-      ctx.beginPath(); ctx.moveTo(X(0), Y(N)); ctx.lineTo(X(0), Y(0)); ctx.lineTo(X(N), Y(0)); ctx.lineTo(X(0), Y(N)); ctx.stroke();
-      ctx.setLineDash([5, 4]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(HALF), Y(HALF)); ctx.stroke(); ctx.setLineDash([]);
+      const cv = $('fan'); const { ctx, w, h } = setup(cv, 0.8, 500);
+      const v = st.view, th = v.theta * Math.PI / 180, ph = v.phi * Math.PI / 180, ct = Math.cos(th), sn = Math.sin(th), cp = Math.cos(ph), sp = Math.sin(ph);
+      const pad = { l: 34, r: 12, t: 14, b: 36 }, pw = w - pad.l - pad.r, phh = h - pad.t - pad.b;
+      const HMAX = 0.5, span = N + 0.8;
+      const scale = Math.min(pw / (1.42 - .42 * Math.max(0, (v.phi - 60) / 30)), phh / (Math.max(1, 1.42 * sp + HMAX * cp) + .04));
+      const cx = pad.l + pw / 2, cy = pad.t + phh / 2 + (HMAX * cp * scale / 2);
+      const P = (a, b, z = 0) => { const u = (a + .4) / span - .5, vv = (b + .4) / span - .5;
+        const x1 = u * ct - vv * sn, y1 = u * sn + vv * ct; return [cx + x1 * scale, cy - (y1 * sp + z * HMAX * cp) * scale, y1 * cp - z * HMAX * sp]; };
+      const line = (p, q) => { ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke(); };
+      const poly = (pts) => { ctx.beginPath(); pts.forEach((q, i) => i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); ctx.closePath(); };
+      ctx.font = '11px ' + C.mono; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+
+      // floor: lattice of possible points, axes, hypotenuse, tie line, ticks
+      ctx.strokeStyle = C.grid; ctx.lineWidth = 1;
+      for (let i = 0; i <= N; i++) { line(P(i, 0), P(i, N - i)); line(P(0, i), P(N - i, i)); }
+      ctx.strokeStyle = C.ink3; ctx.lineWidth = 1.5; line(P(0, 0), P(N, 0)); line(P(0, 0), P(0, N)); line(P(N, 0), P(0, N));
+      ctx.setLineDash([5, 4]); ctx.lineWidth = 1; line(P(0, 0), P(HALF, HALF)); ctx.setLineDash([]);
       ctx.fillStyle = C.ink3;
-      for (let i = 0; i <= N; i++) { ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(i, X(i), Y(0) + cell * .38 + 4);
-        ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(i, X(0) - cell * .38 - 5, Y(i)); }
-      ctx.fillStyle = C.ink2; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.fillText('Alice ballots →', pad.l + pw / 2, h - 4);
-      ctx.save(); ctx.translate(12, pad.t + ph / 2); ctx.rotate(-Math.PI / 2); ctx.fillText('Bob ballots →', 0, 0); ctx.restore();
-      // the path read so far
-      const [ha, hb] = here();
-      if (st.read.length) {
-        ctx.strokeStyle = C.path; ctx.lineWidth = 4; ctx.beginPath(); let a = 0, b = 0; ctx.moveTo(X(0), Y(0));
-        for (const x of st.read) { x ? a++ : b++; ctx.lineTo(X(a), Y(b)); } ctx.stroke();
+      for (let i = 0; i <= N; i++) { let q = P(i, 0); ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(i, q[0], q[1] + 10);
+        q = P(0, i); ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(i, q[0] - 10, q[1]); }
+      ctx.fillStyle = C.ink2; { const q = P(N / 2, 0); ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText('Alice ballots →', q[0], q[1] + 24); }
+      { const q = P(0, N / 2); ctx.save(); ctx.translate(q[0] - 24, q[1]); ctx.rotate(-Math.PI / 2); ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.fillText('Bob ballots →', 0, 0); ctx.restore(); }
+
+      // points the sample has ruled out: empty dashed squares on the floor
+      const hw = .32, [ha, hb] = here();
+      for (let a = 0; a <= N; a++) for (let b = 0; a + b <= N; b++) if (!(r.pts.get(a + ',' + b) > 0)) {
+        ctx.strokeStyle = C.rule; ctx.setLineDash([3, 3]); poly([P(a - hw, b - hw), P(a + hw, b - hw), P(a + hw, b + hw), P(a - hw, b + hw)]); ctx.stroke(); ctx.setLineDash([]);
       }
-      // every point: shaded by the share of weight through it; points ruled out by the sample are left empty
-      const sz = cell * .7;
-      for (let a = 0; a <= N; a++) for (let b = 0; a + b <= N; b++) {
-        const s = r.pts.get(a + ',' + b) || 0, x = X(a) - sz / 2, y = Y(b) - sz / 2;
-        if (s === 0) { ctx.strokeStyle = C.rule; ctx.lineWidth = 1; ctx.setLineDash([3, 3]); ctx.strokeRect(x, y, sz, sz); ctx.setLineDash([]); continue; }
-        const alpha = .1 + .85 * Math.sqrt(s);
-        ctx.fillStyle = C.panel; ctx.fillRect(x, y, sz, sz);
-        ctx.fillStyle = rgba(C.rep, alpha); ctx.fillRect(x, y, sz, sz);
-        if (a === ha && b === hb && st.read.length) { ctx.strokeStyle = C.path; ctx.lineWidth = 2.5; ctx.strokeRect(x, y, sz, sz); }
-        ctx.fillStyle = alpha > .55 ? C.panel : C.ink; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        ctx.font = (sz > 34 ? 12 : 10) + 'px ' + C.mono;
-        ctx.fillText(st.mode === 'seq' ? String(Math.round(s * r.W)) : pc(s), X(a), Y(b) + .5);
+      // the path read so far, on the floor
+      if (st.read.length) { ctx.strokeStyle = C.path; ctx.lineWidth = 4; ctx.beginPath(); let a = 0, b = 0; let q = P(0, 0); ctx.moveTo(q[0], q[1]);
+        for (const x of st.read) { x ? a++ : b++; q = P(a, b); ctx.lineTo(q[0], q[1]); } ctx.stroke(); }
+
+      // towers, back to front
+      const op = 1 - Math.max(0, Math.min(1, (v.phi - 40) / 45));
+      const towers = [];
+      for (const [key, s] of r.pts) { const [a, b] = key.split(',').map(Number); towers.push({ a, b, s, d: P(a, b, 0)[2] }); }
+      towers.sort((x, y) => y.d - x.d);
+      for (const t of towers) {
+        const c = [[t.a - hw, t.b - hw], [t.a + hw, t.b - hw], [t.a + hw, t.b + hw], [t.a - hw, t.b + hw]], z1 = t.s;
+        const faces = [0, 1, 2, 3].map(i => { const p = c[i], q = c[(i + 1) % 4], quad = [P(p[0], p[1], 0), P(q[0], q[1], 0), P(q[0], q[1], z1), P(p[0], p[1], z1)];
+          return { i, quad, d: quad.reduce((acc, x) => acc + x[2], 0) / 4 }; });
+        faces.sort((x, y) => y.d - x.d);
+        for (const f of faces) { poly(f.quad); ctx.fillStyle = rgba(C.rep, .05 + .87 * op); ctx.fill();
+          if (op > .01) { ctx.fillStyle = `rgba(0,0,0,${((f.i % 2 ? .28 : .14) * op).toFixed(3)})`; ctx.fill(); } }
+        // top face: solid when tilted, density-shaded when seen from above
+        const topA = op * .92 + (1 - op) * (.1 + .85 * Math.sqrt(t.s));
+        poly(c.map(p => P(p[0], p[1], z1))); ctx.fillStyle = C.panel; ctx.globalAlpha = 1 - op; ctx.fill(); ctx.globalAlpha = 1;
+        ctx.fillStyle = rgba(C.rep, topA); ctx.fill();
+        const here_ = st.read.length && t.a === ha && t.b === hb;
+        ctx.strokeStyle = here_ ? C.path : rgba(C.rep, .8); ctx.lineWidth = here_ ? 2.5 : 1; ctx.stroke();
+        // label: on the top face from above, just over the tower when tilted
+        const q = P(t.a, t.b, z1), lab = st.mode === 'seq' ? String(Math.round(t.s * r.W)) : pc(t.s);
+        ctx.font = '11px ' + C.mono; ctx.textAlign = 'center';
+        if (op < .5) { ctx.textBaseline = 'middle'; ctx.fillStyle = topA > .55 ? C.panel : C.ink; ctx.fillText(lab, q[0], q[1] + .5); }
+        else { ctx.textBaseline = 'bottom'; ctx.fillStyle = C.ink; ctx.fillText(lab, q[0], q[1] - 3); }
       }
     }
 
@@ -787,6 +826,12 @@ select { width: auto; }
     $('fanB').addEventListener('click', () => { if (st.read.length < N) st.read.push(0); draw(); });
     $('fanUndo').addEventListener('click', () => { st.read.pop(); draw(); });
     $('fanReset').addEventListener('click', () => { st.read = []; draw(); });
+    $('fanTop').addEventListener('click', () => { st.top = !st.top; $('fanTop').textContent = st.top ? 'Tilted view' : 'Top view'; animateView(st.top ? VIEW.top : VIEW.tilted); });
+    (() => { const cv = $('fan'); let d = null;
+      cv.addEventListener('pointerdown', e => { if (raf) return; d = { x: e.clientX, y: e.clientY, th: st.view.theta, ph: st.view.phi, type: e.pointerType }; cv.setPointerCapture(e.pointerId); });
+      cv.addEventListener('pointermove', e => { if (!d) return; st.view.theta = d.th + (e.clientX - d.x) * .4;
+        if (d.type === 'mouse') st.view.phi = Math.max(10, Math.min(90, d.ph + (e.clientY - d.y) * .3)); draw(); });
+      const end = () => d = null; cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end); })();
     const pickW = (on, off, mode) => { $(on).setAttribute('aria-pressed', 'true'); $(off).setAttribute('aria-pressed', 'false'); st.mode = mode; draw(); };
     $('wSeq').addEventListener('click', () => pickW('wSeq', 'wRes', 'seq'));
     $('wRes').addEventListener('click', () => pickW('wRes', 'wSeq', 'res'));
