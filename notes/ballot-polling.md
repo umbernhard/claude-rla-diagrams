@@ -9,12 +9,12 @@ Last updated 2026-10-13. This work builds on `Old/Geometry of Post-election Audi
 
 ## The core idea: the super diagram
 
-- Each ballot is a unit step: Alice = (1, 0), Bob = (0, 1), invalid = (0, 0). One ordering of the ballots is a lattice path from the origin to the result (V_A, V_B).
-- The **super diagram** stacks every ordering that ends at the same result.
-- With V = V_A + V_B valid ballots, the number of orderings passing through (a, b) is C(a+b, a) · C(V−a−b, V_A−a), out of C(V, V_A) in total.
-- The **share** of orderings passing through (a, b) is C(V_A, a) · C(V_B, b) / C(V, a+b). That is the hypergeometric pmf. Invalid ballots don't move the path, so they drop out.
-- A random sample of m ballots is the first m steps of a uniformly random ordering. So the share through (a, b) equals P(the sample has a Alice and b Bob votes | this result).
-- Every ordering crosses each diagonal a + b = k exactly once, so each diagonal slice sums to 1. Slices are bell curves, approximately normal for large k.
+- Each ballot is a unit step: Alice = (1, 0), Bob = (0, 1), invalid = (0, 0). One sequence of the ballots is a lattice path from the origin to the result (V_A, V_B).
+- The **super diagram** stacks every sequence that ends at the same result.
+- With V = V_A + V_B valid ballots, the number of sequences passing through (a, b) is C(a+b, a) · C(V−a−b, V_A−a), out of C(V, V_A) in total.
+- The **share** of sequences passing through (a, b) is C(V_A, a) · C(V_B, b) / C(V, a+b). That is the hypergeometric pmf. Invalid ballots don't move the path, so they drop out.
+- A random sample of m ballots is the first m steps of a uniformly random sequence. So the share through (a, b) equals P(the sample has a Alice and b Bob votes | this result).
+- Every sequence crosses each diagonal a + b = k exactly once, so each diagonal slice sums to 1. Slices are bell curves, approximately normal for large k.
 - The spread of the margin across the stack at depth k is k · σ² · (N−k)/(N−1). It pinches to zero at both ends (the finite population correction): every path starts at the origin and ends at the result.
 
 ## How the SPRT falls out
@@ -35,10 +35,10 @@ Last updated 2026-10-13. This work builds on `Old/Geometry of Post-election Audi
 
 ## Before any audit: every possible election
 
-Stack every sequence of N ballots, not just the orderings of one result. Then reading a ballot rules out every sequence that started differently, halving the count each time. What happens to the possible futures depends on how the sequences are weighted:
+Stack every sequence of N ballots, not just the sequences of one result. Then reading a ballot rules out every sequence that started differently, halving the count each time. What happens to the possible futures depends on how the sequences are weighted:
 
 1. **Every sequence equal.** The weight through (a, b) is C(a+b, a) · 2^(N−a−b), which fans out from the origin along the tie line. Final results are Binomial(N, ½), peaked at a tie. The unread ballots stay independent coin flips, so the final result is the sample plus Binomial(N−k, ½). The sample only uses up ballots; it never says how the rest lean. This is the permutation notebook's model, and it is why that approach needs nearly a full count.
-2. **Every result equal** (then every ordering within a result): the old triangle-area model. Given a sample with a Alice and b Bob votes in k ballots, the posterior over the final Alice count F is ∝ C(N−k, F−a)/C(N, F). The sample does shift the future toward what was seen. This is a Bayesian audit with a uniform prior.
+2. **Every result equal** (then every sequence within a result): the old triangle-area model. Given a sample with a Alice and b Bob votes in k ballots, the posterior over the final Alice count F is ∝ C(N−k, F−a)/C(N, F). The sample does shift the future toward what was seen. This is a Bayesian audit with a uniform prior.
 3. **The RLA** uses neither weighting. It compares two fixed super diagrams (reported vs. tie) through P(sample | result), never P(result | sample).
 
 For six ballots, the chance that Alice won (final count > 3) works out as:
@@ -53,16 +53,16 @@ For six ballots, the chance that Alice won (final count > 3) works out as:
 
 **Every possible election (first section).** Six ballots, 64 sequences. There are buttons to read an Alice or Bob ballot, a toggle between weightings 1 and 2, lattice points shaded and labeled by the weight through them (ruled-out points shown empty), and a bar chart of possible final results.
 
-**Six-ballot example.** Alice 4, Bob 2, compared with a 3–3 tie: 15 vs 20 orderings. The example uses 6 ballots rather than 5 because 5 ballots can't tie.
+**Six-ballot example.** Alice 4, Bob 2, compared with a 3–3 tie: 15 vs 20 sequences. The example uses 6 ballots rather than 5 because 5 ballots can't tie.
 
-1. **One ordering:** the arrows are the real order of the ballots, also shown as chips.
-2. **All 15 orderings:** each edge's thickness is the number of orderings that use it, and each point shows its count. Tapping an ordering traces it.
-3. **Stack them up:** translucent unit blocks, with each ordering adding one block to every point it passes through. Every diagonal holds 15 blocks. The "Top view" button turns the stack into a density map.
+1. **One sequence:** the arrows are the real order of the ballots, also shown as chips.
+2. **All 15 sequences:** each edge's thickness is the number of sequences that use it, and each point shows its count. Tapping an sequence traces it.
+3. **Stack them up:** translucent unit blocks, with each sequence adding one block to every point it passes through. Every diagonal holds 15 blocks. The "Top view" button turns the stack into a density map.
 4. **Compare with a tie:** heights switch to shares, with side-by-side blue and orange towers. The text works the ratio for the current sample.
 
 **1,000-ballot example.** Default 600 / 400 / 0, matching the Geometry notebook.
 
-- Same four steps, using 150 random orderings and ridge slices.
+- Same four steps, using 150 random sequences and ridge slices.
 - Step 4 draws the slice at the sample's depth heavier. (An earlier version shaded the overlap between the two bells grey; it was removed as not very useful, but the overlap math below still holds.)
 - "Zoom to sample" in step 4 draws only the slices the sample has already reached, so the view starts blank.
 - **Log heights** (steps 3–4): heights become log(share), shown over a window of max(10, 2.2·log(1/α)). In step 4 the ratio at the sample becomes a vertical gap, drawn next to a green bracket of length log(1/α). The audit stops when the gap fills the bracket, which stays visible at any risk limit (linear heights fail at α = 0.01, where the orange bar would be 1% of the blue). Each bell becomes a parabola, since the log of a normal curve is quadratic.
