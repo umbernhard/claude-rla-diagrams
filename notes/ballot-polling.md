@@ -19,6 +19,7 @@ Last updated 2026-10-13. This work builds on `Old/Geometry of Post-election Audi
 
 ## How the SPRT falls out
 
+- **Why the tie suffices (same invalid count):** the Alice-ballot factor (V_A − a)/(T_A − a) is always ≥ 1 and the Bob-ballot factor (V_B − b)/(T_B − b) is always ≤ 1. Any null result with the same invalid count is the tie with some Alice ballots turned into Bob ballots, which lowers the expected step, so the LR is a supermartingale under every such null and Ville's inequality still gives risk ≤ α. Nulls with a different invalid count are not covered by this argument (moving ballots to/from invalid can raise the expected step slightly); BRAVO conditions on valid ballots instead.
 - **Null:** a tie with the same number of invalid ballots and the valid ballots split evenly (Bob gets the extra vote if the valid count is odd). Beating the tie is enough, because any Bob-wins result puts even fewer paths near a sample that favors Alice.
 - **Likelihood ratio = height of the reported super diagram at the sample point ÷ height of the tie super diagram there.** Sequentially, each Alice ballot multiplies the ratio by (V_A − a)/(T_A − a), and each Bob ballot by (V_B − b)/(T_B − b). Checked numerically: the height ratio matches the sequential LR to about 1e-13.
 - Stop when LR ≥ 1/α, i.e. log LR ≥ log(1/α).
