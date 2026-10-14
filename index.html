@@ -107,7 +107,8 @@ canvas { display: block; width: 100%; }
 .heights b.rep { color: var(--reported); font-weight: 500; } .heights b.tie { color: var(--tie); font-weight: 500; }
 .heights b { color: var(--ink); font-weight: 500; }
 
-details.settings { border-top: 1px solid var(--rule); padding-top: .75rem; }
+.settings { border-block: 1px solid var(--rule); padding-block: .75rem; }
+.settings .fields { margin-top: .6rem; }
 details.settings summary { cursor: pointer; font: 500 .85rem/1.3 var(--f-body); color: var(--ink-2); }
 .fields { display: flex; flex-wrap: wrap; gap: .75rem 1rem; margin-top: .75rem; }
 .field { display: grid; gap: .25rem; min-width: 0; }
@@ -223,18 +224,8 @@ select { width: auto; }
       </div>
       <span id="status" class="pill wait">No ballots drawn</span>
     </div>
-    <div class="readout" aria-live="polite">
-      <span>drawn <b id="rM">0</b></span>
-      <span>Alice <b id="rA">0</b> · Bob <b id="rB">0</b> · invalid <b id="rU">0</b></span>
-    </div>
-    <div id="heights" class="heights" hidden></div>
-    <div class="tally" aria-live="polite">
-      <p id="tally" class="heights"></p>
-      <p class="caption">Each time an audit finishes, it's added to this tally. The audit either confirms Alice or escalates to a full hand count. Keep pressing <b>Run audit</b> for fresh shuffles. If the ballots really are a tie, every confirmation is a mistake, and over many audits the share of mistakes settles at or below the risk limit α. In the default 600–400 election with α = 0.10, about 1 audit in 11 goes wrong, so ten runs show at least one failure more often than not. If the result is flipped, mistakes almost never happen: the evidence runs the wrong way, and the audit keeps going until a full hand count finds Bob's win. The tally starts over when you change the election settings.</p>
-      <div class="actions"><button id="tallyClear" type="button">Clear tally</button></div>
-    </div>
-    <details class="settings">
-      <summary>Election settings</summary>
+    <div class="settings" role="group" aria-labelledby="setTitle">
+      <h3 class="sub" id="setTitle">Election settings · change these and run the audit again</h3>
       <div class="fields">
         <div class="field"><label for="vA">Alice (reported)</label><input id="vA" type="number" min="1" step="1" value="600"></div>
         <div class="field"><label for="vB">Bob (reported)</label><input id="vB" type="number" min="0" step="1" value="400"></div>
@@ -249,7 +240,17 @@ select { width: auto; }
           </div></div>
       </div>
       <p id="err" class="err" hidden></p>
-    </details>
+    </div>
+    <div class="readout" aria-live="polite">
+      <span>drawn <b id="rM">0</b></span>
+      <span>Alice <b id="rA">0</b> · Bob <b id="rB">0</b> · invalid <b id="rU">0</b></span>
+    </div>
+    <div id="heights" class="heights" hidden></div>
+    <div class="tally" aria-live="polite">
+      <p id="tally" class="heights"></p>
+      <p class="caption">Each time an audit finishes, it's added to this tally. The audit either confirms Alice or escalates to a full hand count. Keep pressing <b>Run audit</b> for fresh shuffles. If the ballots really are a tie, every confirmation is a mistake, and over many audits the share of mistakes settles at or below the risk limit α. In the default 600–400 election with α = 0.10, about 1 audit in 11 goes wrong, so ten runs show at least one failure more often than not. If the result is flipped, mistakes almost never happen: the evidence runs the wrong way, and the audit keeps going until a full hand count finds Bob's win. The tally starts over when you change the election settings.</p>
+      <div class="actions"><button id="tallyClear" type="button">Clear tally</button></div>
+    </div>
   </section>
 
   <section class="figure" aria-labelledby="llrTitle">
