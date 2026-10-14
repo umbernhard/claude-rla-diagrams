@@ -1,0 +1,868 @@
+<title>Super Diagrams for Ballot Polling</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap">
+<style>
+/* Layout: one reading column; a single large stepped figure carries the story, with the evidence chart and simulation below it. */
+:root {
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --ink: #15181d;
+  --ink-2: #4b5260;
+  --ink-3: #79808d;
+  --rule: #dde1e7;
+  --grid: #e9ecf0;
+  --reported: #2a78d6;
+  --tie: #eb6834;
+  --path: #15181d;
+  --good: #1e7d4f;
+  --good-bg: #e3f3ea;
+  --wait: #8a5a00;
+  --wait-bg: #fbf0d9;
+  --focus: #2a78d6;
+  --f-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111317; --panel: #191c21; --ink: #eef0f3; --ink-2: #b7bcc6; --ink-3: #868d99;
+    --rule: #2c3138; --grid: #23272d; --reported: #3987e5; --tie: #d95926; --path: #eef0f3;
+    --good: #5cc48e; --good-bg: #16301f; --wait: #e5b453; --wait-bg: #33280f; --focus: #3987e5;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111317; --panel: #191c21; --ink: #eef0f3; --ink-2: #b7bcc6; --ink-3: #868d99;
+  --rule: #2c3138; --grid: #23272d; --reported: #3987e5; --tie: #d95926; --path: #eef0f3;
+  --good: #5cc48e; --good-bg: #16301f; --wait: #e5b453; --wait-bg: #33280f; --focus: #3987e5;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 1rem/1.6 var(--f-body); }
+.wrap { max-width: 60rem; margin: 0 auto; padding-inline: 16px; padding-block: 2rem 4rem; display: grid; gap: 1.5rem; }
+.prose { max-width: 40rem; }
+h1 { font: 600 clamp(1.7rem, 4vw, 2.3rem)/1.15 var(--f-display); margin: 0 0 .5rem; text-wrap: balance; letter-spacing: -.01em; }
+h2 { font: 600 1.25rem/1.3 var(--f-display); margin: 0; text-wrap: balance; }
+p { margin: 0 0 .75rem; color: var(--ink-2); }
+p strong { color: var(--ink); font-weight: 600; }
+.eyebrow { font: 500 .72rem/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: .6rem; }
+.key { display: inline-flex; align-items: center; gap: .35em; white-space: nowrap; color: var(--ink); font-weight: 500; }
+.sw { width: .8em; height: .8em; border-radius: 2px; display: inline-block; }
+.sw.ovl { background: color-mix(in srgb, var(--ink) 35%, var(--panel)); }
+.sw.rep { background: var(--reported); } .sw.tie { background: var(--tie); }
+.sw.path { background: var(--path); height: 3px; width: 1em; border-radius: 1px; }
+
+.figure { background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; padding: 1rem; display: grid; gap: .8rem; min-width: 0; }
+.row { display: flex; flex-wrap: wrap; gap: .5rem .75rem; align-items: center; justify-content: space-between; }
+.steps { display: flex; flex-wrap: wrap; gap: .4rem; }
+.steps button { display: inline-flex; gap: .45em; align-items: baseline; }
+.steps button .n { font: 500 .75rem/1 var(--f-mono); color: var(--ink-3); }
+.steps button[aria-pressed=true] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.steps button[aria-pressed=true] .n { color: var(--bg); opacity: .7; }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+.seg button { border: 0; border-radius: 0; background: var(--bg); color: var(--ink-2); }
+.seg button[aria-pressed=true] { background: var(--ink); color: var(--bg); }
+button { font: 500 .9rem/1 var(--f-body); color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: .55rem .8rem; cursor: pointer; }
+button.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+button:hover { border-color: var(--ink-3); }
+button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.actions { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+
+.stage-text { min-height: 4.8em; }
+.chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+.order { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); cursor: pointer; }
+.order[aria-pressed=true] { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.order.static { cursor: default; }
+.bal { font: 500 .8rem/1 var(--f-mono); width: 1.6em; height: 1.6em; display: inline-grid; place-items: center; border-radius: 4px; color: var(--ink-2); background: var(--panel); border: 1px solid var(--rule); }
+.bal.read { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chips-label { font: 500 .72rem/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); width: 100%; }
+.stage-text h3 { font: 600 1.05rem/1.3 var(--f-display); margin: 0 0 .25rem; }
+.stage-text p { margin: 0; max-width: 46rem; }
+.legend { display: flex; flex-wrap: wrap; gap: .4rem 1rem; font-size: .85rem; }
+.canvas-box { position: relative; width: 100%; }
+canvas { display: block; width: 100%; }
+#scene { touch-action: pan-y; }
+#scene.rotatable { cursor: grab; }
+.hint { font: 400 .78rem/1.3 var(--f-mono); color: var(--ink-3); position: absolute; right: .25rem; bottom: .25rem; pointer-events: none; }
+
+.readout { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; align-items: center; font: 400 .88rem/1.35 var(--f-mono); font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.readout b { color: var(--ink); font-weight: 500; }
+.pill { font: 500 .8rem/1 var(--f-body); padding: .4rem .65rem; border-radius: 999px; }
+.pill.go { color: var(--good); background: var(--good-bg); }
+.pill.wait { color: var(--wait); background: var(--wait-bg); }
+.heights { font: 400 .88rem/1.4 var(--f-mono); font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.heights b.rep { color: var(--reported); font-weight: 500; } .heights b.tie { color: var(--tie); font-weight: 500; }
+.heights b { color: var(--ink); font-weight: 500; }
+
+details.settings { border-top: 1px solid var(--rule); padding-top: .75rem; }
+details.settings summary { cursor: pointer; font: 500 .85rem/1.3 var(--f-body); color: var(--ink-2); }
+.fields { display: flex; flex-wrap: wrap; gap: .75rem 1rem; margin-top: .75rem; }
+.field { display: grid; gap: .25rem; min-width: 0; }
+.field label, .field .lbl { font: 500 .72rem/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+input[type=number], select { font: 500 .95rem/1 var(--f-mono); font-variant-numeric: tabular-nums; color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: .5rem .55rem; width: 6.5rem; }
+select { width: auto; }
+.err { color: var(--tie); font-size: .9rem; margin: .5rem 0 0; }
+
+.tip { position: absolute; pointer-events: none; background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: .4rem .55rem; font: 400 .78rem/1.35 var(--f-mono); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; box-shadow: 0 2px 8px rgb(0 0 0 / .12); }
+.caption { font-size: .9rem; color: var(--ink-2); margin: 0; max-width: 46rem; }
+.simout { font: 400 .9rem/1.5 var(--f-mono); font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.simout b { color: var(--ink); font-weight: 500; }
+</style>
+
+<div class="wrap">
+  <header class="prose">
+    <div class="eyebrow">Risk-limiting audits from the ground up · Ballot polling</div>
+    <h1>Super diagrams for ballot polling</h1>
+    <p>Lay an election's ballots out in some order and you can draw them as a path: one step right for each Alice ballot, one step up for each Bob ballot. Invalid ballots don't move the path. A ballot polling audit reads the first few steps of the real path and asks which result it is heading toward.</p>
+  </header>
+
+  <section class="figure" aria-labelledby="smTitle">
+    <h2 id="smTitle">Start small: six ballots</h2>
+    <div class="steps" id="smSteps" role="group" aria-label="Steps for the six-ballot election">
+      <button type="button" data-stage="1" aria-pressed="true"><span class="n">1</span>One ordering</button>
+      <button type="button" data-stage="2" aria-pressed="false"><span class="n">2</span>All 15 orderings</button>
+      <button type="button" data-stage="3" aria-pressed="false"><span class="n">3</span>Stack them up</button>
+      <button type="button" data-stage="4" aria-pressed="false"><span class="n">4</span>Compare with a tie</button>
+    </div>
+    <div class="stage-text" aria-live="polite"><h3 id="smStTitle"></h3><p id="smStBody"></p></div>
+    <div class="canvas-box">
+      <canvas id="small" role="img" aria-label="Six-ballot election: orderings drawn as paths and stacked into towers"></canvas>
+      <span id="smHint" class="hint" hidden>drag to turn</span>
+    </div>
+    <div id="smChips" class="chips"></div>
+    <div class="row">
+      <div class="actions">
+        <button id="smNext" class="primary" type="button">Next step</button>
+        <button id="smRead" type="button">Read next ballot</button>
+        <button id="smShuffle" type="button">Reshuffle</button>
+        <button id="smTop" type="button" hidden>Top view</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="figure" aria-labelledby="figTitle">
+    <div class="row">
+      <h2 id="figTitle">Scaling up: 1,000 ballots</h2>
+      <div class="seg" role="group" aria-label="Zoom">
+        <button id="zSample" type="button" aria-pressed="false">Zoom to sample</button>
+        <button id="zFull" type="button" aria-pressed="true">Whole election</button>
+      </div>
+    </div>
+    <div class="steps" id="bigSteps" role="group" aria-label="Steps">
+      <button type="button" data-stage="1" aria-pressed="true"><span class="n">1</span>One ordering</button>
+      <button type="button" data-stage="2" aria-pressed="false"><span class="n">2</span>Many orderings</button>
+      <button type="button" data-stage="3" aria-pressed="false"><span class="n">3</span>Stack them up</button>
+      <button type="button" data-stage="4" aria-pressed="false"><span class="n">4</span>Compare with a tie</button>
+    </div>
+    <div class="stage-text" aria-live="polite"><h3 id="stTitle"></h3><p id="stBody"></p></div>
+    <div class="canvas-box">
+      <canvas id="scene" role="img" aria-label="Outcome plane with ballot orderings drawn as paths"></canvas>
+      <span id="hint" class="hint" hidden>drag to turn</span>
+    </div>
+    <div class="legend" id="legend"></div>
+    <div class="row">
+      <div class="actions">
+        <button id="next" class="primary" type="button">Next step</button>
+        <button id="play" type="button">Run audit</button>
+        <button id="draw10" type="button">Draw 10 ballots</button>
+        <button id="reset" type="button">Reshuffle</button>
+      </div>
+      <span id="status" class="pill wait">No ballots drawn</span>
+    </div>
+    <div class="readout" aria-live="polite">
+      <span>drawn <b id="rM">0</b></span>
+      <span>Alice <b id="rA">0</b> · Bob <b id="rB">0</b> · invalid <b id="rU">0</b></span>
+    </div>
+    <div id="heights" class="heights" hidden></div>
+    <details class="settings">
+      <summary>Election settings</summary>
+      <div class="fields">
+        <div class="field"><label for="vA">Alice (reported)</label><input id="vA" type="number" min="1" step="1" value="600"></div>
+        <div class="field"><label for="vB">Bob (reported)</label><input id="vB" type="number" min="0" step="1" value="400"></div>
+        <div class="field"><label for="vU">Invalid</label><input id="vU" type="number" min="0" step="1" value="0"></div>
+        <div class="field"><label for="alpha">Risk limit α</label>
+          <select id="alpha"><option value="0.1">0.10</option><option value="0.05" selected>0.05</option><option value="0.01">0.01</option></select></div>
+        <div class="field"><span class="lbl" id="truthLbl">Ballots really are</span>
+          <div class="seg" role="group" aria-labelledby="truthLbl">
+            <button id="truthRep" type="button" aria-pressed="true">As reported</button>
+            <button id="truthTie" type="button" aria-pressed="false">A tie</button>
+          </div></div>
+      </div>
+      <p id="err" class="err" hidden></p>
+    </details>
+  </section>
+
+  <section class="figure" aria-labelledby="llrTitle">
+    <h2 id="llrTitle">Evidence against a tie</h2>
+    <div class="legend">
+      <span class="key"><span class="sw path"></span>log of the height ratio</span>
+      <span class="key" style="color:var(--ink-2)">- - BRAVO approximation</span>
+    </div>
+    <div class="canvas-box"><canvas id="llr" role="img" aria-label="Log likelihood ratio by number of ballots drawn, with the stopping threshold"></canvas><div id="llrTip" class="tip" hidden></div></div>
+    <p class="caption">This is the ratio from step 4, tracked ballot by ballot on a log scale. Each Alice ballot multiplies it by (Alice ballots left in the reported election) ÷ (Alice ballots left in the tie), Bob ballots do the same with Bob's counts, and invalid ballots leave it alone. The audit stops when it reaches log(1/α). The dashed BRAVO line is the with-replacement shortcut, (2p)<sup>a</sup>(2−2p)<sup>b</sup>.</p>
+  </section>
+
+  <section class="figure" aria-labelledby="simTitle">
+    <h2 id="simTitle">Run it many times</h2>
+    <p class="caption">One audit walks one path. Running a thousand shows how often the audit stops early. If the ballots are really a tie, every early stop confirms the wrong winner, so that rate is the risk, and it should stay under α. Switch "Ballots really are" in the election settings to try both.</p>
+    <div class="actions"><button id="simRun" type="button">Run 1,000 audits</button></div>
+    <div id="simOut" class="simout" aria-live="polite">Not run yet.</div>
+  </section>
+
+  <footer class="prose">
+    <p>The tie keeps the reported number of invalid ballots and splits the valid ones evenly. When the valid count is odd, Bob gets the extra vote, the closest result in which Alice did not win. Beating the tie is enough: any result where Bob wins has even fewer orderings passing near a sample that favors Alice.</p>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const css = () => {
+    const s = getComputedStyle(document.documentElement), g = n => s.getPropertyValue(n).trim();
+    return { ink: g('--ink'), ink2: g('--ink-2'), ink3: g('--ink-3'), rule: g('--rule'), grid: g('--grid'),
+             rep: g('--reported'), tie: g('--tie'), path: g('--path'), panel: g('--panel'), good: g('--good'), mono: g('--f-mono') };
+  };
+  let C = css();
+  const rgba = (hex, a) => { let h = hex.replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join('');
+    const v = parseInt(h, 16); return `rgba(${(v >> 16) & 255},${(v >> 8) & 255},${v & 255},${a})`; };
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ------------------------------------------------------------- math
+  let LF = [0];
+  const logFact = n => { for (let i = LF.length; i <= n; i++) LF[i] = LF[i - 1] + Math.log(i); return LF[n]; };
+  const lchoose = (n, k) => (k < 0 || k > n) ? -Infinity : logFact(n) - logFact(k) - logFact(n - k);
+  // share of orderings of an (A, B) election whose path passes through (a, b)
+  const share = (A, B, a, b) => Math.exp(lchoose(A, a) + lchoose(B, b) - lchoose(A + B, a + b));
+
+  // ------------------------------------------------------------- state
+  const S = { VA: 600, VB: 400, U: 0, N: 1000, V: 1000, TA: 500, TB: 500, alpha: 0.05, truth: 'rep', zoom: 'full',
+              ballots: null, truePath: [], m: 0, a: 0, b: 0, u: 0, sample: [[0, 0]], llr: [0], bravo: [0], stopAt: null, timer: null,
+              others: [], stage: 1 };
+  const V = { theta: 0, phi: 90, lift: 0, tie: 0, shown: 0, othersAlpha: 1 }; // current view, tweened
+  const TARGET = {
+    1: { theta: 0, phi: 90, lift: 0, tie: 0, shown: 0, othersAlpha: 1 },
+    2: { theta: 0, phi: 90, lift: 0, tie: 0, shown: 150, othersAlpha: 1 },
+    3: { theta: 38, phi: 26, lift: 1, tie: 0, shown: 150, othersAlpha: .35 },
+    4: { theta: 38, phi: 26, lift: 1, tie: 1, shown: 150, othersAlpha: .2 },
+  };
+  let userTurned = false;
+
+  const thresh = () => Math.log(1 / S.alpha);
+  function readInputs() {
+    const VA = Math.floor(+$('vA').value), VB = Math.floor(+$('vB').value), U = Math.floor(+$('vU').value);
+    let msg = '';
+    if (![VA, VB, U].every(Number.isFinite) || VA < 0 || VB < 0 || U < 0) msg = 'Vote counts need to be whole numbers of zero or more.';
+    else if (VA <= VB) msg = 'Alice is the reported winner here, so give her more votes than Bob.';
+    else if (VA + VB + U > 20000) msg = 'Keep the election to 20,000 ballots or fewer so the drawing stays responsive.';
+    $('err').hidden = !msg; $('err').textContent = msg;
+    if (msg) return false;
+    Object.assign(S, { VA, VB, U, N: VA + VB + U, V: VA + VB, alpha: +$('alpha').value });
+    S.TA = Math.floor(S.V / 2); S.TB = S.V - S.TA;
+    logFact(S.N);
+    return true;
+  }
+  const shuffle = arr => { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = arr[i]; arr[i] = arr[j]; arr[j] = t; } return arr; };
+  function makeBallots(A, B, U) { const arr = new Uint8Array(A + B + U); arr.fill(1, 0, A); arr.fill(2, A, A + B); return shuffle(arr); }
+  function pathOf(ballots) { // points after each valid step
+    const pts = new Int32Array(2 * (S.V + 1)); let a = 0, b = 0, i = 1;
+    for (const k of ballots) { if (k === 1) a++; else if (k === 2) b++; else continue; pts[2 * i] = a; pts[2 * i + 1] = b; i++; }
+    return pts;
+  }
+  function stepLLR(kind, a, b) {
+    if (kind === 1) return S.TA - a <= 0 ? Infinity : Math.log((S.VA - a) / (S.TA - a));
+    if (kind === 2) return S.TB - b <= 0 ? Infinity : Math.log((S.VB - b) / (S.TB - b));
+    return 0;
+  }
+
+  function reshuffle(keepOthers) {
+    stopAudit();
+    if (!readInputs()) { render(); return; }
+    const A = S.truth === 'rep' ? S.VA : S.TA, B = S.truth === 'rep' ? S.VB : S.TB;
+    S.ballots = makeBallots(A, B, S.U);
+    S.truePath = pathOf(S.ballots);
+    Object.assign(S, { m: 0, a: 0, b: 0, u: 0, sample: [[0, 0]], llr: [0], bravo: [0], stopAt: null });
+    if (!keepOthers) { S.others = []; for (let i = 0; i < 150; i++) S.others.push(pathOf(makeBallots(S.VA, S.VB, 0))); }
+    render();
+  }
+  function drawBallots(k) {
+    const p = S.VA / S.V;
+    for (let i = 0; i < k && S.m < S.N; i++) {
+      const kind = S.ballots[S.m];
+      S.llr.push(S.llr[S.m] + stepLLR(kind, S.a, S.b));
+      S.bravo.push(S.bravo[S.m] + (kind === 1 ? Math.log(2 * p) : kind === 2 ? Math.log(2 - 2 * p) : 0));
+      if (kind === 1) S.a++; else if (kind === 2) S.b++; else S.u++;
+      S.m++; S.sample.push([S.a, S.b]);
+      if (S.stopAt === null && S.llr[S.m] >= thresh()) S.stopAt = S.m;
+    }
+  }
+  function stopAudit() { if (S.timer) { clearInterval(S.timer); S.timer = null; } $('play').textContent = (S.m && S.stopAt === null && S.m < S.N) ? 'Resume audit' : 'Run audit'; }
+  function play() {
+    if (S.timer) { stopAudit(); return; }
+    if (S.stopAt !== null || S.m >= S.N) reshuffle(true);
+    $('play').textContent = 'Pause';
+    S.timer = setInterval(() => { drawBallots(reduce ? 4 : 1); if (S.stopAt !== null || S.m >= S.N) stopAudit(); render(); }, reduce ? 80 : 40);
+  }
+
+  // ------------------------------------------------------------- copy per stage
+  function sci(log10) { const e = Math.floor(log10), m = Math.pow(10, log10 - e); return `${m.toFixed(1)} × 10<sup>${e}</sup>`; }
+  function stageCopy() {
+    const nPaths = sci(lchoose(S.V, S.VA) / Math.LN10);
+    const R = `(${S.VA.toLocaleString()}, ${S.VB.toLocaleString()})`;
+    const k = Math.round(1 / S.alpha);
+    return {
+      1: ['One ordering', `Here is one shuffle of the ballots, drawn as a path. However the ballots are shuffled, the path always ends at the result: ${R}, the blue arrow. The audit reads this path from the start, one ballot at a time.`],
+      2: ['Many orderings', `There are ${nPaths} different paths that end at ${R}. Here are 150 of them, picked at random. They all start at zero and end at the result, and most of them hug the straight line between.`],
+      3: ['Stack them up', `Tilt the picture and raise each point by the share of paths that pass through it. Every slice across the ridge is the same bell curve: the normal distribution. The ridge is tallest at the two ends, where every path squeezes through the same point, and lowest and widest in the middle.`],
+      4: ['Compare with a tie', `The orange ridge is the same picture for a tie. The audit stands where its sample has reached and compares the two heights there. If the blue ridge is ${k} times taller than the orange one, a sample like this is ${k} times more likely if Alice really won, and the audit can stop. The grey shading is where the two bells overlap: samples that land there look about as likely under either result. Near the start the bells sit almost on top of each other; the more ballots the audit reads, the further apart they drift and the smaller the overlap gets.`],
+    }[S.stage];
+  }
+  function setStage(n) {
+    S.stage = n;
+    document.querySelectorAll('#bigSteps button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.stage === n)));
+    const [t, body] = stageCopy(); $('stTitle').textContent = t; $('stBody').innerHTML = body;
+    $('next').textContent = n === 4 ? 'Start over' : 'Next step';
+    $('scene').classList.toggle('rotatable', n >= 3); $('hint').hidden = n < 3;
+    const L = [];
+    L.push('<span class="key"><span class="sw path"></span>the real order of the ballots</span>');
+    L.push('<span class="key"><span class="sw rep"></span>reported result</span>');
+    if (n >= 4) { L.push('<span class="key"><span class="sw tie"></span>a tie</span>'); L.push('<span class="key"><span class="sw ovl"></span>overlap</span>'); }
+    $('legend').innerHTML = L.join('');
+    if (n < 3) userTurned = false;
+    animateTo(TARGET[n]);
+  }
+
+  let raf = null;
+  function animateTo(tgt) {
+    if (raf) cancelAnimationFrame(raf);
+    const from = { ...V }, t0 = performance.now(), dur = reduce ? 0 : 1100;
+    const goal = { ...tgt }; if (userTurned) { goal.theta = V.theta; goal.phi = V.phi; }
+    const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    const tick = now => {
+      const t = dur ? Math.min(1, (now - t0) / dur) : 1, e = ease(t);
+      for (const key in goal) V[key] = from[key] + (goal[key] - from[key]) * (key === 'shown' ? t : e);
+      render();
+      if (t < 1) raf = requestAnimationFrame(tick); else raf = null;
+    };
+    raf = requestAnimationFrame(tick);
+  }
+
+  // ------------------------------------------------------------- canvas
+  function setup(cv, aspect, maxH) {
+    const w = cv.parentElement.clientWidth, h = Math.min(maxH || 9999, Math.round(w * aspect)), dpr = window.devicePixelRatio || 1;
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    cv.style.height = h + 'px';
+    const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+    return { ctx, w, h };
+  }
+  const niceStep = (span, target) => { const raw = span / target, p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p; return (f < 1.5 ? 1 : f < 3.5 ? 2 : f < 7.5 ? 5 : 10) * p; };
+  const fmtN = v => Math.abs(v) >= 1000 ? Math.round(v).toLocaleString() : String(Math.round(v * 100) / 100);
+
+  function extent() {
+    if (S.zoom === 'full') return S.N;
+    const m = Math.max(S.a + S.b, 12);
+    return Math.min(S.N, Math.max(30, Math.ceil((Math.max(S.a, S.b, m * S.VA / S.V) + 3 * Math.sqrt(m) + 6) * 1.2)));
+  }
+
+  function drawScene() {
+    const cv = $('scene'); const { ctx, w, h } = setup(cv, 0.82, 640);
+    const pad = { l: 44, r: 12, t: 12, b: 38 };
+    const pw = w - pad.l - pad.r, ph = h - pad.t - pad.b;
+    const ext = extent();
+    const th = V.theta * Math.PI / 180, ph_ = V.phi * Math.PI / 180, ct = Math.cos(th), st = Math.sin(th), cp = Math.cos(ph_), sp = Math.sin(ph_);
+    const H = 0.55, lift = V.lift;
+
+    // ridge geometry first, so the vertical scale is known. Both elections have the same number of
+    // valid ballots, so their slices at depth k lie on the same diagonal a + b = k.
+    const pMax = Math.max(S.VA, S.VB) / S.V;
+    const kTop = Math.min(S.V, Math.floor(ext / Math.min(pMax, 0.5) ));
+    const kRep = Math.min(S.V, Math.floor(ext / pMax));
+    const nSl = Math.min(44, Math.max(6, kRep)), dk = Math.max(1, Math.round(kRep / nSl));
+    const sampleK = S.m > 0 ? S.a + S.b : -1;
+    const ks = []; for (let k = dk; k <= kTop; k += dk) ks.push(k);
+    if (sampleK > 0 && sampleK <= kTop && !ks.includes(sampleK)) ks.push(sampleK);
+    const slices = [];
+    if (lift > 0.01) for (const k of ks) {
+      const pts = []; let mx = 0;
+      const aLo = Math.max(0, k - Math.max(S.VB, S.TB)), aHi = Math.min(k, Math.max(S.VA, S.TA));
+      for (let a = aLo; a <= aHi; a++) {
+        const b = k - a; if (a > ext || b > ext) continue;
+        const zr = (a <= S.VA && b <= S.VB) ? share(S.VA, S.VB, a, b) : 0;
+        const zt = (a <= S.TA && b <= S.TB) ? share(S.TA, S.TB, a, b) : 0;
+        if (k <= kRep && zr > mx) mx = zr; pts.push([a, b, zr, zt]);
+      }
+      slices.push({ k, pts, mx });
+    }
+    // scale: 2.4x the peak of the middle slice of the reported ridge; the ends run off the top
+    let zMax = 1;
+    const repSl = slices.filter(s => s.k <= kRep && s.k % dk === 0);
+    if (repSl.length) zMax = Math.max(1e-6, Math.min(1, repSl[Math.floor(repSl.length / 2)].mx * 2.4));
+    const zOf = z => Math.min(z, zMax) / zMax * H * lift;
+
+    const Stop = Math.min(pw, ph), S3 = Math.min(pw / 1.42, ph / (1.42 * sp + H * cp + .08));
+    const scale = Stop + (S3 - Stop) * lift;
+    const cx = pad.l + pw / 2, cy = pad.t + ph / 2 + (H * cp * scale / 2) * lift - (lift * .02 * ph);
+    const P = (a, b, z = 0) => {
+      const u = a / ext - .5, v = b / ext - .5, wv = zOf(z);
+      const x1 = u * ct - v * st, y1 = u * st + v * ct;
+      return [cx + x1 * scale, cy - (y1 * sp + wv * cp) * scale, y1 * cp - wv * sp];
+    };
+    const flat = 1 - lift; // 0 in 3D, 1 in 2D
+
+    // floor: grid, edges, ticks
+    ctx.font = '11px ' + C.mono;
+    const step = niceStep(ext, 5);
+    ctx.lineWidth = 1;
+    for (let v = 0; v <= ext + 1e-9; v += step) {
+      ctx.strokeStyle = C.grid;
+      let p0 = P(v, 0), p1 = P(v, ext); ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(p1[0], p1[1]); ctx.stroke();
+      p0 = P(0, v); p1 = P(ext, v); ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(p1[0], p1[1]); ctx.stroke();
+      ctx.fillStyle = C.ink3;
+      const ta = P(v, 0); ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(fmtN(v), ta[0], ta[1] + 5);
+      const tb = P(0, v); ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(fmtN(v), tb[0] - 6, tb[1]);
+    }
+    ctx.fillStyle = C.ink2;
+    { const q = P(ext / 2, 0); ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText('Alice votes →', q[0], q[1] + 20); }
+    { const q = P(0, ext / 2); ctx.save(); ctx.translate(q[0] - 34, q[1]); ctx.rotate(-Math.PI / 2); ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.fillText('Bob votes →', 0, 0); ctx.restore(); }
+    // axes and the a + b = N edge, tie line
+    ctx.strokeStyle = C.ink3; ctx.lineWidth = 1.5;
+    const seg = (a0, b0, a1, b1) => { const p = P(a0, b0), q = P(a1, b1); ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke(); };
+    seg(0, 0, ext, 0); seg(0, 0, 0, ext);
+    if (2 * ext > S.N) { const lo = Math.max(0, S.N - ext), hi = Math.min(S.N, ext); seg(hi, S.N - hi, lo, S.N - lo); }
+    ctx.setLineDash([5, 4]); ctx.lineWidth = 1; const tieEnd = Math.min(S.V / 2, ext); seg(0, 0, tieEnd, tieEnd); ctx.setLineDash([]);
+
+    // the other orderings (step 2 onward)
+    const nShow = Math.floor(V.shown);
+    if (nShow > 0) {
+      ctx.strokeStyle = rgba(C.rep, (S.zoom === 'full' ? 0.07 : 0.12) * V.othersAlpha); ctx.lineWidth = 1.2;
+      const stride = S.zoom === 'full' && S.V > 1500 ? 2 : 1;
+      for (let i = 0; i < Math.min(nShow, S.others.length); i++) {
+        const pts = S.others[i]; ctx.beginPath(); let p = P(0, 0); ctx.moveTo(p[0], p[1]);
+        for (let j = 1; j <= S.V; j += stride) { const a = pts[2 * j], b = pts[2 * j + 1]; if (a > ext || b > ext) break; p = P(a, b); ctx.lineTo(p[0], p[1]); }
+        ctx.stroke();
+      }
+    }
+
+    // result vectors
+    const arrow = (a, b, col, wdt) => {
+      const scaleK = Math.min(1, ext / Math.max(a, b)); const ea = a * scaleK, eb = b * scaleK;
+      const p = P(0, 0), q = P(ea, eb); ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = wdt;
+      ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke();
+      if (scaleK === 1) { const ang = Math.atan2(q[1] - p[1], q[0] - p[0]), s = 11;
+        ctx.beginPath(); ctx.moveTo(q[0], q[1]); ctx.lineTo(q[0] - s * Math.cos(ang - .4), q[1] - s * Math.sin(ang - .4)); ctx.lineTo(q[0] - s * Math.cos(ang + .4), q[1] - s * Math.sin(ang + .4)); ctx.closePath(); ctx.fill(); }
+    };
+    arrow(S.VA, S.VB, rgba(C.rep, .25 + .75 * flat), 2.5);
+    if (V.tie > .01) arrow(S.TA, S.TB, rgba(C.tie, V.tie * (.25 + .75 * flat)), 2.5);
+
+    // the real ordering of the ballots, with the drawn sample emphasised
+    const tp = S.truePath;
+    if (tp.length) {
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = rgba(C.path, .28 + .25 * flat); ctx.lineWidth = 1.5;
+      ctx.beginPath(); let p = P(0, 0); ctx.moveTo(p[0], p[1]);
+      for (let j = 1; j <= S.V; j++) { const a = tp[2 * j], b = tp[2 * j + 1]; if (a > ext || b > ext) break; p = P(a, b); ctx.lineTo(p[0], p[1]); }
+      ctx.stroke();
+    }
+
+    // ridges: one slice per depth holds both elections, drawn back to front.
+    // Shaded overlap = the part of the bell both elections share at that depth.
+    const tieOn = Math.min(lift, V.tie);
+    const curve = (pts, idx) => { const out = []; for (const q of pts) out.push(P(q[0], q[1], q[idx])); return out; };
+    const fillUnder = (pts, idx, style) => {
+      if (pts.length < 2) return;
+      ctx.beginPath(); let p = P(pts[0][0], pts[0][1], 0); ctx.moveTo(p[0], p[1]);
+      for (const q of curve(pts, idx)) ctx.lineTo(q[0], q[1]);
+      p = P(pts[pts.length - 1][0], pts[pts.length - 1][1], 0); ctx.lineTo(p[0], p[1]); ctx.closePath();
+      ctx.fillStyle = style; ctx.fill();
+    };
+    const strokeCurve = (pts, idx, style, wdt) => {
+      const run = pts.filter(q => q[idx] >= zMax * 0.004); if (run.length < 2) return;
+      ctx.strokeStyle = style; ctx.lineWidth = wdt; ctx.beginPath();
+      curve(run, idx).forEach((q, i) => i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); ctx.stroke();
+    };
+    // in step 4's sample zoom, only draw the bells the sample has already passed through
+    const upToSample = S.stage === 4 && S.zoom === 'sample';
+    const order = slices.filter(s => s.pts.length && (!upToSample || (sampleK > 0 && s.k <= sampleK))).map(s => ({ s, depth: P(s.pts[Math.floor(s.pts.length / 2)][0], s.pts[Math.floor(s.pts.length / 2)][1], 0)[2] }));
+    order.sort((x, y) => y.depth - x.depth);
+    for (const { s } of order) {
+      const vis = s.pts.filter(q => Math.max(q[2], tieOn > .01 ? q[3] : 0) >= zMax * 0.004);
+      if (vis.length < 2) continue;
+      const cur = s.k === sampleK, wd = cur ? 2.6 : 1.3;
+      ctx.globalAlpha = lift;
+      // occlude whatever is behind, under the taller of the two curves
+      fillUnder(vis.map(q => [q[0], q[1], Math.max(q[2], tieOn > .01 ? q[3] : 0)]), 2, C.panel);
+      fillUnder(vis, 2, rgba(C.rep, .14));
+      if (tieOn > .01) {
+        fillUnder(vis, 3, rgba(C.tie, .14 * tieOn));
+        fillUnder(vis.map(q => [q[0], q[1], Math.min(q[2], q[3])]), 2, rgba(C.ink, (cur ? .45 : .22) * tieOn));
+        ctx.globalAlpha = tieOn; strokeCurve(vis, 3, C.tie, wd); ctx.globalAlpha = lift;
+      }
+      strokeCurve(vis, 2, C.rep, wd);
+      ctx.globalAlpha = 1;
+    }
+
+    // sample path on top
+    if (S.sample.length > 1) {
+      ctx.strokeStyle = C.path; ctx.lineWidth = 3; ctx.lineJoin = 'round';
+      ctx.beginPath(); let p = P(0, 0); ctx.moveTo(p[0], p[1]);
+      for (const [a, b] of S.sample) { if (a > ext || b > ext) break; p = P(a, b); ctx.lineTo(p[0], p[1]); }
+      ctx.stroke();
+    }
+    // heights at the sample point (3D only)
+    if (S.m > 0 && S.a <= ext && S.b <= ext) {
+      const base = P(S.a, S.b, 0);
+      if (lift > .05) {
+        const bar = (A, B, col, dx, a) => {
+          const z = share(A, B, S.a, S.b), top = P(S.a, S.b, z);
+          ctx.globalAlpha = a; ctx.strokeStyle = col; ctx.lineWidth = 4; ctx.lineCap = 'round';
+          ctx.beginPath(); ctx.moveTo(base[0] + dx, base[1]); ctx.lineTo(top[0] + dx, top[1]); ctx.stroke();
+          if (z > zMax) { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(top[0] + dx - 6, top[1] + 2); ctx.lineTo(top[0] + dx + 6, top[1] + 2); ctx.lineTo(top[0] + dx, top[1] - 7); ctx.closePath(); ctx.fill(); }
+          ctx.globalAlpha = 1; ctx.lineCap = 'butt';
+        };
+        bar(S.VA, S.VB, C.rep, -4, lift);
+        if (V.tie > .05) bar(S.TA, S.TB, C.tie, 4, V.tie * lift);
+      }
+      ctx.fillStyle = C.panel; ctx.beginPath(); ctx.arc(base[0], base[1], 6, 0, 7); ctx.fill();
+      ctx.fillStyle = C.path; ctx.beginPath(); ctx.arc(base[0], base[1], 4, 0, 7); ctx.fill();
+    }
+    // labels for the end points when visible
+    const label = (a, b, txt, col) => { if (a > ext || b > ext) return; const q = P(a, b, 0); ctx.fillStyle = col; ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.fillText(txt, q[0] + 8, q[1] + 4); };
+    label(S.VA, S.VB, `reported (${S.VA}, ${S.VB})`, C.ink);
+    if (V.tie > .5) label(S.TA, S.TB, `tie (${S.TA}, ${S.TB})`, C.ink);
+  }
+
+  // ------------------------------------------------------------- log LR chart
+  let llrGeom = null;
+  function drawLLR() {
+    const cv = $('llr'); const { ctx, w, h } = setup(cv, 0.46, 380);
+    const pad = { l: 44, r: 12, t: 14, b: 34 }, pw = w - pad.l - pad.r, ph = h - pad.t - pad.b;
+    const T = thresh();
+    const xMax = S.zoom === 'full' ? S.N : Math.min(S.N, Math.max(60, Math.ceil(Math.max(S.m, 1) * 1.25)));
+    const fin = v => Number.isFinite(v) ? v : T * 1.6;
+    let yMin = -2, yMax = T * 1.6;
+    for (let i = 0; i <= S.m; i++) { yMin = Math.min(yMin, fin(S.llr[i]), S.bravo[i]); yMax = Math.max(yMax, fin(S.llr[i]), S.bravo[i]); }
+    yMin = Math.floor(yMin); yMax = Math.ceil(yMax);
+    const X = k => pad.l + k / xMax * pw, Y = v => pad.t + ph - (v - yMin) / (yMax - yMin) * ph;
+    llrGeom = { pad, pw, xMax };
+    ctx.font = '11px ' + C.mono; ctx.lineWidth = 1;
+    const sx = niceStep(xMax, 6), sy = niceStep(yMax - yMin, 5);
+    for (let v = 0; v <= xMax + 1e-9; v += sx) {
+      ctx.strokeStyle = C.grid; ctx.beginPath(); ctx.moveTo(X(v), pad.t); ctx.lineTo(X(v), pad.t + ph); ctx.stroke();
+      ctx.fillStyle = C.ink3; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(fmtN(v), X(v), pad.t + ph + 6);
+    }
+    for (let v = Math.ceil(yMin / sy) * sy; v <= yMax + 1e-9; v += sy) {
+      ctx.strokeStyle = Math.abs(v) < 1e-9 ? C.ink3 : C.grid; ctx.beginPath(); ctx.moveTo(pad.l, Y(v)); ctx.lineTo(pad.l + pw, Y(v)); ctx.stroke();
+      ctx.fillStyle = C.ink3; ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(fmtN(v), pad.l - 6, Y(v));
+    }
+    ctx.fillStyle = C.ink2; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.fillText('ballots drawn', pad.l + pw / 2, h - 3);
+    ctx.strokeStyle = C.good; ctx.lineWidth = 1.5; ctx.setLineDash([6, 4]);
+    ctx.beginPath(); ctx.moveTo(pad.l, Y(T)); ctx.lineTo(pad.l + pw, Y(T)); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = C.good; ctx.textAlign = 'left'; ctx.textBaseline = 'bottom'; ctx.fillText(`stop: log(1/α) = ${T.toFixed(2)}`, pad.l + 6, Y(T) - 4);
+    ctx.save(); ctx.beginPath(); ctx.rect(pad.l, pad.t, pw, ph); ctx.clip();
+    const line = (arr, col, dash) => { ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.setLineDash(dash);
+      ctx.beginPath(); for (let i = 0; i <= S.m; i++) { const y = Y(fin(arr[i])); i ? ctx.lineTo(X(i), y) : ctx.moveTo(X(i), y); } ctx.stroke(); ctx.setLineDash([]); };
+    line(S.bravo, C.ink3, [5, 4]); line(S.llr, C.path, []);
+    if (S.stopAt !== null && S.stopAt <= xMax) { const v = fin(S.llr[S.stopAt]);
+      ctx.fillStyle = C.panel; ctx.beginPath(); ctx.arc(X(S.stopAt), Y(v), 6, 0, 7); ctx.fill();
+      ctx.fillStyle = C.good; ctx.beginPath(); ctx.arc(X(S.stopAt), Y(v), 4, 0, 7); ctx.fill(); }
+    ctx.restore();
+  }
+
+  function drawReadout() {
+    $('rM').textContent = S.m.toLocaleString(); $('rA').textContent = S.a; $('rB').textContent = S.b; $('rU').textContent = S.u;
+    const st = $('status');
+    if (S.stopAt !== null) { st.className = 'pill go'; st.textContent = `Outcome confirmed after ${S.stopAt} ballots`; }
+    else if (S.m >= S.N) { st.className = 'pill wait'; st.textContent = 'Full hand count'; }
+    else if (S.m === 0) { st.className = 'pill wait'; st.textContent = 'No ballots drawn'; }
+    else { st.className = 'pill wait'; st.textContent = 'Keep sampling'; }
+    const hEl = $('heights');
+    if (S.stage >= 3 && S.m > 0) {
+      const pc = z => z === 0 ? '0%' : z < 1e-4 ? (z * 100).toExponential(1) + '%' : (z * 100).toPrecision(3) + '%';
+      const zr = share(S.VA, S.VB, S.a, S.b);
+      let txt = `Height where the sample stands: <b class="rep">${pc(zr)}</b> of reported paths`;
+      if (S.stage >= 4) {
+        const zt = share(S.TA, S.TB, S.a, S.b), ratio = zt === 0 ? Infinity : zr / zt;
+        txt += ` vs <b class="tie">${pc(zt)}</b> of tie paths → ratio <b>${Number.isFinite(ratio) ? (ratio >= 100 ? Math.round(ratio).toLocaleString() : ratio.toFixed(2)) : '∞'}×</b> (stop at ${Math.round(1 / S.alpha)}×)`;
+        txt += `<br>After ${S.a + S.b} valid ballots the two bells overlap by <b>${(overlapAt(S.a + S.b) * 100).toFixed(1)}%</b>` + (S.a + S.b > 1 ? ` (${(overlapAt(1) * 100).toFixed(0)}% after the first one).` : '.');
+      }
+      hEl.innerHTML = txt; hEl.hidden = false;
+    } else hEl.hidden = true;
+  }
+  // share of the depth-k bell that the reported and tie elections have in common
+  function overlapAt(k) { let s = 0; for (let a = Math.max(0, k - S.VB); a <= Math.min(k, S.VA); a++) { const b = k - a; if (a <= S.TA && b <= S.TB) s += Math.min(share(S.VA, S.VB, a, b), share(S.TA, S.TB, a, b)); } return s; }
+  function render() { drawScene(); drawLLR(); drawReadout(); }
+
+  // ------------------------------------------------------------- interaction
+  (() => { // drag to turn the 3D view
+    const cv = $('scene'); let drag = null;
+    cv.addEventListener('pointerdown', e => { if (S.stage < 3 || raf) return; drag = { x: e.clientX, y: e.clientY, th: V.theta, ph: V.phi, type: e.pointerType }; cv.setPointerCapture(e.pointerId); });
+    cv.addEventListener('pointermove', e => { if (!drag) return; userTurned = true;
+      V.theta = drag.th + (e.clientX - drag.x) * 0.4;
+      if (drag.type === 'mouse') V.phi = Math.max(8, Math.min(88, drag.ph + (e.clientY - drag.y) * 0.3));
+      drawScene(); });
+    const end = () => { drag = null; };
+    cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+  })();
+  (() => { // hover on the log LR chart
+    const cv = $('llr'), tip = $('llrTip');
+    const move = e => {
+      const g = llrGeom, r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+      if (!g || !S.m) { tip.hidden = true; return; }
+      const k = Math.round((x - g.pad.l) / g.pw * g.xMax); if (k < 0 || k > S.m) { tip.hidden = true; return; }
+      const L = S.llr[k], [a, b] = S.sample[k];
+      tip.innerHTML = `ballot ${k}: Alice ${a}, Bob ${b}<br>log ratio ${Number.isFinite(L) ? L.toFixed(2) : '∞'} · BRAVO ${S.bravo[k].toFixed(2)}`;
+      tip.hidden = false; const tw = tip.offsetWidth; tip.style.left = Math.max(0, x + 14 + tw > r.width ? x - 14 - tw : x + 14) + 'px'; tip.style.top = Math.max(0, y - 10) + 'px';
+    };
+    cv.addEventListener('pointermove', move); cv.addEventListener('pointerdown', move); cv.addEventListener('pointerleave', () => tip.hidden = true);
+  })();
+
+  function simulate() {
+    if (!readInputs()) return;
+    const runs = 1000, T = thresh(), stops = []; let confirmed = 0; $('simOut').textContent = 'Running…';
+    setTimeout(() => {
+      const A = S.truth === 'rep' ? S.VA : S.TA, B = S.truth === 'rep' ? S.VB : S.TB;
+      for (let r = 0; r < runs; r++) {
+        const bal = makeBallots(A, B, S.U); let a = 0, b = 0, L = 0, k = 0;
+        for (; k < S.N; k++) { const kind = bal[k]; L += stepLLR(kind, a, b); if (kind === 1) a++; else if (kind === 2) b++; if (L >= T) { k++; break; } }
+        if (L >= T) { confirmed++; stops.push(k); }
+      }
+      stops.sort((x, y) => x - y);
+      const pct = (100 * confirmed / runs).toFixed(1), med = stops.length ? stops[Math.floor(stops.length / 2)] : null;
+      $('simOut').innerHTML = S.truth === 'rep'
+        ? `Ballots match the reported result. <b>${pct}%</b> of audits confirmed Alice before a full hand count` + (med !== null ? `, after a median of <b>${med}</b> ballots.` : '.')
+        : `Ballots are really a tie. <b>${pct}%</b> of audits wrongly confirmed Alice (risk limit α = ${S.alpha}). The rest went to a full hand count, which finds the true result.`;
+    }, 20);
+  }
+
+  document.querySelectorAll('#bigSteps button').forEach(b => b.addEventListener('click', () => setStage(+b.dataset.stage)));
+  $('next').addEventListener('click', () => setStage(S.stage === 4 ? 1 : S.stage + 1));
+  $('play').addEventListener('click', play);
+  $('draw10').addEventListener('click', () => { stopAudit(); drawBallots(10); render(); });
+  $('reset').addEventListener('click', () => reshuffle(true));
+  ['vA', 'vB', 'vU', 'alpha'].forEach(id => $(id).addEventListener('change', () => { reshuffle(false); setStage(S.stage); }));
+  const pick = (on, off, key, val) => { $(on).setAttribute('aria-pressed', 'true'); $(off).setAttribute('aria-pressed', 'false'); S[key] = val; };
+  $('truthRep').addEventListener('click', () => { pick('truthRep', 'truthTie', 'truth', 'rep'); reshuffle(true); });
+  $('truthTie').addEventListener('click', () => { pick('truthTie', 'truthRep', 'truth', 'tie'); reshuffle(true); });
+  $('zSample').addEventListener('click', () => { pick('zSample', 'zFull', 'zoom', 'sample'); render(); });
+  $('zFull').addEventListener('click', () => { pick('zFull', 'zSample', 'zoom', 'full'); render(); });
+  $('simRun').addEventListener('click', simulate);
+  new ResizeObserver(() => render()).observe(document.querySelector('.wrap'));
+  const recolor = () => { C = css(); render(); };
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', recolor);
+  new MutationObserver(recolor).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  // ============================================================ six-ballot election
+  const SM = (() => {
+    const A = 4, B = 2, TA = 3, TB = 3, G = 4, NB = A + B;
+    const choose = (n, k) => { if (k < 0 || k > n) return 0; let r = 1; for (let i = 1; i <= k; i++) r = r * (n - k + i) / i; return Math.round(r); };
+    const count = (A_, B_, a, b) => (a > A_ || b > B_) ? 0 : choose(a + b, a) * choose(A_ + B_ - a - b, A_ - a);
+    const edge = (A_, B_, a, b, dir) => { // orderings using the step out of (a, b): dir 1 = Alice, 2 = Bob
+      const before = choose(a + b, a), left = A_ + B_ - a - b - 1;
+      return dir === 1 ? (a < A_ ? before * choose(left, A_ - a - 1) : 0) : (b < B_ ? before * choose(left, A_ - a) : 0);
+    };
+    const orderings = (A_, B_) => { const out = []; const rec = (s, a, b) => { if (a === A_ && b === B_) { out.push(s); return; } if (a < A_) rec(s + 'A', a + 1, b); if (b < B_) rec(s + 'B', a, b + 1); }; rec('', 0, 0); return out; };
+    const ORD = orderings(A, B), TOT = ORD.length, TTOT = choose(TA + TB, TA);
+    const pts = s => { const p = [[0, 0]]; let a = 0, b = 0; for (const c of s) { c === 'A' ? a++ : b++; p.push([a, b]); } return p; };
+    const st = { stage: 1, real: ORD[Math.floor(Math.random() * TOT)], m: 0, hi: null, view: { theta: 0, phi: 90, lift: 0, tie: 0, blocks: 0 } };
+    let raf = null, turned = false;
+    const tilt3 = () => st.top ? { theta: 0, phi: 90 } : { theta: 36, phi: 30 };
+    const TG = { 1: { theta: 0, phi: 90, lift: 0, tie: 0, blocks: 0 }, 2: { theta: 0, phi: 90, lift: 0, tie: 0, blocks: 0 },
+                 3: { theta: 36, phi: 30, lift: 1, tie: 0, blocks: TOT }, 4: { theta: 36, phi: 30, lift: 1, tie: 1, blocks: TOT } };
+    const here = () => { const p = pts(st.real); return p[st.m]; };
+    const seqText = s => s.split('').join(', ');
+
+    function copy() {
+      const [a, b] = here(), cr = count(A, B, a, b), ct = count(TA, TB, a, b);
+      const pc = (x, n) => `${Math.round(100 * x / n)}%`;
+      let cmp;
+      if (st.m === 0) cmp = 'Read a ballot to see the comparison.';
+      else {
+        const r = ct === 0 ? null : (cr / TOT) / (ct / TTOT);
+        cmp = `The audit has read ${seqText(st.real.slice(0, st.m))}, so it stands at (${a}, ${b}). Of the ${TOT} reported orderings, ${cr} ${cr === 1 ? 'passes' : 'pass'} there (${pc(cr, TOT)}); of the ${TTOT} tie orderings, ${ct} ${ct === 1 ? 'does' : 'do'} (${pc(ct, TTOT)}). ` +
+          (r === null ? 'No tie ordering can reach this point, so the sample rules out a tie.' : `A sample like this is <strong>${r.toFixed(2).replace(/\.00$/, '')} times</strong> as likely if Alice won 4–2 as if it was a tie.`);
+      }
+      return {
+        1: ['One ordering', `Six ballots: four for Alice, two for Bob. Shuffle them and lay them out in order, then draw them as a path: right for Alice, up for Bob. This shuffle is ${seqText(st.real)}. However you shuffle, the path ends at the result, (4, 2).`],
+        2: ['All 15 orderings', `There are only ${TOT} ways to order four A's and two B's, so we can draw all of them. Thicker lines carry more orderings, and the number at each point counts the orderings that pass through it. Tap an ordering below to trace it.`],
+        3: ['Stack them up', `Turn each count into a tower: every ordering drops one block onto each point it passes through. All ${TOT} orderings start at (0, 0) and end at (4, 2), so those towers are ${TOT} blocks tall. Read along any diagonal and the towers rise and fall, and each diagonal holds exactly ${TOT} blocks.`],
+        4: ['Compare with a tie', `A 3–3 tie can be shuffled ${TTOT} ways. To compare the two elections, divide each tower by its election's total, so a tower's height is the share of orderings passing through. ${cmp}`],
+      }[st.stage];
+    }
+    function chips() {
+      const box = $('smChips');
+      if (st.stage === 2) {
+        box.innerHTML = '<span class="chips-label">All 15 orderings · tap to trace</span>' + ORD.map((s, i) => `<button type="button" class="order" data-i="${i}" aria-pressed="${st.hi === i}" aria-label="Ordering ${seqText(s)}">${s.split('').map(c => `<span class="bal">${c}</span>`).join('')}</button>`).join('');
+        box.querySelectorAll('.order').forEach(el => el.addEventListener('click', () => { const i = +el.dataset.i; st.hi = st.hi === i ? null : i; chips(); draw(); }));
+      } else {
+        box.innerHTML = `<span class="chips-label">The real order of the ballots · ${st.m} read</span><span class="order static">${st.real.split('').map((c, i) => `<span class="bal${i < st.m ? ' read' : ''}">${c}</span>`).join('')}</span>`;
+      }
+    }
+    function text() { const [t, body] = copy(); $('smStTitle').textContent = t; $('smStBody').innerHTML = body; }
+    function setStage(n) {
+      st.stage = n; if (n < 3) turned = false;
+      if (n === 4 && st.m === 0) st.m = 2;
+      document.querySelectorAll('#smSteps button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.stage === n)));
+      $('smNext').textContent = n === 4 ? 'Start over' : 'Next step';
+      $('small').classList.toggle('rotatable', n >= 3); $('smHint').hidden = n < 3;
+      $('smTop').hidden = n < 3; if (n < 3) { st.top = false; $('smTop').textContent = 'Top view'; }
+      text(); chips(); animate(n >= 3 ? { ...TG[n], ...tilt3() } : TG[n]);
+    }
+    function animate(goal) {
+      if (raf) cancelAnimationFrame(raf);
+      const from = { ...st.view }, g = { ...goal }; if (turned) { g.theta = st.view.theta; g.phi = st.view.phi; }
+      const stacking = g.blocks > from.blocks;
+      const tilt = reduce ? 0 : 900, stack = reduce || !stacking ? 0 : 2600, t0 = performance.now();
+      const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      if (stacking) st.view.blocks = 0;
+      const tick = now => {
+        const e1 = tilt ? Math.min(1, (now - t0) / tilt) : 1, k = ease(e1);
+        for (const key of ['theta', 'phi', 'lift', 'tie']) st.view[key] = from[key] + (g[key] - from[key]) * k;
+        if (stacking) { const e2 = stack ? Math.max(0, Math.min(1, (now - t0 - tilt) / stack)) : 1; st.view.blocks = e2 * g.blocks; }
+        else st.view.blocks = g.blocks;
+        draw();
+        raf = (e1 < 1 || (stacking && st.view.blocks < g.blocks)) ? requestAnimationFrame(tick) : null;
+      };
+      raf = requestAnimationFrame(tick);
+    }
+
+    function draw() {
+      const cv = $('small'); const { ctx, w, h } = setup(cv, 0.78, 520);
+      const v = st.view, th = v.theta * Math.PI / 180, ph = v.phi * Math.PI / 180, ct = Math.cos(th), sn = Math.sin(th), cp = Math.cos(ph), sp = Math.sin(ph);
+      const pad = { l: 40, r: 16, t: 16, b: 40 }, pw = w - pad.l - pad.r, phh = h - pad.t - pad.b;
+      const HMAX = 0.62, lift = v.lift;
+      const span = G + 0.6;
+      const Stop = Math.min(pw, phh), S3 = Math.min(pw / 1.42, phh / (1.42 * sp + HMAX * cp + .05));
+      const scale = Stop + (S3 - Stop) * lift;
+      const cx = pad.l + pw / 2, cy = pad.t + phh / 2 + (HMAX * cp * scale / 2) * lift;
+      const P = (a, b, z = 0) => { const u = (a + .3) / span - .5, vv = (b + .3) / span - .5;
+        const x1 = u * ct - vv * sn, y1 = u * sn + vv * ct; return [cx + x1 * scale, cy - (y1 * sp + z * cp) * scale, y1 * cp - z * sp]; };
+      const line = (p, q) => { ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke(); };
+      ctx.font = '12px ' + C.mono; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+
+      // floor: lattice, axes, tie line
+      ctx.strokeStyle = C.grid; ctx.lineWidth = 1;
+      for (let i = 0; i <= G; i++) { line(P(i, 0), P(i, G)); line(P(0, i), P(G, i)); }
+      ctx.strokeStyle = C.ink3; ctx.lineWidth = 1.5; line(P(0, 0), P(G + .4, 0)); line(P(0, 0), P(0, G + .4));
+      ctx.setLineDash([5, 4]); ctx.lineWidth = 1; line(P(0, 0), P(3.4, 3.4)); ctx.setLineDash([]);
+      ctx.fillStyle = C.ink3;
+      for (let i = 0; i <= G; i++) { let p = P(i, 0); ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(i, p[0], p[1] + 8);
+        p = P(0, i); ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(i, p[0] - 9, p[1]); }
+      ctx.fillStyle = C.ink2; { const p = P(G / 2, 0); ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText('Alice ballots →', p[0], p[1] + 24); }
+      { const p = P(0, G / 2); ctx.save(); ctx.translate(p[0] - 26, p[1]); ctx.rotate(-Math.PI / 2); ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.fillText('Bob ballots →', 0, 0); ctx.restore(); }
+
+      const arrowPath = (p, col, wdt, alpha = 1) => {
+        ctx.globalAlpha = alpha; ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = wdt;
+        for (let i = 1; i < p.length; i++) {
+          const s = P(...p[i - 1]), e = P(...p[i]); line(s, e);
+          const ang = Math.atan2(e[1] - s[1], e[0] - s[0]), hl = 7 + wdt, mx = s[0] + (e[0] - s[0]) * .62, my = s[1] + (e[1] - s[1]) * .62;
+          ctx.beginPath(); ctx.moveTo(mx + hl * .5 * Math.cos(ang), my + hl * .5 * Math.sin(ang));
+          ctx.lineTo(mx - hl * .5 * Math.cos(ang) + hl * .45 * Math.cos(ang + Math.PI / 2), my - hl * .5 * Math.sin(ang) + hl * .45 * Math.sin(ang + Math.PI / 2));
+          ctx.lineTo(mx - hl * .5 * Math.cos(ang) - hl * .45 * Math.cos(ang + Math.PI / 2), my - hl * .5 * Math.sin(ang) - hl * .45 * Math.sin(ang + Math.PI / 2)); ctx.closePath(); ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+      };
+      const flat = 1 - lift;
+
+      // result vector(s)
+      ctx.strokeStyle = rgba(C.rep, .35 + .4 * flat); ctx.lineWidth = 2.5; line(P(0, 0), P(A, B));
+      if (v.tie > .01) { ctx.strokeStyle = rgba(C.tie, v.tie * (.35 + .4 * flat)); line(P(0, 0), P(TA, TB)); }
+
+      // step 2: every edge, weighted by how many orderings use it, with counts at points
+      if (st.stage === 2 && lift < .5) {
+        for (let a = 0; a <= A; a++) for (let b = 0; b <= B; b++) for (const d of [1, 2]) {
+          const c = edge(A, B, a, b, d); if (!c) continue;
+          ctx.strokeStyle = rgba(C.rep, .55); ctx.lineWidth = 1.5 + c * 1.1; line(P(a, b), P(a + (d === 1), b + (d === 2)));
+        }
+        if (st.hi !== null) arrowPath(pts(ORD[st.hi]), C.path, 2.5);
+        for (let a = 0; a <= A; a++) for (let b = 0; b <= B; b++) {
+          const c = count(A, B, a, b), p = P(a, b);
+          ctx.fillStyle = C.panel; ctx.beginPath(); ctx.arc(p[0], p[1], 11, 0, 7); ctx.fill();
+          ctx.strokeStyle = C.rep; ctx.lineWidth = 1.5; ctx.stroke();
+          ctx.fillStyle = C.ink; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(c, p[0], p[1] + .5);
+        }
+      }
+
+      // the real ordering (floor), with the part already read in bold
+      const rp = pts(st.real);
+      if (st.stage === 1 || lift > 0) arrowPath(rp, C.path, 1.6, st.stage === 1 ? .9 : .35);
+      if (st.m > 0 && st.stage !== 2) { ctx.strokeStyle = C.path; ctx.lineWidth = 4; ctx.beginPath(); rp.slice(0, st.m + 1).forEach((q, i) => { const p = P(...q); i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); }); ctx.stroke(); }
+
+      // towers
+      if (lift > .01) {
+        const towers = [];
+        const nBlocks = Math.floor(v.blocks), frac = v.blocks - nBlocks;
+        for (let a = 0; a <= G; a++) for (let b = 0; b <= G; b++) {
+          if (st.stage === 3 || v.tie < .01) {
+            // count of the first nBlocks orderings through (a, b), plus a falling partial block
+            let c = 0, falling = false;
+            for (let i = 0; i < Math.min(nBlocks + 1, TOT); i++) { const p = pts(ORD[i]); if (p.some(q => q[0] === a && q[1] === b)) { if (i < nBlocks) c++; else falling = true; } }
+            if (c || falling) towers.push({ a, b, off: 0, hw: .3, h: c, fall: falling ? frac : 0, col: C.rep, unit: true, alpha: lift });
+          } else {
+            const cr = count(A, B, a, b) / TOT, ctie = count(TA, TB, a, b) / TTOT;
+            if (cr) towers.push({ a, b, off: -.15, hw: .14, h: cr * TOT, share: true, val: cr, col: C.rep, alpha: 1 });
+            if (ctie) towers.push({ a, b, off: .15, hw: .14, h: ctie * TOT, share: true, val: ctie, col: C.tie, alpha: v.tie });
+          }
+        }
+        // translucent unit blocks: from straight above, each block adds one more layer of tint,
+        // so taller towers read darker and the overhead view becomes a density map
+        const unitH = HMAX / TOT;
+        towers.forEach(t => t.depth = P(t.a + t.off, t.b, 0)[2]);
+        towers.sort((x, y) => y.depth - x.depth);
+        for (const t of towers) {
+          const x0 = t.a + t.off - t.hw, x1 = t.a + t.off + t.hw, y0 = t.b - t.hw, y1 = t.b + t.hw;
+          const c = [[x0, y0], [x1, y0], [x1, y1], [x0, y1]];
+          const cube = (z0, z1, wgt) => {
+            ctx.globalAlpha = t.alpha;
+            for (let i = 0; i < 4; i++) { // side faces, faint
+              const p = c[i], q = c[(i + 1) % 4], quad = [P(p[0], p[1], z0), P(q[0], q[1], z0), P(q[0], q[1], z1), P(p[0], p[1], z1)];
+              ctx.beginPath(); quad.forEach((r, j) => j ? ctx.lineTo(r[0], r[1]) : ctx.moveTo(r[0], r[1])); ctx.closePath();
+              ctx.fillStyle = rgba(t.col, .06 * wgt); ctx.fill();
+            }
+            const top = c.map(p => P(p[0], p[1], z1)); // the layer that builds up the overhead density
+            ctx.beginPath(); top.forEach((r, j) => j ? ctx.lineTo(r[0], r[1]) : ctx.moveTo(r[0], r[1])); ctx.closePath();
+            ctx.fillStyle = rgba(t.col, .17 * wgt); ctx.fill();
+            ctx.strokeStyle = rgba(t.col, .7 * wgt); ctx.lineWidth = 1; ctx.stroke();
+            ctx.strokeStyle = rgba(t.col, .45 * wgt);
+            for (const p of c) line(P(p[0], p[1], z0), P(p[0], p[1], z1));
+            ctx.globalAlpha = 1;
+          };
+          const u = unitH * lift, nFull = Math.floor(t.h + 1e-9), part = t.h - nFull;
+          for (let i = 0; i < nFull; i++) cube(i * u, (i + 1) * u, 1);
+          if (part > .01) cube(nFull * u, t.h * u, part);
+          if (t.fall) { const z0 = t.h * u + (1 - t.fall) * HMAX * .5; cube(z0, z0 + u, t.fall); }
+          if (t.h > 0) {
+            const q = P(t.a + t.off, t.b, t.h * u); ctx.fillStyle = C.ink; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.font = '11px ' + C.mono;
+            ctx.globalAlpha = t.alpha; ctx.fillText(t.share ? Math.round(t.val * 100) + '%' : t.h, q[0], q[1] - 3); ctx.globalAlpha = 1;
+          }
+        }
+      }
+      // sample point marker
+      const [sa, sb] = here();
+      if (st.m > 0 && st.stage !== 2) { const p = P(sa, sb, 0); ctx.fillStyle = C.panel; ctx.beginPath(); ctx.arc(p[0], p[1], 7, 0, 7); ctx.fill(); ctx.fillStyle = C.path; ctx.beginPath(); ctx.arc(p[0], p[1], 5, 0, 7); ctx.fill(); }
+      // end point labels in 2D
+      if (lift < .5) {
+        const lab = (a, b, txt) => { const p = P(a, b); ctx.fillStyle = C.ink; ctx.font = '12px ' + C.mono; ctx.textAlign = 'left'; ctx.textBaseline = 'bottom'; ctx.fillText(txt, p[0] + 14, p[1] - 6); };
+        lab(A, B, 'result (4, 2)');
+      }
+    }
+
+    // drag to turn
+    (() => { const cv = $('small'); let d = null;
+      cv.addEventListener('pointerdown', e => { if (st.stage < 3 || raf) return; d = { x: e.clientX, y: e.clientY, th: st.view.theta, ph: st.view.phi, type: e.pointerType }; cv.setPointerCapture(e.pointerId); });
+      cv.addEventListener('pointermove', e => { if (!d) return; turned = true; st.view.theta = d.th + (e.clientX - d.x) * .4;
+        if (d.type === 'mouse') st.view.phi = Math.max(10, Math.min(88, d.ph + (e.clientY - d.y) * .3)); draw(); });
+      const end = () => d = null; cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end); })();
+
+    document.querySelectorAll('#smSteps button').forEach(b => b.addEventListener('click', () => setStage(+b.dataset.stage)));
+    $('smNext').addEventListener('click', () => setStage(st.stage === 4 ? 1 : st.stage + 1));
+    $('smRead').addEventListener('click', () => { if (st.m < NB) st.m++; text(); chips(); draw(); });
+    $('smTop').addEventListener('click', () => { st.top = !st.top; turned = false; $('smTop').textContent = st.top ? 'Tilted view' : 'Top view'; animate({ ...TG[st.stage], ...tilt3() }); });
+    $('smShuffle').addEventListener('click', () => { st.real = ORD[Math.floor(Math.random() * TOT)]; st.m = st.stage === 4 ? 2 : 0; text(); chips(); draw(); });
+    return { setStage, draw, st, count, ORD };
+  })();
+
+  reshuffle(false);
+  setStage(1);
+  SM.setStage(1);
+})();
+</script>
