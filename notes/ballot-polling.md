@@ -65,6 +65,7 @@ For six ballots, the chance that Alice won (final count > 3) works out as:
 - Same four steps, using 150 random orderings and ridge slices.
 - Step 4 shades the overlap grey, and the slice at the sample's depth is drawn heavier.
 - "Zoom to sample" in step 4 draws only the slices the sample has already reached, so the view starts blank.
+- **Log heights** (steps 3–4): heights become log(share), shown over a window of max(10, 2.2·log(1/α)). In step 4 the ratio at the sample becomes a vertical gap, drawn next to a green bracket of length log(1/α). The audit stops when the gap fills the bracket, which stays visible at any risk limit (linear heights fail at α = 0.01, where the orange bar would be 1% of the blue). Each bell becomes a parabola, since the log of a normal curve is quadratic.
 
 **Also on the page:**
 - An evidence chart: log LR against ballots drawn, with BRAVO dashed and the stop line.
