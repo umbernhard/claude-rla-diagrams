@@ -348,7 +348,7 @@ select { width: auto; }
       1: ['One ordering', `Here is one shuffle of the ballots, drawn as a path. However the ballots are shuffled, the path always ends at the result: ${R}, the blue arrow. The audit reads this path from the start, one ballot at a time.`],
       2: ['Many orderings', `There are ${nPaths} different paths that end at ${R}. Here are 150 of them, picked at random. They all start at zero and end at the result, and most of them hug the straight line between.`],
       3: ['Stack them up', `Tilt the picture and raise each point by the share of paths that pass through it. Every slice across the ridge is the same bell curve: the normal distribution. The ridge is tallest at the two ends, where every path squeezes through the same point, and lowest and widest in the middle.${S.logH ? ' With log heights on, each bell becomes a parabola, because the log of a normal curve is quadratic.' : ''}`],
-      4: ['Compare with a tie', `The orange ridge is the same picture for a tie. The audit stands where its sample has reached and compares the two heights there. If the blue ridge is ${k} times taller than the orange one, a sample like this is ${k} times more likely if Alice really won, and the audit can stop. Turn on Log heights to see the ratio as a distance: the audit stops once the gap between the two heights at the sample fills the green bracket, however small the risk limit. The grey shading is where the two bells overlap: samples that land there look about as likely under either result. Near the start the bells sit almost on top of each other; the more ballots the audit reads, the further apart they drift and the smaller the overlap gets.`],
+      4: ['Compare with a tie', `The orange ridge is the same picture for a tie. The audit stands where its sample has reached and compares the two heights there. If the blue ridge is ${k} times taller than the orange one, a sample like this is ${k} times more likely if Alice really won, and the audit can stop. Turn on Log heights to see the ratio as a distance: the audit stops once the gap between the two heights at the sample fills the green bracket, however small the risk limit.`],
     }[S.stage];
   }
   function setStage(n) {
@@ -360,7 +360,7 @@ select { width: auto; }
     const L = [];
     L.push('<span class="key"><span class="sw path"></span>the real order of the ballots</span>');
     L.push('<span class="key"><span class="sw rep"></span>reported result</span>');
-    if (n >= 4) { L.push('<span class="key"><span class="sw tie"></span>a tie</span>'); L.push('<span class="key"><span class="sw ovl"></span>overlap</span>'); }
+    if (n >= 4) { L.push('<span class="key"><span class="sw tie"></span>a tie</span>'); }
     $('legend').innerHTML = L.join('');
     if (n < 3) userTurned = false;
     $('logH').hidden = n < 3; if (n < 3) { S.logH = false; $('logH').setAttribute('aria-pressed', 'false'); }
@@ -505,7 +505,6 @@ select { width: auto; }
     }
 
     // ridges: one slice per depth holds both elections, drawn back to front.
-    // Shaded overlap = the part of the bell both elections share at that depth.
     const tieOn = Math.min(lift, V.tie);
     const curve = (pts, idx) => { const out = []; for (const q of pts) out.push(P(q[0], q[1], q[idx])); return out; };
     const fillUnder = (pts, idx, style) => {
@@ -534,7 +533,6 @@ select { width: auto; }
       fillUnder(vis, 2, rgba(C.rep, .14));
       if (tieOn > .01) {
         fillUnder(vis, 3, rgba(C.tie, .14 * tieOn));
-        fillUnder(vis.map(q => [q[0], q[1], Math.min(q[2], q[3])]), 2, rgba(C.ink, (cur ? .45 : .22) * tieOn));
         ctx.globalAlpha = tieOn; strokeCurve(vis, 3, C.tie, wd); ctx.globalAlpha = lift;
       }
       strokeCurve(vis, 2, C.rep, wd);
@@ -644,13 +642,10 @@ select { width: auto; }
       if (S.stage >= 4) {
         const zt = share(S.TA, S.TB, S.a, S.b), ratio = zt === 0 ? Infinity : zr / zt;
         txt += ` vs <b class="tie">${pc(zt)}</b> of tie paths → ratio <b>${Number.isFinite(ratio) ? (ratio >= 100 ? Math.round(ratio).toLocaleString() : ratio.toFixed(2)) : '∞'}×</b> (stop at ${Math.round(1 / S.alpha)}×)`;
-        txt += `<br>After ${S.a + S.b} valid ballots the two bells overlap by <b>${(overlapAt(S.a + S.b) * 100).toFixed(1)}%</b>` + (S.a + S.b > 1 ? ` (${(overlapAt(1) * 100).toFixed(0)}% after the first one).` : '.');
       }
       hEl.innerHTML = txt; hEl.hidden = false;
     } else hEl.hidden = true;
   }
-  // share of the depth-k bell that the reported and tie elections have in common
-  function overlapAt(k) { let s = 0; for (let a = Math.max(0, k - S.VB); a <= Math.min(k, S.VA); a++) { const b = k - a; if (a <= S.TA && b <= S.TB) s += Math.min(share(S.VA, S.VB, a, b), share(S.TA, S.TB, a, b)); } return s; }
   function render() { drawScene(); drawLLR(); drawReadout(); }
 
   // ------------------------------------------------------------- interaction
