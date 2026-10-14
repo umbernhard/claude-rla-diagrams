@@ -409,7 +409,15 @@ select { width: auto; }
       4: ['Compare with a tie', `The orange ridge is the same picture for a tie. The audit stands where its sample has reached and compares the two heights there. If the blue ridge is ${k} times taller than the orange one, a sample like this is ${k} times more likely if Alice really won, and the audit can stop. Turn on Log heights to see the ratio as a distance: the audit stops once the gap between the two heights at the sample fills the green bracket, however small the risk limit.`],
     }[S.stage];
   }
+  function setZoom(z) {
+    S.zoom = z;
+    $('zSample').setAttribute('aria-pressed', String(z === 'sample')); $('zFull').setAttribute('aria-pressed', String(z === 'full'));
+  }
   function setStage(n) {
+    // Step 4 is about the sample, so it opens zoomed to the sample; leaving it restores the earlier zoom.
+    // The zoom buttons still work while on step 4.
+    if (n === 4 && S.stage !== 4) { S.zoomBefore = S.zoom; setZoom('sample'); }
+    else if (n !== 4 && S.stage === 4 && S.zoomBefore) { setZoom(S.zoomBefore); S.zoomBefore = null; }
     S.stage = n;
     document.querySelectorAll('#bigSteps button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.stage === n)));
     const [t, body] = stageCopy(); $('stTitle').textContent = t; $('stBody').innerHTML = body;
