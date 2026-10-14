@@ -1,4 +1,4 @@
-# Ballot polling super diagrams: working notes
+# Ballot landscapes: working notes
 
 Last updated 2026-10-13. This work builds on `Old/Geometry of Post-election Audits.ipynb` in [umbernhard/rlamath](https://github.com/umbernhard/rlamath) (the triangle outcome plane and election vectors).
 
@@ -7,10 +7,10 @@ Last updated 2026-10-13. This work builds on `Old/Geometry of Post-election Audi
 - **Interactive page:** [`index.html`](../index.html) in this repo. It is one self-contained HTML file with no build step: open it in a browser, or turn on GitHub Pages to serve it.
 - **Drafts:** a private copy is also published as a claude.ai artifact, and a copy is kept in the "RLA Math" Claude project.
 
-## The core idea: the super diagram
+## The core idea: the ballot landscape
 
 - Each ballot is a unit step: Alice = (1, 0), Bob = (0, 1), invalid = (0, 0). One sequence of the ballots is a lattice path from the origin to the result (V_A, V_B).
-- The **super diagram** stacks every sequence that ends at the same result.
+- The **ballot landscape** (originally "landscape") stacks every sequence that ends at the same result.
 - With V = V_A + V_B valid ballots, the number of sequences passing through (a, b) is C(a+b, a) · C(V−a−b, V_A−a), out of C(V, V_A) in total.
 - The **share** of sequences passing through (a, b) is C(V_A, a) · C(V_B, b) / C(V, a+b). That is the hypergeometric pmf. Invalid ballots don't move the path, so they drop out.
 - A random sample of m ballots is the first m steps of a uniformly random sequence. So the share through (a, b) equals P(the sample has a Alice and b Bob votes | this result).
@@ -21,7 +21,7 @@ Last updated 2026-10-13. This work builds on `Old/Geometry of Post-election Audi
 
 - **Why the tie suffices (same invalid count):** the Alice-ballot factor (V_A − a)/(T_A − a) is always ≥ 1 and the Bob-ballot factor (V_B − b)/(T_B − b) is always ≤ 1. Any null result with the same invalid count is the tie with some Alice ballots turned into Bob ballots, which lowers the expected step, so the LR is a supermartingale under every such null and Ville's inequality still gives risk ≤ α. Nulls with a different invalid count are not covered by this argument (moving ballots to/from invalid can raise the expected step slightly); BRAVO conditions on valid ballots instead.
 - **Null:** a tie with the same number of invalid ballots and the valid ballots split evenly (Bob gets the extra vote if the valid count is odd). Beating the tie is enough, because any Bob-wins result puts even fewer paths near a sample that favors Alice.
-- **Likelihood ratio = height of the reported super diagram at the sample point ÷ height of the tie super diagram there.** Sequentially, each Alice ballot multiplies the ratio by (V_A − a)/(T_A − a), and each Bob ballot by (V_B − b)/(T_B − b). Checked numerically: the height ratio matches the sequential LR to about 1e-13.
+- **Likelihood ratio = height of the reported landscape at the sample point ÷ height of the tie landscape there.** Sequentially, each Alice ballot multiplies the ratio by (V_A − a)/(T_A − a), and each Bob ballot by (V_B − b)/(T_B − b). Checked numerically: the height ratio matches the sequential LR to about 1e-13.
 - Stop when LR ≥ 1/α, i.e. log LR ≥ log(1/α).
 - BRAVO is the with-replacement approximation: (2p)^a (2−2p)^b with p = V_A/(V_A + V_B). It matches closely while the sample is a small share of the election.
 - **Simulations** (N = 1,000; 600 / 300 / 100 invalid; α = 0.05):
@@ -38,9 +38,9 @@ Last updated 2026-10-13. This work builds on `Old/Geometry of Post-election Audi
 
 Stack every sequence of N ballots, not just the sequences of one result. Then reading a ballot rules out every sequence that started differently, halving the count each time. What happens to the possible futures depends on how the sequences are weighted:
 
-1. **Every sequence equal.** The weight through (a, b) is C(a+b, a) · 2^(N−a−b), which fans out from the origin along the tie line. Final results are Binomial(N, ½), peaked at a tie. The unread ballots stay independent coin flips, so the final result is the sample plus Binomial(N−k, ½). The sample only uses up ballots; it never says how the rest lean. This is the permutation notebook's model, and it is why that approach needs nearly a full count.
+1. **Every sequence equal** (a Galton board: each ballot is a bounce, and the counts come from Pascal's triangle). The weight through (a, b) is C(a+b, a) · 2^(N−a−b), which fans out from the origin along the tie line. Final results are Binomial(N, ½), peaked at a tie. The unread ballots stay independent coin flips, so the final result is the sample plus Binomial(N−k, ½). The sample only uses up ballots; it never says how the rest lean. This is the permutation notebook's model, and it is why that approach needs nearly a full count.
 2. **Every result equal** (then every sequence within a result): the old triangle-area model. Given a sample with a Alice and b Bob votes in k ballots, the posterior over the final Alice count F is ∝ C(N−k, F−a)/C(N, F). The sample does shift the future toward what was seen. This is Bayesian reasoning with a uniform prior over results. It is related to, but not the same as, the Bayesian audits defined in the literature (e.g. arXiv:1902.00999), so the page no longer calls it a Bayesian audit.
-3. **The RLA** uses neither weighting. It compares two fixed super diagrams (reported vs. tie) through P(sample | result), never P(result | sample).
+3. **The RLA** uses neither weighting. It compares two fixed landscapes (reported vs. tie) through P(sample | result), never P(result | sample).
 
 For six ballots, the chance that Alice won (final count > 3) works out as:
 

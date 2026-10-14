@@ -4,9 +4,9 @@ Interactive diagrams for explaining risk-limiting audits, worked out alongside [
 
 ## Ballot polling
 
-[`index.html`](index.html) shows ballot polling audits as stacks of ballot orderings ("super diagrams"):
+[`index.html`](index.html) shows ballot polling audits as stacks of ballot sequences ("ballot landscapes"):
 
-- **Six ballots:** every ordering of a 4–2 election drawn as a path, stacked into towers, and compared with a 3–3 tie.
+- **Six ballots:** every sequence of a 4–2 election drawn as a path, stacked into towers, and compared with a 3–3 tie.
 - **1,000 ballots:** the same steps at scale, where the stacks become a ridge of bell curves.
 - **Evidence chart and simulations:** the SPRT likelihood ratio as an audit runs, and how often audits stop early when the result is right or wrong.
 
