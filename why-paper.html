@@ -98,6 +98,14 @@ button.cell:disabled { cursor: default; }
 .controls3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: .75rem 1.25rem; }
 .canvas-box { position: relative; width: 100%; min-width: 0; }
 canvas { display: block; width: 100%; }
+sup.fn { font: 500 .7em/0 var(--f-mono); }
+sup.fn a { color: var(--reported); text-decoration: none; padding: 0 .1em; }
+sup.fn a:hover { text-decoration: underline; }
+.refs { max-width: 46rem; display: grid; gap: .4rem; border-top: 1px solid var(--rule); padding-top: 1rem; }
+.refs h2 { font-size: 1.05rem; }
+.refs ol { margin: 0; padding-left: 1.4rem; display: grid; gap: .5rem; color: var(--ink-2); font-size: .88rem; line-height: 1.5; }
+.refs a { color: var(--reported); overflow-wrap: anywhere; }
+.refs li:target { background: color-mix(in srgb, var(--reported) 10%, transparent); border-radius: 4px; }
 .next { display: inline-flex; align-items: center; gap: .5em; font: 600 1rem/1.3 var(--f-body); color: var(--ink); text-decoration: none; border: 1px solid var(--ink); border-radius: 6px; padding: .7rem 1rem; justify-self: start; margin-top: .5rem; }
 .next:hover { background: var(--ink); color: var(--bg); }
 .fine { font-size: .85rem; color: var(--ink-3); }
@@ -108,7 +116,7 @@ canvas { display: block; width: 100%; }
     <div class="eyebrow">Risk-limiting audits from the ground up · Part 0: why paper</div>
     <h1>Why do audits check paper ballots?</h1>
     <p>Most votes in the United States are counted by machines, and machines run software. Software can have bugs, it can be set up wrong, and in the worst case someone can tamper with it. Looking at a machine's output can't tell you which of these happened, because the output is all the software lets you see.</p>
-    <p>An audit needs evidence the software never had a chance to touch. A paper ballot is that evidence: the voter marked it, or checked what was printed on it, before it went into the box. Researchers Ron Rivest and John Wack gave the idea a name, <b>software independence</b>. A voting system is software independent if a change or error in its software can't change the outcome without someone being able to notice.</p>
+    <p>An audit needs evidence the software never had a chance to touch. A paper ballot is that evidence: the voter marked it, or checked what was printed on it, before it went into the box. Ron Rivest and John Wack gave the idea a name, <b>software independence</b>: "A voting system is software independent if an (undetected) change or error in its software cannot cause an undetectable change or error in an election outcome."<sup class="fn"><a href="#ref1" id="cite1" aria-label="Reference 1">1</a></sup></p>
   </header>
 
   <section class="figure" aria-labelledby="t1">
@@ -173,7 +181,7 @@ canvas { display: block; width: 100%; }
 
   <section class="prose" aria-labelledby="s3">
     <h2 id="s3">People make mistakes too</h2>
-    <p>A hand count is done by people, and people misread marks, lose their place, and put ballots in the wrong pile. So a hand count won't always match the paper exactly either.</p>
+    <p>A hand count is done by people, and people misread marks, lose their place, and put ballots in the wrong pile. So a hand count won't always match the paper exactly either. In a 2012 study, Stephen Goggin, Michael Byrne and Juan Gilbert had people count stacks of ballots by hand and found error rates of up to about 2%, depending on how the counting was organized.<sup class="fn"><a href="#ref2" id="cite2" aria-label="Reference 2">2</a></sup> A study of two statewide recounts in Wisconsin found the original tallies and the recounts differed by a fraction of a percent, and that paper ballots counted by scanners were more accurate than paper ballots counted by hand.<sup class="fn"><a href="#ref3" id="cite3" aria-label="Reference 3">3</a></sup></p>
     <p>What saves it is that honest mistakes are small and go in both directions. A tired counter is about as likely to misread a vote for Bob as a vote for Alice, so most mistakes cancel out. For counting mistakes to change who won, they have to pile up on one side by more than the margin. Try it below.</p>
   </section>
 
@@ -208,7 +216,7 @@ canvas { display: block; width: 100%; }
   <section class="prose" aria-labelledby="s4">
     <h2 id="s4">Paper has to be protected</h2>
     <p>Paper is harder to change than software, but it isn't impossible. Someone with access to the ballots after the polls close could fill in an empty oval on a ballot where the voter skipped a contest, add ballots that were never cast, or make ballots disappear. A hand count of altered paper finds the altered result.</p>
-    <p>So the paper is only as trustworthy as the way it's handled. Election offices keep a <b>chain of custody</b>: a record of where the ballots are, who has had access to them, and when, from the moment they're cast until the audit is finished. Containers are sealed and logged, people work in bipartisan pairs, and the number of ballots is checked against the number of voters who signed in. A later page will look at chain of custody in more detail.</p>
+    <p>So the paper is only as trustworthy as the way it's handled. Election offices keep a <b>chain of custody</b>: a record of where the ballots are, who has had access to them, and when, from the moment they're cast until the audit is finished. Containers are sealed and logged, materials change hands in front of at least two people, and the number of ballots is reconciled against the number of voters who signed in.<sup class="fn"><a href="#ref4" id="cite4" aria-label="Reference 4">4</a></sup> Checking that these steps were actually followed is sometimes called a compliance audit, and it comes before any count of the paper.<sup class="fn"><a href="#ref5" id="cite5" aria-label="Reference 5">5</a></sup> A later page will look at chain of custody in more detail.</p>
   </section>
 
   <section class="prose" aria-labelledby="s5">
@@ -216,6 +224,16 @@ canvas { display: block; width: 100%; }
     <p>With paper the voters checked and a sound chain of custody, a full hand count finds the outcome the voters chose, however the electronic records were changed. That makes the hand count the gold standard for checking an election.</p>
     <p>It's also a lot of work. A hand count of a statewide contest means teams of people reading millions of ballots, for days or weeks, and most of the time it just confirms what the machines already said. The next page asks whether we can get most of the confidence of a full hand count by looking at only some of the paper.</p>
     <a class="next" href="sampling.html">Next: what can a few ballots tell you? →</a>
+  </section>
+  <section class="refs" aria-labelledby="refsT">
+    <h2 id="refsT">References</h2>
+    <ol>
+      <li id="ref1">Ronald L. Rivest, "On the notion of 'software independence' in voting systems," <i>Philosophical Transactions of the Royal Society A</i> 366(1881):3759–3767, 2008. <a href="https://doi.org/10.1098/rsta.2008.0149">doi:10.1098/rsta.2008.0149</a>. An earlier version, written with John P. Wack for NIST, dates from 2006: <a href="https://www.nist.gov/document/ronald-r-rivest-and-john-p-wack-notion-software-independence-voting-systems-july-28-2006">NIST copy</a>. <a href="#cite1" aria-label="Back to text">↩</a></li>
+      <li id="ref2">Stephen N. Goggin, Michael D. Byrne and Juan E. Gilbert, "Post-Election Auditing: Effects of Procedure and Ballot Type on Manual Counting Accuracy, Efficiency, and Auditor Satisfaction and Confidence," <i>Election Law Journal</i> 11(1), 2012. Summary: <a href="https://www.sciencedaily.com/releases/2012/02/120202151713.htm">Rice University press release</a>. <a href="#cite2" aria-label="Back to text">↩</a></li>
+      <li id="ref3">Stephen Ansolabehere, Barry C. Burden, Kenneth R. Mayer and Charles Stewart III, "Learning from Recounts," <i>Election Law Journal</i> 17(2):100–116, 2018. <a href="https://doi.org/10.1089/elj.2017.0440">doi:10.1089/elj.2017.0440</a>. <a href="#cite3" aria-label="Back to text">↩</a></li>
+      <li id="ref4">U.S. Election Assistance Commission, <a href="https://www.eac.gov/election-officials/chain-custody-best-practices">Chain of Custody Best Practices</a>, version 1.1, 2021. <a href="#cite4" aria-label="Back to text">↩</a></li>
+      <li id="ref5">Philip B. Stark and David A. Wagner, "Evidence-Based Elections," <i>IEEE Security &amp; Privacy</i>, special issue on electronic voting, 2012. <a href="https://www.stat.berkeley.edu/~stark/Preprints/evidenceVote12.pdf">Preprint</a>. <a href="#cite5" aria-label="Back to text">↩</a></li>
+    </ol>
   </section>
 </div>
 

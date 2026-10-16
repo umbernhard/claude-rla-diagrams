@@ -108,6 +108,14 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
 .out b.rep { color: var(--reported); } .out b.tie { color: var(--tie); }
 .caption { font-size: .9rem; color: var(--ink-2); margin: 0; max-width: 46rem; }
 .tip { position: absolute; pointer-events: none; background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: .4rem .55rem; font: 400 .78rem/1.35 var(--f-mono); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; box-shadow: 0 2px 8px rgb(0 0 0 / .12); }
+sup.fn { font: 500 .7em/0 var(--f-mono); }
+sup.fn a { color: var(--reported); text-decoration: none; padding: 0 .1em; }
+sup.fn a:hover { text-decoration: underline; }
+.refs { max-width: 46rem; display: grid; gap: .4rem; border-top: 1px solid var(--rule); padding-top: 1rem; }
+.refs h2 { font-size: 1.05rem; }
+.refs ol { margin: 0; padding-left: 1.4rem; display: grid; gap: .5rem; color: var(--ink-2); font-size: .88rem; line-height: 1.5; }
+.refs a { color: var(--reported); overflow-wrap: anywhere; }
+.refs li:target { background: color-mix(in srgb, var(--reported) 10%, transparent); border-radius: 4px; }
 .next { display: inline-flex; align-items: center; gap: .5em; font: 600 1rem/1.3 var(--f-body); color: var(--ink); text-decoration: none; border: 1px solid var(--ink); border-radius: 6px; padding: .7rem 1rem; justify-self: start; margin-top: .5rem; }
 .next:hover { background: var(--ink); color: var(--bg); }
 .numpad { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: .35rem; }
@@ -266,7 +274,7 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
   </section>
 
   <section class="prose" aria-label="Seeds in a real audit">
-    <p>In a real audit, then, the shuffle happens on paper rather than by shaking a box. Election offices keep a list of where every ballot is stored, called a ballot manifest, and use the PRNG's numbers to pick ballots from that list. In Colorado, for example, officials roll dice at a public meeting to make the seed. The public part matters. If anyone could predict which ballots would be picked, a mistake or a tampered batch could be kept out of the sample. Because the seed is rolled in the open after the ballots are already counted and listed, nobody could have known in advance where the auditor would look.</p>
+    <p>In a real audit, then, the shuffle happens on paper rather than by shaking a box. Election offices keep a list of where every ballot is stored, called a ballot manifest, and use the PRNG's numbers to pick ballots from that list. In Colorado, for example, the seed is a number of at least 20 digits, made at a public meeting after Election Day by rolling a ten-sided die once per digit, and members of the public are invited to do the rolling.<sup class="fn"><a href="#ref1" id="cite1" aria-label="Reference 1">1</a></sup> The public part matters. If anyone could predict which ballots would be picked, a mistake or a tampered batch could be kept out of the sample. Because the seed is rolled in the open after the election, nobody could have known in advance where the auditor would look.</p>
     <p>Drawing ballots one at a time doesn't make a sample less fair than grabbing a handful at once. Fifty ballots drawn one by one are just as random as fifty drawn together. Reading them in sequence only lets the audit stop early, as soon as it has seen enough.</p>
   </section>
 
@@ -345,6 +353,12 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
     <p>One trap catches both. An audit that checks after every ballot gets many chances to be fooled, so it can't simply stop the first time the sample looks rare. The next part shows how ballot polling audits handle that.</p>
     <a class="next" href="index.html">Next: ballot polling audits →</a>
     <p class="fine" style="margin-top:1rem">Simplifications on this page: one contest, two candidates, one vote per ballot, no blank or invalid ballots, and ballots aren't put back after they're drawn.</p>
+  </section>
+  <section class="refs" aria-labelledby="refsT">
+    <h2 id="refsT">References</h2>
+    <ol>
+      <li id="ref1">Colorado Secretary of State, <a href="https://coloradosos.gov/pubs/elections/RLA/2024/primary/noticePublicMeeting.html">Notice of Public Meeting to Establish the Risk Limiting Audit Random Seed</a>, June 2024 primary election. <a href="#cite1" aria-label="Back to text">↩</a></li>
+    </ol>
   </section>
 </div>
 
