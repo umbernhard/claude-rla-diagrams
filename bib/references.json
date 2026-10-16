@@ -22,8 +22,8 @@
   },
   {
    "id": "handcount",
-   "title": "Hand counts, recounts and retabulation",
-   "description": "How accurate human counting is, what recounts find, and why machine retabulation isn't an audit."
+   "title": "Voter errors, hand counts, recounts and retabulation",
+   "description": "How often voters and counters make mistakes, what recounts find, and why machine retabulation isn't an audit."
   },
   {
    "id": "practice",
@@ -2800,6 +2800,57 @@
    "year": 2020,
    "doi": "10.1007/978-3-030-59013-0_2",
    "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "byrne2017",
+   "group": "handcount",
+   "authors": "Michael D. Byrne",
+   "title": "Improving voting systems’ user-friendliness, reliability, & security",
+   "venue": "Behavioral Science & Policy 3(1):15–24",
+   "year": 2017,
+   "url": "https://behavioralpolicy.org/wp-content/uploads/2017/08/v3i1-web-Byrne.pdf",
+   "note": "Summarizes lab studies of voter error by voting method.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "byrne-greene-everett",
+   "group": "handcount",
+   "authors": "Michael D. Byrne, Kristen K. Greene and Sarah Everett",
+   "title": "Usability of voting systems: baseline data for paper, punch cards, and lever machines",
+   "venue": "ACM CHI 2007, pp. 171–180",
+   "year": 2007,
+   "doi": "10.1145/1240624.1240653",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "undervoting-machine",
+   "group": "handcount",
+   "authors": "Kristen K. Greene, Michael D. Byrne and Stephen N. Goggin",
+   "title": "How To Build an Undervoting Machine: Lessons from an Alternative Ballot Design",
+   "venue": "USENIX Journal of Election Technology and Systems (JETS) 1(1)",
+   "year": 2013,
+   "url": "https://usenix.org/system/files/conference/evtwote13/jets-0101-greene.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "brennan-2011",
+   "group": "handcount",
+   "authors": "Lawrence Norden and Sundeep Iyer",
+   "title": "Design Deficiencies and Lost Votes",
+   "venue": "Brennan Center for Justice",
+   "year": 2011,
+   "url": "https://www.brennancenter.org/our-work/research-reports/design-deficiencies-and-lost-votes",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "quesenbery-paper",
+   "group": "handcount",
+   "authors": "Whitney Quesenbery",
+   "title": "Usability matters – even with paper ballots",
+   "venue": "Center for Civic Design",
+   "year": 2012,
+   "url": "https://civicdesign.org/usability-matters-even-with-paper-ballots/",
+   "source": "checked against the document or its publisher"
   }
  ]
 }
