@@ -3216,6 +3216,97 @@
    "year": 2004,
    "url": "https://www2.seas.gwu.edu/~poorvi/cacm_2004.pdf",
    "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "aslam-popa-rivest-2008",
+   "group": "m-found",
+   "authors": "Javed A. Aslam, Raluca A. Popa and Ronald L. Rivest",
+   "title": "On Auditing Elections When Precincts Have Different Sizes",
+   "venue": "USENIX/ACCURATE Electronic Voting Technology Workshop (EVT 2008)",
+   "year": 2008,
+   "url": "http://www.usenix.org/events/evt08/tech/full_papers/aslam/aslam.pdf",
+   "source": "DBLP (mirror of R. L. Rivest’s author page, through 2009)"
+  },
+  {
+   "key": "aslam-popa-rivest-2007",
+   "group": "m-found",
+   "authors": "Javed A. Aslam, Raluca A. Popa and Ronald L. Rivest",
+   "title": "On Estimating the Size and Confidence of a Statistical Audit",
+   "venue": "USENIX/ACCURATE Electronic Voting Technology Workshop (EVT 2007)",
+   "year": 2007,
+   "url": "https://www.usenix.org/conference/evt-07/estimating-size-and-confidence-statistical-audit",
+   "source": "USENIX EVT 2007 proceedings page"
+  },
+  {
+   "key": "threeballot",
+   "group": "e2e",
+   "authors": "Ronald L. Rivest and Warren D. Smith",
+   "title": "Three Voting Protocols: ThreeBallot, VAV, and Twin",
+   "venue": "USENIX/ACCURATE Electronic Voting Technology Workshop (EVT 2007)",
+   "year": 2007,
+   "url": "https://www.usenix.org/conference/evt-07/three-voting-protocols-threeballot-vav-and-twin",
+   "source": "USENIX EVT 2007 proceedings page"
+  },
+  {
+   "key": "scantegrity-ii-evt",
+   "group": "e2e",
+   "authors": "David Chaum, Richard Carback, Jeremy Clark, Aleksander Essex, Stefan Popoveniuc, Ronald L. Rivest, Peter Y. A. Ryan, Emily Shen and Alan T. Sherman",
+   "title": "Scantegrity II: End-to-End Verifiability for Optical Scan Election Systems using Invisible Ink Confirmation Codes",
+   "venue": "USENIX/ACCURATE Electronic Voting Technology Workshop (EVT 2008)",
+   "year": 2008,
+   "url": "http://www.usenix.org/events/evt08/tech/full_papers/chaum/chaum.pdf",
+   "source": "DBLP (mirror of R. L. Rivest’s author page, through 2009)"
+  },
+  {
+   "key": "scratch-vote",
+   "group": "e2e",
+   "authors": "Ben Adida and Ronald L. Rivest",
+   "title": "Scratch & Vote: Self-Contained Paper-Based Cryptographic Voting",
+   "venue": "ACM Workshop on Privacy in the Electronic Society (WPES 2006), pp. 29–40",
+   "year": 2006,
+   "doi": "10.1145/1179601.1179607",
+   "source": "DBLP (mirror of R. L. Rivest’s author page, through 2009)"
+  },
+  {
+   "key": "rpc-mixnets",
+   "group": "e2e",
+   "authors": "Markus Jakobsson, Ari Juels and Ronald L. Rivest",
+   "title": "Making Mix Nets Robust for Electronic Voting by Randomized Partial Checking",
+   "venue": "USENIX Security Symposium 2002, pp. 339–353",
+   "year": 2002,
+   "url": "http://www.usenix.org/publications/library/proceedings/sec02/jakobsson.html",
+   "source": "DBLP (mirror of R. L. Rivest’s author page, through 2009)"
+  },
+  {
+   "key": "business-evoting",
+   "group": "internet",
+   "authors": "Ed Gerck, C. Andrew Neff, Ronald L. Rivest, Aviel D. Rubin and Moti Yung",
+   "title": "The Business of Electronic Voting",
+   "venue": "Financial Cryptography 2001, LNCS 2339, pp. 234–259",
+   "year": 2001,
+   "url": "http://link.springer.de/link/service/series/0558/bibs/2339/23390243.htm",
+   "source": "DBLP (mirror of R. L. Rivest’s author page, through 2009)"
+  },
+  {
+   "key": "dagstuhl-2007",
+   "group": "overview",
+   "authors": "David Chaum, Miroslaw Kutylowski, Ronald L. Rivest and Peter Y. A. Ryan",
+   "title": "Frontiers of Electronic Voting (Dagstuhl Seminar 07311): Executive Summary and Abstracts Collection",
+   "venue": "Dagstuhl Seminar Proceedings",
+   "year": 2007,
+   "url": "http://drops.dagstuhl.de/opus/volltexte/2008/1294",
+   "note": "Abstracts collection: http://drops.dagstuhl.de/opus/volltexte/2008/1303",
+   "source": "DBLP (mirror of R. L. Rivest’s author page, through 2009)"
+  },
+  {
+   "key": "rivest-nsdi-2007",
+   "group": "overview",
+   "authors": "Ronald L. Rivest",
+   "title": "Security of Voting Systems (keynote, audio)",
+   "venue": "USENIX NSDI 2007",
+   "year": 2007,
+   "url": "http://www.usenix.org/media/events/nsdi07/tech/mp3/rivest.mp3",
+   "source": "DBLP (mirror of R. L. Rivest’s author page, through 2009)"
   }
  ]
 }

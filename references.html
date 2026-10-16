@@ -65,7 +65,7 @@ details summary:focus-visible { outline: 2px solid var(--focus); outline-offset:
   <header class="prose">
     <div class="eyebrow">Risk-limiting audits from the ground up · Reading list</div>
     <h1>Reading list</h1>
-    <p>Every source the series relies on, plus the wider literature on election audits and voting system security: 309 papers, reports, guides and tools, grouped by topic. Entries cited on a page link back to where they're used.</p>
+    <p>Every source the series relies on, plus the wider literature on election audits and voting system security: 318 papers, reports, guides and tools, grouped by topic. Entries cited on a page link back to where they're used.</p>
     <p>Entries come from the papers themselves, their publishers, or the authors' and organizations' own publication lists. Not every entry taken from a publication list has been checked against the original yet. The list grows as the series does; if you know of work that belongs here, please open an issue on <a href="https://github.com/umbernhard/claude-rla-diagrams">GitHub</a>.</p>
   </header>
 
@@ -81,7 +81,7 @@ details summary:focus-visible { outline: 2px solid var(--focus); outline-offset:
   </div>
 
   <section class="group" id="overview" aria-labelledby="h-overview">
-    <h2 id="h-overview">Start here <span class="count">23</span></h2>
+    <h2 id="h-overview">Start here <span class="count">25</span></h2>
     <p class="gdesc">Overviews of why and how elections are audited, and statements of principles.</p>
     <ul>
         <li id="nasem">National Academies of Sciences, Engineering, and Medicine, “Securing the Vote: Protecting American Democracy,” <i>National Academies Press</i>, 2018. <a href="https://doi.org/10.17226/25120">doi:10.17226/25120</a>. Recommendations 4.11, 4.12 and 5.8. <span class="cited">Cited in <a href="why-paper.html#ref-nasem">Part 0</a></span></li>
@@ -107,6 +107,8 @@ details summary:focus-visible { outline: 2px solid var(--focus); outline-offset:
         <li id="rivest-defcon25">Ronald L. Rivest, “<a href="https://people.csail.mit.edu/rivest/pubs/Riv25a.pdf">Evidence-Based Elections and Software Independence</a>,” <i>DEF CON 2025 Voting Village</i>, 2025.</li>
         <li id="nist-desirable">Svetlana Z. Lowry and Poorvi Vora, “<a href="https://www.nist.gov/publications/desirable-properties-voting-systems">Desirable Properties of Voting Systems</a>,” <i>NIST</i>, 2009.</li>
         <li id="cacm-evaluation-2004">P. L. Vora, B. Adida, R. Bucholz, D. Chaum, D. L. Dill, D. Jefferson, D. W. Jones, W. Lattin, A. D. Rubin, M. I. Shamos and M. Yung, “<a href="https://www2.seas.gwu.edu/~poorvi/cacm_2004.pdf">Evaluation of Voting Systems</a>,” <i>Communications of the ACM 47(11), Inside Risks</i>, 2004.</li>
+        <li id="dagstuhl-2007">David Chaum, Miroslaw Kutylowski, Ronald L. Rivest and Peter Y. A. Ryan, “<a href="http://drops.dagstuhl.de/opus/volltexte/2008/1294">Frontiers of Electronic Voting (Dagstuhl Seminar 07311): Executive Summary and Abstracts Collection</a>,” <i>Dagstuhl Seminar Proceedings</i>, 2007. Abstracts collection: http://drops.dagstuhl.de/opus/volltexte/2008/1303</li>
+        <li id="rivest-nsdi-2007">Ronald L. Rivest, “<a href="http://www.usenix.org/media/events/nsdi07/tech/mp3/rivest.mp3">Security of Voting Systems (keynote, audio)</a>,” <i>USENIX NSDI 2007</i>, 2007.</li>
     </ul>
   </section>
 
@@ -142,7 +144,7 @@ details summary:focus-visible { outline: 2px solid var(--focus); outline-offset:
   </section>
 
   <section class="group" id="internet" aria-labelledby="h-internet">
-    <h2 id="h-internet">Internet voting <span class="count">15</span></h2>
+    <h2 id="h-internet">Internet voting <span class="count">16</span></h2>
     <p class="gdesc">Why internet voting can&#x27;t yet provide evidence that outcomes are right.</p>
     <ul>
         <li id="appel-stark-internet">A. Appel and P.B. Stark, “<a href="https://arxiv.org/abs/2411.11796">An Internet Voting System Fatally Flawed in Creative New Ways</a>,” <i>Preprint</i>, 2024.</li>
@@ -160,11 +162,12 @@ details summary:focus-visible { outline: 2px solid var(--focus); outline-offset:
         <li id="remotegrity">Filip Zagórski, Richard T. Carback, David Chaum, Jeremy Clark, Aleksander Essex and Poorvi L. Vora, “Remotegrity: Design and Use of an End-to-End Verifiable Remote Voting System,” <i>ACNS 2013, LNCS 7954, pp. 441–457</i>, 2013. <a href="https://doi.org/10.1007/978-3-642-38980-1_28">doi:10.1007/978-3-642-38980-1_28</a>.</li>
         <li id="infected-computers">Stefan Popoveniuc and Poorvi L. Vora, “<a href="https://www2.seas.gwu.edu/~poorvi/RemoteBallotCasting.pdf">Secure voting using infected computers</a>,” <i>8th Annual Security Conference, Las Vegas</i>, 2009.</li>
         <li id="hard-ai-verification">Rahul Simha and Poorvi L. Vora, “<a href="https://www2.seas.gwu.edu/~poorvi/VoteVerify.pdf">Vote Verification using Hard AI Problems</a>,” <i>Journal of Information Assurance and Security 3(4), pp. 270–278</i>, 2008.</li>
+        <li id="business-evoting">Ed Gerck, C. Andrew Neff, Ronald L. Rivest, Aviel D. Rubin and Moti Yung, “<a href="http://link.springer.de/link/service/series/0558/bibs/2339/23390243.htm">The Business of Electronic Voting</a>,” <i>Financial Cryptography 2001, LNCS 2339, pp. 234–259</i>, 2001.</li>
     </ul>
   </section>
 
   <section class="group" id="e2e" aria-labelledby="h-e2e">
-    <h2 id="h-e2e">Verifiable voting systems and cryptographic elections <span class="count">55</span></h2>
+    <h2 id="h-e2e">Verifiable voting systems and cryptographic elections <span class="count">59</span></h2>
     <p class="gdesc">End-to-end verifiable voting, voter privacy and coercion, and voting rules designed for auditability.</p>
     <ul>
         <li id="merge">Ben Adida, John Caron, Arash Mirzaei and Vanessa Teague, “MERGE: Matching Electronic Results with Genuine Evidence, for Verifiable Voting in Person at Remote Locations,” <i>Lecture Notes in Computer Science</i>, 2025. <a href="https://doi.org/10.1007/978-3-032-05036-6_1">doi:10.1007/978-3-032-05036-6_1</a>.</li>
@@ -212,11 +215,15 @@ details summary:focus-visible { outline: 2px solid var(--focus); outline-offset:
         <li id="admin-public-verif">Josh Benaloh, “<a href="https://www.microsoft.com/en-us/research/publication/administrative-public-verifiability-can/">Administrative and Public Verifiability: Can We Have Both?</a>,” <i>EVT ’08</i>, 2008.</li>
         <li id="info-theoretic-voting">Ben Hosp and Poorvi L. Vora, “<a href="https://www2.seas.gwu.edu/~poorvi/VotingModel.pdf">An Information-Theoretic Model of Voting Systems</a>,” <i>Mathematical and Computer Modelling 48(9–10), pp. 1628–1645</i>, 2008.</li>
         <li id="scantegrity">David Chaum, Aleks Essex, Richard Carback, Jeremy Clark, Stefan Popoveniuc, Alan T. Sherman and Poorvi Vora, “<a href="https://www2.seas.gwu.edu/~poorvi/Scantegrity.pdf">Scantegrity: End-to-End Voter Verifiable Optical-Scan Voting</a>,” <i>IEEE Security &amp; Privacy 6(3), pp. 40–46</i>, 2008.</li>
+        <li id="scantegrity-ii-evt">David Chaum, Richard Carback, Jeremy Clark, Aleksander Essex, Stefan Popoveniuc, Ronald L. Rivest, Peter Y. A. Ryan, Emily Shen and Alan T. Sherman, “<a href="http://www.usenix.org/events/evt08/tech/full_papers/chaum/chaum.pdf">Scantegrity II: End-to-End Verifiability for Optical Scan Election Systems using Invisible Ink Confirmation Codes</a>,” <i>USENIX/ACCURATE Electronic Voting Technology Workshop (EVT 2008)</i>, 2008.</li>
         <li id="ballot-casting-assurance">Josh Benaloh, “<a href="https://www.microsoft.com/en-us/research/publication/ballot-casting-assurance-via-voter-initiated-poll-station-auditing/">Ballot Casting Assurance via Voter-Initiated Poll Station Auditing</a>,” <i>EVT ’07</i>, 2007.</li>
         <li id="unconditional-integrity">David Chaum, Jeroen van de Graaf, Peter Y. A. Ryan and Poorvi L. Vora, “<a href="http://eprint.iacr.org/2007/270">Secret Ballot Elections with Unconditional Integrity</a>,” <i>IACR ePrint 2007/270</i>, 2007.</li>
+        <li id="threeballot">Ronald L. Rivest and Warren D. Smith, “<a href="https://www.usenix.org/conference/evt-07/three-voting-protocols-threeballot-vav-and-twin">Three Voting Protocols: ThreeBallot, VAV, and Twin</a>,” <i>USENIX/ACCURATE Electronic Voting Technology Workshop (EVT 2007)</i>, 2007.</li>
         <li id="simple-verifiable">Josh Benaloh, “<a href="https://www.microsoft.com/en-us/research/publication/simple-verifiable-elections/">Simple Verifiable Elections</a>,” <i>EVT ’06</i>, 2006.</li>
+        <li id="scratch-vote">Ben Adida and Ronald L. Rivest, “Scratch &amp; Vote: Self-Contained Paper-Based Cryptographic Voting,” <i>ACM Workshop on Privacy in the Electronic Society (WPES 2006), pp. 29–40</i>, 2006. <a href="https://doi.org/10.1145/1179601.1179607">doi:10.1145/1179601.1179607</a>.</li>
         <li id="chaum-receipts-vora">Poorvi L. Vora, “<a href="http://eprint.iacr.org/2005/050.pdf">David Chaum’s Voter Verification using Encrypted Paper Receipts</a>,” <i>IACR ePrint 2005/050</i>, 2005.</li>
         <li id="privacy-criterion">Lillie Coney, Joseph L. Hall, Poorvi L. Vora and David Wagner, “<a href="https://www2.seas.gwu.edu/~poorvi/VSPR_PMC/poster_VotingPrivacy.pdf">Towards a Privacy Measurement Criterion for Voting Systems</a>,” <i>National Conference on Digital Government Research</i>, 2005.</li>
+        <li id="rpc-mixnets">Markus Jakobsson, Ari Juels and Ronald L. Rivest, “<a href="http://www.usenix.org/publications/library/proceedings/sec02/jakobsson.html">Making Mix Nets Robust for Electronic Voting by Randomized Partial Checking</a>,” <i>USENIX Security Symposium 2002, pp. 339–353</i>, 2002.</li>
         <li id="receipt-free">Josh Benaloh and Dwight Tuinstra, “<a href="https://www.microsoft.com/en-us/research/publication/receipt-free-secret-ballot-elections/">Receipt-Free Secret-Ballot Elections</a>,” <i>ACM Symposium on Theory of Computing (STOC ’94)</i>, 1994.</li>
         <li id="improving-privacy">Josh Benaloh, “<a href="https://www.microsoft.com/en-us/research/publication/improving-privacy-cryptographic-elections/">Improving Privacy in Cryptographic Elections</a>,” <i>Microsoft Research MSR-TR-1994-3</i>, 1994.</li>
         <li id="benaloh-thesis">Josh Benaloh, “<a href="https://www.microsoft.com/en-us/research/publication/verifiable-secret-ballot-elections/">Verifiable Secret-Ballot Elections</a>,” <i>PhD thesis, Yale University</i>, 1987.</li>
@@ -353,7 +360,7 @@ details summary:focus-visible { outline: 2px solid var(--focus); outline-offset:
   </section>
 
   <section class="group" id="m-found" aria-labelledby="h-m-found">
-    <h2 id="h-m-found">Risk-limiting audit methods: foundations <span class="count">16</span></h2>
+    <h2 id="h-m-found">Risk-limiting audit methods: foundations <span class="count">18</span></h2>
     <p class="gdesc">The early statistical papers that defined risk-limiting audits.</p>
     <ul>
         <li id="bravo">Mark Lindeman, Philip B. Stark and Vincent S. Yates, “<a href="https://www.usenix.org/system/files/conference/evtwote12/evtwote12-final27.pdf">BRAVO: Ballot-polling Risk-limiting Audits to Verify Outcomes</a>,” <i>EVT/WOTE ’12</i>, 2012.</li>
@@ -372,6 +379,8 @@ details summary:focus-visible { outline: 2px solid var(--focus); outline-offset:
         <li id="stark2008">Philip B. Stark, “<a href="https://arxiv.org/abs/0807.4005">Conservative Statistical Post-Election Audits</a>,” <i>Annals of Applied Statistics 2(2):550–581</i>, 2008. <a href="https://doi.org/10.1214/08-AOAS161">doi:10.1214/08-AOAS161</a>.</li>
         <li id="stark-sharper">P.B. Stark, “<a href="http://arxiv.org/abs/0811.1697">A Sharper Discrepancy Measure for Post-Election Audits</a>,” <i>Annals of Applied Statistics 2:982–985</i>, 2008.</li>
         <li id="stark-ppeb">P.B. Stark, “<a href="https://www.stat.berkeley.edu/~stark/Preprints/ppebwrwd08.pdf">Election audits by sampling with probability proportional to an error bound: dealing with discrepancies</a>,” <i>Working draft</i>, 2008.</li>
+        <li id="aslam-popa-rivest-2008">Javed A. Aslam, Raluca A. Popa and Ronald L. Rivest, “<a href="http://www.usenix.org/events/evt08/tech/full_papers/aslam/aslam.pdf">On Auditing Elections When Precincts Have Different Sizes</a>,” <i>USENIX/ACCURATE Electronic Voting Technology Workshop (EVT 2008)</i>, 2008.</li>
+        <li id="aslam-popa-rivest-2007">Javed A. Aslam, Raluca A. Popa and Ronald L. Rivest, “<a href="https://www.usenix.org/conference/evt-07/estimating-size-and-confidence-statistical-audit">On Estimating the Size and Confidence of a Statistical Audit</a>,” <i>USENIX/ACCURATE Electronic Voting Technology Workshop (EVT 2007)</i>, 2007.</li>
     </ul>
   </section>
 
