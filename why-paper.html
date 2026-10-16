@@ -16,6 +16,7 @@
   --reported: #2a78d6;
   --alice: #6b46c1;
   --bob: #0b8686;
+  --tie: #eb6834;
   --bad: #c2341b;
   --bad-bg: #fbe6e1;
   --good: #1e7d4f;
@@ -28,13 +29,13 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #111317; --panel: #191c21; --ink: #eef0f3; --ink-2: #b7bcc6; --ink-3: #868d99; --rule: #2c3138; --grid: #23272d;
-    --reported: #3987e5; --alice: #a88bf0; --bob: #3fc0bd; --bad: #ff7a5c; --bad-bg: #3a1a13; --good: #5cc48e; --good-bg: #16301f; --focus: #3987e5;
+    --reported: #3987e5; --tie: #d95926; --alice: #a88bf0; --bob: #3fc0bd; --bad: #ff7a5c; --bad-bg: #3a1a13; --good: #5cc48e; --good-bg: #16301f; --focus: #3987e5;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #111317; --panel: #191c21; --ink: #eef0f3; --ink-2: #b7bcc6; --ink-3: #868d99; --rule: #2c3138; --grid: #23272d;
-  --reported: #3987e5; --alice: #a88bf0; --bob: #3fc0bd; --bad: #ff7a5c; --bad-bg: #3a1a13; --good: #5cc48e; --good-bg: #16301f; --focus: #3987e5;
+  --reported: #3987e5; --tie: #d95926; --alice: #a88bf0; --bob: #3fc0bd; --bad: #ff7a5c; --bad-bg: #3a1a13; --good: #5cc48e; --good-bg: #16301f; --focus: #3987e5;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -94,6 +95,9 @@ button.cell:disabled { cursor: default; }
 .pill { font: 500 .8rem/1 var(--f-body); padding: .4rem .65rem; border-radius: 999px; color: var(--ink-2); background: var(--bg); border: 1px solid var(--rule); }
 .pill.bad { color: var(--bad); background: var(--bad-bg); border-color: transparent; }
 .pill.good { color: var(--good); background: var(--good-bg); border-color: transparent; }
+.controls3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: .75rem 1.25rem; }
+.canvas-box { position: relative; width: 100%; min-width: 0; }
+canvas { display: block; width: 100%; }
 .next { display: inline-flex; align-items: center; gap: .5em; font: 600 1rem/1.3 var(--f-body); color: var(--ink); text-decoration: none; border: 1px solid var(--ink); border-radius: 6px; padding: .7rem 1rem; justify-self: start; margin-top: .5rem; }
 .next:hover { background: var(--ink); color: var(--bg); }
 .fine { font-size: .85rem; color: var(--ink-3); }
@@ -146,7 +150,7 @@ button.cell:disabled { cursor: default; }
 
   <section class="figure" aria-labelledby="t2">
     <h2 id="t2">Try to change the outcome</h2>
-    <p>Now you're the one with access to the software. Click Alice's electronic records to change them to Bob. You can't touch the paper: it's sealed in the box, and each voter already checked their own. Your goal is a reported win for <span class="who-b">Bob</span>.</p>
+    <p>Now you're the one with access to the software. Click Alice's electronic records to change them to Bob. You can't touch the paper: it's sealed in the box, and each voter already checked their own. (Keeping it that way is its own job; more on that below.) Your goal is a reported win for <span class="who-b">Bob</span>.</p>
     <div class="tallies">
       <div class="tally"><span class="lbl">Machine count (reported)</span><span class="nums" id="hNums"></span><span class="win" id="hWin"></span></div>
       <div class="tally"><span class="lbl">Your changes</span><span class="nums" id="hEdits"></span><span class="win" id="hNeed"></span></div>
@@ -168,10 +172,49 @@ button.cell:disabled { cursor: default; }
   </section>
 
   <section class="prose" aria-labelledby="s3">
-    <h2 id="s3">Where this leaves us</h2>
-    <p>However the electronic records are changed, a full hand count of the paper finds the outcome the voters chose. That makes the hand count the gold standard for checking an election.</p>
+    <h2 id="s3">People make mistakes too</h2>
+    <p>A hand count is done by people, and people misread marks, lose their place, and put ballots in the wrong pile. So a hand count won't always match the paper exactly either.</p>
+    <p>What saves it is that honest mistakes are small and go in both directions. A tired counter is about as likely to misread a vote for Bob as a vote for Alice, so most mistakes cancel out. For counting mistakes to change who won, they have to pile up on one side by more than the margin. Try it below.</p>
+  </section>
+
+  <section class="figure" aria-labelledby="t3">
+    <div class="row">
+      <h2 id="t3">A thousand imperfect hand counts</h2>
+      <button id="eRun" class="primary" type="button">Run 1,000 hand counts</button>
+    </div>
+    <p>Each simulated hand count misreads every ballot with the same small chance, turning a vote for one candidate into a vote for the other. The chart shows Alice's share in each count; any count that lands on the orange line or left of it names the wrong winner.</p>
+    <div class="controls3">
+      <div class="slider">
+        <label for="eSize" class="lbl">Ballots in the election: <b id="eSizeVal">1,000</b></label>
+        <input id="eSize" type="range" min="0" max="3" step="1" value="1">
+      </div>
+      <div class="slider">
+        <label for="eShare" class="lbl">Alice's true share: <b id="eShareVal">52%</b></label>
+        <input id="eShare" type="range" min="50.5" max="60" step="0.5" value="52">
+      </div>
+      <div class="slider">
+        <label for="eRate" class="lbl">Chance of misreading a ballot: <b id="eRateVal">1%</b></label>
+        <input id="eRate" type="range" min="0" max="10" step="0.5" value="1">
+      </div>
+    </div>
+    <div class="canvas-box"><canvas id="eCv" role="img" aria-label="Histogram of Alice's share across 1,000 simulated hand counts, with the 50% line marked"></canvas></div>
+    <div id="out3" class="out" aria-live="polite"></div>
+  </section>
+
+  <section class="prose" aria-label="Recounts">
+    <p>Real contests that are close enough for counting mistakes to matter usually trigger a recount, sometimes more than one, with careful procedures for disputed marks. And mistakes that all go one way aren't really mistakes anymore. That's tampering, which brings up the last piece.</p>
+  </section>
+
+  <section class="prose" aria-labelledby="s4">
+    <h2 id="s4">Paper has to be protected</h2>
+    <p>Paper is harder to change than software, but it isn't impossible. Someone with access to the ballots after the polls close could fill in an empty oval on a ballot where the voter skipped a contest, add ballots that were never cast, or make ballots disappear. A hand count of altered paper finds the altered result.</p>
+    <p>So the paper is only as trustworthy as the way it's handled. Election offices keep a <b>chain of custody</b>: a record of where the ballots are, who has had access to them, and when, from the moment they're cast until the audit is finished. Containers are sealed and logged, people work in bipartisan pairs, and the number of ballots is checked against the number of voters who signed in. A later page will look at chain of custody in more detail.</p>
+  </section>
+
+  <section class="prose" aria-labelledby="s5">
+    <h2 id="s5">Where this leaves us</h2>
+    <p>With paper the voters checked and a sound chain of custody, a full hand count finds the outcome the voters chose, however the electronic records were changed. That makes the hand count the gold standard for checking an election.</p>
     <p>It's also a lot of work. A hand count of a statewide contest means teams of people reading millions of ballots, for days or weeks, and most of the time it just confirms what the machines already said. The next page asks whether we can get most of the confidence of a full hand count by looking at only some of the paper.</p>
-    <p>One thing has to be true for any of this to work. The paper has to be a trustworthy record of the vote, which means voters marked or checked it, and the boxes are kept secure until the audit. An audit is only as good as the paper it checks.</p>
     <a class="next" href="sampling.html">Next: what can a few ballots tell you? →</a>
   </section>
 </div>
@@ -258,6 +301,79 @@ button.cell:disabled { cursor: default; }
     $('hCount').addEventListener('click', () => { st.counted = true; render(); });
     $('hReset').addEventListener('click', () => { st.counted = false; render(); });
     render();
+  })();
+
+  // ============================================================ 3: imperfect hand counts
+  (() => {
+    const SIZES = [100, 1000, 10000, 100000], RUNS = 1000;
+    let res = null;
+    const css = () => { const g = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim(); return { ink: g('--ink'), ink2: g('--ink-2'), ink3: g('--ink-3'), grid: g('--grid'), rep: g('--reported'), tie: g('--tie'), mono: g('--f-mono') }; };
+    const params = () => { const N = SIZES[+$('eSize').value], share = +$('eShare').value / 100, e = +$('eRate').value / 100; return { N, A: Math.max(Math.floor(N / 2) + 1, Math.round(N * share)), e, share }; };
+    // number of misreads among n ballots: binomial, exact for small n, normal approximation for large
+    function binom(n, p) {
+      if (p === 0) return 0;
+      if (n * p < 30) { let k = 0; for (let i = 0; i < n; i++) if (Math.random() < p) k++; return k; }
+      let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random();
+      const z = Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+      return Math.max(0, Math.min(n, Math.round(n * p + z * Math.sqrt(n * p * (1 - p)))));
+    }
+    function run() {
+      const { N, A, e } = params(), B = N - A, shares = new Float64Array(RUNS); let wrong = 0;
+      for (let r = 0; r < RUNS; r++) {
+        const aToB = binom(A, e), bToA = binom(B, e), ca = A - aToB + bToA;
+        shares[r] = ca / N; if (2 * ca <= N) wrong++;
+      }
+      res = { shares, wrong, ...params() }; draw();
+    }
+    function labels() {
+      const { N, A, e } = params();
+      $('eSizeVal').textContent = N.toLocaleString(); $('eShareVal').textContent = (+$('eShare').value) + '%'; $('eRateVal').textContent = (+$('eRate').value) + '%';
+      return { N, A, e };
+    }
+    function draw() {
+      const C = css(), cv = $('eCv'), w = cv.parentElement.clientWidth, h = Math.min(260, Math.round(w * .42)), dpr = window.devicePixelRatio || 1;
+      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); cv.style.height = h + 'px';
+      const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+      const pad = { l: 40, r: 12, t: 16, b: 34 }, pw = w - pad.l - pad.r, ph = h - pad.t - pad.b;
+      const p0 = params();
+      let lo = Math.min(.5, p0.A / p0.N), hi = Math.max(.5, p0.A / p0.N);
+      if (res) for (const v of res.shares) { if (v < lo) lo = v; if (v > hi) hi = v; }
+      const span = Math.max(hi - lo, .004), x0 = lo - span * .15, x1 = hi + span * .15, X = v => pad.l + (v - x0) / (x1 - x0) * pw;
+      // bins hold whole numbers of Alice votes, so no bin straddles the 50% line
+      const NN = p0.N, c0 = Math.floor(x0 * NN), wv = Math.max(1, Math.ceil((x1 - x0) * NN / 80)), bins = Math.ceil((x1 * NN - c0) / wv) + 1, cnt = new Array(bins).fill(0);
+      if (res) for (const v of res.shares) { const k = Math.floor((Math.round(v * NN) - c0) / wv); if (k >= 0 && k < bins) cnt[k]++; }
+      const ymax = Math.max(10, ...cnt) * 1.1, Y = v => pad.t + ph - v / ymax * ph;
+      const half = NN / 2, edge = k => c0 + k * wv - (wv === 1 ? .5 : 0); // bins of width 1 sit centered on their count
+      ctx.font = '11px ' + C.mono; ctx.lineWidth = 1;
+      const raw = (x1 - x0) / 6, pw10 = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / pw10, step = (f < 1.5 ? 1 : f < 3.5 ? 2 : f < 7.5 ? 5 : 10) * pw10;
+      const dec = Math.max(0, -Math.floor(Math.log10(step * 100) + 1e-9));
+      for (let v = Math.ceil(x0 / step) * step; v <= x1 + 1e-9; v += step) { ctx.strokeStyle = C.grid; ctx.beginPath(); ctx.moveTo(X(v), pad.t); ctx.lineTo(X(v), pad.t + ph); ctx.stroke();
+        ctx.fillStyle = C.ink3; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText((v * 100).toFixed(dec) + '%', X(v), pad.t + ph + 6); }
+      ctx.strokeStyle = C.ink3; ctx.beginPath(); ctx.moveTo(pad.l, Y(0)); ctx.lineTo(pad.l + pw, Y(0)); ctx.stroke();
+      for (let k = 0; k < bins; k++) if (cnt[k]) {
+        const top = c0 + (k + 1) * wv - 1, xa = X(edge(k) / NN), xb = X(edge(k + 1) / NN);
+        ctx.fillStyle = 2 * top <= NN ? C.tie : C.rep; ctx.globalAlpha = .7;
+        ctx.fillRect(xa + .5, Y(cnt[k]), Math.max(1, xb - xa - 1), Y(0) - Y(cnt[k])); ctx.globalAlpha = 1;
+      }
+      ctx.strokeStyle = C.tie; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(X(.5), pad.t); ctx.lineTo(X(.5), pad.t + ph); ctx.stroke();
+      ctx.fillStyle = C.tie; ctx.textAlign = 'right'; ctx.textBaseline = 'top'; ctx.fillText('wrong winner ←', X(.5) - 4, pad.t);
+      const p = params(); ctx.strokeStyle = C.ink; ctx.setLineDash([4, 3]); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(X(p.A / p.N), pad.t + 14); ctx.lineTo(X(p.A / p.N), pad.t + ph); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = C.ink; ctx.textAlign = 'left'; ctx.fillText('true share', X(p.A / p.N) + 4, pad.t + 14);
+      ctx.fillStyle = C.ink2; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.fillText("Alice's share in the hand count", pad.l + pw / 2, h - 1);
+      const stale = !res || res.N !== p.N || res.A !== p.A || res.e !== p.e;
+      if (stale) { $('out3').innerHTML = '<p>Settings changed. Press <b>Run 1,000 hand counts</b> to see what happens.</p>'; return; }
+      const margin = p.A - (p.N - p.A), errs = Math.round(p.N * p.e);
+      $('out3').innerHTML = `<p>Out of 1,000 hand counts, <b>${res.wrong}</b> named the wrong winner or a tie.</p>` +
+        (res.wrong
+          ? `<p>Each count misread about <b>${errs.toLocaleString()}</b> ballot${errs === 1 ? '' : 's'}, and Alice's true margin is only <b>${margin.toLocaleString()}</b> vote${margin === 1 ? '' : 's'}, so the misreads sometimes pile up on one side by more than the margin. Try a wider margin or a bigger election.</p>`
+          : `<p>Each count misread about <b>${errs.toLocaleString()}</b> ballot${errs === 1 ? '' : 's'}, against Alice's true margin of <b>${margin.toLocaleString()}</b> vote${margin === 1 ? '' : 's'}, but the misreads mostly cancel each other out and never once overturned the margin. Try a narrower margin, a smaller election, or a higher misread rate to make counting mistakes matter.</p>`);
+    }
+    ['eSize', 'eShare', 'eRate'].forEach(id => $(id).addEventListener('input', () => { labels(); draw(); }));
+    $('eRun').addEventListener('click', run);
+    labels(); run();
+    new ResizeObserver(draw).observe($('eCv').parentElement);
+    matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+    new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   })();
 })();
 </script>
