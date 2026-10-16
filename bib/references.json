@@ -536,7 +536,8 @@
    "title": "The New South Wales iVote system: Security failures and verification flaws in a live online election",
    "venue": "E-Vote-ID 2015, pp. 35–53",
    "year": 2015,
-   "source": "V. Teague's Google Scholar profile"
+   "source": "V. Teague's Google Scholar profile",
+   "doi": "10.1007/978-3-319-22270-7_3"
   },
   {
    "key": "bad-to-worse",
@@ -595,7 +596,8 @@
    "title": "A review of e-voting: the past, present and future",
    "venue": "Annals of Telecommunications 71(7):279–286",
    "year": 2016,
-   "source": "V. Teague's Google Scholar profile"
+   "source": "V. Teague's Google Scholar profile",
+   "doi": "10.1007/s12243-016-0525-8"
   },
   {
    "key": "e2e-verifiability",
@@ -614,7 +616,8 @@
    "title": "End-to-end verifiability in voting systems, from theory to practice",
    "venue": "IEEE Security & Privacy 13(3):59–62",
    "year": 2015,
-   "source": "V. Teague's Google Scholar profile"
+   "source": "V. Teague's Google Scholar profile",
+   "doi": "10.1109/msp.2015.54"
   },
   {
    "key": "star-vote",
@@ -634,7 +637,8 @@
    "title": "vVote: a verifiable voting system",
    "venue": "ACM Transactions on Information and System Security 18(1):1–30",
    "year": 2015,
-   "source": "V. Teague's Google Scholar profile"
+   "source": "V. Teague's Google Scholar profile",
+   "doi": "10.1145/2746338"
   },
   {
    "key": "pret-victoria",
@@ -652,7 +656,8 @@
    "title": "How not to prove your election outcome",
    "venue": "IEEE Symposium on Security and Privacy, pp. 644–660",
    "year": 2020,
-   "source": "V. Teague's Google Scholar profile"
+   "source": "V. Teague's Google Scholar profile",
+   "doi": "10.1109/sp40000.2020.00048"
   },
   {
    "key": "pretty-good-democracy",
@@ -661,7 +666,8 @@
    "title": "Pretty good democracy",
    "venue": "International Workshop on Security Protocols, pp. 111–130",
    "year": 2009,
-   "source": "V. Teague's Google Scholar profile"
+   "source": "V. Teague's Google Scholar profile",
+   "doi": "10.1007/978-3-642-36213-2_15"
   },
   {
    "key": "helios-eligibility",
@@ -670,7 +676,8 @@
    "title": "Extending Helios towards private eligibility verifiability",
    "venue": "E-Vote-ID 2015, pp. 57–73",
    "year": 2015,
-   "source": "V. Teague's Google Scholar profile"
+   "source": "V. Teague's Google Scholar profile",
+   "doi": "10.1007/978-3-319-22270-7_4"
   },
   {
    "key": "shuffle-sum",
@@ -680,7 +687,8 @@
    "venue": "IEEE Transactions on Information Forensics and Security 4(4):685–698",
    "year": 2009,
    "url": "https://www.microsoft.com/en-us/research/publication/shuffle-sum-coercion-resistant-verifiable-tallying-stv-voting/",
-   "source": "J. Benaloh's publication page (Microsoft Research)"
+   "source": "J. Benaloh's publication page (Microsoft Research)",
+   "doi": "10.1109/tifs.2009.2033757"
   },
   {
    "key": "verifiable-postal",
@@ -690,7 +698,8 @@
    "venue": "21st International Workshop on Security Protocols",
    "year": 2013,
    "url": "https://www.microsoft.com/en-us/research/publication/verifiable-postal-voting/",
-   "source": "J. Benaloh's publication page (Microsoft Research)"
+   "source": "J. Benaloh's publication page (Microsoft Research)",
+   "doi": "10.1007/978-3-642-41717-7_8"
   },
   {
    "key": "rethinking-coercion",
@@ -1220,7 +1229,8 @@
    "venue": "E-Vote-ID 2019, LNCS 11759",
    "year": 2019,
    "url": "https://arxiv.org/abs/1901.03108",
-   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)",
+   "doi": "10.1007/978-3-030-30625-0_10"
   },
   {
    "key": "india-inquiry",
@@ -1614,7 +1624,8 @@
    "venue": "E-Vote-ID 2020, pp. 112–128",
    "year": 2020,
    "url": "https://arxiv.org/abs/2008.08536",
-   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)",
+   "doi": "10.1007/978-3-030-60347-2_8"
   },
   {
    "key": "bayes-above-average",
@@ -1756,7 +1767,8 @@
    "venue": "Financial Cryptography and Data Security 2025 (to appear)",
    "year": 2025,
    "url": "https://arxiv.org/abs/2503.16104",
-   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)",
+   "doi": "10.1007/978-3-032-00495-6_13"
   },
   {
    "key": "adaptive-comparison",
@@ -1830,7 +1842,9 @@
    "venue": "Preprint",
    "year": 2015,
    "url": "https://arxiv.org/pdf/1508.04885.pdf",
-   "source": "RiskLimitingAudits.org resources page"
+   "source": "RiskLimitingAudits.org resources page",
+   "doi": "10.3233/978-1-61499-672-9-480",
+   "note": "Published in ECAI 2016 (DOI); preprint linked."
   },
   {
    "key": "raire",
@@ -1901,7 +1915,8 @@
    "venue": "Preprint",
    "year": 2021,
    "url": "https://arxiv.org/pdf/2112.09921.pdf",
-   "source": "RiskLimitingAudits.org resources page"
+   "source": "RiskLimitingAudits.org resources page",
+   "doi": "10.1007/978-3-031-32415-4_25"
   },
   {
    "key": "assertion-party-list",
@@ -1922,7 +1937,8 @@
    "venue": "Voting ’21",
    "year": 2021,
    "url": "https://arxiv.org/abs/2102.08510",
-   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)",
+   "doi": "10.1007/978-3-662-63958-0_21"
   },
   {
    "key": "dhondt",
@@ -2634,6 +2650,156 @@
    "year": 2018,
    "url": "https://www.stat.berkeley.edu/~stark/Seminars/ballotPollingSimulation.pdf",
    "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "stv-margins-2026",
+   "group": "m-complex",
+   "authors": "Michelle Blom, Alexander Ek, Peter J. Stuckey, Vanessa Teague and Damjan Vukcevic",
+   "title": "Advances in STV Margin Computation",
+   "venue": "Lecture Notes in Computer Science",
+   "year": 2026,
+   "doi": "10.1007/978-3-032-39512-2_1",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "sainte-lague",
+   "group": "m-complex",
+   "authors": "Jurlind Budurushi, Tobias Hilt, Christian Mack, Vanessa Teague and Melanie Volkamer",
+   "title": "Assorter-Based RLAs for Complex Sainte-Laguë Elections: Reducing sample sizes by trusting manually counted ballots",
+   "venue": "KITopen repository, Karlsruhe Institute of Technology",
+   "year": 2026,
+   "doi": "10.5445/ir/1000193592",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "stv-3seat",
+   "group": "m-complex",
+   "authors": "Michelle L. Blom, Alexander Ek, Peter J. Stuckey, Vanessa Teague and Damjan Vukcevic",
+   "title": "3+ Seat Risk-Limiting Audits for Single Transferable Vote Elections",
+   "venue": "Lecture Notes in Computer Science",
+   "year": 2025,
+   "doi": "10.1007/978-3-032-00495-6_12",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "stv-2seat",
+   "group": "m-complex",
+   "authors": "Michelle L. Blom, Peter J. Stuckey, Vanessa Teague and Damjan Vukcevic",
+   "title": "RLAs for 2-Seat STV Elections: Revisited",
+   "venue": "Lecture Notes in Computer Science",
+   "year": 2024,
+   "doi": "10.1007/978-3-031-69231-4_1",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "condorcet",
+   "group": "m-complex",
+   "authors": "Michelle L. Blom, Peter J. Stuckey, Vanessa Teague and Damjan Vukcevic",
+   "title": "Risk-Limiting Audits for Condorcet Elections",
+   "venue": "Financial Cryptography and Data Security: FC 2023 Workshops, LNCS",
+   "year": 2023,
+   "doi": "10.1007/978-3-031-48806-1_6",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "stv-lower-bound",
+   "group": "m-complex",
+   "authors": "Michelle L. Blom, Alexander Ek, Peter J. Stuckey, Vanessa Teague and Damjan Vukcevic",
+   "title": "Efficient Lower Bounding of Single Transferable Vote Election Margins",
+   "venue": "Preprint (arXiv)",
+   "year": 2025,
+   "url": "https://arxiv.org/abs/2501.14847",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "stv-idiosyncratic",
+   "group": "m-complex",
+   "authors": "Andrew R. Conway, Michelle L. Blom, Alexander Ek, Peter J. Stuckey, Vanessa Teague and Damjan Vukcevic",
+   "title": "Idiosyncratic properties of Australian STV election counting",
+   "venue": "Preprint (arXiv)",
+   "year": 2024,
+   "url": "https://arxiv.org/abs/2409.11627",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "senate-accuracy",
+   "group": "practice",
+   "authors": "Michelle L. Blom, Philip B. Stark, Peter J. Stuckey, Vanessa Teague and Damjan Vukcevic",
+   "title": "Assessing the accuracy of the Australian Senate count: Key steps for a rigorous and transparent audit",
+   "venue": "Preprint (arXiv)",
+   "year": 2022,
+   "url": "https://arxiv.org/abs/2205.14634",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "evacs",
+   "group": "security",
+   "authors": "Chris Culnane, Andrew R. Conway, Vanessa Teague and Ty Wilson-Brown",
+   "title": "Security analysis of the Australian Capital Territory’s eVACS 2020/2024 paperless direct recording electronic voting system",
+   "venue": "Preprint (arXiv)",
+   "year": 2024,
+   "url": "https://arxiv.org/abs/2409.13570",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "merge",
+   "group": "e2e",
+   "authors": "Ben Adida, John Caron, Arash Mirzaei and Vanessa Teague",
+   "title": "MERGE: Matching Electronic Results with Genuine Evidence, for Verifiable Voting in Person at Remote Locations",
+   "venue": "Lecture Notes in Computer Science",
+   "year": 2025,
+   "doi": "10.1007/978-3-032-05036-6_1",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "democratizing",
+   "group": "e2e",
+   "authors": "Vanessa Teague",
+   "title": "Democratizing election verification: new methods for addressing an ancient attacker model",
+   "venue": "ACM Asia Conference on Computer and Communications Security (ASIA CCS)",
+   "year": 2023,
+   "doi": "10.1145/3579856.3596443",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "swiss-race",
+   "group": "internet",
+   "authors": "Thomas Haines, Olivier Pereira and Vanessa Teague",
+   "title": "Running the Race: A Swiss Voting Story",
+   "venue": "E-Vote-ID 2022, LNCS",
+   "year": 2022,
+   "doi": "10.1007/978-3-031-15911-4_4",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "knights-knaves",
+   "group": "internet",
+   "authors": "Chris Culnane, Aleksander Essex, Sarah Jamie Lewis, Olivier Pereira and Vanessa Teague",
+   "title": "Knights and Knaves Run Elections: Internet Voting and Undetectable Electoral Fraud",
+   "venue": "IEEE Security & Privacy",
+   "year": 2019,
+   "doi": "10.1109/msec.2019.2915398",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "uv-mpc-irv",
+   "group": "e2e",
+   "authors": "Kim Ramchen, Chris Culnane, Olivier Pereira and Vanessa Teague",
+   "title": "Universally Verifiable MPC and IRV Ballot Counting",
+   "venue": "Lecture Notes in Computer Science",
+   "year": 2019,
+   "doi": "10.1007/978-3-030-32101-7_19",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "test-not-proof",
+   "group": "e2e",
+   "authors": "Eleanor McMurtry, Olivier Pereira and Vanessa Teague",
+   "title": "When Is a Test Not a Proof?",
+   "venue": "Lecture Notes in Computer Science",
+   "year": 2020,
+   "doi": "10.1007/978-3-030-59013-0_2",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
   }
  ]
 }
