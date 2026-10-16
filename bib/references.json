@@ -2736,10 +2736,12 @@
    "group": "security",
    "authors": "Chris Culnane, Andrew R. Conway, Vanessa Teague and Ty Wilson-Brown",
    "title": "Security analysis of the Australian Capital Territory’s eVACS 2020/2024 paperless direct recording electronic voting system",
-   "venue": "Preprint (arXiv)",
-   "year": 2024,
+   "venue": "Lecture Notes in Computer Science",
+   "year": 2025,
    "url": "https://arxiv.org/abs/2409.13570",
-   "source": "OpenAlex record for V. Teague (author A5013158281)"
+   "source": "OpenAlex record for V. Teague (author A5013158281)",
+   "doi": "10.1007/978-3-032-00495-6_17",
+   "note": "Preprint: arXiv:2409.13570 (linked)."
   },
   {
    "key": "merge",
@@ -2913,6 +2915,76 @@
    "doi": "10.1145/358198.358210",
    "note": "Turing Award lecture: a compromised compiler can hide a back door that source code review won’t find.",
    "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "to-whom-vote",
+   "group": "m-complex",
+   "authors": "Andrew Conway, Michelle L. Blom, Alexander Ek, Peter J. Stuckey, Vanessa Teague and Damjan Vukcevic",
+   "title": "To whom did my vote go?",
+   "venue": "Preprint (arXiv)",
+   "year": 2025,
+   "url": "https://arxiv.org/abs/2509.13370",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "dirichlet-first-steps",
+   "group": "m-complex",
+   "authors": "Floyd Everest, Michelle L. Blom, Philip B. Stark, Peter J. Stuckey, Vanessa Teague and Damjan Vukcevic",
+   "title": "Auditing Ranked Voting Elections with Dirichlet-Tree Models: First Steps",
+   "venue": "Preprint",
+   "year": 2022,
+   "doi": "10.15157/diss/021",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "remote-paper-assurance",
+   "group": "e2e",
+   "authors": "Eleanor McMurtry, Xavier Boyen, Chris Culnane, Kristian Gjøsteen, Thomas Haines and Vanessa Teague",
+   "title": "Towards Verifiable Remote Voting with Paper Assurance",
+   "venue": "Preprint (arXiv)",
+   "year": 2021,
+   "url": "https://arxiv.org/abs/2111.04210",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "which-evoting-problems",
+   "group": "e2e",
+   "authors": "Vanessa Teague",
+   "title": "Which E-Voting Problems Do We Need to Solve?",
+   "venue": "Lecture Notes in Computer Science",
+   "year": 2021,
+   "doi": "10.1007/978-3-030-84242-0_1",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "aus-verifiability-law",
+   "group": "internet",
+   "authors": "Vanessa Teague and Patrick Keyzer",
+   "title": "Electronic Australian Elections: Verifiability of Accuracy is a Design Goal, which Must be Mandated by Law and Deliberately Designed into Electronic Electoral Processes",
+   "venue": "Law in Context",
+   "year": 2020,
+   "doi": "10.26826/law-in-context.v37i1.119",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "random-errors",
+   "group": "forensics",
+   "authors": "Michelle Blom, Andrew Conway, Peter J. Stuckey, Vanessa Teague and Damjan Vukcevic",
+   "title": "Random Errors Are Not Necessarily Politically Neutral",
+   "venue": "E-Vote-ID 2020, LNCS",
+   "year": 2020,
+   "doi": "10.1007/978-3-030-60347-2_2",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "election-manip-100",
+   "group": "m-complex",
+   "authors": "Michelle L. Blom, Peter J. Stuckey and Vanessa Teague",
+   "title": "Election Manipulation 100",
+   "venue": "Lecture Notes in Computer Science",
+   "year": 2020,
+   "doi": "10.1007/978-3-030-43725-1_15",
+   "source": "OpenAlex record for V. Teague (author A5013158281)"
   }
  ]
 }
