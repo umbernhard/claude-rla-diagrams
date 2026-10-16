@@ -2851,6 +2851,36 @@
    "year": 2012,
    "url": "https://civicdesign.org/usability-matters-even-with-paper-ballots/",
    "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "ga-image-2026",
+   "group": "pilots",
+   "authors": "Aaron Wilson, Steven Musick, Matt Bernhard and Mike Garcia (Enhanced Voting)",
+   "title": "Ballot Image Audit Report (Georgia, May and June 2026 primaries)",
+   "venue": "Prepared for the Georgia Secretary of State",
+   "year": 2026,
+   "url": "https://sos.ga.gov/sites/default/files/2026-07/FINAL%20Georgia%20Image%20Audit%20Report.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "sc-image-2026",
+   "group": "pilots",
+   "authors": "Aaron Wilson, Steven Musick, Matt Bernhard and Mike Garcia (Enhanced Voting)",
+   "title": "Ballot Image Audit Report (South Carolina, June 2026 primaries)",
+   "venue": "Prepared for the South Carolina State Election Commission",
+   "year": 2026,
+   "url": "https://scvotes.gov/wp-content/uploads/2026/06/1.SC_ImageAuditRpt_June2026.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "bajcsy",
+   "group": "handcount",
+   "authors": "Andrea Bajcsy, Ya-Shian Li-Baboud and Mary Brady",
+   "title": "Systematic Measurement of Marginal Mark Types on Voting Ballots",
+   "venue": "NISTIR 8069, National Institute of Standards and Technology",
+   "year": 2015,
+   "url": "https://nvlpubs.nist.gov/nistpubs/ir/2015/NIST.IR.8069.pdf",
+   "source": "checked against the document or its publisher"
   }
  ]
 }
