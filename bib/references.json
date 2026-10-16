@@ -2902,6 +2902,17 @@
    "year": 2025,
    "url": "https://sos.ga.gov/sites/default/files/2025-12/georgia_image_audit_report_2025.pdf",
    "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "thompson",
+   "group": "security",
+   "authors": "Ken Thompson",
+   "title": "Reflections on Trusting Trust",
+   "venue": "Communications of the ACM 27(8):761–763",
+   "year": 1984,
+   "doi": "10.1145/358198.358210",
+   "note": "Turing Award lecture: a compromised compiler can hide a back door that source code review won’t find.",
+   "source": "checked against the document or its publisher"
   }
  ]
 }
