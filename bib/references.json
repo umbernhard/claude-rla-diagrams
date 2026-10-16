@@ -2985,6 +2985,237 @@
    "year": 2020,
    "doi": "10.1007/978-3-030-43725-1_15",
    "source": "OpenAlex record for V. Teague (author A5013158281)"
+  },
+  {
+   "key": "priv-apollo",
+   "group": "internet",
+   "authors": "Hua Wu, Poorvi Vora and Filip Zagórski",
+   "title": "Priv-Apollo: Secret Ballot E2E-V Internet Voting",
+   "venue": "Voting ’19 (Financial Cryptography workshops)",
+   "year": 2019,
+   "url": "https://fc19.ifca.ai/voting/papers/ZVW19.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "apollo",
+   "group": "internet",
+   "authors": "Dawid Gawel, Maciej Kosarzecki, Poorvi Vora, Hua Wu and Filip Zagórski",
+   "title": "Apollo: End-to-end Verifiable Internet Voting with Recovery from Vote Manipulation",
+   "venue": "E-Vote-ID 2016; IACR ePrint 2016/1037",
+   "year": 2016,
+   "url": "https://eprint.iacr.org/2016/1037",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "audiotegrity",
+   "group": "e2e",
+   "authors": "Tyler Kaczmarek, John Wittrock, Richard T. Carback, Alex Florescu, Jan Rubio, Noel Runyan, Poorvi L. Vora and Filip Zagórski",
+   "title": "Dispute Resolution in Accessible Voting Systems: The Design and Use of Audiotegrity",
+   "venue": "VoteID 2013, LNCS 7985, pp. 127–141",
+   "year": 2013,
+   "url": "https://www2.seas.gwu.edu/~poorvi/Audiotegrity.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "remotegrity",
+   "group": "internet",
+   "authors": "Filip Zagórski, Richard T. Carback, David Chaum, Jeremy Clark, Aleksander Essex and Poorvi L. Vora",
+   "title": "Remotegrity: Design and Use of an End-to-End Verifiable Remote Voting System",
+   "venue": "ACNS 2013, LNCS 7954, pp. 441–457",
+   "year": 2013,
+   "doi": "10.1007/978-3-642-38980-1_28",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "paperless-iv",
+   "group": "e2e",
+   "authors": "David Chaum, Alex Florescu, Mridul Nandi, Stefan Popoveniuc, Jan Rubio, Poorvi L. Vora and Filip Zagórski",
+   "title": "Paperless Independently-Verifiable Voting",
+   "venue": "VoteID 2011, LNCS 7187, pp. 140–157",
+   "year": 2012,
+   "url": "https://www2.seas.gwu.edu/~poorvi/PaperlessVoteID.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "etegrity",
+   "group": "e2e",
+   "authors": "David Chaum, Stefan Popoveniuc and Poorvi L. Vora",
+   "title": "eTegrity and ePunchScan",
+   "venue": "NIST End-to-End Voting Systems Workshop",
+   "year": 2009,
+   "url": "http://csrc.nist.gov/groups/ST/e2evoting/documents/papers/Popoveniuc_PaperlessVoting.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "stamp-it",
+   "group": "e2e",
+   "authors": "Mridul Nandi, Stefan Popoveniuc and Poorvi L. Vora",
+   "title": "Stamp-It: A Method for Enhancing the Universal Verifiability of E2E Voting Systems",
+   "venue": "ICISS 2010, LNCS 6503, pp. 81–95",
+   "year": 2011,
+   "url": "https://www2.seas.gwu.edu/~poorvi/StampItFinal.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "scantegrity-takoma",
+   "group": "e2e",
+   "authors": "Richard Carback, David Chaum, Jeremy Clark, Aleksander Essex, Travis Mayberry, Stefan Popoveniuc, Ronald L. Rivest, Emily Shen, Alan T. Sherman and Poorvi L. Vora",
+   "title": "Scantegrity II Municipal Election at Takoma Park: The First E2E Binding Governmental Election with Ballot Privacy",
+   "venue": "USENIX Security 2010",
+   "year": 2010,
+   "url": "https://www2.seas.gwu.edu/~poorvi/TakomaCaseStudy.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "scantegrity-mock",
+   "group": "e2e",
+   "authors": "Alan T. Sherman, Richard Carback, David Chaum, Jeremy Clark, Aleksander Essex, Paul S. Herrnson, Travis Mayberry, Stefan Popoveniuc, Ronald L. Rivest, Emily Shen, Bimal Sinha and Poorvi Vora",
+   "title": "Scantegrity Mock Election at Takoma Park",
+   "venue": "EVOTE 2010, Bregenz",
+   "year": 2010,
+   "url": "https://www2.seas.gwu.edu/~poorvi/Mock1_Final.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "scantegrity-takoma-nist",
+   "group": "e2e",
+   "authors": "Alan T. Sherman, Richard Carback, David Chaum, Jeremy Clark, John Conway, Aleksander Essex, Paul S. Herrnson, Travis Mayberry, Stefan Popoveniuc, Ronald L. Rivest, Anne Sergeant, Emily Shen, Bimal Sinha and Poorvi Vora",
+   "title": "Scantegrity at Takoma Park (position paper)",
+   "venue": "NIST End-to-End Voting Systems Workshop",
+   "year": 2009,
+   "url": "http://csrc.nist.gov/groups/ST/e2evoting/documents/papers/SHERMAN_scantegrity%20at%20Takoma-NIST%20revised9-25-09.pdf",
+   "note": "Vora’s page links this only as “summary”; title taken from the file name.",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "e2e-performance",
+   "group": "e2e",
+   "authors": "Stefan Popoveniuc, John Kelsey, Andrew Regenscheid and Poorvi Vora",
+   "title": "Performance Requirements for End-to-End Verifiable Elections",
+   "venue": "EVT/WOTE 2010",
+   "year": 2010,
+   "url": "https://www2.seas.gwu.edu/~poorvi/PerformanceRequirements.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "secure-voting-framework",
+   "group": "e2e",
+   "authors": "Stefan Popoveniuc and Poorvi L. Vora",
+   "title": "A framework for secure electronic voting",
+   "venue": "Cryptologia 34(3), pp. 236–257",
+   "year": 2010,
+   "url": "https://www2.seas.gwu.edu/~poorvi/FrameworkCryptologia.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "scantegrity-ii",
+   "group": "e2e",
+   "authors": "David Chaum, Richard T. Carback, Jeremy Clark, Aleksander Essex, Stefan Popoveniuc, Ronald L. Rivest, Peter Y. A. Ryan, Emily Shen, Alan T. Sherman and Poorvi L. Vora",
+   "title": "Scantegrity II: End-to-End Verifiability by Voters of Optical Scan Elections Through Confirmation Codes",
+   "venue": "IEEE Transactions on Information Forensics and Security 4(4), pp. 611–627",
+   "year": 2009,
+   "url": "https://www2.seas.gwu.edu/~poorvi/ScantegritySpecialIssue.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "nist-desirable",
+   "group": "overview",
+   "authors": "Svetlana Z. Lowry and Poorvi Vora",
+   "title": "Desirable Properties of Voting Systems",
+   "venue": "NIST",
+   "year": 2009,
+   "url": "https://www.nist.gov/publications/desirable-properties-voting-systems",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "accessible-verifiability",
+   "group": "e2e",
+   "authors": "David Chaum, Ben Hosp, Stefan Popoveniuc and Poorvi L. Vora",
+   "title": "Accessible Voter Verifiability",
+   "venue": "Cryptologia 33(3), pp. 283–291",
+   "year": 2009,
+   "url": "https://www2.seas.gwu.edu/~poorvi/AccessibleVoterVerifiability.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "infected-computers",
+   "group": "internet",
+   "authors": "Stefan Popoveniuc and Poorvi L. Vora",
+   "title": "Secure voting using infected computers",
+   "venue": "8th Annual Security Conference, Las Vegas",
+   "year": 2009,
+   "url": "https://www2.seas.gwu.edu/~poorvi/RemoteBallotCasting.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "info-theoretic-voting",
+   "group": "e2e",
+   "authors": "Ben Hosp and Poorvi L. Vora",
+   "title": "An Information-Theoretic Model of Voting Systems",
+   "venue": "Mathematical and Computer Modelling 48(9–10), pp. 1628–1645",
+   "year": 2008,
+   "url": "https://www2.seas.gwu.edu/~poorvi/VotingModel.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "hard-ai-verification",
+   "group": "internet",
+   "authors": "Rahul Simha and Poorvi L. Vora",
+   "title": "Vote Verification using Hard AI Problems",
+   "venue": "Journal of Information Assurance and Security 3(4), pp. 270–278",
+   "year": 2008,
+   "url": "https://www2.seas.gwu.edu/~poorvi/VoteVerify.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "scantegrity",
+   "group": "e2e",
+   "authors": "David Chaum, Aleks Essex, Richard Carback, Jeremy Clark, Stefan Popoveniuc, Alan T. Sherman and Poorvi Vora",
+   "title": "Scantegrity: End-to-End Voter Verifiable Optical-Scan Voting",
+   "venue": "IEEE Security & Privacy 6(3), pp. 40–46",
+   "year": 2008,
+   "url": "https://www2.seas.gwu.edu/~poorvi/Scantegrity.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "unconditional-integrity",
+   "group": "e2e",
+   "authors": "David Chaum, Jeroen van de Graaf, Peter Y. A. Ryan and Poorvi L. Vora",
+   "title": "Secret Ballot Elections with Unconditional Integrity",
+   "venue": "IACR ePrint 2007/270",
+   "year": 2007,
+   "url": "http://eprint.iacr.org/2007/270",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "chaum-receipts-vora",
+   "group": "e2e",
+   "authors": "Poorvi L. Vora",
+   "title": "David Chaum’s Voter Verification using Encrypted Paper Receipts",
+   "venue": "IACR ePrint 2005/050",
+   "year": 2005,
+   "url": "http://eprint.iacr.org/2005/050.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "privacy-criterion",
+   "group": "e2e",
+   "authors": "Lillie Coney, Joseph L. Hall, Poorvi L. Vora and David Wagner",
+   "title": "Towards a Privacy Measurement Criterion for Voting Systems",
+   "venue": "National Conference on Digital Government Research",
+   "year": 2005,
+   "url": "https://www2.seas.gwu.edu/~poorvi/VSPR_PMC/poster_VotingPrivacy.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
+  },
+  {
+   "key": "cacm-evaluation-2004",
+   "group": "overview",
+   "authors": "P. L. Vora, B. Adida, R. Bucholz, D. Chaum, D. L. Dill, D. Jefferson, D. W. Jones, W. Lattin, A. D. Rubin, M. I. Shamos and M. Yung",
+   "title": "Evaluation of Voting Systems",
+   "venue": "Communications of the ACM 47(11), Inside Risks",
+   "year": 2004,
+   "url": "https://www2.seas.gwu.edu/~poorvi/cacm_2004.pdf",
+   "source": "Poorvi Vora, Voting publications page (www2.seas.gwu.edu/~poorvi/VotingDetail.html)"
   }
  ]
 }
