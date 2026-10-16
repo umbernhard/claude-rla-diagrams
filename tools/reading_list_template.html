@@ -1,0 +1,112 @@
+<title>RLA Reading List</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap">
+<style>
+/* Layout: one reading column; the bibliography is grouped by topic, each group a heading, a one-line description and a hanging list. Shares the series' tokens. */
+:root {
+  --bg: #f6f7f9; --panel: #ffffff; --ink: #15181d; --ink-2: #4b5260; --ink-3: #79808d; --rule: #dde1e7; --reported: #2a78d6; --focus: #2a78d6;
+  --f-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #111317; --panel: #191c21; --ink: #eef0f3; --ink-2: #b7bcc6; --ink-3: #868d99; --rule: #2c3138; --reported: #3987e5; --focus: #3987e5; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #111317; --panel: #191c21; --ink: #eef0f3; --ink-2: #b7bcc6; --ink-3: #868d99; --rule: #2c3138; --reported: #3987e5; --focus: #3987e5; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 1rem/1.6 var(--f-body); }
+.wrap { max-width: 52rem; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 2rem 4rem; display: grid; gap: 1.75rem; }
+.prose { max-width: 40rem; }
+h1 { font: 600 clamp(1.7rem, 4vw, 2.3rem)/1.15 var(--f-display); margin: 0 0 .5rem; text-wrap: balance; }
+h2 { font: 600 1.15rem/1.3 var(--f-display); margin: 0; text-wrap: balance; }
+p { margin: 0 0 .75rem; color: var(--ink-2); }
+a { color: var(--reported); }
+a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.eyebrow { font: 500 .72rem/1.3 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: .6rem; }
+.group { display: grid; gap: .35rem; border-top: 1px solid var(--rule); padding-top: 1rem; }
+.gdesc { margin: 0 0 .25rem; font-size: .92rem; }
+.group ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .65rem; }
+.group li { padding-left: 1.1rem; text-indent: -1.1rem; color: var(--ink-2); font-size: .92rem; line-height: 1.5; overflow-wrap: anywhere; }
+.group li:target { background: color-mix(in srgb, var(--reported) 10%, transparent); border-radius: 4px; }
+.cited { display: inline-block; text-indent: 0; font: 500 .7rem/1.2 var(--f-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); margin-left: .35rem; }
+.cited a { color: var(--ink-3); }
+.count { font: 500 .75rem/1 var(--f-mono); color: var(--ink-3); margin-left: .35rem; vertical-align: .15em; }
+.toc { columns: 2 16rem; column-gap: 1.5rem; margin: 0; padding-left: 1.1rem; font-size: .9rem; color: var(--ink-2); }
+.toc li { break-inside: avoid; margin-bottom: .2rem; }
+.search { display: grid; gap: .35rem; max-width: 30rem; }
+.search label { font: 500 .72rem/1.3 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.search input { font: 400 1rem/1.3 var(--f-body); color: var(--ink); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: .55rem .7rem; width: 100%; }
+.search input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.search output { font: 400 .85rem/1.3 var(--f-mono); color: var(--ink-3); }
+details summary { cursor: pointer; font-size: .9rem; color: var(--ink-2); margin-bottom: .5rem; }
+details summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+/* site-wide warning banner; carries its own colors so it reads the same on every page */
+.disclaimer { --dz-bg: #fff3d1; --dz-ink: #4a2a00; --dz-edge: #b45309; --dz-a: #f2b705; --dz-b: #1d1d1d;
+  background: var(--dz-bg); color: var(--dz-ink); border: 2px solid var(--dz-edge); border-radius: 8px; overflow: hidden; display: grid; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .disclaimer { --dz-bg: #2d1f05; --dz-ink: #fde8b3; --dz-edge: #f59e0b; --dz-b: #0b0b0b; } }
+:root[data-theme="dark"] .disclaimer { --dz-bg: #2d1f05; --dz-ink: #fde8b3; --dz-edge: #f59e0b; --dz-b: #0b0b0b; }
+.disclaimer .dz-stripe { height: 10px; background: repeating-linear-gradient(135deg, var(--dz-a) 0 14px, var(--dz-b) 14px 28px); }
+.disclaimer .dz-body { padding: .8rem 1rem .9rem; display: grid; gap: .35rem; }
+.disclaimer .dz-title { font: 700 .95rem/1.25 var(--f-body, system-ui, sans-serif); letter-spacing: .06em; text-transform: uppercase; margin: 0; color: var(--dz-ink); }
+.disclaimer p { margin: 0; color: var(--dz-ink); font-size: .95rem; line-height: 1.5; max-width: 50rem; }
+.disclaimer a { color: var(--dz-ink); font-weight: 600; }
+</style>
+
+<div class="wrap">
+  <aside class="disclaimer" role="note" aria-labelledby="dzTitle">
+    <div class="dz-stripe" aria-hidden="true"></div>
+    <div class="dz-body">
+      <p class="dz-title" id="dzTitle">Under construction · Made with AI · May contain errors</p>
+      <p>This site is a work in progress and changes often. Much of it was written and coded with the help of an AI model (Claude), and it has not yet been fully checked. The math, the explanations, the citations and the interactive demos may all contain mistakes. Please don't treat it as an authoritative source on election audits. <a href="index.html">All pages</a></p>
+    </div>
+  </aside>
+  <header class="prose">
+    <div class="eyebrow">Risk-limiting audits from the ground up · Reading list</div>
+    <h1>Reading list</h1>
+    <p>Every source the series relies on, plus the wider literature on election audits and voting system security: {{COUNT}} papers, reports, guides and tools, grouped by topic. Entries cited on a page link back to where they're used.</p>
+    <p>Entries come from the papers themselves, their publishers, or the authors' and organizations' own publication lists. Not every entry taken from a publication list has been checked against the original yet. The list grows as the series does; if you know of work that belongs here, please open an issue on <a href="https://github.com/umbernhard/claude-rla-diagrams">GitHub</a>.</p>
+  </header>
+
+  <nav aria-labelledby="tocT">
+    <div class="eyebrow" id="tocT">Topics</div>
+    <ul class="toc">{{TOC}}</ul>
+  </nav>
+
+  <div class="search" role="search">
+    <label for="q">Filter by author, title, venue or year</label>
+    <input id="q" type="search" autocomplete="off" placeholder="e.g. Stark, ballot polling, 2012">
+    <output id="qOut" for="q" aria-live="polite"></output>
+  </div>
+{{BODY}}
+  <section class="group" aria-labelledby="gElse">
+    <h2 id="gElse">Other places to look</h2>
+    <p class="gdesc">Not relied on here, but useful for exploring further.</p>
+    <ul>
+        <li>MIT Election Data and Science Lab, <a href="https://electionlab.mit.edu/election-audit-references">election audit references</a>.</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+(() => {
+  const q = document.getElementById('q'), out = document.getElementById('qOut');
+  const items = [...document.querySelectorAll('.group li[id]')];
+  const groups = [...document.querySelectorAll('.group[id]')];
+  const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const text = new Map(items.map(li => [li, norm(li.textContent)]));
+  function filter() {
+    const terms = norm(q.value).split(/\s+/).filter(Boolean);
+    let shown = 0;
+    for (const li of items) { const ok = terms.every(t => text.get(li).includes(t)); li.hidden = !ok; if (ok) shown++; }
+    for (const g of groups) {
+      const any = [...g.querySelectorAll('li[id]')].some(li => !li.hidden);
+      g.hidden = terms.length > 0 && !any;
+      const d = g.querySelector('details'); if (d && terms.length && any) d.open = true;
+    }
+    out.textContent = terms.length ? `${shown} of ${items.length} entries match` : '';
+  }
+  q.addEventListener('input', filter);
+})();
+</script>

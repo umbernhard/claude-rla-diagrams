@@ -1,0 +1,2639 @@
+{
+ "groups": [
+  {
+   "id": "overview",
+   "title": "Start here",
+   "description": "Overviews of why and how elections are audited, and statements of principles."
+  },
+  {
+   "id": "security",
+   "title": "Software independence and voting system security",
+   "description": "Why audits rely on paper: what voting software, ballot-marking devices and ballot images can be made to do."
+  },
+  {
+   "id": "internet",
+   "title": "Internet voting",
+   "description": "Why internet voting can't yet provide evidence that outcomes are right."
+  },
+  {
+   "id": "e2e",
+   "title": "Verifiable voting systems and cryptographic elections",
+   "description": "End-to-end verifiable voting, voter privacy and coercion, and voting rules designed for auditability."
+  },
+  {
+   "id": "handcount",
+   "title": "Hand counts, recounts and retabulation",
+   "description": "How accurate human counting is, what recounts find, and why machine retabulation isn't an audit."
+  },
+  {
+   "id": "practice",
+   "title": "Audit practice, guides and chain of custody",
+   "description": "How audits are run in practice: guidance for election officials, ballot custody, random seeds and audits outside the US."
+  },
+  {
+   "id": "pilots",
+   "title": "Pilot audits and state audit reports",
+   "description": "Reports from risk-limiting audit pilots and other audits of real elections."
+  },
+  {
+   "id": "ct",
+   "title": "Connecticut post-election audit reports",
+   "description": "Annual statistical analyses of Connecticut's hand-count audits and audits of voting machine memory cards, by the University of Connecticut's Center for Voting Technology Research."
+  },
+  {
+   "id": "m-found",
+   "title": "Risk-limiting audit methods: foundations",
+   "description": "The early statistical papers that defined risk-limiting audits."
+  },
+  {
+   "id": "m-poll",
+   "title": "Risk-limiting audit methods: ballot polling",
+   "description": "Audits that look only at a random sample of paper ballots."
+  },
+  {
+   "id": "m-comp",
+   "title": "Risk-limiting audit methods: comparison, batch and stratified audits",
+   "description": "Audits that compare paper ballots or batches with the voting system's records, and audits that mix methods."
+  },
+  {
+   "id": "m-gen",
+   "title": "Risk-limiting audit methods: general frameworks",
+   "description": "Unifying frameworks and modern statistical machinery for audits."
+  },
+  {
+   "id": "m-complex",
+   "title": "Risk-limiting audit methods: ranked-choice and proportional elections",
+   "description": "Auditing instant-runoff, single transferable vote and party-list elections."
+  },
+  {
+   "id": "sampling",
+   "title": "Sampling and randomness",
+   "description": "How ballots are selected for an audit."
+  },
+  {
+   "id": "bayes",
+   "title": "Bayesian audits",
+   "description": "Audits based on Bayesian reasoning, and how they relate to risk-limiting audits."
+  },
+  {
+   "id": "forensics",
+   "title": "Election integrity analyses",
+   "description": "Case studies of specific elections and election policies."
+  },
+  {
+   "id": "tools",
+   "title": "Software, tools and explainers",
+   "description": "Audit software, calculators, demonstrations and videos."
+  }
+ ],
+ "entries": [
+  {
+   "key": "nasem",
+   "group": "overview",
+   "authors": "National Academies of Sciences, Engineering, and Medicine",
+   "title": "Securing the Vote: Protecting American Democracy",
+   "venue": "National Academies Press",
+   "year": 2018,
+   "doi": "10.17226/25120",
+   "note": "Recommendations 4.11, 4.12 and 5.8.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "public-evidence",
+   "group": "overview",
+   "authors": "Matthew Bernhard, Josh Benaloh, J. Alex Halderman, Ronald L. Rivest, Peter Y. A. Ryan, Philip B. Stark, Vanessa Teague, Poorvi L. Vora and Dan S. Wallach",
+   "title": "Public Evidence from Secret Ballots",
+   "venue": "E-Vote-ID 2017, LNCS 10615",
+   "year": 2017,
+   "url": "https://arxiv.org/abs/1707.08619",
+   "doi": "10.1007/978-3-319-68687-5_6",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "gentle",
+   "group": "overview",
+   "authors": "Mark Lindeman and Philip B. Stark",
+   "title": "A Gentle Introduction to Risk-Limiting Audits",
+   "venue": "IEEE Security & Privacy 10(5):42–49",
+   "year": 2012,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/gentle12.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "stark-wagner",
+   "group": "overview",
+   "authors": "Philip B. Stark and David A. Wagner",
+   "title": "Evidence-Based Elections",
+   "venue": "IEEE Security & Privacy 10:33–41",
+   "year": 2012,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/evidenceVote12.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "rla-sok",
+   "group": "overview",
+   "authors": "Matthew Bernhard",
+   "title": "Risk-limiting Audits: A Practical Systematization of Knowledge",
+   "venue": "E-Vote-ID 2021",
+   "year": 2021,
+   "url": "https://mbernhard.com/papers/RLA_Threat_Model.pdf",
+   "note": "Assumptions, logistics and a threat model for RLAs.",
+   "source": "M. Bernhard's publication page (mbernhard.com)"
+  },
+  {
+   "key": "rla-whitepaper",
+   "group": "overview",
+   "authors": "J. Bretschneider, S. Flaherty, S. Goodman, M. Halvorson, R. Johnston, M. Lindeman, R.L. Rivest, P. Smith and P.B. Stark",
+   "title": "Risk-Limiting Post-Election Audits: Why and How",
+   "venue": "Risk-Limiting Audits Working Group, version 1.1",
+   "year": 2012,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/RLAwhitepaper12.pdf",
+   "note": "Endorsed by the American Statistical Association.",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "appel-stark-gltr",
+   "group": "overview",
+   "authors": "Andrew W. Appel and Philip B. Stark",
+   "title": "Evidence-Based Elections: Create a Meaningful Paper Trail, Then Audit",
+   "venue": "Georgetown Law Technology Review 4:523–541",
+   "year": 2020,
+   "url": "https://georgetownlawtechreview.org/wp-content/uploads/2020/07/4.2-p523-541-Appel-Stark.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "rivest-stark-verifiable",
+   "group": "overview",
+   "authors": "Ronald L. Rivest and Philip B. Stark",
+   "title": "When is an election verifiable?",
+   "venue": "IEEE Security & Privacy, pp. 48–50",
+   "year": 2017,
+   "doi": "10.1109/MSP.2017.78",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "stark-vtp19",
+   "group": "overview",
+   "authors": "Philip B. Stark",
+   "title": "Risk-limiting audits and evidence-based elections",
+   "venue": "in Election Auditing: Key Issues and Perspectives, Caltech/MIT Voting Technology Project",
+   "year": 2019,
+   "url": "http://electionlab.mit.edu/sites/default/files/2019-06/Election-Auditing-Key-Issues-Perspectives.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "stark-lhc18",
+   "group": "overview",
+   "authors": "Philip B. Stark",
+   "title": "An Introduction to Risk-Limiting Audits and Evidence-Based Elections",
+   "venue": "Written testimony for the Little Hoover Commission",
+   "year": 2018,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/lhc18.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "ccc-research",
+   "group": "overview",
+   "authors": "Josh Benaloh, Philip B. Stark, Vanessa Teague, Melanie Volkamer and Dan Wallach",
+   "title": "Research Opportunities in Evidence-Based Elections",
+   "venue": "Computing Community Consortium",
+   "year": 2022,
+   "url": "https://cra.org/ccc/wp-content/uploads/sites/2/2022/01/Research-Opportunities-in-Evidence-Based-Elections_Jan-5-Draft-1.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "best-practices",
+   "group": "overview",
+   "authors": "Lynn Garland et al.",
+   "title": "Principles and Best Practices for Post-Election Tabulation Audits",
+   "venue": "Hosted by Verified Voting",
+   "year": 2018,
+   "url": "https://verifiedvoting.org/publication/principles-and-best-practices-for-post-election-tabulation-audits/",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "best-practices-2008",
+   "group": "overview",
+   "authors": "Mark Lindeman, Mark Halvorson, Pamela Smith, Lynn Garland, Vittorio Addona and Dan McCrea, eds.",
+   "title": "Principles and Best Practices for Post-Election Audits",
+   "venue": "ElectionAudits.org, endorsed by the American Statistical Association",
+   "year": 2008,
+   "url": "http://electionaudits.org/files/best%20practices%20final_0.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "brennan-2007",
+   "group": "overview",
+   "authors": "Lawrence Norden, Aaron Burstein, Joseph Lorenzo Hall and Margaret Chen",
+   "title": "Post-Election Audits: Restoring Trust in Elections",
+   "venue": "Brennan Center for Justice and Samuelson Law, Technology & Public Policy Clinic",
+   "year": 2007,
+   "url": "https://electionaudits.org/files/Brennan%20Center%20Report%20on%20Post-Election%20Audits.pdf",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "asa-endorse",
+   "group": "overview",
+   "authors": "American Statistical Association",
+   "title": "Endorsement of Risk-Limiting Election Audits (Board statement and press release)",
+   "venue": "American Statistical Association",
+   "year": 2010,
+   "url": "https://www.amstat.org/asa/files/pdfs/POL-Risk-Limiting_Endorsement.pdf",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "ash-pierson-stark",
+   "group": "overview",
+   "authors": "A. Ash, S. Pierson and P.B. Stark",
+   "title": "Thinking outside the urn: Statisticians make their marks on U.S. Ballots",
+   "venue": "Amstat News 384:37–40",
+   "year": 2009,
+   "url": "http://www.amstat.org/outreach/pdfs/SP_ANJun09.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "lindeman-blog09",
+   "group": "overview",
+   "authors": "Mark Lindeman",
+   "title": "What's an RLA? What Does a Good One Look Like, and Why Would I Care?",
+   "venue": "OSET Institute blog",
+   "year": 2009,
+   "url": "https://trustthevote.org/blog/2009/08/14/whats-an-rla-what-does-a-good-one-look-like-and-why-would-i-care/",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "stark-status09",
+   "group": "overview",
+   "authors": "Philip B. Stark",
+   "title": "The status and near future of post-election auditing",
+   "venue": "Preprint",
+   "year": 2009,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/auditingPosition09.htm",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "vtp-2012",
+   "group": "overview",
+   "authors": "R. Michael Alvarez, Jonathan N. Katz, Charles Stewart III, Ronald L. Rivest, Stephen Ansolabehere and Thad E. Hall",
+   "title": "Voting: What Has Changed, What Hasn't, & What Needs Improvement",
+   "venue": "Caltech/MIT Voting Technology Project",
+   "year": 2012,
+   "url": "http://vote.caltech.edu/content/voting-what-has-changed-what-hasnt-what-needs-improvement",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "vvf-principles",
+   "group": "overview",
+   "authors": "Verified Voting Foundation",
+   "title": "Principles for New Voting Systems",
+   "venue": "Verified Voting Foundation",
+   "year": 2015,
+   "url": "http://www.verifiedvotingfoundation.org/voting-systems-principles/",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "rivest-defcon25",
+   "group": "overview",
+   "authors": "Ronald L. Rivest",
+   "title": "Evidence-Based Elections and Software Independence",
+   "venue": "DEF CON 2025 Voting Village",
+   "year": 2025,
+   "url": "https://people.csail.mit.edu/rivest/pubs/Riv25a.pdf",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "rivest",
+   "group": "security",
+   "authors": "Ronald L. Rivest",
+   "title": "On the notion of ‘software independence’ in voting systems",
+   "venue": "Philosophical Transactions of the Royal Society A 366(1881):3759–3767",
+   "year": 2008,
+   "url": "https://www.nist.gov/document/ronald-r-rivest-and-john-p-wack-notion-software-independence-voting-systems-july-28-2006",
+   "doi": "10.1098/rsta.2008.0149",
+   "note": "An earlier version, written with John P. Wack for NIST, dates from 2006 (linked).",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "rivest-virza",
+   "group": "security",
+   "authors": "Ronald L. Rivest and Madars Virza",
+   "title": "Software Independence Revisited",
+   "venue": "Chapter 1 of Real-World Electronic Voting: Design, Analysis, and Deployment, CRC Press, pp. 3–17",
+   "year": 2016,
+   "url": "https://people.csail.mit.edu/rivest/pubs/RV16.pdf",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "declaration-si",
+   "group": "security",
+   "authors": "P.Y.A. Ryan, S. Schneider, C. Schürmann, P.B. Stark and W. Jamroga",
+   "title": "A Declaration of Software Independence",
+   "venue": "Festschrift for Joshua Guttman, LNCS 13066",
+   "year": 2022,
+   "url": "https://link.springer.com/chapter/10.1007/978-3-030-91631-2_11",
+   "doi": "10.1007/978-3-030-91631-2_11",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "kohno",
+   "group": "security",
+   "authors": "Tadayoshi Kohno, Adam Stubblefield, Aviel D. Rubin and Dan S. Wallach",
+   "title": "Analysis of an Electronic Voting System",
+   "venue": "IEEE Symposium on Security and Privacy",
+   "year": 2004,
+   "url": "https://homes.cs.washington.edu/~yoshi/papers/eVoting/index.html",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "accubasic",
+   "group": "security",
+   "authors": "David Wagner, David Jefferson and Matt Bishop",
+   "title": "Security Analysis of the Diebold AccuBasic Interpreter",
+   "venue": "Voting Systems Technology Assessment Advisory Board, report for the California Secretary of State",
+   "year": 2006,
+   "url": "https://www.sos.texas.gov/elections/forms/security_diebold_accubasic.pdf",
+   "note": "Confirms the memory-card attack demonstrated by Harri Hursti in 2005.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "ttbr",
+   "group": "security",
+   "authors": "Matt Bishop",
+   "title": "Overview of Red Team Reports",
+   "venue": "California Secretary of State Top-to-Bottom Review of voting systems",
+   "year": 2007,
+   "url": "https://nob.cs.ucdavis.edu/bishop/notes/2007-CaSoS/index.html",
+   "note": "Systems examined: Diebold, Hart InterCivic and Sequoia.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "everest",
+   "group": "security",
+   "authors": "Patrick McDaniel, Matt Blaze, Giovanni Vigna et al.",
+   "title": "EVEREST: Evaluation and Validation of Election-Related Equipment, Standards and Testing, Final Report",
+   "venue": "Report for the Ohio Secretary of State",
+   "year": 2007,
+   "url": "https://patrickmcdaniel.org/pubs/everest.pdf",
+   "note": "Systems examined: ES&S, Hart InterCivic and Premier (formerly Diebold).",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "feldman",
+   "group": "security",
+   "authors": "Ariel J. Feldman, J. Alex Halderman and Edward W. Felten",
+   "title": "Security Analysis of the Diebold AccuVote-TS Voting Machine",
+   "venue": "USENIX/ACCURATE Electronic Voting Technology Workshop (EVT ’07)",
+   "year": 2007,
+   "url": "https://jhalderm.com/pub/papers/ts-evt07.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "appel2008",
+   "group": "security",
+   "authors": "Andrew W. Appel, Maia Ginsburg, Harri Hursti, Brian W. Kernighan, Christopher D. Richards and Gang Tan",
+   "title": "Insecurities and Inaccuracies of the Sequoia AVC Advantage 9.00H DRE Voting Machine",
+   "venue": "Expert report in Gusciora v. Corzine (N.J. Super. Ct.)",
+   "year": 2008,
+   "url": "https://www.cs.princeton.edu/~appel/papers/advantage-insecurities-redacted.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "checkoway",
+   "group": "security",
+   "authors": "Stephen Checkoway, Ariel J. Feldman, Brian Kantor, J. Alex Halderman, Edward W. Felten and Hovav Shacham",
+   "title": "Can DREs Provide Long-Lasting Security? The Case of Return-Oriented Programming and the AVC Advantage",
+   "venue": "EVT/WOTE ’09",
+   "year": 2009,
+   "url": "https://jhalderm.com/pub/papers/avc-evt09.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "wolchok",
+   "group": "security",
+   "authors": "Scott Wolchok, Eric Wustrow, J. Alex Halderman, Hari K. Prasad, Arun Kankipati, Sai Krishna Sakhamuri, Vasavya Yagati and Rop Gonggrijp",
+   "title": "Security Analysis of India’s Electronic Voting Machines",
+   "venue": "ACM Conference on Computer and Communications Security (CCS ’10)",
+   "year": 2010,
+   "url": "https://jhalderm.com/pub/papers/evm-ccs10.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "defcon27",
+   "group": "security",
+   "authors": "Matt Blaze, Harri Hursti, Margaret MacAlpine, Mary Hanley, Jeff Moss, Rachel Wehr, Kendall Spencer and Christopher Ferris",
+   "title": "DEF CON 27 Voting Machine Hacking Village Report",
+   "venue": "DEF CON",
+   "year": 2019,
+   "url": "https://harris.uchicago.edu/files/def_con_27_voting_village_report.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "cisa-icx",
+   "group": "security",
+   "authors": "Cybersecurity and Infrastructure Security Agency",
+   "title": "Vulnerabilities Affecting Dominion Voting Systems ImageCast X (ICSA-22-154-01)",
+   "venue": "CISA advisory",
+   "year": 2022,
+   "url": "https://www.cisa.gov/uscert/ics/advisories/icsa-22-154-01",
+   "note": "Vulnerabilities reported by J. Alex Halderman and Drew Springall.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "uconn-memcard-causes",
+   "group": "security",
+   "authors": "UConn VoTeR Center",
+   "title": "Determining the Causes of AccuVote Optical Scan Voting Terminal Memory Card Failures",
+   "venue": "UConn Center for Voting Technology Research",
+   "year": 2010,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/evt2010_techreport.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "essex-stark26",
+   "group": "security",
+   "authors": "A. Essex and P.B. Stark",
+   "title": "It doesn’t take a thief: Optical-scan voting systems fail even without adversaries",
+   "venue": "E-Vote-ID 2026 (to appear)",
+   "year": 2026,
+   "url": "https://arxiv.org/abs/2607.27101",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "unclearballot",
+   "group": "security",
+   "authors": "Matthew Bernhard, Kartikeya Kandula, Jeremy Wink and J. Alex Halderman",
+   "title": "UnclearBallot: Automated Ballot Image Manipulation",
+   "venue": "E-Vote-ID 2019, pp. 14–31",
+   "year": 2019,
+   "url": "https://mbernhard.com/papers/unclearballot.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "bmd-detect",
+   "group": "security",
+   "authors": "Matthew Bernhard, Allison McDonald, Henry Meng, Jensen Hwa, Nakul Bajaj, Kevin Chang and J. Alex Halderman",
+   "title": "Can Voters Detect Malicious Manipulation of Ballot Marking Devices?",
+   "venue": "IEEE Symposium on Security and Privacy",
+   "year": 2020,
+   "url": "https://mbernhard.com/papers/bmd-verifiability-sp20.pdf",
+   "note": "Best Student Paper Award.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "appel-demillo-stark",
+   "group": "security",
+   "authors": "Andrew W. Appel, Richard A. DeMillo and Philip B. Stark",
+   "title": "Ballot-Marking Devices Cannot Ensure the Will of the Voters",
+   "venue": "Election Law Journal 19(3):432–450",
+   "year": 2020,
+   "doi": "10.1089/elj.2019.0619",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "stark-xie",
+   "group": "security",
+   "authors": "P.B. Stark and R. Xie",
+   "title": "They may look and look, yet not see: BMDs cannot be tested adequately",
+   "venue": "E-Vote-ID 2022, LNCS",
+   "year": 2022,
+   "url": "https://link.springer.com/chapter/10.1007/978-3-031-15911-4_8",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "stark-bmd19",
+   "group": "security",
+   "authors": "Philip B. Stark",
+   "title": "Ballot-marking devices (BMDs) are not secure election technology",
+   "venue": "Letter to the Subcommittee on Voting Technology, Georgia House of Representatives",
+   "year": 2019,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/bmd19.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "stark-vvsg19",
+   "group": "security",
+   "authors": "Philip B. Stark",
+   "title": "Comments on Draft VVSG 2.0",
+   "venue": "Public comment",
+   "year": 2019,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/vvsg19.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "texas-trenches",
+   "group": "security",
+   "authors": "Elizabeth Kasongo, Matthew Bernhard and Chris Bronk",
+   "title": "Tales from the Trenches: Case Studies in Election Cybersecurity Preparedness in Texas",
+   "venue": "E-Vote-ID 2021",
+   "year": 2021,
+   "url": "https://mbernhard.com/papers/Cybersecurity_preparedness_in_Texas.pdf",
+   "source": "M. Bernhard's publication page (mbernhard.com)"
+  },
+  {
+   "key": "ivote-nsw",
+   "group": "internet",
+   "authors": "J. Alex Halderman and Vanessa Teague",
+   "title": "The New South Wales iVote system: Security failures and verification flaws in a live online election",
+   "venue": "E-Vote-ID 2015, pp. 35–53",
+   "year": 2015,
+   "source": "V. Teague's Google Scholar profile"
+  },
+  {
+   "key": "bad-to-worse",
+   "group": "internet",
+   "authors": "Sunoo Park, Michael Specter, Neha Narula and Ronald L. Rivest",
+   "title": "Going from Bad to Worse: from Internet Voting to Blockchain Voting",
+   "venue": "Journal of Cybersecurity 7(1)",
+   "year": 2021,
+   "doi": "10.1093/cybsec/tyaa025",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "appel-stark-internet",
+   "group": "internet",
+   "authors": "A. Appel and P.B. Stark",
+   "title": "An Internet Voting System Fatally Flawed in Creative New Ways",
+   "venue": "Preprint",
+   "year": 2024,
+   "url": "https://arxiv.org/abs/2411.11796",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "internet-return-wg",
+   "group": "internet",
+   "authors": "R. Michael Alvarez, Mike Garcia, Josh Benaloh, Roy Herrera, Allie Bones, Henry E. Brady, Amber McReynolds, Jeremy Epstein, Ronald L. Rivest, Anthony Fowler, Maurice Turner, Michael J. Frias and Mark Wetherford",
+   "title": "Working Group Statement on Developing Standards for Internet Ballot Return",
+   "venue": "Center for Security in Politics, UC Berkeley",
+   "year": 2022,
+   "url": "https://people.csail.mit.edu/rivest/pubs/AGBHx22.pdf",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "spectrum-online",
+   "group": "internet",
+   "authors": "Robert Cunningham, Matthew Bernhard and J. Alex Halderman",
+   "title": "The Security Challenges of Online Voting Have Not Gone Away",
+   "venue": "IEEE Spectrum",
+   "year": 2016,
+   "url": "http://spectrum.ieee.org/tech-talk/telecom/security/the-security-challenges-of-online-voting-have-not-gone-away",
+   "source": "M. Bernhard's publication page (mbernhard.com)"
+  },
+  {
+   "key": "ovf-e2eviv",
+   "group": "internet",
+   "authors": "Overseas Vote Foundation",
+   "title": "The Future of Voting: End-to-End Verifiable Internet Voting — Specification and Feasibility Study",
+   "venue": "U.S. Vote Foundation",
+   "year": 2015,
+   "url": "https://www.usvotefoundation.org/E2E-VIV",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "review-evoting",
+   "group": "internet",
+   "authors": "J.P. Gibson, R. Krimmer, V. Teague and J. Pomares",
+   "title": "A review of e-voting: the past, present and future",
+   "venue": "Annals of Telecommunications 71(7):279–286",
+   "year": 2016,
+   "source": "V. Teague's Google Scholar profile"
+  },
+  {
+   "key": "e2e-verifiability",
+   "group": "e2e",
+   "authors": "J. Benaloh, R.L. Rivest, P.Y.A. Ryan, P.B. Stark, V. Teague and P. Vora",
+   "title": "End-to-end verifiability",
+   "venue": "Preprint",
+   "year": 2015,
+   "url": "http://arxiv.org/abs/1504.03778",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "e2e-theory-practice",
+   "group": "e2e",
+   "authors": "P.Y.A. Ryan, S. Schneider and V. Teague",
+   "title": "End-to-end verifiability in voting systems, from theory to practice",
+   "venue": "IEEE Security & Privacy 13(3):59–62",
+   "year": 2015,
+   "source": "V. Teague's Google Scholar profile"
+  },
+  {
+   "key": "star-vote",
+   "group": "e2e",
+   "authors": "Susan Bell, Josh Benaloh, Michael D. Byrne, Dana DeBeauvoir, Bryce Eakin, Gail Fisher, Philip Kortum, Neal McBurnett, Julian Montoya, Michelle Parker, Olivier Pereira, Philip B. Stark, Dan S. Wallach and Michael Winn",
+   "title": "STAR-Vote: A Secure, Transparent, Auditable, and Reliable Voting System",
+   "venue": "USENIX Journal of Election Technology and Systems (JETS) 1:18–37",
+   "year": 2013,
+   "url": "https://www.usenix.org/sites/default/files/jets0101-complete.pdf",
+   "note": "Preprint: arXiv:1211.1904.",
+   "source": "J. Benaloh's publication page (Microsoft Research)"
+  },
+  {
+   "key": "vvote",
+   "group": "e2e",
+   "authors": "C. Culnane, P.Y.A. Ryan, S. Schneider and V. Teague",
+   "title": "vVote: a verifiable voting system",
+   "venue": "ACM Transactions on Information and System Security 18(1):1–30",
+   "year": 2015,
+   "source": "V. Teague's Google Scholar profile"
+  },
+  {
+   "key": "pret-victoria",
+   "group": "e2e",
+   "authors": "C. Burton, C. Culnane, J.A. Heather, T. Peacock, P.Y.A. Ryan, S.A. Schneider et al.",
+   "title": "Using Prêt à Voter in Victorian state elections",
+   "venue": "EVT/WOTE ’12",
+   "year": 2012,
+   "source": "V. Teague's Google Scholar profile"
+  },
+  {
+   "key": "how-not-prove",
+   "group": "e2e",
+   "authors": "T. Haines, S.J. Lewis, O. Pereira and V. Teague",
+   "title": "How not to prove your election outcome",
+   "venue": "IEEE Symposium on Security and Privacy, pp. 644–660",
+   "year": 2020,
+   "source": "V. Teague's Google Scholar profile"
+  },
+  {
+   "key": "pretty-good-democracy",
+   "group": "e2e",
+   "authors": "P.Y.A. Ryan and V. Teague",
+   "title": "Pretty good democracy",
+   "venue": "International Workshop on Security Protocols, pp. 111–130",
+   "year": 2009,
+   "source": "V. Teague's Google Scholar profile"
+  },
+  {
+   "key": "helios-eligibility",
+   "group": "e2e",
+   "authors": "O. Kulyk, V. Teague and M. Volkamer",
+   "title": "Extending Helios towards private eligibility verifiability",
+   "venue": "E-Vote-ID 2015, pp. 57–73",
+   "year": 2015,
+   "source": "V. Teague's Google Scholar profile"
+  },
+  {
+   "key": "shuffle-sum",
+   "group": "e2e",
+   "authors": "Josh Benaloh, Tal Moran, Lee Naish, Kim Ramchen and Vanessa Teague",
+   "title": "Shuffle-Sum: Coercion-Resistant Verifiable Tallying for STV Voting",
+   "venue": "IEEE Transactions on Information Forensics and Security 4(4):685–698",
+   "year": 2009,
+   "url": "https://www.microsoft.com/en-us/research/publication/shuffle-sum-coercion-resistant-verifiable-tallying-stv-voting/",
+   "source": "J. Benaloh's publication page (Microsoft Research)"
+  },
+  {
+   "key": "verifiable-postal",
+   "group": "e2e",
+   "authors": "Josh Benaloh, Peter Y.A. Ryan and Vanessa Teague",
+   "title": "Verifiable Postal Voting",
+   "venue": "21st International Workshop on Security Protocols",
+   "year": 2013,
+   "url": "https://www.microsoft.com/en-us/research/publication/verifiable-postal-voting/",
+   "source": "J. Benaloh's publication page (Microsoft Research)"
+  },
+  {
+   "key": "rethinking-coercion",
+   "group": "e2e",
+   "authors": "Josh Benaloh",
+   "title": "Rethinking Voter Coercion: The Realities Imposed by Technology",
+   "venue": "USENIX Journal of Election Technology and Systems (JETS)",
+   "year": 2013,
+   "url": "https://www.microsoft.com/en-us/research/publication/rethinking-voter-coercion-realities-imposed-technology/",
+   "source": "J. Benaloh's publication page (Microsoft Research)"
+  },
+  {
+   "key": "trash-attack",
+   "group": "e2e",
+   "authors": "Josh Benaloh and Eric Lazarus",
+   "title": "The Trash Attack: An Attack on Verifiable Voting Systems and a Simple Mitigation",
+   "venue": "Microsoft Research MSR-TR-2011-115",
+   "year": 2011,
+   "url": "https://www.microsoft.com/en-us/research/publication/the-trash-attack-an-attack-on-verifiable-voting-systems-and-a-simple-mitigation/",
+   "source": "J. Benaloh's publication page (Microsoft Research)"
+  },
+  {
+   "key": "subliminal",
+   "group": "e2e",
+   "authors": "Ariel J. Feldman and Josh Benaloh",
+   "title": "On Subliminal Channels in Encrypt-on-Cast Voting Systems",
+   "venue": "EVT/WOTE ’09",
+   "year": 2009,
+   "url": "https://www.microsoft.com/en-us/research/publication/subliminal-channels-encrypt-cast-voting-systems/",
+   "source": "J. Benaloh's publication page (Microsoft Research)"
+  },
+  {
+   "key": "admin-public-verif",
+   "group": "e2e",
+   "authors": "Josh Benaloh",
+   "title": "Administrative and Public Verifiability: Can We Have Both?",
+   "venue": "EVT ’08",
+   "year": 2008,
+   "url": "https://www.microsoft.com/en-us/research/publication/administrative-public-verifiability-can/",
+   "source": "J. Benaloh's publication page (Microsoft Research)"
+  },
+  {
+   "key": "ballot-casting-assurance",
+   "group": "e2e",
+   "authors": "Josh Benaloh",
+   "title": "Ballot Casting Assurance via Voter-Initiated Poll Station Auditing",
+   "venue": "EVT ’07",
+   "year": 2007,
+   "url": "https://www.microsoft.com/en-us/research/publication/ballot-casting-assurance-via-voter-initiated-poll-station-auditing/",
+   "source": "J. Benaloh's publication page (Microsoft Research)"
+  },
+  {
+   "key": "simple-verifiable",
+   "group": "e2e",
+   "authors": "Josh Benaloh",
+   "title": "Simple Verifiable Elections",
+   "venue": "EVT ’06",
+   "year": 2006,
+   "url": "https://www.microsoft.com/en-us/research/publication/simple-verifiable-elections/",
+   "source": "J. Benaloh's publication page (Microsoft Research)"
+  },
+  {
+   "key": "receipt-free",
+   "group": "e2e",
+   "authors": "Josh Benaloh and Dwight Tuinstra",
+   "title": "Receipt-Free Secret-Ballot Elections",
+   "venue": "ACM Symposium on Theory of Computing (STOC ’94)",
+   "year": 1994,
+   "url": "https://www.microsoft.com/en-us/research/publication/receipt-free-secret-ballot-elections/",
+   "source": "J. Benaloh's publication page (Microsoft Research)"
+  },
+  {
+   "key": "improving-privacy",
+   "group": "e2e",
+   "authors": "Josh Benaloh",
+   "title": "Improving Privacy in Cryptographic Elections",
+   "venue": "Microsoft Research MSR-TR-1994-3",
+   "year": 1994,
+   "url": "https://www.microsoft.com/en-us/research/publication/improving-privacy-cryptographic-elections/",
+   "source": "J. Benaloh's publication page (Microsoft Research)"
+  },
+  {
+   "key": "benaloh-thesis",
+   "group": "e2e",
+   "authors": "Josh Benaloh",
+   "title": "Verifiable Secret-Ballot Elections",
+   "venue": "PhD thesis, Yale University",
+   "year": 1987,
+   "url": "https://www.microsoft.com/en-us/research/publication/verifiable-secret-ballot-elections/",
+   "source": "J. Benaloh's publication page (Microsoft Research)"
+  },
+  {
+   "key": "benaloh-yung",
+   "group": "e2e",
+   "authors": "Josh Benaloh and Moti Yung",
+   "title": "Distributing the Power of a Government to Enhance the Privacy of Voters",
+   "venue": "Principles of Distributed Computing (PODC)",
+   "year": 1986,
+   "url": "https://www.microsoft.com/en-us/research/publication/distributing-the-power-of-a-government-to-enhance-the-privacy-of-voters/",
+   "source": "J. Benaloh's publication page (Microsoft Research)"
+  },
+  {
+   "key": "benaloh-fischer",
+   "group": "e2e",
+   "authors": "Josh Benaloh and Michael J. Fischer",
+   "title": "A Robust and Verifiable Cryptographically Secure Election Scheme",
+   "venue": "26th Symposium on Foundations of Computer Science (FOCS)",
+   "year": 1985,
+   "url": "https://www.microsoft.com/en-us/research/publication/robust-verifiable-cryptographically-secure-election-scheme/",
+   "source": "J. Benaloh's publication page (Microsoft Research)"
+  },
+  {
+   "key": "rabin-rivest-14",
+   "group": "e2e",
+   "authors": "Michael O. Rabin and Ronald L. Rivest",
+   "title": "Efficient End to End Verifiable Electronic Voting Employing Split Value Representations",
+   "venue": "EVOTE 2014",
+   "year": 2014,
+   "url": "https://people.csail.mit.edu/rivest/pubs/RR14b.pdf",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "rabin-rivest-wp122",
+   "group": "e2e",
+   "authors": "Michael O. Rabin and Ronald L. Rivest",
+   "title": "Practical End-to-End Verifiable Voting via Split-Value Representations and Randomized Partial Checking",
+   "venue": "Caltech/MIT Voting Technology Project Working Paper 122",
+   "year": 2014,
+   "url": "http://www.vote.caltech.edu/content/practical-end-end-verifiable-voting-split-value-representations-and-randomized-partial",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "rabin-rivest-wp124",
+   "group": "e2e",
+   "authors": "Michael O. Rabin and Ronald L. Rivest",
+   "title": "Practical Provably Correct Voter Privacy Protecting End to End Voting Employing Multiparty Computations and Split Value Representations of Votes",
+   "venue": "Caltech/MIT Voting Technology Project Working Paper 124",
+   "year": 2014,
+   "url": "http://vote.caltech.edu/content/practical-provably-correct-voter-privacy-protecting-end-end-voting-employing-multiparty",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "marked-mixnets",
+   "group": "e2e",
+   "authors": "Olivier Pereira and Ronald L. Rivest",
+   "title": "Marked mix-nets",
+   "venue": "Voting ’17",
+   "year": 2017,
+   "url": "http://fc17.ifca.ai/voting/papers/voting17_prm3.pdf",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "masked-voter",
+   "group": "e2e",
+   "authors": "P.Y.A. Ryan, P.B. Roenne, P.B. Stark, D. Ostrev, N. Soroush and F-E. El Orche",
+   "title": "Who was that masked voter? The tally won’t tell!",
+   "venue": "E-Vote-ID 2021, LNCS",
+   "year": 2021,
+   "doi": "10.1007/978-3-030-86942-7_8",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "risk-limiting-tallies",
+   "group": "e2e",
+   "authors": "W. Jamroga, P. Roenne, P.Y.A. Ryan and P.B. Stark",
+   "title": "Risk-Limiting Tallies",
+   "venue": "E-Vote-ID 2019, LNCS 11759",
+   "year": 2019,
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "quadratic-voting",
+   "group": "e2e",
+   "authors": "Sunoo Park and Ronald L. Rivest",
+   "title": "Towards Secure Quadratic Voting",
+   "venue": "Public Choice, pp. 1–25",
+   "year": 2017,
+   "doi": "10.1007/s11127-017-0407-2",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "cumulative-voting",
+   "group": "e2e",
+   "authors": "Josh Benaloh",
+   "title": "The Weakness of Cumulative Voting",
+   "venue": "Microsoft Research",
+   "year": 2017,
+   "url": "https://www.microsoft.com/en-us/research/publication/the-weakness-of-cumulative-voting/",
+   "source": "J. Benaloh's publication page (Microsoft Research)"
+  },
+  {
+   "key": "batchvote",
+   "group": "e2e",
+   "authors": "Ronald L. Rivest, Philip B. Stark and Zara Perumal",
+   "title": "BatchVote: Voting rules designed for auditability",
+   "venue": "Voting ’17",
+   "year": 2017,
+   "url": "http://fc17.ifca.ai/voting/papers/voting17_bv.pdf",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "stat-robust-rules",
+   "group": "e2e",
+   "authors": "Ronald L. Rivest and Emily Shen",
+   "title": "Statistical Robustness of Voting Rules",
+   "venue": "Preprint",
+   "year": 2012,
+   "url": "https://people.csail.mit.edu/rivest/pubs/RS12a.ver-2012-01-25.pdf",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "double-bubble",
+   "group": "e2e",
+   "authors": "Ronald L. Rivest",
+   "title": "Double-Bubble Ballots",
+   "venue": "Note",
+   "year": 2020,
+   "url": "https://people.csail.mit.edu/rivest/pubs/Riv20a.pdf",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "attestable-kiosks",
+   "group": "e2e",
+   "authors": "Matthew Bernhard, J. Alex Halderman and Gabe Stocco",
+   "title": "Implementing Attestable Kiosks",
+   "venue": "14th IEEE Conference on Privacy, Security, and Trust (PST ’16)",
+   "year": 2016,
+   "url": "https://mbernhard.com/papers/kiosk-pst16.pdf",
+   "source": "M. Bernhard's publication page (mbernhard.com)"
+  },
+  {
+   "key": "goggin",
+   "group": "handcount",
+   "authors": "Stephen N. Goggin, Michael D. Byrne and Juan E. Gilbert",
+   "title": "Post-Election Auditing: Effects of Procedure and Ballot Type on Manual Counting Accuracy, Efficiency, and Auditor Satisfaction and Confidence",
+   "venue": "Election Law Journal 11(1):36–51",
+   "year": 2012,
+   "doi": "10.1089/elj.2010.0098",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "atkeson",
+   "group": "handcount",
+   "authors": "Lonna Rae Atkeson, R. Michael Alvarez and Thad E. Hall",
+   "title": "The New Mexico 2006 Post Election Audit Report",
+   "venue": "Revised October 2009",
+   "year": 2009,
+   "url": "https://www.unm.edu/~atkeson/assets/new_mexico_report_revised_oct09.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "ans-reeves",
+   "group": "handcount",
+   "authors": "Stephen Ansolabehere and Andrew Reeves",
+   "title": "Using Recounts to Measure the Accuracy of Vote Tabulations: Evidence from New Hampshire Elections, 1946–2002",
+   "venue": "Caltech/MIT Voting Technology Project Working Paper 11",
+   "year": 2004,
+   "url": "https://vote.caltech.edu/documents/133/vtp_wp11.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "ans2018",
+   "group": "handcount",
+   "authors": "Stephen Ansolabehere, Barry C. Burden, Kenneth R. Mayer and Charles Stewart III",
+   "title": "Learning from Recounts",
+   "venue": "Election Law Journal 17(2):100–116",
+   "year": 2018,
+   "doi": "10.1089/elj.2017.0440",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "mebane-bernhard",
+   "group": "handcount",
+   "authors": "Walter R. Mebane, Jr. and Matthew Bernhard",
+   "title": "Voting Technologies, Recount Methods and Votes in Wisconsin and Michigan in 2016",
+   "venue": "3rd Workshop on Advances in Secure Electronic Voting (Voting ’18)",
+   "year": 2018,
+   "url": "https://mbernhard.com/papers/recount2016.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "retab-verification",
+   "group": "handcount",
+   "authors": "M. Lindeman, R.L. Rivest and P.B. Stark",
+   "title": "Retabulations, Machine-Assisted Audits, and Election Verification",
+   "venue": "Preprint",
+   "year": 2013,
+   "url": "http://www.stat.berkeley.edu/~stark/Preprints/retabulation13.htm",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "retab-not-audit",
+   "group": "handcount",
+   "authors": "M. Lindeman, R.L. Rivest and P.B. Stark",
+   "title": "Machine Retabulation is not Auditing",
+   "venue": "Preprint",
+   "year": 2013,
+   "url": "http://www.stat.berkeley.edu/~stark/Preprints/retabNotAudit13.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "scan-shuffle-rescan",
+   "group": "handcount",
+   "authors": "Douglas W. Jones, Sunoo Park, Ronald L. Rivest and Adam Sealfon",
+   "title": "Scan, Shuffle, Rescan: Two-Prover Election Audits With Untrusted Scanners",
+   "venue": "Financial Cryptography 2024",
+   "year": 2024,
+   "url": "https://eprint.iacr.org/2022/960",
+   "note": "Earlier version: Cryptology ePrint Archive 2022/960 (linked).",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "eac-custody",
+   "group": "practice",
+   "authors": "U.S. Election Assistance Commission",
+   "title": "Chain of Custody Best Practices, version 1.1",
+   "venue": "U.S. Election Assistance Commission",
+   "year": 2021,
+   "url": "https://www.eac.gov/election-officials/chain-custody-best-practices",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "kir-1",
+   "group": "practice",
+   "authors": "Democracy Fund",
+   "title": "Knowing It’s Right, Part One: A Practical Guide to Risk-Limiting Audits",
+   "venue": "Democracy Fund / electionline",
+   "year": null,
+   "url": "http://electionline.org/resources/rla-practical-guide",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "kir-2",
+   "group": "practice",
+   "authors": "Democracy Fund",
+   "title": "Knowing It’s Right, Part Two: Risk-Limiting Audit Implementation Workbook",
+   "venue": "Democracy Fund / electionline",
+   "year": null,
+   "url": "http://electionline.org/resources/rla-implementation-workbook",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "kir-3",
+   "group": "practice",
+   "authors": "Democracy Fund",
+   "title": "Knowing It’s Right, Part Three: Planning & Conducting a Risk-Limiting Pilot",
+   "venue": "Democracy Fund",
+   "year": 2020,
+   "url": "https://democracyfund.org/wp-content/uploads/2020/06/2020_DF_KnowingItsRight_Part3.pdf",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "kir-4",
+   "group": "practice",
+   "authors": "Democracy Fund",
+   "title": "Knowing It’s Right, Part Four: Ballot Accounting Audits Best Practices Guide",
+   "venue": "Democracy Fund",
+   "year": 2021,
+   "url": "https://demofund.wpengine.com/wp-content/uploads/2021/02/2021_DF_KnowingItsRight_Part4.pdf",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "vv-messaging",
+   "group": "practice",
+   "authors": "Verified Voting",
+   "title": "Risk-Limiting Audit (RLA) Messaging Guide for Election Officials",
+   "venue": "Verified Voting",
+   "year": null,
+   "url": "https://verifiedvoting.org/publication/risk-limiting-audit-rla-messaging-guide-for-election-officials/",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "vv-oversight",
+   "group": "practice",
+   "authors": "Verified Voting",
+   "title": "Checking the Paper Record: A Guide for Public Oversight of Tabulation Audits",
+   "venue": "Verified Voting",
+   "year": null,
+   "url": "https://verifiedvoting.org/publication/checking-the-paper-record-a-guide-for-public-oversight-of-tabulation-audits-2/",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "vv-methods-graphic",
+   "group": "practice",
+   "authors": "Verified Voting",
+   "title": "Differences Between RLA Methods (graphic)",
+   "venue": "Verified Voting",
+   "year": 2020,
+   "url": "https://verifiedvoting.org/wp-content/uploads/2020/05/RLA-Methods.pdf",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "vv-audit-laws",
+   "group": "practice",
+   "authors": "Verified Voting",
+   "title": "Audit Law Database",
+   "venue": "Verified Voting",
+   "year": null,
+   "url": "https://verifiedvoting.org/auditlaws/",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "ncsl-rla",
+   "group": "practice",
+   "authors": "National Conference of State Legislatures",
+   "title": "Risk-Limiting Audits (state-by-state audit laws and analysis)",
+   "venue": "NCSL",
+   "year": null,
+   "url": "https://www.ncsl.org/research/elections-and-campaigns/risk-limiting-audits.aspx",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "eg-templates",
+   "group": "practice",
+   "authors": "The Elections Group",
+   "title": "Audit Report Templates",
+   "venue": "The Elections Group",
+   "year": null,
+   "url": "https://electionsgroup.com/resource/audit-report-templates/",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "ifes-guide",
+   "group": "practice",
+   "authors": "E. Shein (IFES)",
+   "title": "Risk Limiting Audits: A Guide for Global Use",
+   "venue": "International Foundation for Electoral Systems",
+   "year": null,
+   "url": "https://www.ifes.org/publications/risk-limiting-audits-guide-global-use",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "peas-2007",
+   "group": "practice",
+   "authors": "D. Jefferson, K. Alexander, E. Ginnold, A. Lehmkuhl, K. Midstokke and P.B. Stark",
+   "title": "Post Election Audit Standards Report: Evaluation of Audit Sampling Models and Options for Strengthening California’s Manual Count",
+   "venue": "California Secretary of State Post-Election Audit Standards Working Group",
+   "year": 2007,
+   "url": "http://www.sos.ca.gov/voting-systems/oversight/peas/final-peaswg-report.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "co-cvr-anon",
+   "group": "practice",
+   "authors": "J. McCarthy, N. McBurnett, H. Branscomb, R. Rivest and P.B. Stark",
+   "title": "Colorado Risk-Limiting Tabulation Audit: Preserving Anonymity of Cast Vote Record",
+   "venue": "Colorado Secretary of State",
+   "year": 2018,
+   "url": "https://www.sos.state.co.us/pubs/elections/VotingSystems/riskAuditFiles/2018/20180309PreservingAnonymityOfCVR.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "co-rep-group",
+   "group": "practice",
+   "authors": "Colorado RLA Representative Group",
+   "title": "Risk-Limiting Audit Representative Group Recommendations for Colorado",
+   "venue": "Colorado Secretary of State",
+   "year": 2017,
+   "url": "https://www.sos.state.co.us/pubs/elections/VotingSystems/riskAuditFiles/ConciseRecommendationsCO-RLA2017.pdf",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "corla-next",
+   "group": "practice",
+   "authors": "M. Lindeman, N. McBurnett, K. Ottoboni and P.B. Stark",
+   "title": "Next Steps for the Colorado Risk-Limiting Audit (CORLA) Program",
+   "venue": "Preprint",
+   "year": 2018,
+   "url": "https://arxiv.org/abs/1803.00698",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "co-audit-center",
+   "group": "practice",
+   "authors": "Colorado Secretary of State",
+   "title": "Audit Center",
+   "venue": "Colorado Secretary of State",
+   "year": null,
+   "url": "https://www.sos.state.co.us/pubs/elections/auditCenter.html",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "co-seed",
+   "group": "practice",
+   "authors": "Colorado Secretary of State",
+   "title": "Notice of Public Meeting to Establish the Risk Limiting Audit Random Seed (June 2024 primary)",
+   "venue": "Colorado Secretary of State",
+   "year": 2024,
+   "url": "https://coloradosos.gov/pubs/elections/RLA/2024/primary/noticePublicMeeting.html",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "hall-ca-2009",
+   "group": "practice",
+   "authors": "J.L. Hall, L.W. Miratrix, P.B. Stark, M. Briones, E. Ginnold, F. Oakley, M. Peaden, G. Pellerin, T. Stanionis and T. Webber",
+   "title": "Implementing Risk-Limiting Audits in California",
+   "venue": "EVT/WOTE ’09",
+   "year": 2009,
+   "url": "http://arxiv.org/abs/0905.4691",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "stark-ca-2009",
+   "group": "practice",
+   "authors": "P.B. Stark",
+   "title": "Efficient post-election audits of multiple contests: 2009 California tests",
+   "venue": "Conference on Empirical Legal Studies",
+   "year": 2009,
+   "url": "http://ssrn.com/abstract=1443314",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "vault-inyo",
+   "group": "practice",
+   "authors": "J. Benaloh, K. Foote, P.B. Stark, V. Teague and D.S. Wallach",
+   "title": "VAULT-Style Risk-Limiting Audits and the Inyo County Pilot",
+   "venue": "IEEE Security & Privacy 19:8–18",
+   "year": 2021,
+   "doi": "10.1109/MSEC.2021.3075107",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "india-audit",
+   "group": "practice",
+   "authors": "V. Mohanty, N. Akinyokun, A. Conway, C. Culnane, P.B. Stark and V. Teague",
+   "title": "Auditing Indian Elections",
+   "venue": "E-Vote-ID 2019, LNCS 11759",
+   "year": 2019,
+   "url": "https://arxiv.org/abs/1901.03108",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "india-inquiry",
+   "group": "practice",
+   "authors": "Poorvi L. Vora, Alok Choudhary, J. Alex Halderman, Douglas W. Jones, Nasir Memon, Bhagirath Narahari, R. Ramanujam, Ronald L. Rivest, Philip B. Stark, K.V. Subrahmanyam and Vanessa Teague",
+   "title": "An Inquiry into India’s Election System (deposition)",
+   "venue": "Citizens’ Commission on Elections",
+   "year": 2021,
+   "url": "https://people.csail.mit.edu/rivest/pubs/VCHJx21.pdf",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "australian-senate",
+   "group": "practice",
+   "authors": "B. Chilingirian, Z. Perumal, R.L. Rivest, G. Bowland, A. Conway, P.B. Stark, M. Blom, C. Culnane and V. Teague",
+   "title": "Auditing Australian Senate Ballots",
+   "venue": "Preprint",
+   "year": 2016,
+   "url": "https://arxiv.org/abs/1610.00127",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "venice-irregularities",
+   "group": "practice",
+   "authors": "D. Bochsler, J. Medzihorsky, C. Schuermann and P.B. Stark",
+   "title": "Report on the Identification of Electoral Irregularities by Statistical Methods",
+   "venue": "Venice Commission of the Council of Europe, CDL-AD(2018)009",
+   "year": 2018,
+   "url": "http://www.venice.coe.int/webforms/documents/?pdf=CDL-AD(2018)009-e",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "nist-data-req",
+   "group": "practice",
+   "authors": "Audit Working Group, ElectionAudits.org",
+   "title": "Data requirements for vote-tabulation audits: Statement to NIST",
+   "venue": "ElectionAudits.org",
+   "year": 2009,
+   "url": "http://electionaudits.org/niststatement",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "ca-precinct-data",
+   "group": "practice",
+   "authors": "J.L. Hall, P.B. Stark, H.E. Brady and J.S. Sekhon",
+   "title": "Comments on the CA SoS’ Precinct Level Data Pilot Project",
+   "venue": "Public comment",
+   "year": 2009,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/CACountyData09.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "mcburnett-random",
+   "group": "practice",
+   "authors": "Neal McBurnett",
+   "title": "Publicly verifiable random selection procedures",
+   "venue": "neal.mcburnett.org",
+   "year": null,
+   "url": "https://neal.mcburnett.org/publicly-verifiable-random-selection-last-input-nomcom.html",
+   "source": "N. McBurnett's site (neal.mcburnett.org)"
+  },
+  {
+   "key": "dice",
+   "group": "practice",
+   "authors": "Arel Cordero, David Wagner and David Dill",
+   "title": "The Role of Dice in Election Audits",
+   "venue": "WOTE 2006",
+   "year": 2006,
+   "url": "https://people.eecs.berkeley.edu/~daw/papers/dice-wote06.pdf",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "ri-pilot",
+   "group": "pilots",
+   "authors": "Rhode Island RLA Working Group",
+   "title": "Pilot Implementation Study of Risk-Limiting Audit Methods in the State of Rhode Island",
+   "venue": "Brennan Center for Justice",
+   "year": 2019,
+   "url": "https://www.brennancenter.org/our-work/research-reports/pilot-implementation-study-risk-limiting-audit-methods-state-rhode-island",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "oc-2018",
+   "group": "pilots",
+   "authors": "Verified Voting (hosted)",
+   "title": "Orange County, California Pilot Risk-Limiting Audit Report (June 2018)",
+   "venue": "Verified Voting",
+   "year": 2018,
+   "url": "https://www.verifiedvoting.org/wp-content/uploads/2018/12/2018-RLA-Report-Orange-County-CA.pdf",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "fairfax-2018",
+   "group": "pilots",
+   "authors": "Verified Voting",
+   "title": "City of Fairfax, VA Pilot Risk-Limiting Audit Report (August 2018)",
+   "venue": "Verified Voting",
+   "year": 2018,
+   "url": "https://verifiedvoting.org/publication/city-of-fairfax-va-pilot-risk-limiting-audit-report/",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "mi-2019",
+   "group": "pilots",
+   "authors": "Brennan Center for Justice",
+   "title": "A Review of Robust Post-Election Audits (Michigan pilot, November 2019)",
+   "venue": "Brennan Center for Justice",
+   "year": 2019,
+   "url": "https://www.brennancenter.org/our-work/research-reports/review-robust-post-election-audits",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "ca-pilots",
+   "group": "pilots",
+   "authors": "California Secretary of State",
+   "title": "Risk-Limiting Audits: 2021–2022 pilot results",
+   "venue": "California Secretary of State",
+   "year": 2022,
+   "url": "https://www.sos.ca.gov/elections/post-election-audits/risk-limiting-audits",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "pa-2022",
+   "group": "pilots",
+   "authors": "Pennsylvania Post-Election Audit Working Group",
+   "title": "Post-Election Audit Working Group Report on Risk Limiting Audits (September 2022)",
+   "venue": "Pennsylvania Department of State",
+   "year": 2022,
+   "url": "https://www.vote.pa.gov/About-Elections/Documents/2022-09-30-Post-Election-Audit-Workgroup-Report-RLA.pdf",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "ct-rla-2023",
+   "group": "pilots",
+   "authors": "UConn VoTeR Center (hosted)",
+   "title": "Risk-Limiting Audit Recommendations for Connecticut",
+   "venue": "UConn VoTeR Center",
+   "year": 2023,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/04/rla-overview.pdf",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "boulder-2008",
+   "group": "pilots",
+   "authors": "Neal McBurnett et al.",
+   "title": "Boulder County audit of the 2008 election",
+   "venue": "neal.mcburnett.org",
+   "year": 2008,
+   "url": "https://neal.mcburnett.org/~neal/elections/boulder-audit-08-11/",
+   "source": "N. McBurnett's site (neal.mcburnett.org)"
+  },
+  {
+   "key": "boulder-2010",
+   "group": "pilots",
+   "authors": "Neal McBurnett et al.",
+   "title": "First Colorado risk-limiting audit (Boulder County, 2010)",
+   "venue": "neal.mcburnett.org",
+   "year": 2010,
+   "url": "https://neal.mcburnett.org/~neal/elections/boulder-audit-10-11/",
+   "source": "N. McBurnett's site (neal.mcburnett.org)"
+  },
+  {
+   "key": "nh-sb43",
+   "group": "pilots",
+   "authors": "H. Hursti, M. Lindeman and P.B. Stark",
+   "title": "New Hampshire SB 43 Forensic Audit Report",
+   "venue": "New Hampshire Department of Justice",
+   "year": 2021,
+   "url": "https://www.doj.nh.gov/sb43/documents/20210713-sb43-forensic-audit-report.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "stark2008",
+   "group": "m-found",
+   "authors": "Philip B. Stark",
+   "title": "Conservative Statistical Post-Election Audits",
+   "venue": "Annals of Applied Statistics 2(2):550–581",
+   "year": 2008,
+   "url": "https://arxiv.org/abs/0807.4005",
+   "doi": "10.1214/08-AOAS161",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "stark-sharper",
+   "group": "m-found",
+   "authors": "P.B. Stark",
+   "title": "A Sharper Discrepancy Measure for Post-Election Audits",
+   "venue": "Annals of Applied Statistics 2:982–985",
+   "year": 2008,
+   "url": "http://arxiv.org/abs/0811.1697",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "stark-ppeb",
+   "group": "m-found",
+   "authors": "P.B. Stark",
+   "title": "Election audits by sampling with probability proportional to an error bound: dealing with discrepancies",
+   "venue": "Working draft",
+   "year": 2008,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/ppebwrwd08.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "stark2009",
+   "group": "m-found",
+   "authors": "Philip B. Stark",
+   "title": "Risk-Limiting Postelection Audits: Conservative P-Values From Common Probability Inequalities",
+   "venue": "IEEE Transactions on Information Forensics and Security 4(4):1005–1014",
+   "year": 2009,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/pvalues09.pdf",
+   "doi": "10.1109/TIFS.2009.2034190",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "cast",
+   "group": "m-found",
+   "authors": "P.B. Stark",
+   "title": "CAST: Canvass Audits by Sampling and Testing",
+   "venue": "IEEE Transactions on Information Forensics and Security 4:708–717",
+   "year": 2009,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/cast09.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "trinomial",
+   "group": "m-found",
+   "authors": "L.W. Miratrix and P.B. Stark",
+   "title": "Election Audits using a Trinomial Bound",
+   "venue": "IEEE Transactions on Information Forensics and Security 4:974–981",
+   "year": 2009,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/trinomial09.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "stark-collection",
+   "group": "m-found",
+   "authors": "P.B. Stark",
+   "title": "Auditing a collection of races simultaneously",
+   "venue": "Preprint",
+   "year": 2009,
+   "url": "http://arxiv.org/abs/0905.1422",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "cluster-size",
+   "group": "m-found",
+   "authors": "P.B. Stark",
+   "title": "Risk-Limiting Vote-Tabulation Audits: The Importance of Cluster Size",
+   "venue": "Chance 23(3):9–12",
+   "year": 2010,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/auditingChance10.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "small-batches",
+   "group": "m-found",
+   "authors": "P.B. Stark",
+   "title": "Why small audit batches are more efficient: two heuristic explanations",
+   "venue": "Preprint",
+   "year": 2010,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/smallBatchHeuristics10.htm",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "super-simple",
+   "group": "m-found",
+   "authors": "Philip B. Stark",
+   "title": "Super-Simple Simultaneous Single-Ballot Risk-Limiting Audits",
+   "venue": "EVT/WOTE ’10",
+   "year": 2010,
+   "url": "https://usenix.org/conference/evtwote-10/super-simple-simultaneous-single-ballot-risk-limiting-audits",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "sharper-stratified",
+   "group": "m-found",
+   "authors": "M.J. Higgins, R.L. Rivest and P.B. Stark",
+   "title": "Sharper p-values for Stratified Post-Election Audits",
+   "venue": "Statistics, Politics, and Policy 2(1)",
+   "year": 2011,
+   "url": "http://www.bepress.com/spp/vol2/iss1/7/",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "workload",
+   "group": "m-found",
+   "authors": "K. McLaughlin and P.B. Stark",
+   "title": "Workload Estimates for Risk-Limiting Audits of Large Contests",
+   "venue": "Preprint",
+   "year": 2011,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/workload11.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "soba",
+   "group": "m-found",
+   "authors": "Josh Benaloh, Douglas Jones, Eric L. Lazarus, Mark Lindeman and Philip B. Stark",
+   "title": "SOBA: Secrecy-preserving Observable Ballot-level Audit",
+   "venue": "EVT/WOTE ’11",
+   "year": 2011,
+   "url": "http://static.usenix.org/events/evtwote11/tech/final_files/Benaloh.pdf",
+   "source": "J. Benaloh's publication page (Microsoft Research)"
+  },
+  {
+   "key": "bravo",
+   "group": "m-found",
+   "authors": "Mark Lindeman, Philip B. Stark and Vincent S. Yates",
+   "title": "BRAVO: Ballot-polling Risk-limiting Audits to Verify Outcomes",
+   "venue": "EVT/WOTE ’12",
+   "year": 2012,
+   "url": "https://www.usenix.org/system/files/conference/evtwote12/evtwote12-final27.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "bpa-2pages",
+   "group": "m-found",
+   "authors": "P.B. Stark",
+   "title": "Ballot-Polling Audits in Two Pages (±1)",
+   "venue": "Note",
+   "year": 2012,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/bpa2pp.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "evil-zombies",
+   "group": "m-found",
+   "authors": "J.H. Banuelos and P.B. Stark",
+   "title": "Limiting Risk by Turning Manifest Phantoms into Evil Zombies",
+   "venue": "Preprint",
+   "year": 2012,
+   "url": "https://arxiv.org/abs/1207.3413",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "bernoulli-bp",
+   "group": "m-poll",
+   "authors": "Kellie Ottoboni, Matthew Bernhard, J. Alex Halderman, Ronald L. Rivest and Philip B. Stark",
+   "title": "Bernoulli Ballot Polling: A Manifest Improvement for Risk-Limiting Audits",
+   "venue": "Voting ’19",
+   "year": 2019,
+   "url": "https://mbernhard.com/papers/bbp.pdf",
+   "note": "Preprint: arXiv:1812.06361.",
+   "source": "M. Bernhard's publication page (mbernhard.com)"
+  },
+  {
+   "key": "minerva",
+   "group": "m-poll",
+   "authors": "Filip Zagórski, Grant McClearn, Sarah Morin, Neal McBurnett and Poorvi L. Vora",
+   "title": "Minerva: An Efficient Risk-Limiting Ballot Polling Audit",
+   "venue": "30th USENIX Security Symposium",
+   "year": 2021,
+   "url": "https://www.usenix.org/conference/usenixsecurity21/presentation/zagorski",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "athena",
+   "group": "m-poll",
+   "authors": "Filip Zagórski, Grant McClearn, Sarah Morin, Neal McBurnett and Poorvi L. Vora",
+   "title": "The Athena Class of Risk-Limiting Ballot Polling Audits",
+   "venue": "Preprint (full version of Minerva, with proofs)",
+   "year": 2020,
+   "url": "https://arxiv.org/abs/2008.02315",
+   "source": "P.L. Vora's audit research page (seas.gwu.edu/~poorvi)"
+  },
+  {
+   "key": "providence",
+   "group": "m-poll",
+   "authors": "Oliver Broadrick, Poorvi L. Vora and Filip Zagórski",
+   "title": "PROVIDENCE: a Flexible Round-by-Round Risk-Limiting Audit",
+   "venue": "32nd USENIX Security Symposium",
+   "year": 2023,
+   "url": "https://www.usenix.org/conference/usenixsecurity23/presentation/broadrick",
+   "note": "Preprint: arXiv:2210.08717.",
+   "source": "P.L. Vora's audit research page (seas.gwu.edu/~poorvi)"
+  },
+  {
+   "key": "bp-simulations",
+   "group": "m-poll",
+   "authors": "Oliver Broadrick, Sarah Morin, Grant McClearn, Neal McBurnett, Poorvi L. Vora and Filip Zagórski",
+   "title": "Simulations of Ballot Polling Risk-Limiting Audits",
+   "venue": "Voting ’22",
+   "year": 2022,
+   "url": "https://oliverbroadrick.com/papers/2022_Voting_Broadrick_simulations.pdf",
+   "source": "P.L. Vora's audit research page (seas.gwu.edu/~poorvi)"
+  },
+  {
+   "key": "unified-bp",
+   "group": "m-poll",
+   "authors": "Zhuoqun Huang, Ronald L. Rivest, Philip B. Stark, Vanessa Teague and Damjan Vukcevic",
+   "title": "A Unified Evaluation of Two-Candidate Ballot-Polling Election Auditing Methods",
+   "venue": "E-Vote-ID 2020, pp. 112–128",
+   "year": 2020,
+   "url": "https://arxiv.org/abs/2008.08536",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "bayes-above-average",
+   "group": "m-poll",
+   "authors": "A. Glazer, J. Spertus and P.B. Stark",
+   "title": "Bayesian audits are average but risk-limiting audits are above average",
+   "venue": "E-Vote-ID 2020, LNCS",
+   "year": 2020,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/bayesRLA20.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "vora-bayes-rla",
+   "group": "m-poll",
+   "authors": "Poorvi L. Vora",
+   "title": "Risk-Limiting Bayesian Polling Audits for Two Candidate Elections",
+   "venue": "Preprint, CoRR abs/1902.00999",
+   "year": 2019,
+   "url": "https://arxiv.org/abs/1902.00999",
+   "source": "P.L. Vora's audit research page (seas.gwu.edu/~poorvi)"
+  },
+  {
+   "key": "bayes-rla-note",
+   "group": "m-poll",
+   "authors": "Sarah Morin, Grant McClearn, Neal McBurnett, Poorvi L. Vora and Filip Zagórski",
+   "title": "A Note on Risk-Limiting Bayesian Polling Audits for Two-Candidate Elections",
+   "venue": "Voting ’20",
+   "year": 2020,
+   "url": "https://www2.seas.gwu.edu/~poorvi/Bayesian-RLAs-short.pdf",
+   "source": "P.L. Vora's audit research page (seas.gwu.edu/~poorvi)"
+  },
+  {
+   "key": "clipaudit",
+   "group": "m-poll",
+   "authors": "Ronald L. Rivest",
+   "title": "ClipAudit: A Simple Post-Election Risk-Limiting Audit",
+   "venue": "Preprint",
+   "year": 2017,
+   "url": "https://arxiv.org/abs/1701.08312",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "diffsum",
+   "group": "m-poll",
+   "authors": "Ronald L. Rivest",
+   "title": "DiffSum: A Simple Post-Election Risk-Limiting Audit",
+   "venue": "Preprint",
+   "year": 2015,
+   "url": "http://arxiv.org/abs/1509.00127",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "suite",
+   "group": "m-comp",
+   "authors": "K. Ottoboni, P.B. Stark, M. Lindeman and N. McBurnett",
+   "title": "Risk-Limiting Audits by Stratified Union-Intersection Tests of Elections (SUITE)",
+   "venue": "E-Vote-ID 2018, LNCS",
+   "year": 2018,
+   "url": "https://link.springer.com/chapter/10.1007/978-3-030-00419-4_12",
+   "note": "Preprint: arXiv:1809.04235.",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "sweeter-suite",
+   "group": "m-comp",
+   "authors": "J. Spertus and P.B. Stark",
+   "title": "Sweeter than SUITE: Supermartingale Stratified Union-Intersection Tests of Elections",
+   "venue": "E-Vote-ID 2022, LNCS",
+   "year": 2022,
+   "url": "https://link.springer.com/chapter/10.1007/978-3-031-15911-4_7",
+   "note": "Preprint: arXiv:2207.03379.",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "delayed-strat",
+   "group": "m-comp",
+   "authors": "P.B. Stark",
+   "title": "Delayed Stratification for Timely Risk-Limiting Audits",
+   "venue": "Preprint",
+   "year": 2019,
+   "url": "https://www.stat.berkeley.edu/~stark/Preprints/delayed19.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "more-style",
+   "group": "m-comp",
+   "authors": "A. Glazer, J. Spertus and P.B. Stark",
+   "title": "More style, less work: card-style data decrease risk-limiting audit sample sizes",
+   "venue": "Digital Threats: Research and Practice",
+   "year": 2021,
+   "doi": "10.1145/3457907",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "stylish-practice",
+   "group": "m-comp",
+   "authors": "A. Glazer, J. Spertus and P.B. Stark",
+   "title": "Stylish Risk-Limiting Audits in Practice",
+   "venue": "E-Vote-ID 2023",
+   "year": 2023,
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "oneaudit",
+   "group": "m-comp",
+   "authors": "P.B. Stark",
+   "title": "Overstatement-Net-Equivalent Risk-Limiting Audit: ONEAudit",
+   "venue": "Financial Cryptography and Data Security: FC 2023 Workshops, LNCS 13953",
+   "year": 2024,
+   "url": "http://arxiv.org/abs/2303.03335",
+   "doi": "10.1007/978-3-031-48806-1_5",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "dice-not-slice",
+   "group": "m-comp",
+   "authors": "A. Glazer, J. Spertus and P.B. Stark",
+   "title": "Dice but don’t slice: Optimizing the efficiency of ONEAudit",
+   "venue": "E-Vote-ID 2025 (to appear)",
+   "year": 2025,
+   "url": "https://arxiv.org/abs/2507.22179",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "noncesuch",
+   "group": "m-comp",
+   "authors": "P.B. Stark",
+   "title": "Non(c)esuch Ballot-Level Comparison Risk-Limiting Audits",
+   "venue": "ESORICS 2022 Workshops, LNCS 13785",
+   "year": 2023,
+   "doi": "10.1007/978-3-031-25460-4_31",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "mismatch",
+   "group": "m-comp",
+   "authors": "A. Ek, M. Blom, P.B. Stark, P.J. Stuckey, V.J. Teague and D. Vukcevic",
+   "title": "Doing More With Less: Mismatch-Based Risk-Limiting Audits",
+   "venue": "Financial Cryptography and Data Security 2025 (to appear)",
+   "year": 2025,
+   "url": "https://arxiv.org/abs/2503.16104",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "adaptive-comparison",
+   "group": "m-comp",
+   "authors": "B. Fuller, A. Harrison and A. Russell",
+   "title": "Adaptive Risk-Limiting Comparison Audits",
+   "venue": "Preprint",
+   "year": 2022,
+   "url": "https://arxiv.org/pdf/2202.02607.pdf",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "vault",
+   "group": "m-comp",
+   "authors": "Josh Benaloh, Philip B. Stark and Vanessa Teague",
+   "title": "VAULT: Verifiable Audits Using Limited Transparency",
+   "venue": "E-Vote-ID 2019, LNCS 11759",
+   "year": 2019,
+   "url": "https://www.microsoft.com/en-us/research/publication/vault-verifiable-audits-using-limited-transparency/",
+   "source": "J. Benaloh's publication page (Microsoft Research)"
+  },
+  {
+   "key": "shangrla",
+   "group": "m-gen",
+   "authors": "Philip B. Stark",
+   "title": "Sets of Half-Average Nulls Generate Risk-Limiting Audits: SHANGRLA",
+   "venue": "Financial Cryptography and Data Security: FC 2020 Workshops (Voting ’20), LNCS 12063, pp. 319–336",
+   "year": 2020,
+   "url": "https://arxiv.org/abs/1911.10035",
+   "doi": "10.1007/978-3-030-54455-3_23",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "alpha",
+   "group": "m-gen",
+   "authors": "P.B. Stark",
+   "title": "ALPHA: Audit that Learns from Previously Hand-Audited Ballots",
+   "venue": "Annals of Applied Statistics 17(1):641–679",
+   "year": 2023,
+   "url": "https://arxiv.org/abs/2201.02707",
+   "doi": "10.1214/22-AOAS1646",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "rilacs",
+   "group": "m-gen",
+   "authors": "I. Waudby-Smith, P.B. Stark and A. Ramdas",
+   "title": "RiLACS: Risk Limiting Audits via Confidence Sequences",
+   "venue": "E-Vote-ID 2021, LNCS",
+   "year": 2021,
+   "url": "https://arxiv.org/abs/2107.11323",
+   "doi": "10.1007/978-3-030-86942-7_9",
+   "note": "Best paper award, Elections and Practical Experiences track.",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "blotto",
+   "group": "m-gen",
+   "authors": "S. Behnezhad, A. Blum, M. Derakhshan, M. Hajiaghayi, M. Mahdian, C.H. Papadimitriou, R.L. Rivest, S. Seddighin and P.B. Stark",
+   "title": "From Battlefields to Elections: Winning Strategies of Blotto and Auditing Games",
+   "venue": "ACM-SIAM Symposium on Discrete Algorithms (SODA ’18)",
+   "year": 2018,
+   "url": "https://epubs.siam.org/doi/abs/10.1137/1.9781611975031.148",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "irv-margins",
+   "group": "m-complex",
+   "authors": "M. Blom, P.J. Stuckey, V. Teague and R. Tidhar",
+   "title": "Efficient Computation of Exact IRV Margins",
+   "venue": "Preprint",
+   "year": 2015,
+   "url": "https://arxiv.org/pdf/1508.04885.pdf",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "raire",
+   "group": "m-complex",
+   "authors": "M. Blom, P.J. Stuckey and V. Teague",
+   "title": "RAIRE: Risk-Limiting Audits for IRV Elections",
+   "venue": "Preprint",
+   "year": 2019,
+   "url": "https://arxiv.org/pdf/1903.08804.pdf",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "rla-irv",
+   "group": "m-complex",
+   "authors": "M. Blom, A. Conway, D. King, L. Sandrolini, P.B. Stark, P.J. Stuckey and V. Teague",
+   "title": "You can do RLAs for IRV",
+   "venue": "E-Vote-ID 2020",
+   "year": 2020,
+   "url": "https://arxiv.org/abs/2004.00235",
+   "note": "Best paper award, Elections and Practical Experiences track.",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "awaire",
+   "group": "m-complex",
+   "authors": "A. Ek, P.B. Stark, P.J. Stuckey and D. Vukcevic",
+   "title": "Adaptively Weighted Audits of Instant-Runoff Voting Elections: AWAIRE",
+   "venue": "E-Vote-ID 2023",
+   "year": 2023,
+   "url": "https://link.springer.com/chapter/10.1007/978-3-031-43756-4_3",
+   "note": "Best paper award: security, usability, and technical issues.",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "irv-weighting",
+   "group": "m-complex",
+   "authors": "A. Ek, P.B. Stark, P.J. Stuckey and D. Vukcevic",
+   "title": "Efficient Weighting Schemes for Auditing Instant-Runoff Voting Elections",
+   "venue": "Financial Cryptography and Data Security, LNCS 14230, pp. 35–51",
+   "year": 2024,
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "irv-adaptive-eff",
+   "group": "m-complex",
+   "authors": "A. Ek, M. Blom, P.B. Stark, P.J. Stuckey and D. Vukcevic",
+   "title": "Improving the Computational Efficiency of Adaptive Audits of IRV Elections",
+   "venue": "E-Vote-ID 2024, LNCS",
+   "year": 2024,
+   "url": "https://arxiv.org/abs/2407.16465",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "irv-dirichlet",
+   "group": "m-complex",
+   "authors": "F. Everest, M. Blom, P.B. Stark, P.J. Stuckey, V. Teague and D. Vukcevic",
+   "title": "Ballot-Polling Audits of Instant-Runoff Voting Elections with a Dirichlet-Tree Model",
+   "venue": "ESORICS 2022 Workshops, LNCS 13785",
+   "year": 2023,
+   "doi": "10.1007/978-3-031-25460-4_30",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "stv-rla",
+   "group": "m-complex",
+   "authors": "M. Blom, P.J. Stuckey, V. Teague and D. Vukcevic",
+   "title": "A First Approach to Risk-Limiting Audits for Single Transferable Vote Elections",
+   "venue": "Preprint",
+   "year": 2021,
+   "url": "https://arxiv.org/pdf/2112.09921.pdf",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "assertion-party-list",
+   "group": "m-complex",
+   "authors": "M. Blom, J. Budurushi, R.L. Rivest, P.B. Stark, P.J. Stuckey, V. Teague and D. Vukcevic",
+   "title": "Assertion-based approaches to auditing complex elections, with application to party-list proportional elections",
+   "venue": "E-Vote-ID 2021, LNCS, pp. 47–62",
+   "year": 2021,
+   "url": "https://arxiv.org/abs/2107.11903",
+   "doi": "10.1007/978-3-030-86942-7_4",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "hamiltonian",
+   "group": "m-complex",
+   "authors": "M. Blom, P.B. Stark, P.J. Stuckey, V. Teague and D. Vukcevic",
+   "title": "Auditing Hamiltonian Elections",
+   "venue": "Voting ’21",
+   "year": 2021,
+   "url": "https://arxiv.org/abs/2102.08510",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "dhondt",
+   "group": "m-complex",
+   "authors": "P.B. Stark and V. Teague",
+   "title": "Verifiable European Elections: Risk-limiting Audits for D’Hondt and Its Relatives",
+   "venue": "USENIX Journal of Election Technology and Systems (JETS) 3(1)",
+   "year": 2014,
+   "url": "https://www.usenix.org/jets/issues/0301/stark",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "kcut",
+   "group": "sampling",
+   "authors": "Mayuri Sridhar and Ronald L. Rivest",
+   "title": "k-Cut: A Simple Approximately-Uniform Method for Sampling Ballots in Post-Election Audits",
+   "venue": "Voting ’19",
+   "year": 2019,
+   "url": "https://people.csail.mit.edu/rivest/pubs/SR19.pdf",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "consistent-sampling",
+   "group": "sampling",
+   "authors": "R.L. Rivest",
+   "title": "Consistent Sampling with Replacement",
+   "venue": "Preprint",
+   "year": 2018,
+   "url": "https://arxiv.org/pdf/1808.10016.pdf",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "ternary-trees",
+   "group": "sampling",
+   "authors": "Ronald L. Rivest",
+   "title": "Voting and Auditing with Ternary Plurality Trees",
+   "venue": "GitHub repository",
+   "year": 2019,
+   "url": "https://github.com/ron-rivest/2019-ternary-plurality-trees",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "rivest-shen-bayes",
+   "group": "bayes",
+   "authors": "Ronald L. Rivest and Emily Shen",
+   "title": "A Bayesian Method for Auditing Elections",
+   "venue": "EVT/WOTE ’12",
+   "year": 2012,
+   "url": "https://www.usenix.org/system/files/conference/evtwote12/rivest_bayes_rev_073112.pdf",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "bayes-explained",
+   "group": "bayes",
+   "authors": "Ronald L. Rivest",
+   "title": "Bayesian Tabulation Audits: Explained and Extended",
+   "venue": "Preprint",
+   "year": 2018,
+   "url": "https://arxiv.org/abs/1801.00528",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "bayes-one-page",
+   "group": "bayes",
+   "authors": "Audrey Malagon and Ronald L. Rivest",
+   "title": "Bayesian Election Audits in One Page",
+   "venue": "Note",
+   "year": 2018,
+   "url": "https://people.csail.mit.edu/rivest/pubs/MR18.pdf",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "bayes-maa",
+   "group": "bayes",
+   "authors": "Audrey Malagon and Ronald L. Rivest",
+   "title": "A Bayesian Approach to Election Audits",
+   "venue": "MAA FOCUS 39(6)",
+   "year": 2019,
+   "url": "http://digitaleditions.walsworthprintgroup.com/display_article.php?id=3546930&view=638453",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "georgia-2018",
+   "group": "forensics",
+   "authors": "K. Ottoboni and P.B. Stark",
+   "title": "Election Integrity and Electronic Voting Machines in 2018 Georgia",
+   "venue": "E-Vote-ID 2019, LNCS 11759",
+   "year": 2019,
+   "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3426250",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "georgia-2020",
+   "group": "forensics",
+   "authors": "P.B. Stark",
+   "title": "When Audits and Recounts are a Distraction: The 2020 U.S. Presidential Election in Georgia",
+   "venue": "Preprint",
+   "year": 2024,
+   "url": "https://arxiv.org/abs/2408.00055",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "georgia-bombs",
+   "group": "forensics",
+   "authors": "S. Andrade and P.B. Stark",
+   "title": "Does Extending Polling Hours Compensate for Bomb Threats? The 2024 Election in Georgia, USA",
+   "venue": "E-Vote-ID 2025 (to appear)",
+   "year": 2025,
+   "url": "https://arxiv.org/abs/2508.19442",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "npv",
+   "group": "forensics",
+   "authors": "Ronald L. Rivest and Philip B. Stark",
+   "title": "The National Popular Vote (NPV) proposal for U.S. Presidential Elections undermines election integrity",
+   "venue": "SSRN",
+   "year": 2024,
+   "url": "https://ssrn.com/abstract=5032049",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "ct-hc-2025",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Statistical Analysis of Post-Election Audit Data for the November 4, 2025 Municipal Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2025,
+   "url": "https://voter-engr.media.uconn.edu/wp-content/uploads/sites/3651/2026/07/CTHandCount2025-1.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-hc-2024",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Statistical Analysis of Post-Election Audit Data for the November 5, 2024 Presidential Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2024,
+   "url": "https://voter-engr.media.uconn.edu/wp-content/uploads/sites/3651/2025/11/CTHandCount2024-1.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-hc-2023",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Statistical Analysis of Post-Election Audit Data for the November 7, 2023 Municipal Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2023,
+   "url": "https://voter-engr.media.uconn.edu/wp-content/uploads/sites/3651/2025/11/CTHandCount2023-1.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-hc-2022",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Statistical Analysis of Post-Election Audit Data for the November 8, 2022 State Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2022,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/2022-11-08-hand-count-statistics.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-hc-2021",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Statistical Analysis of Post-Election Audit Data for the November 2, 2021 Municipal Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2021,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/2021-11-02-hand-count-statistics.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2021",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Audit of Memory Cards for the November 2021 Municipal Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2021,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/2021-11-02-ct-technological-audit.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-hc-2020",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Statistical Analysis of Post-Election Audit Data for the November 3, 2020 Presidential Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2020,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/2020-11-03-hand-count-statistics.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2020",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Audit of Memory Cards for the November 2020 Presidential Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2020,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/2020-11-03-ct-technological-audit.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-hc-2019",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Statistical Analysis of Post-Election Audit Data for the November 5, 2019 Municipal Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2019,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/2019-11-05-hand-count-statistics.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-hc-2018",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Statistical Analysis of Post-Election Audit Data for the November 6, 2018 State Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2018,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/2018-11-06-hand-count-statistics.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-hc-2017",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Statistical Analysis of Post-Election Audit Data for the November 7, 2017 Municipal Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2017,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/2017-11-07-hand-count-statistics.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-hc-2016",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Statistical Analysis of Post-Election Audit Data for the November 8, 2016 Presidential Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2016,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/2016-11-08-hand-count-statistics.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-hc-2014aug",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Statistical Analysis of the Post-Election Audit Data, 2014 August Primary Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2014,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/2014-Aug-Hand-Count-V1.0.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2013pre",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Pre-Election Audit of Memory Cards for the November 5, 2013 Connecticut Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2013,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/VC-audit-main1.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2012post",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Post-Election Audit of Memory Cards for the November 6, 2012 Connecticut Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2012,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/VC-audit-main.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2012pre",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Pre-Election Audit of Memory Cards for the November 6, 2012 Connecticut Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2012,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/VC-pre-audit-Nov-2012.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2012augpost",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Post-Election Audit of Memory Cards for the August 14, 2012 Connecticut Primary Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2012,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/VC-post-2012-Aug.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2012augpre",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Pre-Election Audit of Memory Cards for the August 14, 2012 Connecticut Primary Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2012,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/VC-pre-2012-Aug.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2012apr",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Technological Audit of Memory Cards for the April 24, 2012 Connecticut Primary Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2012,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/VC-audit-main-12-04.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-hc-2011",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Statistical Analysis of the Post-Election Audit Data, 2011 November Election",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2011,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/Nov-8-2011-HCA-V11.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2011",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Technological Audit of Memory Cards for the November 8, 2011 Connecticut Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2011,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/VC-audit-main-11.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-tech-2007-2010",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Technological Audits of Optical Scan Voting Systems: Summary for 2007 to 2010 Connecticut Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2011,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/VC-TechAudits-2007-2010c.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-hc-2010aug",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Statistical Analysis of the Post-Election Audit Data, 2010 August Primary Election",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2010,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/2010-aug-hand-v11.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2010augpre",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Pre-Election Audit of Memory Cards for the August 10, 2010 Primary Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2010,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/vc-pre-2010-august11.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-hc-2009",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Statistical Analysis of the Post Election Audit Data, 2009 November Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2009,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/2009-nov-hand13.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2009post",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Post-Election Audit of Memory Cards for the November 2009 Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2009,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/2009-nov-post-card12.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2009pre",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Pre-Election Audit of Memory Cards for the November 2009 Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2009,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/2009-nov-pre-card12.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-hc-2008nov",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Statistical Analysis of the Post Election Audit Data, 2008 November Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2008,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/2008-Nov-Hand-V10.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2008novpost",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Post-Election Audit of Memory Cards for the November 2008 Presidential Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2008,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/2008-nov-post-v10.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2008novpre",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Pre-Election Audit of Memory Cards for the November 2008 Presidential Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2008,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/audit08-nov-pre-10.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2008augpost",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Post-Election Audit of Memory Cards for the August 2008 Connecticut Primary Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2008,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/audit-post-08-08.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2008augpre",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Pre-Election Audit of Memory Cards for the August 2008 Connecticut Primary Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2008,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/audit0808pre.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-hc-2008feb",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Statistical Analysis of the Post Election Audit Data, 2008 February Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2008,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/audit08-february-v3.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2008feb",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Post-Election Audit of Memory Cards for the February 2008 Connecticut Primary Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2008,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/audit08-b1.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-hc-2007",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Statistical Analysis of the Post Election Audit Data, 2007 November Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2008,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/audit07-h-080410.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2007post",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Partial Post-Election Audit of Memory Cards for the November 2007 Connecticut Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2008,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/audit07mc-post.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-mc-2007pre",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Pre-Election Audit of Memory Cards for the November 2007 Connecticut Elections",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2008,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/audit07mc.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "ct-hc-2006",
+   "group": "ct",
+   "authors": "UConn Center for Voting Technology Research (VoTeR Center)",
+   "title": "Analysis of the post-election audit results for the November 2006 Election",
+   "venue": "Report for the Connecticut Secretary of the State",
+   "year": 2007,
+   "url": "https://voter.engr.uconn.edu/wp-content/uploads/sites/3651/2023/02/audit-final-06.pdf",
+   "source": "UConn VoTeR Center audits page"
+  },
+  {
+   "key": "arlo",
+   "group": "tools",
+   "authors": "VotingWorks",
+   "title": "Arlo: risk-limiting audit software",
+   "venue": "Open-source software (GitHub)",
+   "year": null,
+   "url": "https://github.com/votingworks/arlo",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "arlo-planner",
+   "group": "tools",
+   "authors": "VotingWorks",
+   "title": "Audit Planner",
+   "venue": "Web tool",
+   "year": null,
+   "url": "https://arlo.voting.works/planner",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "corla-sw",
+   "group": "tools",
+   "authors": "Democracy Works (repository)",
+   "title": "ColoradoRLA (CORLA): Colorado’s risk-limiting audit software",
+   "venue": "Open-source software (GitHub)",
+   "year": null,
+   "url": "https://github.com/democracyworks/ColoradoRLA",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "stark-polltools",
+   "group": "tools",
+   "authors": "Philip B. Stark",
+   "title": "Interactive tools for ballot-polling risk-limiting audits",
+   "venue": "Web tool",
+   "year": null,
+   "url": "https://www.stat.berkeley.edu/~stark/Java/Html/ballotPollTools.htm",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "stark-comptools",
+   "group": "tools",
+   "authors": "Philip B. Stark",
+   "title": "Interactive tools for ballot-level comparison risk-limiting audits",
+   "venue": "Web tool",
+   "year": null,
+   "url": "https://www.stat.berkeley.edu/~stark/Java/Html/auditTools.htm",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "stark-sha256",
+   "group": "tools",
+   "authors": "Philip B. Stark",
+   "title": "A simple random number generator using SHA-256",
+   "venue": "Web tool",
+   "year": null,
+   "url": "https://www.stat.berkeley.edu/~stark/Java/Html/sha256Rand.htm",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "shangrla-code",
+   "group": "tools",
+   "authors": "Philip B. Stark et al.",
+   "title": "SHANGRLA",
+   "venue": "Open-source software (GitHub)",
+   "year": null,
+   "url": "https://github.com/pbstark/SHANGRLA",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "audittools-code",
+   "group": "tools",
+   "authors": "Philip B. Stark",
+   "title": "auditTools",
+   "venue": "Open-source software (GitHub)",
+   "year": null,
+   "url": "https://github.com/pbstark/auditTools",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "bbp-code",
+   "group": "tools",
+   "authors": "Philip B. Stark et al.",
+   "title": "BernoulliBallotPolling",
+   "venue": "Open-source software (GitHub)",
+   "year": null,
+   "url": "https://github.com/pbstark/BernoulliBallotPolling",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  },
+  {
+   "key": "corla18-code",
+   "group": "tools",
+   "authors": "Kellie Ottoboni",
+   "title": "SUITE/hybrid audit demonstration notebook (CORLA18)",
+   "venue": "Jupyter notebook",
+   "year": null,
+   "url": "https://mybinder.org/v2/gh/pbstark/CORLA18/master?filepath=code%2Fsuite_toolkit.ipynb",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "mcburnett-calc",
+   "group": "tools",
+   "authors": "Neal McBurnett",
+   "title": "RLA Sample Size Calculator",
+   "venue": "Web tool",
+   "year": null,
+   "url": "http://bcn.boulder.co.us/~neal/electionaudits/rlacalc.html",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "electionaudits-sw",
+   "group": "tools",
+   "authors": "Neal McBurnett",
+   "title": "ElectionAudits",
+   "venue": "Open-source software",
+   "year": null,
+   "url": "https://neal.mcburnett.org/~neal/electionaudits/",
+   "source": "N. McBurnett's site (neal.mcburnett.org)"
+  },
+  {
+   "key": "eaw",
+   "group": "tools",
+   "authors": "Ronald L. Rivest",
+   "title": "ElectionAuditWare",
+   "venue": "Open-source software (GitHub)",
+   "year": null,
+   "url": "https://github.com/ron-rivest/ElectionAuditWareRepo/blob/master/README.md",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "rlaorg",
+   "group": "tools",
+   "authors": "VotingWorks (coordinator)",
+   "title": "RiskLimitingAudits.org",
+   "venue": "Website",
+   "year": null,
+   "url": "https://risklimitingaudits.org/",
+   "note": "A collaborative documentation project about RLAs.",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "vid-vv",
+   "group": "tools",
+   "authors": "Verified Voting",
+   "title": "Understanding Risk-Limiting Audits (video)",
+   "venue": "YouTube",
+   "year": null,
+   "url": "https://www.youtube.com/watch?v=DlstGHazHPM",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "vid-vw",
+   "group": "tools",
+   "authors": "VotingWorks",
+   "title": "Risk-Limiting Audit (video)",
+   "venue": "YouTube",
+   "year": null,
+   "url": "https://youtu.be/yhQNir0rS_s",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "vid-denver",
+   "group": "tools",
+   "authors": "Denver8TV",
+   "title": "3-Minute RLA Explainer (video)",
+   "venue": "YouTube",
+   "year": null,
+   "url": "https://youtu.be/oKgSKh4utNo",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "vid-co",
+   "group": "tools",
+   "authors": "Colorado Secretary of State",
+   "title": "30-Minute RLA Video",
+   "venue": "YouTube",
+   "year": null,
+   "url": "https://www.youtube.com/watch?v=ysG4pFFmQ-E",
+   "source": "RiskLimitingAudits.org resources page"
+  },
+  {
+   "key": "numberphile-urn",
+   "group": "tools",
+   "authors": "Ronald L. Rivest",
+   "title": "How to Check Election Results (feat. Pólya’s Urn)",
+   "venue": "Numberphile (YouTube)",
+   "year": 2016,
+   "url": "https://www.youtube.com/watch?v=ZM-i8t4pMK0",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "numberphile-homo",
+   "group": "tools",
+   "authors": "Ronald L. Rivest",
+   "title": "Was YOUR vote counted? (feat. homomorphic encryption)",
+   "venue": "Numberphile (YouTube)",
+   "year": 2016,
+   "url": "https://www.youtube.com/watch?v=BYRTvoZ3Rho",
+   "source": "R.L. Rivest's publication page (people.csail.mit.edu/rivest/pubs.html)"
+  },
+  {
+   "key": "stark-cards-dice",
+   "group": "tools",
+   "authors": "Philip B. Stark",
+   "title": "Simulating a Ballot-Polling Risk-Limiting Audit with Cards and Dice",
+   "venue": "Multidisciplinary Conference on Election Auditing, MIT",
+   "year": 2018,
+   "url": "https://www.stat.berkeley.edu/~stark/Seminars/ballotPollingSimulation.pdf",
+   "source": "P.B. Stark's publication page (stat.berkeley.edu/~stark/Vote)"
+  }
+ ]
+}

@@ -34,7 +34,7 @@ The page is a single self-contained HTML file. Open it in a browser, or turn on 
 
 ## Reading list
 
-[`references.html`](references.html) collects every source cited in the series, plus the risk-limiting audit papers later pages will build on, grouped by topic.
+[`references.html`](references.html) collects every source cited in the series plus the wider literature on election audits and voting system security, grouped by topic, with a search filter. It is generated from [`bib/references.json`](bib/references.json) by `python3 tools/build_reading_list.py` (template: `tools/reading_list_template.html`); edit the JSON, not the HTML. Each entry records where its details came from (`source`). The build fails if a page cites a key that isn't in the bibliography.
 
 ## Citations
 
