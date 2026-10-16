@@ -33,7 +33,9 @@ Last updated 2026-10-15. Page: [`sampling.html`](../sampling.html). It comes bef
 - Simplifications to relax later: two candidates, no invalid ballots, sampling without replacement.
 - Rework the ballot polling page: drop what this page now covers, revisit the towers, avoid framing the LR as required.
 
-## Next idea: why paper (software independence)
+## Why paper page (software independence), built 2026-10-15
 
-- Explain why audits check paper rather than electronic records: software independence (an undetected change in software can't cause an undetected change in the outcome). Probably its own page, before this one.
-- Demo ideas: (1) a machine screen says Alice, the electronic record says Bob, the paper the voter checked says Alice; a slider flips some share of electronic records, the reported result moves, the paper doesn't, and sampling the paper catches it. (2) "Hack the count": try to change the outcome by editing only electronic records; every attempt shows up when the paper is sampled.
+- Page: [`why-paper.html`](../why-paper.html), Part 0, links forward to this page; this page links back to it from the intro.
+- Built from these two demo ideas: (1) a machine screen says Alice, the electronic record says Bob, the paper the voter checked says Alice; a slider flips some share of electronic records, the reported result moves, the paper doesn't, and sampling the paper catches it. (2) "Hack the count": try to change the outcome by editing only electronic records; every attempt shows up when the paper is sampled.
+- Both demos use 100 voters, 55–45 on paper; 6 changed records flip the reported winner (5 makes a tie). The audit in demo 2 is a comparison of each pulled paper ballot with its own record; the page notes that ballot polling looks only at paper. Catch probability shown is 1 − C(100−k, n)/C(100, n).
+- To check: the Rivest–Wack definition is paraphrased, not quoted; the "most votes in the US are counted by machines" opener; whether to say more about ballot-marking devices (the page only says voters "marked or checked" the paper).

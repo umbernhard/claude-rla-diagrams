@@ -1,0 +1,277 @@
+<title>Why Audit Paper</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap">
+<style>
+/* Layout: one reading column of prose broken by two figure panels; each figure is a 10×10 grid of ballots, every cell holding an electronic record with its paper ballot underneath. Shares the series' tokens. */
+:root {
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --ink: #15181d;
+  --ink-2: #4b5260;
+  --ink-3: #79808d;
+  --rule: #dde1e7;
+  --grid: #e9ecf0;
+  --reported: #2a78d6;
+  --alice: #6b46c1;
+  --bob: #0b8686;
+  --bad: #c2341b;
+  --bad-bg: #fbe6e1;
+  --good: #1e7d4f;
+  --good-bg: #e3f3ea;
+  --focus: #2a78d6;
+  --f-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111317; --panel: #191c21; --ink: #eef0f3; --ink-2: #b7bcc6; --ink-3: #868d99; --rule: #2c3138; --grid: #23272d;
+    --reported: #3987e5; --alice: #a88bf0; --bob: #3fc0bd; --bad: #ff7a5c; --bad-bg: #3a1a13; --good: #5cc48e; --good-bg: #16301f; --focus: #3987e5;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111317; --panel: #191c21; --ink: #eef0f3; --ink-2: #b7bcc6; --ink-3: #868d99; --rule: #2c3138; --grid: #23272d;
+  --reported: #3987e5; --alice: #a88bf0; --bob: #3fc0bd; --bad: #ff7a5c; --bad-bg: #3a1a13; --good: #5cc48e; --good-bg: #16301f; --focus: #3987e5;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 1rem/1.6 var(--f-body); }
+.wrap { max-width: 60rem; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 2rem 4rem; display: grid; gap: 1.75rem; }
+.prose { max-width: 40rem; display: grid; gap: .1rem; }
+h1 { font: 600 clamp(1.7rem, 4vw, 2.3rem)/1.15 var(--f-display); margin: 0 0 .5rem; text-wrap: balance; letter-spacing: -.01em; }
+h2 { font: 600 1.25rem/1.3 var(--f-display); margin: 0 0 .4rem; text-wrap: balance; }
+.figure h2 { margin: 0; }
+p { margin: 0 0 .75rem; color: var(--ink-2); }
+p b, p strong { color: var(--ink); font-weight: 600; }
+.eyebrow { font: 500 .72rem/1.3 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: .6rem; }
+.who-a { color: var(--alice); font-weight: 600; } .who-b { color: var(--bob); font-weight: 600; }
+.figure { background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; padding: 1rem; display: grid; gap: .8rem; min-width: 0; }
+.figure > p { margin: 0; max-width: 46rem; }
+.row { display: flex; flex-wrap: wrap; gap: .5rem .75rem; align-items: center; justify-content: space-between; }
+.actions { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+button { font: 500 .9rem/1 var(--f-body); color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: .55rem .8rem; cursor: pointer; }
+button.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+button:hover { border-color: var(--ink-3); }
+button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+.seg button { border: 0; border-radius: 0; background: var(--bg); color: var(--ink-2); }
+.seg button[aria-pressed=true] { background: var(--ink); color: var(--bg); }
+.lbl { font: 500 .72rem/1.2 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.slider { display: grid; gap: .35rem; }
+.slider label b { color: var(--ink); font-weight: 500; letter-spacing: 0; }
+input[type=range] { width: 100%; accent-color: var(--ink); }
+
+/* tallies */
+.tallies { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .6rem; }
+.tally { border: 1px solid var(--rule); border-radius: 8px; padding: .6rem .75rem; display: grid; gap: .3rem; background: var(--bg); }
+.tally .nums { font: 500 1rem/1.3 var(--f-mono); font-variant-numeric: tabular-nums; color: var(--ink); }
+.tally .win { font: 500 .85rem/1.2 var(--f-body); }
+.tally.off { opacity: .45; }
+
+/* ballot grid: each cell is an electronic record (top) over its paper ballot (bottom) */
+.ballots { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; max-width: 34rem; }
+.cell { position: relative; display: grid; grid-template-rows: 1fr 1fr; border: 1px solid var(--rule); border-radius: 5px; overflow: hidden; background: var(--panel); aspect-ratio: 3 / 4; max-width: 100%; padding: 0; font: 500 .78rem/1 var(--f-mono); cursor: default; }
+.cell span { display: grid; place-items: center; }
+.cell .rec { border-bottom: 1px dashed var(--rule); }
+.cell .a { color: var(--alice); } .cell .b { color: var(--bob); }
+.cell .paper.hidden { color: var(--ink-3); background: repeating-linear-gradient(135deg, var(--grid) 0 4px, var(--panel) 4px 8px); }
+.cell .paper.none { color: transparent; background: var(--bg); }
+.cell.drawn { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.cell.bad { border-color: var(--bad); box-shadow: 0 0 0 2px var(--bad); }
+.cell.bad .rec { background: var(--bad-bg); }
+.cell.edited .rec { background: color-mix(in srgb, var(--bob) 16%, var(--panel)); }
+button.cell { cursor: pointer; }
+button.cell:disabled { cursor: default; }
+.key { display: flex; flex-wrap: wrap; gap: .4rem 1rem; font-size: .85rem; color: var(--ink-2); }
+.key span { display: inline-flex; gap: .35rem; align-items: center; }
+.mini { display: inline-grid; grid-template-rows: 1fr 1fr; width: 1.1rem; height: 1.45rem; border: 1px solid var(--rule); border-radius: 3px; overflow: hidden; }
+.mini i:first-child { border-bottom: 1px dashed var(--rule); }
+.mini.bad { border-color: var(--bad); box-shadow: 0 0 0 1px var(--bad); }
+.mini.hid i:last-child { background: repeating-linear-gradient(135deg, var(--grid) 0 3px, var(--panel) 3px 6px); }
+
+.out { font-size: .95rem; color: var(--ink-2); display: grid; gap: .35rem; max-width: 46rem; }
+.out p { margin: 0; }
+.out b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.pill { font: 500 .8rem/1 var(--f-body); padding: .4rem .65rem; border-radius: 999px; color: var(--ink-2); background: var(--bg); border: 1px solid var(--rule); }
+.pill.bad { color: var(--bad); background: var(--bad-bg); border-color: transparent; }
+.pill.good { color: var(--good); background: var(--good-bg); border-color: transparent; }
+.next { display: inline-flex; align-items: center; gap: .5em; font: 600 1rem/1.3 var(--f-body); color: var(--ink); text-decoration: none; border: 1px solid var(--ink); border-radius: 6px; padding: .7rem 1rem; justify-self: start; margin-top: .5rem; }
+.next:hover { background: var(--ink); color: var(--bg); }
+.fine { font-size: .85rem; color: var(--ink-3); }
+</style>
+
+<div class="wrap">
+  <header class="prose">
+    <div class="eyebrow">Risk-limiting audits from the ground up · Part 0: why paper</div>
+    <h1>Why do audits check paper ballots?</h1>
+    <p>Most votes in the United States are counted by machines, and machines run software. Software can have bugs, it can be set up wrong, and in the worst case someone can tamper with it. Looking at a machine's output can't tell you which of these happened, because the output is all the software lets you see.</p>
+    <p>An audit needs evidence the software never had a chance to touch. A paper ballot is that evidence: the voter marked it, or checked what was printed on it, before it went into the box. Researchers Ron Rivest and John Wack gave the idea a name, <b>software independence</b>. A voting system is software independent if a change or error in its software can't change the outcome without someone being able to notice.</p>
+  </header>
+
+  <section class="figure" aria-labelledby="t1">
+    <h2 id="t1">One vote, two records</h2>
+    <p>One hundred voters cast ballots. Every ballot leaves two records: an electronic record the machine counts (top half of each square), and the paper ballot the voter checked (bottom half, sealed in the box until an audit). On paper, <span class="who-a">Alice</span> won 55 to 45. Use the slider to make the software quietly record some Alice votes as Bob votes.</p>
+    <div class="slider">
+      <label for="flip" class="lbl">Alice votes the software records as Bob: <b id="flipVal">8</b></label>
+      <input id="flip" type="range" min="0" max="30" step="1" value="8">
+    </div>
+    <div class="tallies">
+      <div class="tally"><span class="lbl">Electronic count (reported)</span><span class="nums" id="eNums"></span><span class="win" id="eWin"></span></div>
+      <div class="tally" id="pTally"><span class="lbl">Paper ballots (in the box)</span><span class="nums" id="pNums"></span><span class="win" id="pWin"></span></div>
+    </div>
+    <div class="row">
+      <div class="actions">
+        <button id="draw1" class="primary" type="button">Check 10 paper ballots</button>
+        <button id="clear1" type="button">Put them back</button>
+      </div>
+      <div class="actions">
+        <span class="lbl" id="paperLbl">Paper ballots</span>
+        <div class="seg" role="group" aria-labelledby="paperLbl">
+          <button id="paperYes" type="button" aria-pressed="true">Yes</button>
+          <button id="paperNo" type="button" aria-pressed="false">No paper</button>
+        </div>
+      </div>
+    </div>
+    <div class="ballots" id="grid1" aria-label="One hundred ballots"></div>
+    <div class="key">
+      <span><span class="mini hid"><i></i><i></i></span>record over sealed paper</span>
+      <span><span class="mini bad"><i></i><i></i></span>record doesn't match its paper</span>
+    </div>
+    <div id="out1" class="out" aria-live="polite"></div>
+  </section>
+
+  <section class="prose" aria-labelledby="s2">
+    <h2 id="s2">The paper doesn't move</h2>
+    <p>However many records the software changes, the paper stays where the voters left it. That's what makes the paper worth auditing: it is a record of the vote that doesn't depend on the software being right.</p>
+    <p>Switch to "No paper" and try again. Now every record you pull agrees with the count, because the count was made from those same records. Without an independent record, a check can only ask the software whether the software was right.</p>
+  </section>
+
+  <section class="figure" aria-labelledby="t2">
+    <h2 id="t2">Try to change the outcome</h2>
+    <p>Now you're the one with access to the software. Click Alice's electronic records to change them to Bob. You can't touch the paper: it's sealed in the box, and each voter already checked their own. Your goal is a reported win for <span class="who-b">Bob</span> that gets past the audit.</p>
+    <div class="tallies">
+      <div class="tally"><span class="lbl">Electronic count (reported)</span><span class="nums" id="hNums"></span><span class="win" id="hWin"></span></div>
+      <div class="tally"><span class="lbl">Your changes</span><span class="nums" id="hEdits"></span><span class="win" id="hNeed"></span></div>
+    </div>
+    <div class="actions">
+      <button id="hAuto" type="button">Change just enough for Bob to win</button>
+      <button id="hUndo" type="button">Undo all changes</button>
+    </div>
+    <div class="ballots" id="grid2" aria-label="One hundred ballots; click Alice records to change them"></div>
+    <div class="slider">
+      <label for="hN" class="lbl">Paper ballots the audit checks: <b id="hNVal">20</b></label>
+      <input id="hN" type="range" min="1" max="100" step="1" value="20">
+    </div>
+    <div class="row">
+      <button id="hAudit" class="primary" type="button">Run the audit</button>
+      <span id="hPill" class="pill">Audit not run yet</span>
+    </div>
+    <div id="out2" class="out" aria-live="polite"></div>
+  </section>
+
+  <section class="prose" aria-labelledby="s3">
+    <h2 id="s3">Where this leaves us</h2>
+    <p>To get past the audit, a change to the electronic records has to dodge every paper ballot the audit pulls. The more records you change, the harder that is, and changing the outcome takes a lot of changed records when the margin is wide. The rest of the series is about the other side of the bargain: how many paper ballots an audit needs to check so that a wrong outcome would almost certainly be caught, while a right one can be confirmed without counting everything.</p>
+    <p>One thing has to be true for any of this to work. The paper has to be a trustworthy record of the vote, which means voters marked or checked it, and the boxes are kept secure until the audit. An audit is only as good as the paper it checks.</p>
+    <a class="next" href="sampling.html">Next: what can a few ballots tell you? →</a>
+    <p class="fine" style="margin-top:1rem">The audit on this page compares each checked paper ballot with its own electronic record, the way a ballot comparison audit does. Ballot polling audits look only at the paper; later pages cover both.</p>
+  </section>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const N = 100, PA = 55, PB = 45;
+  const shuffle = arr => { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; };
+  const LF = [0]; const lf = n => { for (let i = LF.length; i <= n; i++) LF[i] = LF[i - 1] + Math.log(i); return LF[n]; };
+  const lc = (n, k) => k < 0 || k > n ? -Infinity : lf(n) - lf(k) - lf(n - k);
+  const pct = x => { const p = 100 * x; return (p >= 99.5 && p < 100 ? '>99' : p > 0 && p < 1 ? '<1' : Math.round(p)) + '%'; };
+  const winner = (a, b) => a > b ? '<span class="who-a">Alice wins</span>' : b > a ? '<span class="who-b">Bob wins</span>' : 'Tie';
+  const letter = v => `<span class="${v === 'A' ? 'a' : 'b'}">${v}</span>`;
+
+  // ============================================================ 1: one vote, two records
+  (() => {
+    const paper = shuffle([...Array(PA).fill('A'), ...Array(PB).fill('B')]);
+    const aliceIdx = shuffle(paper.map((v, i) => v === 'A' ? i : -1).filter(i => i >= 0)); // order the software flips them in
+    const st = { k: 8, hasPaper: true, drawn: new Set() };
+    const record = i => (aliceIdx.indexOf(i) > -1 && aliceIdx.indexOf(i) < st.k) ? 'B' : paper[i];
+    function render() {
+      $('flipVal').textContent = st.k;
+      const eA = PA - st.k, eB = PB + st.k;
+      $('eNums').textContent = `Alice ${eA} · Bob ${eB}`; $('eWin').innerHTML = winner(eA, eB);
+      $('pNums').textContent = st.hasPaper ? `Alice ${PA} · Bob ${PB}` : 'No paper record'; $('pWin').innerHTML = st.hasPaper ? winner(PA, PB) : 'Nothing to check against';
+      $('pTally').classList.toggle('off', !st.hasPaper);
+      let bad = 0;
+      $('grid1').innerHTML = paper.map((p, i) => {
+        const r = record(i), d = st.drawn.has(i), mism = d && st.hasPaper && r !== p; if (mism) bad++;
+        const pap = !st.hasPaper ? '<span class="paper none">·</span>' : d ? `<span class="paper">${letter(p)}</span>` : '<span class="paper hidden"></span>';
+        return `<div class="cell${d ? ' drawn' : ''}${mism ? ' bad' : ''}" role="img" aria-label="Record ${r}${d && st.hasPaper ? ', paper ' + p : ''}"><span class="rec">${letter(r)}</span>${pap}</div>`;
+      }).join('');
+      const n = st.drawn.size;
+      let html;
+      if (!n) html = `<p>The software changed <b>${st.k}</b> record${st.k === 1 ? '' : 's'}. From the outside, nothing looks wrong: the count adds up and every record is a valid vote. ${st.k >= 6 ? 'The reported winner is now Bob, though more voters chose Alice.' : st.k === 5 ? 'The reported result is now a tie.' : 'Alice still wins the reported count, by less than she should.'}</p>`;
+      else if (!st.hasPaper) html = `<p>You checked <b>${n}</b> records. With no paper, there's nothing to compare them to, so every one looks fine. The changed records are invisible.</p>`;
+      else html = `<p>You checked <b>${n}</b> paper ballots against their electronic records. <b>${bad}</b> ${bad === 1 ? "doesn't" : "don't"} match.` +
+        (bad ? ' One mismatch is enough to show the electronic records can\'t be trusted as they stand, and the audit keeps going, up to a full hand count of the paper if needed.</p>' : (st.k ? ' None of the changed records happened to be in this sample. Check more and the chance of missing them drops fast.</p>' : ' With the slider at 0, there are no changes to find.</p>'));
+      $('out1').innerHTML = html;
+    }
+    $('flip').addEventListener('input', e => { st.k = +e.target.value; render(); });
+    $('draw1').addEventListener('click', () => { const left = [...Array(N).keys()].filter(i => !st.drawn.has(i)); shuffle(left).slice(0, 10).forEach(i => st.drawn.add(i)); render(); });
+    $('clear1').addEventListener('click', () => { st.drawn.clear(); render(); });
+    const setPaper = v => { st.hasPaper = v; $('paperYes').setAttribute('aria-pressed', String(v)); $('paperNo').setAttribute('aria-pressed', String(!v)); render(); };
+    $('paperYes').addEventListener('click', () => setPaper(true)); $('paperNo').addEventListener('click', () => setPaper(false));
+    render();
+  })();
+
+  // ============================================================ 2: try to change the outcome
+  (() => {
+    const paper = shuffle([...Array(PA).fill('A'), ...Array(PB).fill('B')]);
+    const st = { edits: new Set(), n: 20, drawn: new Set() };
+    const grid = $('grid2');
+    function render() {
+      const k = st.edits.size, eA = PA - k, eB = PB + k, need = Math.max(0, Math.floor((PA - PB) / 2) + 1 - k);
+      $('hNVal').textContent = st.n; $('hAudit').textContent = st.drawn.size ? 'Reset the audit' : 'Run the audit';
+      $('hNums').textContent = `Alice ${eA} · Bob ${eB}`; $('hWin').innerHTML = winner(eA, eB);
+      $('hEdits').textContent = `${k} record${k === 1 ? '' : 's'} changed`;
+      $('hNeed').textContent = need ? `${need} more for Bob to win` : 'Enough for Bob to win';
+      grid.innerHTML = paper.map((p, i) => {
+        const ed = st.edits.has(i), r = ed ? 'B' : p, d = st.drawn.has(i), bad = d && ed;
+        const pap = d ? `<span class="paper">${letter(p)}</span>` : '<span class="paper hidden"></span>';
+        return `<button type="button" class="cell${ed ? ' edited' : ''}${d ? ' drawn' : ''}${bad ? ' bad' : ''}" data-i="${i}" ${p === 'A' && !st.drawn.size ? '' : 'disabled'} aria-label="${p === 'A' ? (ed ? 'Changed to Bob; click to change back' : 'Alice record; click to change to Bob') : 'Bob record'}"><span class="rec">${letter(r)}</span>${pap}</button>`;
+      }).join('');
+      const pCatch = 1 - Math.exp(lc(N - k, st.n) - lc(N, st.n));
+      const pill = $('hPill'), out = $('out2');
+      if (!st.drawn.size) {
+        pill.className = 'pill'; pill.textContent = 'Audit not run yet';
+        out.innerHTML = k
+          ? `<p>An audit that checks <b>${st.n}</b> paper ballots will pull at least one of your ${k} changed records <b>${pct(pCatch)}</b> of the time.</p>`
+          : '<p>Click some of Alice\'s records (the purple A\'s) to change them.</p>';
+      } else {
+        const caught = [...st.drawn].filter(i => st.edits.has(i)).length;
+        if (caught) { pill.className = 'pill bad'; pill.textContent = `Caught: ${caught} mismatch${caught === 1 ? '' : 'es'}`; }
+        else { pill.className = 'pill good'; pill.textContent = k ? 'Got past this time' : 'No changes to find'; }
+        out.innerHTML = caught
+          ? `<p>The audit pulled <b>${st.n}</b> paper ballots and <b>${caught}</b> didn't match their records. Once the records are shown to be wrong, the audit keeps checking paper, all the way to a full hand count if needed, and the paper says <span class="who-a">Alice</span> won.</p>`
+          : k ? `<p>None of your changes were in this sample of ${st.n}. That happens ${pct(1 - pCatch)} of the time with this many changes and this many ballots checked, which is why real audits choose how many ballots to check based on the margin and the risk they're willing to accept.</p>`
+          : '<p>Nothing was changed, so every paper ballot matched its record.</p>';
+      }
+    }
+    grid.addEventListener('click', e => { const b = e.target.closest('button.cell'); if (!b || b.disabled) return; const i = +b.dataset.i; st.edits.has(i) ? st.edits.delete(i) : st.edits.add(i); render(); });
+    $('hAuto').addEventListener('click', () => {
+      st.drawn.clear(); const need = Math.floor((PA - PB) / 2) + 1;
+      const free = shuffle(paper.map((v, i) => v === 'A' && !st.edits.has(i) ? i : -1).filter(i => i >= 0));
+      while (st.edits.size < need && free.length) st.edits.add(free.pop()); render();
+    });
+    $('hUndo').addEventListener('click', () => { st.edits.clear(); st.drawn.clear(); render(); });
+    $('hN').addEventListener('input', e => { st.n = +e.target.value; st.drawn.clear(); render(); });
+    $('hAudit').addEventListener('click', () => {
+      if (st.drawn.size) { st.drawn.clear(); render(); return; }
+      shuffle([...Array(N).keys()]).slice(0, st.n).forEach(i => st.drawn.add(i)); render();
+    });
+    render();
+  })();
+})();
+</script>
