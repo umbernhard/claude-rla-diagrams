@@ -79,9 +79,6 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
 .cell .a { color: var(--alice); } .cell .b { color: var(--bob); }
 .cell .paper.hidden { color: var(--ink-3); background: repeating-linear-gradient(135deg, var(--grid) 0 4px, var(--panel) 4px 8px); }
 .cell .paper.none { color: transparent; background: var(--bg); }
-.cell.drawn { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
-.cell.bad { border-color: var(--bad); box-shadow: 0 0 0 2px var(--bad); }
-.cell.bad .rec { background: var(--bad-bg); }
 .cell.edited .rec { background: color-mix(in srgb, var(--bob) 16%, var(--panel)); }
 button.cell { cursor: pointer; }
 button.cell:disabled { cursor: default; }
@@ -89,7 +86,6 @@ button.cell:disabled { cursor: default; }
 .key span { display: inline-flex; gap: .35rem; align-items: center; }
 .mini { display: inline-grid; grid-template-rows: 1fr 1fr; width: 1.1rem; height: 1.45rem; border: 1px solid var(--rule); border-radius: 3px; overflow: hidden; }
 .mini i:first-child { border-bottom: 1px dashed var(--rule); }
-.mini.bad { border-color: var(--bad); box-shadow: 0 0 0 1px var(--bad); }
 .mini.hid i:last-child { background: repeating-linear-gradient(135deg, var(--grid) 0 3px, var(--panel) 3px 6px); }
 
 .out { font-size: .95rem; color: var(--ink-2); display: grid; gap: .35rem; max-width: 46rem; }
@@ -160,24 +156,23 @@ button.cell:disabled { cursor: default; }
       <button id="hUndo" type="button">Undo all changes</button>
     </div>
     <div class="ballots" id="grid2" aria-label="One hundred ballots; click Alice records to change them"></div>
-    <p>Counting all 100 paper ballots by hand would settle it, but real elections have millions of ballots. Instead, draw a handful of paper ballots at random and see whether they look like they came from the election that was reported.</p>
+    <p>When you're happy with your changes, open the box and count the paper by hand.</p>
     <div class="row">
       <div class="actions">
-        <button id="hDraw" class="primary" type="button">Draw 10 paper ballots</button>
-        <button id="hCount" type="button">Count all the paper</button>
+        <button id="hCount" class="primary" type="button">Count the paper by hand</button>
         <button id="hReset" type="button">Seal it again</button>
       </div>
-      <span id="hPill" class="pill">No paper drawn yet</span>
+      <span id="hPill" class="pill">Paper sealed</span>
     </div>
     <div id="out2" class="out" aria-live="polite"></div>
   </section>
 
   <section class="prose" aria-labelledby="s3">
     <h2 id="s3">Where this leaves us</h2>
-    <p>Whatever happens to the electronic records, every paper ballot drawn comes from a box where Alice won 55 to 45. If the reported result is wrong, the paper will, sooner or later, start to disagree with it. The question the rest of the series answers is how much paper you need to look at before you can say, with a known level of confidence, that the reported winner really won, without counting everything.</p>
+    <p>However the electronic records are changed, a full hand count of the paper finds the outcome the voters chose. That makes the hand count the gold standard for checking an election.</p>
+    <p>It's also a lot of work. A hand count of a statewide contest means teams of people reading millions of ballots, for days or weeks, and most of the time it just confirms what the machines already said. The next page asks whether we can get most of the confidence of a full hand count by looking at only some of the paper.</p>
     <p>One thing has to be true for any of this to work. The paper has to be a trustworthy record of the vote, which means voters marked or checked it, and the boxes are kept secure until the audit. An audit is only as good as the paper it checks.</p>
     <a class="next" href="sampling.html">Next: what can a few ballots tell you? →</a>
-    <p class="fine" style="margin-top:1rem">The checks on this page only look at the paper: a full hand count, or a sample of paper ballots compared with the reported totals. That's how a ballot polling audit works. Another kind, the ballot comparison audit, checks each sampled paper ballot against its own electronic record; a later page covers it.</p>
   </section>
 </div>
 
@@ -228,50 +223,40 @@ button.cell:disabled { cursor: default; }
   // ============================================================ 2: try to change the outcome
   (() => {
     const paper = shuffle([...Array(PA).fill('A'), ...Array(PB).fill('B')]);
-    const st = { edits: new Set(), order: [], drawn: 0 };
+    const st = { edits: new Set(), counted: false };
     const grid = $('grid2');
-    const drawnSet = () => new Set(st.order.slice(0, st.drawn));
     function render() {
       const k = st.edits.size, eA = PA - k, eB = PB + k, need = Math.max(0, Math.floor((PA - PB) / 2) + 1 - k);
       $('hNums').textContent = `Alice ${eA} · Bob ${eB}`; $('hWin').innerHTML = winner(eA, eB);
       $('hEdits').textContent = `${k} record${k === 1 ? '' : 's'} changed`;
       $('hNeed').textContent = need ? `${need} more for Bob to win` : 'Enough for Bob to win';
-      const D = drawnSet(), locked = st.drawn > 0;
       grid.innerHTML = paper.map((p, i) => {
-        const ed = st.edits.has(i), r = ed ? 'B' : p, d = D.has(i);
-        const pap = d ? `<span class="paper">${letter(p)}</span>` : '<span class="paper hidden"></span>';
-        return `<button type="button" class="cell${ed ? ' edited' : ''}${d ? ' drawn' : ''}" data-i="${i}" ${p === 'A' && !locked ? '' : 'disabled'} aria-label="${d ? 'Drawn paper ballot: ' + (p === 'A' ? 'Alice' : 'Bob') : p === 'A' ? (ed ? 'Changed to Bob; click to change back' : 'Alice record; click to change to Bob') : 'Bob record'}"><span class="rec">${letter(r)}</span>${pap}</button>`;
+        const ed = st.edits.has(i), r = ed ? 'B' : p;
+        const pap = st.counted ? `<span class="paper">${letter(p)}</span>` : '<span class="paper hidden"></span>';
+        return `<button type="button" class="cell${ed ? ' edited' : ''}" data-i="${i}" ${p === 'A' && !st.counted ? '' : 'disabled'} aria-label="${st.counted ? 'Paper: ' + (p === 'A' ? 'Alice' : 'Bob') + ', record: ' + (r === 'A' ? 'Alice' : 'Bob') : p === 'A' ? (ed ? 'Changed to Bob; click to change back' : 'Alice record; click to change to Bob') : 'Bob record'}"><span class="rec">${letter(r)}</span>${pap}</button>`;
       }).join('');
-      const sa = [...D].filter(i => paper[i] === 'A').length, sb = st.drawn - sa;
       const pill = $('hPill'), out = $('out2');
-      $('hDraw').disabled = st.drawn >= 100;
-      $('hDraw').textContent = st.drawn ? 'Draw 10 more' : 'Draw 10 paper ballots';
-      if (!st.drawn) {
-        pill.className = 'pill'; pill.textContent = 'No paper drawn yet';
+      if (!st.counted) {
+        pill.className = 'pill'; pill.textContent = 'Paper sealed';
         out.innerHTML = k ? `<p>The machine count now says <b>Alice ${eA}, Bob ${eB}</b>. The paper in the box still says Alice ${PA}, Bob ${PB}; your changes can't reach it.</p>`
-          : '<p>Click some of Alice\'s records (the purple A\'s) to change them. Drawing paper locks the records in place.</p>';
+          : '<p>Click some of Alice\'s records (the purple A\'s) to change them.</p>';
         return;
       }
-      const repShare = Math.round(100 * eA / 100), smpShare = Math.round(100 * sa / st.drawn);
-      pill.className = 'pill'; pill.textContent = `Paper drawn: Alice ${sa} · Bob ${sb}`;
-      if (st.drawn >= 100) {
-        pill.className = eB > eA ? 'pill bad' : 'pill good';
-        out.innerHTML = `<p>Every paper ballot is counted: <b>Alice ${PA}, Bob ${PB}</b>. ${k ? `The machine count said Alice ${eA}, Bob ${eB}. None of your ${k} changes survived a full count of the paper.` : 'It matches the machine count, because nothing was changed.'}</p>`;
-        return;
-      }
-      out.innerHTML = `<p>Of the <b>${st.drawn}</b> paper ballots drawn, <b>${sa}</b> have a vote for Alice (${smpShare}%). The reported count gives Alice <b>${repShare}%</b>.</p>` +
-        `<p>${k ? `Your changes moved the reported count, but not one paper ballot, so the sample keeps coming from a box where Alice has 55%. ` : ''}Does a sample like this look like it came from the reported election? With only ${st.drawn} ballots it can be hard to say, which is what the rest of the series is about: how surprised to be by a sample, and how many ballots to draw before deciding.</p>`;
+      pill.className = k ? 'pill bad' : 'pill good';
+      pill.textContent = k ? 'Changes found' : 'Counts agree';
+      out.innerHTML = `<p>The hand count of the paper says <b>Alice ${PA}, Bob ${PB}</b>. ` +
+        (k ? `The machine count said Alice ${eA}, Bob ${eB}. None of your ${k} change${k === 1 ? '' : 's'} survived the hand count${eB >= eA ? ', and Alice is the winner after all' : ''}. Seal the box and try again: there's no set of changes to the records that a full count of the paper won't undo.</p>`
+           : 'It matches the machine count, because nothing was changed.</p>');
     }
     grid.addEventListener('click', e => { const b = e.target.closest('button.cell'); if (!b || b.disabled) return; const i = +b.dataset.i; st.edits.has(i) ? st.edits.delete(i) : st.edits.add(i); render(); });
     $('hAuto').addEventListener('click', () => {
-      if (st.drawn) return; const need = Math.floor((PA - PB) / 2) + 1;
+      if (st.counted) return; const need = Math.floor((PA - PB) / 2) + 1;
       const free = shuffle(paper.map((v, i) => v === 'A' && !st.edits.has(i) ? i : -1).filter(i => i >= 0));
       while (st.edits.size < need && free.length) st.edits.add(free.pop()); render();
     });
-    $('hUndo').addEventListener('click', () => { st.edits.clear(); st.drawn = 0; render(); });
-    $('hDraw').addEventListener('click', () => { if (!st.drawn) st.order = shuffle([...Array(N).keys()]); st.drawn = Math.min(N, st.drawn + 10); render(); });
-    $('hCount').addEventListener('click', () => { if (!st.drawn) st.order = shuffle([...Array(N).keys()]); st.drawn = N; render(); });
-    $('hReset').addEventListener('click', () => { st.drawn = 0; render(); });
+    $('hUndo').addEventListener('click', () => { st.edits.clear(); st.counted = false; render(); });
+    $('hCount').addEventListener('click', () => { st.counted = true; render(); });
+    $('hReset').addEventListener('click', () => { st.counted = false; render(); });
     render();
   })();
 })();

@@ -7,7 +7,7 @@ Interactive diagrams for explaining risk-limiting audits, worked out alongside [
 [`why-paper.html`](why-paper.html) comes first: why audits check paper ballots rather than electronic records (software independence).
 
 - **One vote, two records:** a slider makes the software record some Alice votes as Bob; a hand count of the paper shows the true result, and switching to "No paper" shows that recounting the same records proves nothing.
-- **Try to change the outcome:** the reader edits electronic records to make Bob win, then draws paper ballots and compares the sample with the reported totals, leading into the sampling page.
+- **Try to change the outcome:** the reader edits electronic records to make Bob win, then hand counts the paper, which finds the true outcome every time. The page closes on the cost of full hand counts, leading into the sampling page.
 
 ## Sampling basics
 
