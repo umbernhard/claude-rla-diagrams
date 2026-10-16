@@ -61,6 +61,11 @@
    "description": "Unifying frameworks and modern statistical machinery for audits."
   },
   {
+   "id": "stats",
+   "title": "Statistical background: sequential tests and testing by betting",
+   "description": "The general statistics that risk-limiting audits are built on: sequential probability ratio tests, supermartingales, confidence sequences and testing by betting."
+  },
+  {
    "id": "m-complex",
    "title": "Risk-limiting audit methods: ranked-choice and proportional elections",
    "description": "Auditing instant-runoff, single transferable vote and party-list elections."
@@ -78,12 +83,22 @@
   {
    "id": "forensics",
    "title": "Election integrity analyses",
-   "description": "Case studies of specific elections and election policies."
+   "description": "Statistical election forensics, and case studies of specific elections and election policies."
+  },
+  {
+   "id": "grey",
+   "title": "Reports, working papers and other grey literature",
+   "description": "Government and court reports, security evaluations, advocacy-group reports, working papers, manuscripts and public comments: material that was not peer reviewed. Peer-reviewed papers and preprints of research papers stay in the topic sections above."
+  },
+  {
+   "id": "blogs",
+   "title": "Blog posts and commentary",
+   "description": "Shorter, informal writing by researchers on audits, voting machines and specific elections. Not peer reviewed."
   },
   {
    "id": "tools",
    "title": "Software, tools and explainers",
-   "description": "Audit software, calculators, demonstrations and videos."
+   "description": "Audit software, data sets, calculators, demonstrations and videos."
   }
  ],
  "entries": [
@@ -253,7 +268,7 @@
   },
   {
    "key": "lindeman-blog09",
-   "group": "overview",
+   "group": "blogs",
    "authors": "Mark Lindeman",
    "title": "What's an RLA? What Does a Good One Look Like, and Why Would I Care?",
    "venue": "OSET Institute blog",
@@ -346,7 +361,7 @@
   },
   {
    "key": "accubasic",
-   "group": "security",
+   "group": "grey",
    "authors": "David Wagner, David Jefferson and Matt Bishop",
    "title": "Security Analysis of the Diebold AccuBasic Interpreter",
    "venue": "Voting Systems Technology Assessment Advisory Board, report for the California Secretary of State",
@@ -357,7 +372,7 @@
   },
   {
    "key": "ttbr",
-   "group": "security",
+   "group": "grey",
    "authors": "Matt Bishop",
    "title": "Overview of Red Team Reports",
    "venue": "California Secretary of State Top-to-Bottom Review of voting systems",
@@ -368,7 +383,7 @@
   },
   {
    "key": "everest",
-   "group": "security",
+   "group": "grey",
    "authors": "Patrick McDaniel, Matt Blaze, Giovanni Vigna et al.",
    "title": "EVEREST: Evaluation and Validation of Election-Related Equipment, Standards and Testing, Final Report",
    "venue": "Report for the Ohio Secretary of State",
@@ -389,7 +404,7 @@
   },
   {
    "key": "appel2008",
-   "group": "security",
+   "group": "grey",
    "authors": "Andrew W. Appel, Maia Ginsburg, Harri Hursti, Brian W. Kernighan, Christopher D. Richards and Gang Tan",
    "title": "Insecurities and Inaccuracies of the Sequoia AVC Advantage 9.00H DRE Voting Machine",
    "venue": "Expert report in Gusciora v. Corzine (N.J. Super. Ct.)",
@@ -419,7 +434,7 @@
   },
   {
    "key": "defcon27",
-   "group": "security",
+   "group": "grey",
    "authors": "Matt Blaze, Harri Hursti, Margaret MacAlpine, Mary Hanley, Jeff Moss, Rachel Wehr, Kendall Spencer and Christopher Ferris",
    "title": "DEF CON 27 Voting Machine Hacking Village Report",
    "venue": "DEF CON",
@@ -429,7 +444,7 @@
   },
   {
    "key": "cisa-icx",
-   "group": "security",
+   "group": "grey",
    "authors": "Cybersecurity and Infrastructure Security Agency",
    "title": "Vulnerabilities Affecting Dominion Voting Systems ImageCast X (ICSA-22-154-01)",
    "venue": "CISA advisory",
@@ -440,7 +455,7 @@
   },
   {
    "key": "uconn-memcard-causes",
-   "group": "security",
+   "group": "grey",
    "authors": "UConn VoTeR Center",
    "title": "Determining the Causes of AccuVote Optical Scan Voting Terminal Memory Card Failures",
    "venue": "UConn Center for Voting Technology Research",
@@ -501,7 +516,7 @@
   },
   {
    "key": "stark-bmd19",
-   "group": "security",
+   "group": "grey",
    "authors": "Philip B. Stark",
    "title": "Ballot-marking devices (BMDs) are not secure election technology",
    "venue": "Letter to the Subcommittee on Voting Technology, Georgia House of Representatives",
@@ -511,7 +526,7 @@
   },
   {
    "key": "stark-vvsg19",
-   "group": "security",
+   "group": "grey",
    "authors": "Philip B. Stark",
    "title": "Comments on Draft VVSG 2.0",
    "venue": "Public comment",
@@ -561,7 +576,7 @@
   },
   {
    "key": "internet-return-wg",
-   "group": "internet",
+   "group": "grey",
    "authors": "R. Michael Alvarez, Mike Garcia, Josh Benaloh, Roy Herrera, Allie Bones, Henry E. Brady, Amber McReynolds, Jeremy Epstein, Ronald L. Rivest, Anthony Fowler, Maurice Turner, Michael J. Frias and Mark Wetherford",
    "title": "Working Group Statement on Developing Standards for Internet Ballot Return",
    "venue": "Center for Security in Politics, UC Berkeley",
@@ -571,7 +586,7 @@
   },
   {
    "key": "spectrum-online",
-   "group": "internet",
+   "group": "grey",
    "authors": "Robert Cunningham, Matthew Bernhard and J. Alex Halderman",
    "title": "The Security Challenges of Online Voting Have Not Gone Away",
    "venue": "IEEE Spectrum",
@@ -581,7 +596,7 @@
   },
   {
    "key": "ovf-e2eviv",
-   "group": "internet",
+   "group": "grey",
    "authors": "Overseas Vote Foundation",
    "title": "The Future of Voting: End-to-End Verifiable Internet Voting — Specification and Feasibility Study",
    "venue": "U.S. Vote Foundation",
@@ -823,7 +838,7 @@
   },
   {
    "key": "rabin-rivest-wp122",
-   "group": "e2e",
+   "group": "grey",
    "authors": "Michael O. Rabin and Ronald L. Rivest",
    "title": "Practical End-to-End Verifiable Voting via Split-Value Representations and Randomized Partial Checking",
    "venue": "Caltech/MIT Voting Technology Project Working Paper 122",
@@ -833,7 +848,7 @@
   },
   {
    "key": "rabin-rivest-wp124",
-   "group": "e2e",
+   "group": "grey",
    "authors": "Michael O. Rabin and Ronald L. Rivest",
    "title": "Practical Provably Correct Voter Privacy Protecting End to End Voting Employing Multiparty Computations and Split Value Representations of Votes",
    "venue": "Caltech/MIT Voting Technology Project Working Paper 124",
@@ -942,7 +957,7 @@
   },
   {
    "key": "atkeson",
-   "group": "handcount",
+   "group": "grey",
    "authors": "Lonna Rae Atkeson, R. Michael Alvarez and Thad E. Hall",
    "title": "The New Mexico 2006 Post Election Audit Report",
    "venue": "Revised October 2009",
@@ -952,7 +967,7 @@
   },
   {
    "key": "ans-reeves",
-   "group": "handcount",
+   "group": "grey",
    "authors": "Stephen Ansolabehere and Andrew Reeves",
    "title": "Using Recounts to Measure the Accuracy of Vote Tabulations: Evidence from New Hampshire Elections, 1946–2002",
    "venue": "Caltech/MIT Voting Technology Project Working Paper 11",
@@ -2052,7 +2067,7 @@
   },
   {
    "key": "npv",
-   "group": "forensics",
+   "group": "grey",
    "authors": "Ronald L. Rivest and Philip B. Stark",
    "title": "The National Popular Vote (NPV) proposal for U.S. Presidential Elections undermines election integrity",
    "venue": "SSRN",
@@ -2663,7 +2678,7 @@
   },
   {
    "key": "sainte-lague",
-   "group": "m-complex",
+   "group": "grey",
    "authors": "Jurlind Budurushi, Tobias Hilt, Christian Mack, Vanessa Teague and Melanie Volkamer",
    "title": "Assorter-Based RLAs for Complex Sainte-Laguë Elections: Reducing sample sizes by trusting manually counted ballots",
    "venue": "KITopen repository, Karlsruhe Institute of Technology",
@@ -2836,7 +2851,7 @@
   },
   {
    "key": "brennan-2011",
-   "group": "handcount",
+   "group": "grey",
    "authors": "Lawrence Norden and Sundeep Iyer",
    "title": "Design Deficiencies and Lost Votes",
    "venue": "Brennan Center for Justice",
@@ -2846,7 +2861,7 @@
   },
   {
    "key": "quesenbery-paper",
-   "group": "handcount",
+   "group": "grey",
    "authors": "Whitney Quesenbery",
    "title": "Usability matters – even with paper ballots",
    "venue": "Center for Civic Design",
@@ -2876,7 +2891,7 @@
   },
   {
    "key": "bajcsy",
-   "group": "handcount",
+   "group": "grey",
    "authors": "Andrea Bajcsy, Ya-Shian Li-Baboud and Mary Brady",
    "title": "Systematic Measurement of Marginal Mark Types on Voting Ballots",
    "venue": "NISTIR 8069, National Institute of Standards and Technology",
@@ -3038,7 +3053,7 @@
   },
   {
    "key": "etegrity",
-   "group": "e2e",
+   "group": "grey",
    "authors": "David Chaum, Stefan Popoveniuc and Poorvi L. Vora",
    "title": "eTegrity and ePunchScan",
    "venue": "NIST End-to-End Voting Systems Workshop",
@@ -3078,7 +3093,7 @@
   },
   {
    "key": "scantegrity-takoma-nist",
-   "group": "e2e",
+   "group": "grey",
    "authors": "Alan T. Sherman, Richard Carback, David Chaum, Jeremy Clark, John Conway, Aleksander Essex, Paul S. Herrnson, Travis Mayberry, Stefan Popoveniuc, Ronald L. Rivest, Anne Sergeant, Emily Shen, Bimal Sinha and Poorvi Vora",
    "title": "Scantegrity at Takoma Park (position paper)",
    "venue": "NIST End-to-End Voting Systems Workshop",
@@ -3307,6 +3322,4491 @@
    "year": 2007,
    "url": "http://www.usenix.org/media/events/nsdi07/tech/mp3/rivest.mp3",
    "source": "DBLP (mirror of R. L. Rivest’s author page, through 2009)"
+  },
+  {
+   "key": "greene06-comparison",
+   "group": "handcount",
+   "authors": "Kristen K. Greene, Michael D. Byrne and Sarah P. Everett",
+   "title": "A Comparison of Usability Between Voting Methods",
+   "venue": "USENIX EVT 2006",
+   "year": 2006,
+   "url": "https://www.usenix.org/conference/evt-06/comparison-usability-between-voting-methods",
+   "source": "DBLP record"
+  },
+  {
+   "key": "mcgaley06-critical",
+   "group": "practice",
+   "authors": "Margaret McGaley and J. Paul Gibson",
+   "title": "A Critical Analysis of the Council of Europe Recommendations on E-Voting",
+   "venue": "USENIX EVT 2006",
+   "year": 2006,
+   "url": "https://www.usenix.org/conference/evt-06/critical-analysis-council-europe-recommendations-e-voting",
+   "source": "DBLP record"
+  },
+  {
+   "key": "sherman06-examination",
+   "group": "security",
+   "authors": "Alan T. Sherman, Aryya Gangopadhyay, Stephen H. Holden, George Karabatis, A. Günes Koru, Chris M. Law, Donald F. Norris, John Pinkston, Andrew Sears and Dongsong Zhang",
+   "title": "An Examination of Vote Verification Technologies: Findings and Experiences from the Maryland Study",
+   "venue": "USENIX EVT 2006",
+   "year": 2006,
+   "url": "https://www.usenix.org/conference/evt-06/examination-vote-verification-technologies-findings-and-experiences-maryland-study",
+   "source": "DBLP record"
+  },
+  {
+   "key": "adida06-ballot",
+   "group": "e2e",
+   "authors": "Ben Adida and C. Andrew Neff",
+   "title": "Ballot Casting Assurance",
+   "venue": "USENIX EVT 2006",
+   "year": 2006,
+   "url": "https://www.usenix.org/conference/evt-06/ballot-casting-assurance",
+   "source": "DBLP record"
+  },
+  {
+   "key": "laskowski06-making",
+   "group": "handcount",
+   "authors": "Sharon J. Laskowski and Janice (Ginny) Redish",
+   "title": "Making Ballot Language Understandable to Voters",
+   "venue": "USENIX EVT 2006",
+   "year": 2006,
+   "url": "https://www.usenix.org/conference/evt-06/making-ballot-language-understandable-voters",
+   "source": "DBLP record"
+  },
+  {
+   "key": "yee06-prerendered",
+   "group": "security",
+   "authors": "Ka-Ping Yee, David Wagner, Marti Hearst and Steven M. Bellovin",
+   "title": "Prerendered User Interfaces for Higher-Assurance Electronic Voting",
+   "venue": "USENIX EVT 2006",
+   "year": 2006,
+   "url": "https://www.usenix.org/conference/evt-06/prerendered-user-interfaces-higher-assurance-electronic-voting",
+   "source": "DBLP record"
+  },
+  {
+   "key": "herrnson06-importance",
+   "group": "handcount",
+   "authors": "Paul S. Herrnson, Richard G. Niemi, Michael J. Hanmer, Benjamin B. Bederson, Frederick G. Conrad and Michael Traugott",
+   "title": "The Importance of Usability Testing of Voting Systems",
+   "venue": "USENIX EVT 2006",
+   "year": 2006,
+   "url": "https://www.usenix.org/conference/evt-06/importance-usability-testing-voting-systems",
+   "source": "DBLP record"
+  },
+  {
+   "key": "hall06-transparency",
+   "group": "practice",
+   "authors": "Joseph Lorenzo Hall",
+   "title": "Transparency and Access to Source Code in Electronic Voting",
+   "venue": "USENIX EVT 2006",
+   "year": 2006,
+   "url": "https://www.usenix.org/conference/evt-06/transparency-and-access-source-code-electronic-voting",
+   "source": "DBLP record"
+  },
+  {
+   "key": "cunha06-methodology",
+   "group": "practice",
+   "authors": "João Falcão e Cunha, Mário Jorge Leitão, João Pascoal Faria, Miguel Pimenta Monteiro and Maria Antónia Carravilla",
+   "title": "A Methodology for Auditing e-Voting Processes and Systems used at the Elections for the Portuguese Parliament",
+   "venue": "Electronic Voting 2006 (EVOTE), GI Lecture Notes in Informatics",
+   "year": 2006,
+   "url": "https://dl.gi.de/handle/20.500.12116/29158",
+   "source": "DBLP record"
+  },
+  {
+   "key": "sastry06-designing",
+   "group": "security",
+   "authors": "Naveen Sastry",
+   "title": "Designing Voting Machines for Verification",
+   "venue": "15th USENIX Security Symposium",
+   "year": 2006,
+   "url": "https://www.usenix.org/conference/15th-usenix-security-symposium/designing-voting-machines-verification",
+   "source": "DBLP record"
+  },
+  {
+   "key": "karlof05-cryptographic",
+   "group": "e2e",
+   "authors": "Chris Karlof, Naveen Sastry and David Wagner",
+   "title": "Cryptographic Voting Protocols: A Systems Perspective",
+   "venue": "14th USENIX Security Symposium",
+   "year": 2005,
+   "url": "https://www.usenix.org/conference/14th-usenix-security-symposium/cryptographic-voting-protocols-systems-perspective",
+   "source": "DBLP record"
+  },
+  {
+   "key": "rubin01-security",
+   "group": "security",
+   "authors": "Aviel D. Rubin",
+   "title": "Security for E-Voting in Public Elections",
+   "venue": "USENIX LISA 2001",
+   "year": 2001,
+   "source": "DBLP record"
+  },
+  {
+   "key": "gonggrijp07-studying",
+   "group": "security",
+   "authors": "Rop Gonggrijp and Willem-Jan Hengeveld",
+   "title": "Studying the Nedap/Groenendaal ES3B Voting Computer: A Computer Security Perspective",
+   "venue": "USENIX EVT 2007",
+   "year": 2007,
+   "url": "https://static.usenix.org/events/evt07/tech/full_papers/gonggrijp/gonggrijp.pdf",
+   "source": "USENIX EVT 2007 program page (static.usenix.org/events/evt07/tech)"
+  },
+  {
+   "key": "proebstel07-analysis",
+   "group": "security",
+   "authors": "Elliot Proebstel, Sean Riddle, Francis Hsu, Justin Cummins, Freddie Oakley, Tom Stanionis and Matt Bishop",
+   "title": "An Analysis of the Hart Intercivic DAU eSlate",
+   "venue": "USENIX EVT 2007",
+   "year": 2007,
+   "url": "https://static.usenix.org/events/evt07/tech/full_papers/proebstel/proebstel.pdf",
+   "source": "USENIX EVT 2007 program page (static.usenix.org/events/evt07/tech)"
+  },
+  {
+   "key": "sandler07-casting",
+   "group": "security",
+   "authors": "Daniel Sandler and Dan S. Wallach",
+   "title": "Casting Votes in the Auditorium",
+   "venue": "USENIX EVT 2007",
+   "year": 2007,
+   "url": "https://static.usenix.org/events/evt07/tech/full_papers/sandler/sandler.pdf",
+   "source": "USENIX EVT 2007 program page (static.usenix.org/events/evt07/tech)"
+  },
+  {
+   "key": "yee07-extending",
+   "group": "security",
+   "authors": "Ka-Ping Yee",
+   "title": "Extending Prerendered-Interface Voting Software to Support Accessibility and Other Ballot Features",
+   "venue": "USENIX EVT 2007",
+   "year": 2007,
+   "url": "https://static.usenix.org/events/evt07/tech/full_papers/yee/yee.pdf",
+   "source": "USENIX EVT 2007 program page (static.usenix.org/events/evt07/tech)"
+  },
+  {
+   "key": "kiniry07-verification",
+   "group": "m-complex",
+   "authors": "Joseph R. Kiniry, Dermot Cochran and Patrick E. Tierney",
+   "title": "Verification-Centric Realization of Electronic Vote Counting",
+   "venue": "USENIX EVT 2007",
+   "year": 2007,
+   "url": "https://static.usenix.org/events/evt07/tech/full_papers/kiniry/kiniry.pdf",
+   "source": "USENIX EVT 2007 program page (static.usenix.org/events/evt07/tech)"
+  },
+  {
+   "key": "hall07-contractual",
+   "group": "practice",
+   "authors": "Joseph Lorenzo Hall",
+   "title": "Contractual Barriers to Transparency in Electronic Voting",
+   "venue": "USENIX EVT 2007",
+   "year": 2007,
+   "url": "https://static.usenix.org/events/evt07/tech/full_papers/hall/hall.pdf",
+   "source": "USENIX EVT 2007 program page (static.usenix.org/events/evt07/tech)"
+  },
+  {
+   "key": "calandrino07-machine",
+   "group": "handcount",
+   "authors": "Joseph A. Calandrino, J. Alex Halderman and Edward W. Felten",
+   "title": "Machine-Assisted Election Auditing",
+   "venue": "USENIX EVT 2007",
+   "year": 2007,
+   "url": "https://static.usenix.org/events/evt07/tech/full_papers/calandrino/calandrino.pdf",
+   "source": "USENIX EVT 2007 program page (static.usenix.org/events/evt07/tech)"
+  },
+  {
+   "key": "goggin07-examination",
+   "group": "handcount",
+   "authors": "Stephen N. Goggin and Michael D. Byrne",
+   "title": "An Examination of the Auditability of Voter Verified Paper Audit Trail (VVPAT) Ballots",
+   "venue": "USENIX EVT 2007",
+   "year": 2007,
+   "url": "https://static.usenix.org/events/evt07/tech/full_papers/goggin/goggin.pdf",
+   "source": "USENIX EVT 2007 program page (static.usenix.org/events/evt07/tech)"
+  },
+  {
+   "key": "gardner07-difficulty",
+   "group": "security",
+   "authors": "Ryan Gardner, Sujata Garera and Aviel D. Rubin",
+   "title": "On the Difficulty of Validating Voting Machine Software with Software",
+   "venue": "USENIX EVT 2007",
+   "year": 2007,
+   "url": "https://static.usenix.org/events/evt07/tech/full_papers/gardner/gardner.pdf",
+   "source": "USENIX EVT 2007 program page (static.usenix.org/events/evt07/tech)"
+  },
+  {
+   "key": "ryan07-gems",
+   "group": "security",
+   "authors": "Thomas P. Ryan and Candice Hoke",
+   "title": "GEMS Tabulation Database Design Issues in Relation to Voting Systems Certification Standards",
+   "venue": "USENIX EVT 2007",
+   "year": 2007,
+   "url": "https://static.usenix.org/events/evt07/tech/full_papers/ryan/ryan.pdf",
+   "source": "USENIX EVT 2007 program page (static.usenix.org/events/evt07/tech)"
+  },
+  {
+   "key": "kiayias07-authentication",
+   "group": "security",
+   "authors": "Aggelos Kiayias, Laurent Michel, Alexander Russell, Narasimha Shashidhar, Andrew See and Alexander A. Shvartsman",
+   "title": "An Authentication and Ballot Layout Attack Against an Optical Scan Voting Terminal",
+   "venue": "USENIX EVT 2007",
+   "year": 2007,
+   "url": "https://static.usenix.org/events/evt07/tech/full_papers/kiayias/kiayias.pdf",
+   "source": "USENIX EVT 2007 program page (static.usenix.org/events/evt07/tech)"
+  },
+  {
+   "key": "riva07-bare",
+   "group": "e2e",
+   "authors": "Ben Riva and Amnon Ta-Shma",
+   "title": "Bare-Handed Electronic Voting with Pre-processing",
+   "venue": "USENIX EVT 2007",
+   "year": 2007,
+   "url": "https://static.usenix.org/events/evt07/tech/full_papers/riva/riva.pdf",
+   "source": "USENIX EVT 2007 program page (static.usenix.org/events/evt07/tech)"
+  },
+  {
+   "key": "cordero08-replayable",
+   "group": "security",
+   "authors": "Arel Cordero and David Wagner",
+   "title": "Replayable Voting Machine Audit Logs",
+   "venue": "USENIX EVT 2008",
+   "year": 2008,
+   "url": "https://static.usenix.org/events/evt08/tech/full_papers/cordero/cordero.pdf",
+   "source": "USENIX EVT 2008 program page (static.usenix.org/legacy/events/evt08/tech)"
+  },
+  {
+   "key": "calandrino08-defense",
+   "group": "sampling",
+   "authors": "Joseph A. Calandrino, J. Alex Halderman and Edward W. Felten",
+   "title": "In Defense of Pseudorandom Sample Selection",
+   "venue": "USENIX EVT 2008",
+   "year": 2008,
+   "url": "https://static.usenix.org/events/evt08/tech/full_papers/calandrino/calandrino.pdf",
+   "source": "USENIX EVT 2008 program page (static.usenix.org/legacy/events/evt08/tech)"
+  },
+  {
+   "key": "halderman08-you",
+   "group": "security",
+   "authors": "J. Alex Halderman, Eric Rescorla, Hovav Shacham and David Wagner",
+   "title": "You Go to Elections with the Voting System You Have: Stop-Gap Mitigations for Deployed Voting Systems",
+   "venue": "USENIX EVT 2008",
+   "year": 2008,
+   "url": "https://static.usenix.org/events/evt08/tech/full_papers/halderman/halderman.pdf",
+   "source": "USENIX EVT 2008 program page (static.usenix.org/legacy/events/evt08/tech)"
+  },
+  {
+   "key": "sandler08-case",
+   "group": "internet",
+   "authors": "Daniel Sandler and Dan S. Wallach",
+   "title": "The Case for Networked Remote Voting Precincts",
+   "venue": "USENIX EVT 2008",
+   "year": 2008,
+   "url": "https://static.usenix.org/events/evt08/tech/full_papers/sandler/sandler.pdf",
+   "source": "USENIX EVT 2008 program page (static.usenix.org/legacy/events/evt08/tech)"
+  },
+  {
+   "key": "davtyan08-pre",
+   "group": "security",
+   "authors": "Seda Davtyan, Sotiris Kentros, Aggelos Kiayias, Laurent Michel, Nicolas Nicolaou, Alexander Russell, Andrew See, Narasimha Shashidhar and Alexander A. Shvartsman",
+   "title": "Pre-Election Testing and Post-Election Audit of Optical Scan Voting Terminal Memory Cards",
+   "venue": "USENIX EVT 2008",
+   "year": 2008,
+   "url": "https://static.usenix.org/events/evt08/tech/full_papers/davtyan/davtyan.pdf",
+   "source": "USENIX EVT 2008 program page (static.usenix.org/legacy/events/evt08/tech)"
+  },
+  {
+   "key": "hall08-improving",
+   "group": "practice",
+   "authors": "Joseph Lorenzo Hall",
+   "title": "Improving the Security, Transparency, and Efficiency of California's 1% Manual Tally Procedures",
+   "venue": "USENIX EVT 2008",
+   "year": 2008,
+   "url": "https://static.usenix.org/events/evt08/tech/full_papers/hall/hall.pdf",
+   "source": "USENIX EVT 2008 program page (static.usenix.org/legacy/events/evt08/tech)"
+  },
+  {
+   "key": "goggin08-comparing",
+   "group": "handcount",
+   "authors": "Stephen N. Goggin, Michael D. Byrne, Juan E. Gilbert, Gregory Rogers and Jerome McClendon",
+   "title": "Comparing the Auditability of Optical Scan, Voter Verified Paper Audit Trail (VVPAT) and Video (VVVAT) Ballot Systems",
+   "venue": "USENIX EVT 2008",
+   "year": 2008,
+   "url": "https://static.usenix.org/events/evt08/tech/full_papers/goggin/goggin.pdf",
+   "source": "USENIX EVT 2008 program page (static.usenix.org/legacy/events/evt08/tech)"
+  },
+  {
+   "key": "weldemariam08-modeling",
+   "group": "practice",
+   "authors": "Komminist Weldemariam and Adolfo Villafiorita",
+   "title": "Modeling and Analysis of Procedural Security in (e)Voting: The Trentino's Approach and Experiences",
+   "venue": "USENIX EVT 2008",
+   "year": 2008,
+   "url": "https://static.usenix.org/events/evt08/tech/full_papers/weldemariam/weldemariam.pdf",
+   "source": "USENIX EVT 2008 program page (static.usenix.org/legacy/events/evt08/tech)"
+  },
+  {
+   "key": "aviv08-security",
+   "group": "security",
+   "authors": "Adam Aviv, Pavol Černý, Sandy Clark, Eric Cronin, Gaurav Shah, Micah Sherr and Matt Blaze",
+   "title": "Security Evaluation of ES&S Voting Machines and Election Management System",
+   "venue": "USENIX EVT 2008",
+   "year": 2008,
+   "url": "https://static.usenix.org/events/evt08/tech/full_papers/aviv/aviv.pdf",
+   "source": "USENIX EVT 2008 program page (static.usenix.org/legacy/events/evt08/tech)"
+  },
+  {
+   "key": "butler08-systemic",
+   "group": "security",
+   "authors": "Kevin Butler, William Enck, Harri Hursti, Stephen McLaughlin, Patrick Traynor and Patrick McDaniel",
+   "title": "Systemic Issues in the Hart InterCivic and Premier Voting Systems: Reflections on Project EVEREST",
+   "venue": "USENIX EVT 2008",
+   "year": 2008,
+   "url": "https://static.usenix.org/events/evt08/tech/full_papers/butler/butler.pdf",
+   "source": "USENIX EVT 2008 program page (static.usenix.org/legacy/events/evt08/tech)"
+  },
+  {
+   "key": "xia08-analysis",
+   "group": "e2e",
+   "authors": "Zhe Xia, Steve A. Schneider, James Heather and Jacques Traoré",
+   "title": "Analysis, Improvement, and Simplification of Prêt à Voter with Paillier Encryption",
+   "venue": "USENIX EVT 2008",
+   "year": 2008,
+   "url": "https://static.usenix.org/events/evt08/tech/full_papers/xia/xia.pdf",
+   "source": "USENIX EVT 2008 program page (static.usenix.org/legacy/events/evt08/tech)"
+  },
+  {
+   "key": "teague08-coercion",
+   "group": "e2e",
+   "authors": "Vanessa Teague, Kim Ramchen and Lee Naish",
+   "title": "Coercion-Resistant Tallying for STV Voting",
+   "venue": "USENIX EVT 2008",
+   "year": 2008,
+   "url": "https://static.usenix.org/events/evt08/tech/full_papers/teague/teague.pdf",
+   "source": "USENIX EVT 2008 program page (static.usenix.org/legacy/events/evt08/tech)"
+  },
+  {
+   "key": "adida08-helios",
+   "group": "e2e",
+   "authors": "Ben Adida",
+   "title": "Helios: Web-based Open-Audit Voting",
+   "venue": "17th USENIX Security Symposium",
+   "year": 2008,
+   "url": "https://static.usenix.org/event/sec08/tech/full_papers/adida/adida.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "sandler08-votebox",
+   "group": "security",
+   "authors": "Daniel Sandler, Kyle Derr and Dan S. Wallach",
+   "title": "VoteBox: A Tamper-evident, Verifiable Electronic Voting System",
+   "venue": "17th USENIX Security Symposium",
+   "year": 2008,
+   "url": "http://www.usenix.org/events/sec08/tech/full_papers/sandler/sandler.pdf",
+   "source": "DBLP record"
+  },
+  {
+   "key": "campbell09-now",
+   "group": "handcount",
+   "authors": "Bryan A. Campbell and Michael D. Byrne",
+   "title": "Now Do Voters Notice Review Screen Anomalies? A Look at Voting System Usability",
+   "venue": "USENIX EVT/WOTE 2009",
+   "year": 2009,
+   "url": "https://static.usenix.org/events/evtwote09/tech/full_papers/campbell.pdf",
+   "source": "USENIX EVT/WOTE 2009 program page (static.usenix.org/events/evtwote09/tech)"
+  },
+  {
+   "key": "chisnell09-style",
+   "group": "practice",
+   "authors": "Dana Chisnell, Susan Becker, Sharon Laskowski and Svetlana Lowry",
+   "title": "Style Guide for Voting System Documentation: Why User-Centered Documentation Matters to Voting Security",
+   "venue": "USENIX EVT/WOTE 2009",
+   "year": 2009,
+   "url": "https://static.usenix.org/events/evtwote09/tech/full_papers/chisnell.pdf",
+   "source": "USENIX EVT/WOTE 2009 program page (static.usenix.org/events/evtwote09/tech)"
+  },
+  {
+   "key": "bishop09-e",
+   "group": "security",
+   "authors": "Matt Bishop, Sean Peisert, Candice Hoke, Mark Graff and David Jefferson",
+   "title": "E-Voting and Forensics: Prying Open the Black Box",
+   "venue": "USENIX EVT/WOTE 2009",
+   "year": 2009,
+   "url": "https://static.usenix.org/events/evtwote09/tech/full_papers/bishop.pdf",
+   "source": "USENIX EVT/WOTE 2009 program page (static.usenix.org/events/evtwote09/tech)"
+  },
+  {
+   "key": "levin09-detecting",
+   "group": "forensics",
+   "authors": "Inés Levin, Gabe A. Cohn, Peter C. Ordeshook and R. Michael Alvarez",
+   "title": "Detecting Voter Fraud in an Electronic Voting Context: An Analysis of the Unlimited Reelection Vote in Venezuela",
+   "venue": "USENIX EVT/WOTE 2009",
+   "year": 2009,
+   "url": "https://static.usenix.org/events/evtwote09/tech/full_papers/levin.pdf",
+   "source": "USENIX EVT/WOTE 2009 program page (static.usenix.org/events/evtwote09/tech)"
+  },
+  {
+   "key": "appel09-new",
+   "group": "security",
+   "authors": "Andrew W. Appel, Maia Ginsburg, Harri Hursti, Brian W. Kernighan, Christopher D. Richards, Gang Tan and Penny Venetis",
+   "title": "The New Jersey Voting-machine Lawsuit and the AVC Advantage DRE Voting Machine",
+   "venue": "USENIX EVT/WOTE 2009",
+   "year": 2009,
+   "url": "https://static.usenix.org/events/evtwote09/tech/full_papers/appel.pdf",
+   "source": "USENIX EVT/WOTE 2009 program page (static.usenix.org/events/evtwote09/tech)"
+  },
+  {
+   "key": "rescorla09-understanding",
+   "group": "e2e",
+   "authors": "Eric Rescorla",
+   "title": "Understanding the Security Properties of Ballot-Based Verification Techniques",
+   "venue": "USENIX EVT/WOTE 2009",
+   "year": 2009,
+   "url": "https://static.usenix.org/events/evtwote09/tech/full_papers/rescorla-ballot.pdf",
+   "source": "USENIX EVT/WOTE 2009 program page (static.usenix.org/events/evtwote09/tech)"
+  },
+  {
+   "key": "oksuzoglu09-votebox",
+   "group": "security",
+   "authors": "Ersin Öksüzoğlu and Dan S. Wallach",
+   "title": "VoteBox Nano: A Smaller, Stronger FPGA-based Voting Machine",
+   "venue": "USENIX EVT/WOTE 2009",
+   "year": 2009,
+   "url": "https://static.usenix.org/events/evtwote09/tech/full_papers/oksuzoglu.pdf",
+   "source": "USENIX EVT/WOTE 2009 program page (static.usenix.org/events/evtwote09/tech)"
+  },
+  {
+   "key": "calandrino09-some",
+   "group": "practice",
+   "authors": "Joseph A. Calandrino, William Clarkson and Edward W. Felten",
+   "title": "Some Consequences of Paper Fingerprinting for Elections",
+   "venue": "USENIX EVT/WOTE 2009",
+   "year": 2009,
+   "url": "https://static.usenix.org/events/evtwote09/tech/full_papers/calandrino.pdf",
+   "source": "USENIX EVT/WOTE 2009 program page (static.usenix.org/events/evtwote09/tech)"
+  },
+  {
+   "key": "adida09-electing",
+   "group": "e2e",
+   "authors": "Ben Adida, Olivier de Marneffe, Olivier Pereira and Jean-Jacques Quisquater",
+   "title": "Electing a University President Using Open-Audit Voting: Analysis of Real-World Use of Helios",
+   "venue": "USENIX EVT/WOTE 2009",
+   "year": 2009,
+   "url": "https://static.usenix.org/events/evtwote09/tech/full_papers/adida-helios.pdf",
+   "source": "USENIX EVT/WOTE 2009 program page (static.usenix.org/events/evtwote09/tech)"
+  },
+  {
+   "key": "adida09-efficient",
+   "group": "e2e",
+   "authors": "Ben Adida and C. Andrew Neff",
+   "title": "Efficient Receipt-Free Ballot Casting Resistant to Covert Channels",
+   "venue": "USENIX EVT/WOTE 2009",
+   "year": 2009,
+   "url": "https://static.usenix.org/events/evtwote09/tech/full_papers/adida-casting.pdf",
+   "source": "USENIX EVT/WOTE 2009 program page (static.usenix.org/events/evtwote09/tech)"
+  },
+  {
+   "key": "ryan09-permutations",
+   "group": "e2e",
+   "authors": "Peter Y. A. Ryan and Vanessa Teague",
+   "title": "Permutations in Prêt à Voter",
+   "venue": "USENIX EVT/WOTE 2009",
+   "year": 2009,
+   "url": "https://static.usenix.org/events/evtwote09/tech/full_papers/ryan.pdf",
+   "source": "USENIX EVT/WOTE 2009 program page (static.usenix.org/events/evtwote09/tech)"
+  },
+  {
+   "key": "sturton09-weight",
+   "group": "sampling",
+   "authors": "Cynthia Sturton, Eric Rescorla and David Wagner",
+   "title": "Weight, Weight, Don't Tell Me: Using Scales to Select Ballots for Auditing",
+   "venue": "USENIX EVT/WOTE 2009",
+   "year": 2009,
+   "url": "https://static.usenix.org/events/evtwote09/tech/full_papers/sturton.pdf",
+   "source": "USENIX EVT/WOTE 2009 program page (static.usenix.org/events/evtwote09/tech)"
+  },
+  {
+   "key": "antonyan09-automating",
+   "group": "security",
+   "authors": "Tigran Antonyan, Seda Davtyan, Sotiris Kentros, Aggelos Kiayias, Laurent Michel, Nicolas Nicolaou, Alexander Russell and Alexander Shvartsman",
+   "title": "Automating Voting Terminal Event Log Analysis",
+   "venue": "USENIX EVT/WOTE 2009",
+   "year": 2009,
+   "url": "https://static.usenix.org/events/evtwote09/tech/full_papers/antonyan.pdf",
+   "source": "USENIX EVT/WOTE 2009 program page (static.usenix.org/events/evtwote09/tech)"
+  },
+  {
+   "key": "rescorla09-security",
+   "group": "sampling",
+   "authors": "Eric Rescorla",
+   "title": "On the Security of Election Audits with Low Entropy Randomness",
+   "venue": "USENIX EVT/WOTE 2009",
+   "year": 2009,
+   "url": "https://static.usenix.org/events/evtwote09/tech/full_papers/rescorla-randomness.pdf",
+   "source": "USENIX EVT/WOTE 2009 program page (static.usenix.org/events/evtwote09/tech)"
+  },
+  {
+   "key": "alvarez09-interstate",
+   "group": "practice",
+   "authors": "R. Michael Alvarez, Jeff Jonas, William E. Winkler and Rebecca N. Wright",
+   "title": "Interstate Voter Registration Database Matching: The Oregon-Washington 2008 Pilot Project",
+   "venue": "USENIX EVT/WOTE 2009",
+   "year": 2009,
+   "url": "https://static.usenix.org/events/evtwote09/tech/full_papers/alvarez.pdf",
+   "source": "USENIX EVT/WOTE 2009 program page (static.usenix.org/events/evtwote09/tech)"
+  },
+  {
+   "key": "gianelli09-software",
+   "group": "practice",
+   "authors": "Gabrielle A. Gianelli, Jennifer D. King, Edward W. Felten and William P. Zeller",
+   "title": "Software Support for Software-Independent Auditing",
+   "venue": "USENIX EVT/WOTE 2009",
+   "year": 2009,
+   "url": "https://static.usenix.org/events/evtwote09/tech/full_papers/gianelli.pdf",
+   "source": "USENIX EVT/WOTE 2009 program page (static.usenix.org/events/evtwote09/tech)"
+  },
+  {
+   "key": "cordero10-efficient",
+   "group": "handcount",
+   "authors": "Arel Cordero, Theron Ji, Alan Tsai, Keaton Mowery and David Wagner",
+   "title": "Efficient User-Guided Ballot Image Verification",
+   "venue": "USENIX EVT/WOTE 2010",
+   "year": 2010,
+   "url": "https://static.usenix.org/events/evtwote10/tech/full_papers/Cordero.pdf",
+   "source": "USENIX EVT/WOTE 2010 program page (static.usenix.org/events/evtwote10/tech)"
+  },
+  {
+   "key": "wang10-openscan",
+   "group": "handcount",
+   "authors": "Kai Wang, Eric Rescorla, Hovav Shacham and Serge Belongie",
+   "title": "OpenScan: A Fully Transparent Optical Scan Voting System",
+   "venue": "USENIX EVT/WOTE 2010",
+   "year": 2010,
+   "url": "https://static.usenix.org/events/evtwote10/tech/full_papers/Wang.pdf",
+   "source": "USENIX EVT/WOTE 2010 program page (static.usenix.org/events/evtwote10/tech)"
+  },
+  {
+   "key": "clark10-use",
+   "group": "sampling",
+   "authors": "Jeremy Clark and Urs Hengartner",
+   "title": "On the Use of Financial Data as a Random Beacon",
+   "venue": "USENIX EVT/WOTE 2010",
+   "year": 2010,
+   "url": "https://static.usenix.org/events/evtwote10/tech/full_papers/Clark.pdf",
+   "source": "USENIX EVT/WOTE 2010 program page (static.usenix.org/events/evtwote10/tech)"
+  },
+  {
+   "key": "edelstein10-queuing",
+   "group": "practice",
+   "authors": "William A. Edelstein and Arthur D. Edelstein",
+   "title": "Queuing and Elections: Long Lines, DREs and Paper Ballots",
+   "venue": "USENIX EVT/WOTE 2010",
+   "year": 2010,
+   "url": "https://static.usenix.org/events/evtwote10/tech/full_papers/Edelstein.pdf",
+   "source": "USENIX EVT/WOTE 2010 program page (static.usenix.org/events/evtwote10/tech)"
+  },
+  {
+   "key": "simidchieva10-modeling",
+   "group": "practice",
+   "authors": "Borislava I. Simidchieva, Sophie J. Engle, Michael Clifford, Alicia Clay Jones, Sean Peisert, Matt Bishop, Lori A. Clarke and Leon J. Osterweil",
+   "title": "Modeling and Analyzing Faults to Improve Election Process Robustness",
+   "venue": "USENIX EVT/WOTE 2010",
+   "year": 2010,
+   "url": "https://static.usenix.org/events/evtwote10/tech/full_papers/Simidchieva.pdf",
+   "source": "USENIX EVT/WOTE 2010 program page (static.usenix.org/events/evtwote10/tech)"
+  },
+  {
+   "key": "estehghari10-exploiting",
+   "group": "internet",
+   "authors": "Saghar Estehghari and Yvo Desmedt",
+   "title": "Exploiting the Client Vulnerabilities in Internet E-voting Systems: Hacking Helios 2.0 as an Example",
+   "venue": "USENIX EVT/WOTE 2010",
+   "year": 2010,
+   "url": "https://static.usenix.org/events/evtwote10/tech/full_papers/Estehghari.pdf",
+   "source": "USENIX EVT/WOTE 2010 program page (static.usenix.org/events/evtwote10/tech)"
+  },
+  {
+   "key": "heninger10-computational",
+   "group": "sampling",
+   "authors": "Nadia Heninger",
+   "title": "Computational Complexity and Information Asymmetry in Election Audits with Low-Entropy Randomness",
+   "venue": "USENIX EVT/WOTE 2010",
+   "year": 2010,
+   "url": "https://static.usenix.org/events/evtwote10/tech/full_papers/Heninger.pdf",
+   "source": "USENIX EVT/WOTE 2010 program page (static.usenix.org/events/evtwote10/tech)"
+  },
+  {
+   "key": "checkoway10-single",
+   "group": "m-comp",
+   "authors": "Stephen Checkoway, Anand Sarwate and Hovav Shacham",
+   "title": "Single-Ballot Risk-Limiting Audits Using Convex Optimization",
+   "venue": "USENIX EVT/WOTE 2010",
+   "year": 2010,
+   "url": "https://static.usenix.org/events/evtwote10/tech/full_papers/Checkoway.pdf",
+   "source": "USENIX EVT/WOTE 2010 program page (static.usenix.org/events/evtwote10/tech)"
+  },
+  {
+   "key": "ramchen10-parallel",
+   "group": "e2e",
+   "authors": "Kim Ramchen and Vanessa Teague",
+   "title": "Parallel Shuffling and Its Application to Prêt à Voter",
+   "venue": "USENIX EVT/WOTE 2010",
+   "year": 2010,
+   "url": "https://static.usenix.org/events/evtwote10/tech/full_papers/Ramchen.pdf",
+   "source": "USENIX EVT/WOTE 2010 program page (static.usenix.org/events/evtwote10/tech)"
+  },
+  {
+   "key": "essex10-eperio",
+   "group": "e2e",
+   "authors": "Aleksander Essex, Jeremy Clark, Urs Hengartner and Carlisle Adams",
+   "title": "Eperio: Mitigating Technical Complexity in Cryptographic Election Verification",
+   "venue": "USENIX EVT/WOTE 2010",
+   "year": 2010,
+   "url": "https://static.usenix.org/events/evtwote10/tech/full_papers/Essex.pdf",
+   "source": "USENIX EVT/WOTE 2010 program page (static.usenix.org/events/evtwote10/tech)"
+  },
+  {
+   "key": "mascher10-towards",
+   "group": "security",
+   "authors": "Andrea L. Mascher, Paul T. Cotton and Douglas W. Jones",
+   "title": "Towards Publishable Event Logs That Reveal Touchscreen Faults",
+   "venue": "USENIX EVT/WOTE 2010",
+   "year": 2010,
+   "url": "https://static.usenix.org/events/evtwote10/tech/full_papers/Mascher.pdf",
+   "source": "USENIX EVT/WOTE 2010 program page (static.usenix.org/events/evtwote10/tech)"
+  },
+  {
+   "key": "piner10-baseline",
+   "group": "handcount",
+   "authors": "Gillian E. Piner and Michael D. Byrne",
+   "title": "Baseline Usability Data for a Non-Electronic Approach to Accessible Voting",
+   "venue": "USENIX EVT/WOTE 2010",
+   "year": 2010,
+   "url": "https://static.usenix.org/events/evtwote10/tech/full_papers/Piner.pdf",
+   "source": "USENIX EVT/WOTE 2010 program page (static.usenix.org/events/evtwote10/tech)"
+  },
+  {
+   "key": "ji11-analysis",
+   "group": "handcount",
+   "authors": "Theron Ji, Eric Kim, Raji Srikantan, Alan Tsai, Arel Cordero and David Wagner",
+   "title": "An Analysis of Write-in Marks on Optical Scan Ballots",
+   "venue": "USENIX EVT/WOTE 2011",
+   "year": 2011,
+   "url": "https://static.usenix.org/events/evtwote11/tech/final_files/Ji.pdf",
+   "source": "USENIX EVT/WOTE 2011 program page (static.usenix.org/events/evtwote11/tech)"
+  },
+  {
+   "key": "piner11-accessible",
+   "group": "handcount",
+   "authors": "Gillian E. Piner and Michael D. Byrne",
+   "title": "Accessible Polling Places for the Visually Impaired: A Compilation of Survey Results",
+   "venue": "USENIX EVT/WOTE 2011",
+   "year": 2011,
+   "url": "https://static.usenix.org/events/evtwote11/tech/final_files/Piner.pdf",
+   "source": "USENIX EVT/WOTE 2011 program page (static.usenix.org/events/evtwote11/tech)"
+  },
+  {
+   "key": "cary11-estimating",
+   "group": "m-complex",
+   "authors": "David Cary",
+   "title": "Estimating the Margin of Victory for Instant-Runoff Voting",
+   "venue": "USENIX EVT/WOTE 2011",
+   "year": 2011,
+   "url": "https://static.usenix.org/events/evtwote11/tech/final_files/Cary8-2-11.pdf",
+   "source": "USENIX EVT/WOTE 2011 program page (static.usenix.org/events/evtwote11/tech)"
+  },
+  {
+   "key": "magrino11-computing",
+   "group": "m-complex",
+   "authors": "Thomas R. Magrino, Ronald L. Rivest, Emily Shen and David Wagner",
+   "title": "Computing the Margin of Victory in IRV Elections",
+   "venue": "USENIX EVT/WOTE 2011",
+   "year": 2011,
+   "url": "https://static.usenix.org/events/evtwote11/tech/final_files/Magrino.pdf",
+   "source": "USENIX EVT/WOTE 2011 program page (static.usenix.org/events/evtwote11/tech)"
+  },
+  {
+   "key": "karayumak11-usability",
+   "group": "e2e",
+   "authors": "Fatih Karayumak, Maina M. Olembo, Michaela Kauer and Melanie Volkamer",
+   "title": "Usability Analysis of Helios — An Open Source Verifiable Remote Electronic Voting System",
+   "venue": "USENIX EVT/WOTE 2011",
+   "year": 2011,
+   "url": "https://static.usenix.org/events/evtwote11/tech/final_files/Karayumak7-27-11.pdf",
+   "source": "USENIX EVT/WOTE 2011 program page (static.usenix.org/events/evtwote11/tech)"
+  },
+  {
+   "key": "bulens11-running",
+   "group": "e2e",
+   "authors": "Philippe Bulens, Damien Giry and Olivier Pereira",
+   "title": "Running Mixnet-Based Elections with Helios",
+   "venue": "USENIX EVT/WOTE 2011",
+   "year": 2011,
+   "url": "https://static.usenix.org/events/evtwote11/tech/final_files/Bulens.pdf",
+   "source": "USENIX EVT/WOTE 2011 program page (static.usenix.org/events/evtwote11/tech)"
+  },
+  {
+   "key": "sherman11-scantegrity",
+   "group": "e2e",
+   "authors": "Alan T. Sherman, Russell A. Fink, Richard Carback and David Chaum",
+   "title": "Scantegrity III: Automatic Trustworthy Receipts, Highlighting Over/Under Votes, and Full Voter Verifiability",
+   "venue": "USENIX EVT/WOTE 2011",
+   "year": 2011,
+   "url": "https://static.usenix.org/events/evtwote11/tech/final_files/Sherman.pdf",
+   "source": "USENIX EVT/WOTE 2011 program page (static.usenix.org/events/evtwote11/tech)"
+  },
+  {
+   "key": "haenni11-secure",
+   "group": "internet",
+   "authors": "Rolf Haenni and Oliver Spycher",
+   "title": "Secure Internet Voting on Limited Devices with Anonymized DSA Public Keys",
+   "venue": "USENIX EVT/WOTE 2011",
+   "year": 2011,
+   "url": "https://static.usenix.org/events/evtwote11/tech/final_files/Haenni.pdf",
+   "source": "USENIX EVT/WOTE 2011 program page (static.usenix.org/events/evtwote11/tech)"
+  },
+  {
+   "key": "culnane11-authentication",
+   "group": "e2e",
+   "authors": "Chris Culnane, David Bismark, James Heather, Steve Schneider, Sriramkrishnan Srinivasan and Zhe Xia",
+   "title": "Authentication Codes",
+   "venue": "USENIX EVT/WOTE 2011",
+   "year": 2011,
+   "url": "https://static.usenix.org/events/evtwote11/tech/final_files/Culnane7-6-11.pdf",
+   "source": "USENIX EVT/WOTE 2011 program page (static.usenix.org/events/evtwote11/tech)"
+  },
+  {
+   "key": "ryan11-pret",
+   "group": "e2e",
+   "authors": "Peter Y. A. Ryan",
+   "title": "Prêt à Voter with Confirmation Codes",
+   "venue": "USENIX EVT/WOTE 2011",
+   "year": 2011,
+   "url": "https://static.usenix.org/events/evtwote11/tech/final_files/Ryan.pdf",
+   "source": "USENIX EVT/WOTE 2011 program page (static.usenix.org/events/evtwote11/tech)"
+  },
+  {
+   "key": "buell11-auditing",
+   "group": "pilots",
+   "authors": "Duncan A. Buell, Eleanor Hare, Frank Heindel, Chip Moore and Barbara Zia",
+   "title": "Auditing a DRE-Based Election in South Carolina",
+   "venue": "USENIX EVT/WOTE 2011",
+   "year": 2011,
+   "url": "https://static.usenix.org/events/evtwote11/tech/final_files/Buell.pdf",
+   "source": "USENIX EVT/WOTE 2011 program page (static.usenix.org/events/evtwote11/tech)"
+  },
+  {
+   "key": "lazarus11-applying",
+   "group": "practice",
+   "authors": "Eric L. Lazarus, David L. Dill, Jeremy Epstein and Joseph Lorenzo Hall",
+   "title": "Applying a Reusable Election Threat Model at the County Level",
+   "venue": "USENIX EVT/WOTE 2011",
+   "year": 2011,
+   "url": "https://static.usenix.org/events/evtwote11/tech/final_files/Lazarus.pdf",
+   "source": "USENIX EVT/WOTE 2011 program page (static.usenix.org/events/evtwote11/tech)"
+  },
+  {
+   "key": "hall12-probing",
+   "group": "practice",
+   "authors": "Joseph Lorenzo Hall, Emily Barabas, Gregory Shapiro, Deirdre Mulligan and Coye Cheshire",
+   "title": "Probing the Front Lines: Pollworker Perceptions of Security & Privacy",
+   "venue": "USENIX EVT/WOTE 2012",
+   "year": 2012,
+   "url": "https://www.usenix.org/conference/evtwote12/workshop-program/presentation/hall",
+   "source": "USENIX EVT/WOTE 2012 program page (usenix.org/conference/evtwote12)"
+  },
+  {
+   "key": "essex12-cobra",
+   "group": "internet",
+   "authors": "Aleksander Essex, Jeremy Clark and Urs Hengartner",
+   "title": "Cobra: Toward Concurrent Ballot Authorization for Internet Voting",
+   "venue": "USENIX EVT/WOTE 2012",
+   "year": 2012,
+   "url": "https://www.usenix.org/conference/evtwote12/workshop-program/presentation/essex",
+   "source": "USENIX EVT/WOTE 2012 program page (usenix.org/conference/evtwote12)"
+  },
+  {
+   "key": "kempka12-coercion",
+   "group": "e2e",
+   "authors": "Carmen Kempka",
+   "title": "Coercion-Resistant Electronic Elections with Write-In Candidates",
+   "venue": "USENIX EVT/WOTE 2012",
+   "year": 2012,
+   "url": "https://www.usenix.org/conference/evtwote12/workshop-program/presentation/kempka",
+   "source": "USENIX EVT/WOTE 2012 program page (usenix.org/conference/evtwote12)"
+  },
+  {
+   "key": "wang12-operator",
+   "group": "handcount",
+   "authors": "Kai Wang, Nicholas Carlini, Eric Kim, Ivan Motyashov, Daniel Nguyen and David Wagner",
+   "title": "Operator-Assisted Tabulation of Optical Scan Ballots",
+   "venue": "USENIX EVT/WOTE 2012",
+   "year": 2012,
+   "url": "https://www.usenix.org/conference/evtwote12/workshop-program/presentation/wang_kai",
+   "source": "USENIX EVT/WOTE 2012 program page (usenix.org/conference/evtwote12)"
+  },
+  {
+   "key": "culnane12-hybrid",
+   "group": "e2e",
+   "authors": "Chris Culnane",
+   "title": "A Hybrid Touch Interface for Prêt à Voter",
+   "venue": "USENIX EVT/WOTE 2012",
+   "year": 2012,
+   "url": "https://www.usenix.org/conference/evtwote12/workshop-program/presentation/culnane",
+   "source": "USENIX EVT/WOTE 2012 program page (usenix.org/conference/evtwote12)"
+  },
+  {
+   "key": "khazaei12-cryptanalysis",
+   "group": "e2e",
+   "authors": "Shahram Khazaei, Björn Terelius and Douglas Wikström",
+   "title": "Cryptanalysis of a Universally Verifiable Efficient Re-encryption Mixnet",
+   "venue": "USENIX EVT/WOTE 2012",
+   "year": 2012,
+   "url": "https://www.usenix.org/conference/evtwote12/workshop-program/presentation/khazaei",
+   "source": "USENIX EVT/WOTE 2012 program page (usenix.org/conference/evtwote12)"
+  },
+  {
+   "key": "demirel12-improving",
+   "group": "e2e",
+   "authors": "Denise Demirel, Jeroen van de Graaf and Roberto Araújo",
+   "title": "Improving Helios with Everlasting Privacy Towards the Public",
+   "venue": "USENIX EVT/WOTE 2012",
+   "year": 2012,
+   "url": "https://www.usenix.org/conference/evtwote12/workshop-program/presentation/demirel",
+   "source": "USENIX EVT/WOTE 2012 program page (usenix.org/conference/evtwote12)"
+  },
+  {
+   "key": "baxter12-automated",
+   "group": "security",
+   "authors": "Patrick Baxter, Anne Edmundson, Keishla Ortiz, Ana Maria Quevedo, Samuel Rodríguez, Cynthia Sturton and David Wagner",
+   "title": "Automated Analysis of Election Audit Logs",
+   "venue": "USENIX EVT/WOTE 2012",
+   "year": 2012,
+   "url": "https://www.usenix.org/conference/evtwote12/workshop-program/presentation/baxter",
+   "source": "USENIX EVT/WOTE 2012 program page (usenix.org/conference/evtwote12)"
+  },
+  {
+   "key": "phan12-systematic",
+   "group": "practice",
+   "authors": "Huong Phan, George S. Avrunin, Matt Bishop, Lori A. Clarke and Leon J. Osterweil",
+   "title": "A Systematic Process-Model-based Approach for Synthesizing Attacks and Evaluating Them",
+   "venue": "USENIX EVT/WOTE 2012",
+   "year": 2012,
+   "url": "https://www.usenix.org/conference/evtwote12/workshop-program/presentation/phan",
+   "source": "USENIX EVT/WOTE 2012 program page (usenix.org/conference/evtwote12)"
+  },
+  {
+   "key": "aranha12-software",
+   "group": "security",
+   "authors": "Diego F. Aranha",
+   "title": "Software Vulnerabilities in the Brazilian Voting Machine (invited talk)",
+   "venue": "USENIX EVT/WOTE 2012",
+   "year": 2012,
+   "url": "https://www.usenix.org/conference/evtwote12/workshop-program/presentation/aranha",
+   "source": "USENIX EVT/WOTE 2012 program page (usenix.org/conference/evtwote12)"
+  },
+  {
+   "key": "tsoukalas13-helios",
+   "group": "e2e",
+   "authors": "Georgios Tsoukalas, Kostas Papadimitriou, Panos Louridas and Panayiotis Tsanakas",
+   "title": "From Helios to Zeus",
+   "venue": "USENIX EVT/WOTE 2013 (USENIX JETS 1(1))",
+   "year": 2013,
+   "url": "https://www.usenix.org/conference/evtwote13/workshop-program/presentation/tsoukalas",
+   "source": "USENIX EVT/WOTE 2013 program page (usenix.org/conference/evtwote13)"
+  },
+  {
+   "key": "llewellyn13-testing",
+   "group": "e2e",
+   "authors": "Morgan Llewellyn, Steve Schneider, Zhe Xia, Chris Culnane, James Heather, Peter Y. A. Ryan and Sriramkrishnan Srinivasan",
+   "title": "Testing Voters' Understanding of a Security Mechanism Used in Verifiable Voting",
+   "venue": "USENIX EVT/WOTE 2013 (USENIX JETS 1(1))",
+   "year": 2013,
+   "url": "https://www.usenix.org/conference/evtwote13/workshop-program/presentation/llewellyn",
+   "source": "USENIX EVT/WOTE 2013 program page (usenix.org/conference/evtwote13)"
+  },
+  {
+   "key": "khader13-proving",
+   "group": "e2e",
+   "authors": "Dalia Khader, Peter Y. A. Ryan and Qiang Tang",
+   "title": "Proving Prêt à Voter Receipt Free Using Computational Security Models",
+   "venue": "USENIX EVT/WOTE 2013 (USENIX JETS 1(1))",
+   "year": 2013,
+   "url": "https://www.usenix.org/conference/evtwote13/workshop-program/presentation/khader",
+   "source": "USENIX EVT/WOTE 2013 program page (usenix.org/conference/evtwote13)"
+  },
+  {
+   "key": "kim13-improved",
+   "group": "handcount",
+   "authors": "Eric Kim, Nicholas Carlini, Andrew Chang, George Yiu, Kai Wang and David Wagner",
+   "title": "Improved Support for Machine-assisted Ballot-level Audits",
+   "venue": "USENIX EVT/WOTE 2013 (USENIX JETS 1(1))",
+   "year": 2013,
+   "url": "https://www.usenix.org/conference/evtwote13/workshop-program/presentation/kim",
+   "source": "USENIX EVT/WOTE 2013 program page (usenix.org/conference/evtwote13)"
+  },
+  {
+   "key": "buell13-analysis",
+   "group": "practice",
+   "authors": "Duncan A. Buell",
+   "title": "An Analysis of Long Lines in Richland County, South Carolina",
+   "venue": "USENIX EVT/WOTE 2013 (USENIX JETS 1(1))",
+   "year": 2013,
+   "url": "https://www.usenix.org/conference/evtwote13/workshop-program/presentation/buell",
+   "source": "USENIX EVT/WOTE 2013 program page (usenix.org/conference/evtwote13)"
+  },
+  {
+   "key": "bader14-new",
+   "group": "forensics",
+   "authors": "Max Bader",
+   "title": "Do New Voting Technologies Prevent Fraud? Evidence from Russia",
+   "venue": "USENIX EVT/WOTE 2014 (USENIX JETS 2(1))",
+   "year": 2014,
+   "url": "https://www.usenix.org/conference/evtwote14/workshop-program/presentation/bader",
+   "source": "USENIX JETS issue page (usenix.org/jets/issues)"
+  },
+  {
+   "key": "culnane14-faster",
+   "group": "e2e",
+   "authors": "Chris Culnane, James Heather, Rui Joaquim, Peter Y. A. Ryan, Steve Schneider and Vanessa Teague",
+   "title": "Faster Print on Demand for Prêt à Voter",
+   "venue": "USENIX EVT/WOTE 2014 (USENIX JETS 2(1))",
+   "year": 2014,
+   "url": "https://www.usenix.org/conference/evtwote14/workshop-program/presentation/culnane",
+   "source": "USENIX JETS issue page (usenix.org/jets/issues)"
+  },
+  {
+   "key": "michel14-systematic",
+   "group": "security",
+   "authors": "Laurent D. Michel, Alexander A. Shvartsman and Nikolaj Volgushev",
+   "title": "A Systematic Approach to Analyzing Voting Terminal Event Logs",
+   "venue": "USENIX EVT/WOTE 2014",
+   "year": 2014,
+   "url": "https://www.usenix.org/conference/evtwote14/workshop-program/presentation/michel",
+   "source": "DBLP record"
+  },
+  {
+   "key": "pomares14-voters",
+   "group": "practice",
+   "authors": "Julia Pomares, Inés Levin and R. Michael Alvarez",
+   "title": "Do Voters and Poll Workers Differ in their Attitudes Toward E-voting? Evidence from the First E-election in Salta, Argentina",
+   "venue": "USENIX EVT/WOTE 2014",
+   "year": 2014,
+   "url": "https://www.usenix.org/conference/evtwote14/workshop-program/presentation/pomares",
+   "source": "DBLP record"
+  },
+  {
+   "key": "hao14-every",
+   "group": "e2e",
+   "authors": "Feng Hao, Matthew Nicolas Kreeger, Brian Randell, Dylan Clarke, Siamak F. Shahandashti and Peter Hyun-Jeen Lee",
+   "title": "Every Vote Counts: Ensuring Integrity in Large-Scale Electronic Voting",
+   "venue": "USENIX EVT/WOTE 2014",
+   "year": 2014,
+   "url": "https://www.usenix.org/conference/evtwote14/workshop-program/presentation/hao",
+   "source": "DBLP record"
+  },
+  {
+   "key": "summers14-making",
+   "group": "handcount",
+   "authors": "Kathryn Summers, Dana Chisnell, Drew Davies, Noel T. Alton and Megan McKeever",
+   "title": "Making Voting Accessible: Designing Digital Ballot Marking for People with Low Literacy and Mild Cognitive Disabilities",
+   "venue": "USENIX EVT/WOTE 2014",
+   "year": 2014,
+   "url": "https://www.usenix.org/conference/evtwote14/workshop-program/presentation/summers",
+   "source": "DBLP record"
+  },
+  {
+   "key": "acemyan14-usability",
+   "group": "e2e",
+   "authors": "Claudia Z. Acemyan, Philip T. Kortum, Michael D. Byrne and Dan S. Wallach",
+   "title": "Usability of Voter Verifiable, End-to-end Voting Systems: Baseline Data for Helios, Prêt à Voter, and Scantegrity II",
+   "venue": "USENIX EVT/WOTE 2014",
+   "year": 2014,
+   "url": "https://www.usenix.org/conference/evtwote14/workshop-program/presentation/acemyan",
+   "source": "DBLP record"
+  },
+  {
+   "key": "verzola10-double",
+   "group": "handcount",
+   "authors": "Roberto S. Verzola",
+   "title": "Double-entry Accounting Provides Software-Independent Algorithm for Confirming the Integrity of Automated Election Tallies",
+   "venue": "Electronic Voting 2010 (EVOTE), GI Lecture Notes in Informatics",
+   "year": 2010,
+   "url": "https://dl.gi.de/handle/20.500.12116/19494",
+   "source": "DBLP record"
+  },
+  {
+   "key": "cordero10-enabling",
+   "group": "security",
+   "authors": "Arel Cordero",
+   "title": "Enabling More Meaningful Post-Election Investigations",
+   "venue": "PhD dissertation, University of California, Berkeley",
+   "year": 2010,
+   "url": "https://www.escholarship.org/uc/item/1d9083h2",
+   "source": "DBLP record"
+  },
+  {
+   "key": "burton12-supervised",
+   "group": "e2e",
+   "authors": "Craig Burton, Chris Culnane, James Heather, Thea Peacock, Peter Y. A. Ryan, Steve Schneider, Sriramkrishnan Srinivasan, Vanessa Teague, Roland Wen and Zhe Xia",
+   "title": "A Supervised Verifiable Voting Protocol for the Victorian Electoral Commission",
+   "venue": "Electronic Voting 2012 (EVOTE), GI Lecture Notes in Informatics",
+   "year": 2012,
+   "url": "https://dl.gi.de/handle/20.500.12116/18227",
+   "source": "DBLP record"
+  },
+  {
+   "key": "olembo12-partial",
+   "group": "e2e",
+   "authors": "Maina M. Olembo, Anna Kahlert, Stephan Neumann and Melanie Volkamer",
+   "title": "Partial Verifiability in POLYAS for the GI Elections",
+   "venue": "Electronic Voting 2012 (EVOTE), GI Lecture Notes in Informatics",
+   "year": 2012,
+   "url": "https://dl.gi.de/handle/20.500.12116/18228",
+   "source": "DBLP record"
+  },
+  {
+   "key": "stenerud12-when",
+   "group": "internet",
+   "authors": "Ida Sofie Gebhardt Stenerud and Christian Bull",
+   "title": "When Reality Comes Knocking: Norwegian Experiences with Verifiable Electronic Voting",
+   "venue": "Electronic Voting 2012 (EVOTE), GI Lecture Notes in Informatics",
+   "year": 2012,
+   "url": "https://dl.gi.de/handle/20.500.12116/18219",
+   "source": "DBLP record"
+  },
+  {
+   "key": "smyth15-computational",
+   "group": "e2e",
+   "authors": "Ben Smyth, Steven Frink and Michael R. Clarkson",
+   "title": "Computational Election Verifiability: Definitions and an Analysis of Helios and JCJ",
+   "venue": "IACR Cryptology ePrint Archive 2015/233",
+   "year": 2015,
+   "url": "https://eprint.iacr.org/2015/233",
+   "source": "DBLP record"
+  },
+  {
+   "key": "quaglia17-short",
+   "group": "e2e",
+   "authors": "Elizabeth A. Quaglia and Ben Smyth",
+   "title": "A short introduction to secrecy and verifiability for elections",
+   "venue": "arXiv:1702.03168",
+   "year": 2017,
+   "url": "https://arxiv.org/abs/1702.03168",
+   "source": "DBLP record"
+  },
+  {
+   "key": "lueks20-voteagain",
+   "group": "e2e",
+   "authors": "Wouter Lueks, Iñigo Querejeta-Azurmendi and Carmela Troncoso",
+   "title": "VoteAgain: A scalable coercion-resistant voting system",
+   "venue": "29th USENIX Security Symposium",
+   "year": 2020,
+   "url": "https://www.usenix.org/conference/usenixsecurity20/presentation/lueks",
+   "source": "DBLP record"
+  },
+  {
+   "key": "specter20-ballot",
+   "group": "internet",
+   "authors": "Michael A. Specter, James Koppel and Daniel Weitzner",
+   "title": "The Ballot is Busted Before the Blockchain: A Security Analysis of Voatz, the First Internet Voting Application Used in U.S. Federal Elections",
+   "venue": "29th USENIX Security Symposium",
+   "year": 2020,
+   "url": "https://www.usenix.org/conference/usenixsecurity20/presentation/specter",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "specter21-security",
+   "group": "internet",
+   "authors": "Michael A. Specter and J. Alex Halderman",
+   "title": "Security Analysis of the Democracy Live Online Voting System",
+   "venue": "30th USENIX Security Symposium",
+   "year": 2021,
+   "url": "https://jhalderm.com/pub/papers/omniballot-sec21.pdf",
+   "source": "J.A. Halderman's papers page (jhalderm.com/papers)"
+  },
+  {
+   "key": "halderman22-antrim",
+   "group": "security",
+   "authors": "J. Alex Halderman",
+   "title": "The Antrim County 2020 Election Incident: An Independent Forensic Investigation",
+   "venue": "31st USENIX Security Symposium",
+   "year": 2022,
+   "url": "https://www.usenix.org/system/files/sec22-halderman.pdf",
+   "source": "J.A. Halderman's papers page (jhalderm.com/papers)"
+  },
+  {
+   "key": "volkamer22-increasing",
+   "group": "e2e",
+   "authors": "Melanie Volkamer, Oksana Kulyk, Jonas Ludwig and Niklas Fuhrberg",
+   "title": "Increasing security without decreasing usability: A comparison of various verifiable voting systems",
+   "venue": "SOUPS 2022",
+   "year": 2022,
+   "url": "https://www.usenix.org/conference/soups2022/presentation/volkamer",
+   "source": "DBLP record"
+  },
+  {
+   "key": "marky22-investigating",
+   "group": "internet",
+   "authors": "Karola Marky, Paul Gerber, Sebastian Günther, Mohamed Khamis, Maximilian Fries and Max Mühlhäuser",
+   "title": "Investigating State-of-the-Art Practices for Fostering Subjective Trust in Online Voting through Interviews",
+   "venue": "31st USENIX Security Symposium",
+   "year": 2022,
+   "url": "https://www.usenix.org/conference/usenixsecurity22/presentation/marky",
+   "source": "DBLP record"
+  },
+  {
+   "key": "chaum22-votexx",
+   "group": "e2e",
+   "authors": "David Chaum, Richard Carback, Jeremy Clark, Chao Liu, Mahdi Nejadgholi, Bart Preneel, Alan T. Sherman, Mario Yaksetig, Zeyuan Yin, Filip Zagórski and Bingsheng Zhang",
+   "title": "VoteXX: A Solution to Improper Influence in Voter-Verifiable Elections",
+   "venue": "IACR Cryptology ePrint Archive 2022/1212",
+   "year": 2022,
+   "url": "https://eprint.iacr.org/2022/1212",
+   "source": "DBLP record"
+  },
+  {
+   "key": "debant23-reversing",
+   "group": "internet",
+   "authors": "Alexandre Debant and Lucca Hirschi",
+   "title": "Reversing, Breaking, and Fixing the French Legislative Election E-Voting Protocol",
+   "venue": "32nd USENIX Security Symposium",
+   "year": 2023,
+   "url": "https://www.usenix.org/conference/usenixsecurity23/presentation/debant",
+   "source": "DBLP record"
+  },
+  {
+   "key": "panahi24-but",
+   "group": "security",
+   "authors": "Kabir Panahi, Shawn Robertson, Yasemin Acar, Alexandru G. Bardas, Tadayoshi Kohno and Lucy Simko",
+   "title": "\"But they have overlooked a few things in Afghanistan\": An Analysis of the Integration of Biometric Voter Verification in the 2019 Afghan Presidential Elections",
+   "venue": "33rd USENIX Security Symposium",
+   "year": 2024,
+   "url": "https://www.usenix.org/conference/usenixsecurity24/presentation/panahi",
+   "source": "DBLP record"
+  },
+  {
+   "key": "cortier24-election",
+   "group": "internet",
+   "authors": "Véronique Cortier, Alexandre Debant, Anselme Goetschmann and Lucca Hirschi",
+   "title": "Election Eligibility with OpenID: Turning Authentication into Transferable Proof of Eligibility",
+   "venue": "33rd USENIX Security Symposium",
+   "year": 2024,
+   "url": "https://www.usenix.org/conference/usenixsecurity24/presentation/cortier",
+   "source": "DBLP record"
+  },
+  {
+   "key": "benaloh24-electionguard",
+   "group": "e2e",
+   "authors": "Josh Benaloh, Michael Naehrig, Olivier Pereira and Dan S. Wallach",
+   "title": "ElectionGuard: a Cryptographic Toolkit to Enable Verifiable Elections",
+   "venue": "33rd USENIX Security Symposium",
+   "year": 2024,
+   "url": "https://www.usenix.org/conference/usenixsecurity24/presentation/benaloh",
+   "note": "Extended version: IACR ePrint 2024/955.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "fuller24-decisive",
+   "group": "m-comp",
+   "authors": "Benjamin Fuller, Rashmi Pai and Alexander Russell",
+   "title": "The Decisive Power of Indecision: Low-Variance Risk-Limiting Audits and Election Contestation via Marginal Mark Recording",
+   "venue": "33rd USENIX Security Symposium",
+   "year": 2024,
+   "url": "https://www.usenix.org/conference/usenixsecurity24/presentation/fuller",
+   "note": "Preprint: arXiv:2402.06515.",
+   "source": "DBLP record"
+  },
+  {
+   "key": "crimmins24-dvsorder",
+   "group": "security",
+   "authors": "Braden L. Crimmins, Dhanya Y. Narayanan, Drew Springall and J. Alex Halderman",
+   "title": "DVSorder: Ballot Randomization Flaws Threaten Voter Privacy",
+   "venue": "33rd USENIX Security Symposium",
+   "year": 2024,
+   "url": "https://www.usenix.org/system/files/usenixsecurity24-crimmins.pdf",
+   "source": "J.A. Halderman's papers page (jhalderm.com/papers)"
+  },
+  {
+   "key": "benaloh25-drop",
+   "group": "e2e",
+   "authors": "Josh Benaloh, Michael Naehrig and Olivier Pereira",
+   "title": "The DROP Protocol: Dispute Resolution via Observation in Public for Verifiable, In-Person Voting",
+   "venue": "IACR Cryptology ePrint Archive 2025/929",
+   "year": 2025,
+   "url": "https://eprint.iacr.org/2025/929",
+   "source": "DBLP record"
+  },
+  {
+   "key": "haines25-vestigial",
+   "group": "e2e",
+   "authors": "Thomas Haines and Jarrod Rose",
+   "title": "Vestigial Vulnerabilities in Deployed Verifiable E-Voting Systems",
+   "venue": "IACR Cryptology ePrint Archive 2025/2033",
+   "year": 2025,
+   "url": "https://eprint.iacr.org/2025/2033",
+   "source": "DBLP record"
+  },
+  {
+   "key": "kim26-haechi",
+   "group": "e2e",
+   "authors": "Jiwon Kim, Michael Naehrig, Olivier Pereira and Josh Benaloh",
+   "title": "Haechi: Simple Commitment-based Keyless In-person Verifiable Elections",
+   "venue": "IACR Cryptology ePrint Archive 2026/613",
+   "year": 2026,
+   "url": "https://eprint.iacr.org/2026/613",
+   "source": "DBLP record"
+  },
+  {
+   "key": "bernhard20-election",
+   "group": "security",
+   "authors": "Matthew Bernhard",
+   "title": "Election Security Is Harder Than You Think",
+   "venue": "PhD dissertation, University of Michigan",
+   "year": 2020,
+   "url": "https://hdl.handle.net/2027.42/163272",
+   "source": "DBLP record"
+  },
+  {
+   "key": "walker22-logic",
+   "group": "security",
+   "authors": "Josiah Walker, Nakul Bajaj, Braden L. Crimmins and J. Alex Halderman",
+   "title": "Logic and Accuracy Testing: A Fifty-State Review",
+   "venue": "E-Vote-ID 2022",
+   "year": 2022,
+   "url": "https://arxiv.org/abs/2207.14394",
+   "source": "J.A. Halderman's papers page (jhalderm.com/papers)"
+  },
+  {
+   "key": "crimmins22-remotevote",
+   "group": "e2e",
+   "authors": "Braden L. Crimmins, Marshall Rhea and J. Alex Halderman",
+   "title": "RemoteVote and SAFE Vote: Towards Usable End-to-End Verification for Vote-by-Mail",
+   "venue": "Voting 2022 (FC workshops)",
+   "year": 2022,
+   "url": "https://arxiv.org/abs/2111.08662",
+   "source": "J.A. Halderman's papers page (jhalderm.com/papers)"
+  },
+  {
+   "key": "crimmins25-improving",
+   "group": "m-gen",
+   "authors": "Braden L. Crimmins, J. Alex Halderman and Bradley Sturt",
+   "title": "Improving the Security of United States Elections with Robust Optimization",
+   "venue": "Operations Research 73(1):61–85",
+   "year": 2025,
+   "url": "https://pubsonline.informs.org/doi/full/10.1287/opre.2023.0422",
+   "doi": "10.1287/opre.2023.0422",
+   "source": "J.A. Halderman's papers page (jhalderm.com/papers)"
+  },
+  {
+   "key": "kroll14-efficiently",
+   "group": "m-gen",
+   "authors": "Joshua A. Kroll, Edward W. Felten and J. Alex Halderman",
+   "title": "Efficiently Auditing Multi-Level Elections",
+   "venue": "EVOTE 2014",
+   "year": 2014,
+   "url": "https://jhalderm.com/pub/papers/audit-evote14.pdf",
+   "source": "J.A. Halderman's papers page (jhalderm.com/papers)"
+  },
+  {
+   "key": "halderman21-security",
+   "group": "grey",
+   "authors": "J. Alex Halderman and Drew Springall",
+   "title": "Security Analysis of Georgia's ImageCast X Ballot Marking Devices",
+   "venue": "Expert report, Curling v. Raffensperger, N.D. Ga. (filed 2021, unsealed 2023)",
+   "year": 2021,
+   "url": "https://storage.courtlistener.com/recap/gov.uscourts.gand.240678/gov.uscourts.gand.240678.1681.0.pdf",
+   "source": "J.A. Halderman's papers page (jhalderm.com/papers)"
+  },
+  {
+   "key": "saltman75-effective",
+   "group": "grey",
+   "authors": "Roy G. Saltman",
+   "title": "Effective Use of Computing Technology in Vote-Tallying",
+   "venue": "NBSIR 75-687, National Bureau of Standards",
+   "year": 1975,
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nbsir75-687.pdf",
+   "note": "Recommends hand-counting a random sample of precincts to check machine counts; reissued in 1978 as NBS Special Publication 500-30.",
+   "source": "J.L. Hall's post-election manual auditing bibliography, v2.4 (josephhall.org/blog/pea_biblio)"
+  },
+  {
+   "key": "mebane03-detecting",
+   "group": "grey",
+   "authors": "Walter R. Mebane Jr., Jasjeet S. Sekhon and Jonathan Wand",
+   "title": "Detecting and Correcting Election Irregularities",
+   "venue": "Working paper",
+   "year": 2003,
+   "source": "J.L. Hall's post-election manual auditing bibliography, v2.4 (josephhall.org/blog/pea_biblio)"
+  },
+  {
+   "key": "neff03-election",
+   "group": "grey",
+   "authors": "C. Andrew Neff",
+   "title": "Election Confidence: A Comparison of Methodologies and Their Relative Effectiveness at Achieving It (rev. 6)",
+   "venue": "VoteHere white paper",
+   "year": 2003,
+   "source": "J.L. Hall's post-election manual auditing bibliography, v2.4 (josephhall.org/blog/pea_biblio)"
+  },
+  {
+   "key": "wand04-auditing",
+   "group": "grey",
+   "authors": "Jonathan Wand",
+   "title": "Auditing an Election Using Sampling: The Impact of Bin Size on the Probability of Detecting Manipulation",
+   "venue": "Working paper",
+   "year": 2004,
+   "source": "J.L. Hall's post-election manual auditing bibliography, v2.4 (josephhall.org/blog/pea_biblio)"
+  },
+  {
+   "key": "brennan06-machinery",
+   "group": "overview",
+   "authors": "Brennan Center Task Force on Voting System Security (Lawrence Norden, chair)",
+   "title": "The Machinery of Democracy: Protecting Elections in an Electronic World",
+   "venue": "Brennan Center for Justice",
+   "year": 2006,
+   "url": "https://www.brennancenter.org/our-work/research-reports/machinery-democracy-protecting-elections-electronic-world",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "dopp05-independent",
+   "group": "grey",
+   "authors": "Kathy Dopp",
+   "title": "How Can Independent Paper Audits Detect and Correct Vote Miscounts?",
+   "venue": "Working paper, National Election Data Archive",
+   "year": 2005,
+   "source": "J.L. Hall's post-election manual auditing bibliography, v2.4 (josephhall.org/blog/pea_biblio)"
+  },
+  {
+   "key": "theisen05-auditing",
+   "group": "grey",
+   "authors": "Ellen Theisen",
+   "title": "Auditing Election Equipment — The Real Scoop!",
+   "venue": "VotersUnite!",
+   "year": 2005,
+   "source": "J.L. Hall's post-election manual auditing bibliography, v2.4 (josephhall.org/blog/pea_biblio)"
+  },
+  {
+   "key": "stanislevic06-random",
+   "group": "grey",
+   "authors": "Howard Stanislevic",
+   "title": "Random Auditing of E-Voting Systems: How Much Is Enough?",
+   "venue": "VoteTrustUSA",
+   "year": 2006,
+   "source": "J.L. Hall's post-election manual auditing bibliography, v2.4 (josephhall.org/blog/pea_biblio)"
+  },
+  {
+   "key": "simon06-end",
+   "group": "grey",
+   "authors": "Jonathan D. Simon and Bruce O'Dell",
+   "title": "An End To \"Faith-Based\" Voting: Universal Precinct-based Handcount Sampling To Check Computerized Vote Counts In Federal and Statewide Elections",
+   "venue": "Election Defense Alliance",
+   "year": 2006,
+   "source": "J.L. Hall's post-election manual auditing bibliography, v2.4 (josephhall.org/blog/pea_biblio)"
+  },
+  {
+   "key": "dopp06-election",
+   "group": "grey",
+   "authors": "Kathy Dopp and Frank Stenger",
+   "title": "The Election Integrity Audit",
+   "venue": "Working paper, National Election Data Archive",
+   "year": 2006,
+   "source": "J.L. Hall's post-election manual auditing bibliography, v2.4 (josephhall.org/blog/pea_biblio)"
+  },
+  {
+   "key": "lobdill06-considering",
+   "group": "grey",
+   "authors": "Jerry Lobdill",
+   "title": "Considering Vote Count Distribution in Designing Election Audits",
+   "venue": "Paper submitted to NIST",
+   "year": 2006,
+   "source": "J.L. Hall's post-election manual auditing bibliography, v2.4 (josephhall.org/blog/pea_biblio)"
+  },
+  {
+   "key": "lobdill06-election",
+   "group": "grey",
+   "authors": "Jerry Lobdill",
+   "title": "Election Audit Sampling Plan Design — It's Not Just About Sampling Without Replacement",
+   "venue": "Paper submitted to NIST",
+   "year": 2006,
+   "source": "J.L. Hall's post-election manual auditing bibliography, v2.4 (josephhall.org/blog/pea_biblio)"
+  },
+  {
+   "key": "stanislevic06-larger",
+   "group": "grey",
+   "authors": "Howard Stanislevic",
+   "title": "Larger Audits Required to Confirm 2006 US House Races",
+   "venue": "VoteTrustUSA",
+   "year": 2006,
+   "source": "J.L. Hall's post-election manual auditing bibliography, v2.4 (josephhall.org/blog/pea_biblio)"
+  },
+  {
+   "key": "dopp07-big",
+   "group": "grey",
+   "authors": "Kathy Dopp",
+   "title": "How Big Should an Election Audit Be? Fixed Rate Audits Do Not Work For Elections",
+   "venue": "Working paper, National Election Data Archive",
+   "year": 2007,
+   "source": "J.L. Hall's post-election manual auditing bibliography, v2.4 (josephhall.org/blog/pea_biblio)"
+  },
+  {
+   "key": "dopp07-tiered",
+   "group": "grey",
+   "authors": "Kathy Dopp",
+   "title": "Tiered Election Audits Based on Margins between Candidates",
+   "venue": "Working paper, National Election Data Archive",
+   "year": 2007,
+   "source": "J.L. Hall's post-election manual auditing bibliography, v2.4 (josephhall.org/blog/pea_biblio)"
+  },
+  {
+   "key": "dopp07-fool",
+   "group": "grey",
+   "authors": "Kathy Dopp",
+   "title": "Fool Me Once: Checking Vote Count Integrity",
+   "venue": "Working paper, National Election Data Archive",
+   "year": 2007,
+   "source": "J.L. Hall's post-election manual auditing bibliography, v2.4 (josephhall.org/blog/pea_biblio)"
+  },
+  {
+   "key": "appel07-effective",
+   "group": "grey",
+   "authors": "Andrew W. Appel",
+   "title": "Effective Audit Policy for Voter-Verified Paper Ballots",
+   "venue": "APSA 2007 Annual Meeting",
+   "year": 2007,
+   "url": "https://www.cs.princeton.edu/~appel/papers/appel-audits.pdf",
+   "note": "An earlier version, written for New Jersey, dates from February 2007.",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "hall07-post",
+   "group": "overview",
+   "authors": "Joseph Lorenzo Hall",
+   "title": "Post-Election Manual Auditing of Paper Records: Bibliography (v2.4)",
+   "venue": "josephhall.org",
+   "year": 2007,
+   "url": "https://josephhall.org/blog/pea_biblio/",
+   "note": "Annotated list of the pre-2007 audit literature.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "appel25-examination",
+   "group": "grey",
+   "authors": "Andrew W. Appel",
+   "title": "Examination Report on the Hart Verity Vanguard 1.0 Voting System",
+   "venue": "Report for the Texas Secretary of State",
+   "year": 2025,
+   "url": "https://www.sos.state.tx.us/elections/forms/sysexam/andrew-appel-hart-vanguard-1.0.1.pdf",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "adhoc23-24",
+   "group": "overview",
+   "authors": "Ad Hoc Committee for 2024 Election Fairness and Legitimacy (Richard L. Hasen, ed.)",
+   "title": "24 for '24: Urgent Recommendations in Law, Media, Politics, and Tech for Fair and Legitimate 2024 U.S. Elections",
+   "venue": "UCLA School of Law",
+   "year": 2023,
+   "url": "https://law.ucla.edu/sites/default/files/PDFs/Safeguarding_Democracy/24_for_24-REPORT-FINAL.pdf",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "adhoc20-fair",
+   "group": "overview",
+   "authors": "Ad Hoc Committee for 2020 Election Fairness and Legitimacy (Richard L. Hasen, ed.)",
+   "title": "Fair Elections During a Crisis: Urgent Recommendations in Law, Media, Politics, and Tech to Advance the Legitimacy of, and the Public Confidence in, the November 2020 U.S. Elections",
+   "venue": "UC Irvine School of Law",
+   "year": 2020,
+   "url": "https://www.cs.princeton.edu/~appel/voting/FairElectionsDuringACrisis.pdf",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel23-internet",
+   "group": "internet",
+   "authors": "Andrew W. Appel",
+   "title": "Is Internet Voting Trustworthy? The Science and the Policy Battles",
+   "venue": "University of New Hampshire Law Review 21:523",
+   "year": 2023,
+   "url": "https://scholars.unh.edu/unh_lr/vol21/iss2/9",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel08-security",
+   "group": "grey",
+   "authors": "Andrew W. Appel",
+   "title": "Security Seals on AVC Advantage Voting Machines are Easily Defeated",
+   "venue": "Technical report, Princeton CITP",
+   "year": 2008,
+   "url": "https://citp.princeton.edu/voting/advantage/seals",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel06-defeat",
+   "group": "grey",
+   "authors": "Andrew W. Appel",
+   "title": "How to Defeat Rivest's ThreeBallot Voting System",
+   "venue": "Manuscript",
+   "year": 2006,
+   "url": "https://www.cs.princeton.edu/~appel/papers/DefeatingThreeBallot.pdf",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "strauss06-trouble",
+   "group": "grey",
+   "authors": "Charlie Strauss",
+   "title": "The Trouble With Triples: A Critical Review of the Triple Ballot (3ballot) scheme, Part 1",
+   "venue": "Manuscript",
+   "year": 2006,
+   "url": "https://www.cs.princeton.edu/~appel/voting/Strauss-TroubleWithTriples.pdf",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "strauss06-critical",
+   "group": "grey",
+   "authors": "Charlie Strauss",
+   "title": "A Critical Review of the Triple Ballot Voting System. Part 2: Cracking the Triple Ballot Encryption",
+   "venue": "Manuscript",
+   "year": 2006,
+   "url": "https://www.cs.princeton.edu/~appel/voting/Strauss-ThreeBallotCritique2v1.5.pdf",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel20-ballot",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Ballot-level comparison audits: central-count",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2020,
+   "url": "https://freedom-to-tinker.com/2020/03/04/ballot-level-comparison-audits-central-count",
+   "note": "First of a five-part series on comparison audits.",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel20-ballot-level",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Ballot-level comparison audits: precinct-count",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2020,
+   "url": "https://freedom-to-tinker.com/2020/03/06/ballot-level-comparison-audits-precinct-count",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel20-t",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Why we can't do random selection the other way round in PCOS RLAs",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2020,
+   "url": "https://freedom-to-tinker.com/2020/03/09/why-we-cant-do-random-selection-the-other-way-round-in-pcos-rlas",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel20-finding",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Finding a randomly numbered ballot",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2020,
+   "url": "https://freedom-to-tinker.com/2020/03/11/finding-a-randomly-numbered-ballot",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel20-ballot-comparison",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Ballot-level comparison audits: BMD",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2020,
+   "url": "https://freedom-to-tinker.com/2020/03/13/ballot-level-comparison-audits-bmd",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel19-risk",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "How to do a Risk-Limiting Audit",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2019,
+   "url": "https://freedom-to-tinker.com/2019/05/23/how-to-do-a-risk-limiting-audit/",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel19-bmds",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "BMDs are not meaningfully auditable",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2019,
+   "url": "https://freedom-to-tinker.com/2019/04/22/bmds-are-not-meaningfully-auditable/",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel18-ten",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Ten ways to make voting machines cheat with plausible deniability",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2018,
+   "url": "https://freedom-to-tinker.com/2018/10/25/ten-ways-to-make-voting-machines-cheat-with-plausible-deniability",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel18-cheating",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Cheating with paper ballots",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2018,
+   "url": "https://freedom-to-tinker.com/2018/11/01/cheating-with-paper-ballots",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel18-unverifiability",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "An unverifiability principle for voting machines",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2018,
+   "url": "https://freedom-to-tinker.com/2018/10/22/an-unverifiability-principle-for-voting-machines",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel09-optical",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Optical-scan voting extremely accurate in Minnesota",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2009,
+   "url": "https://freedom-to-tinker.com/blog/appel/optical-scan-voting-extremely-accurate-minnesota",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel11-seals",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Why seals can't secure elections",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2011,
+   "url": "https://freedom-to-tinker.com/blog/appel/why-seals-cant-secure-elections",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel18-pilots",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Pilots of risk-limiting election audits in California and Virginia",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2018,
+   "url": "https://freedom-to-tinker.com/2018/12/10/pilots-of-risk-limiting-election-audits-in-california-and-virginia/",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel25-flaky",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Flaky paper won't secure our elections without a protocol to go with it",
+   "venue": "CITP Blog",
+   "year": 2025,
+   "url": "https://blog.citp.princeton.edu/2025/05/22/flaky-paper-wont-secure-our-elections-without-a-protocol-to-go-with-it",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel25-paper",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Paper fingerprinting and ballot tracking",
+   "venue": "CITP Blog",
+   "year": 2025,
+   "url": "https://blog.citp.princeton.edu/2025/05/23/paper-fingerprinting-and-ballot-tracking",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel26-ballot",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Ballot tabulation by uploading scanned images for OCR is quite insecure",
+   "venue": "CITP Blog",
+   "year": 2026,
+   "url": "https://blog.citp.princeton.edu/2026/04/10/ballot-tabulation-by-uploading-scanned-images-for-ocr-is-quite-insecure",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel21-new",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "New Hampshire Election Audit, part 1",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2021,
+   "url": "https://freedom-to-tinker.com/2021/06/02/new-hampshire-election-audit-part-1",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel21-new-hampshire",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "New Hampshire Election Audit, part 2",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2021,
+   "url": "https://freedom-to-tinker.com/2021/06/07/new-hampshire-election-audit-part-2",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel23-expensive",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Expensive and ineffective recounts in Los Angeles County",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2023,
+   "url": "https://freedom-to-tinker.com/2023/05/05/expensive-and-ineffective-recounts-in-los-angeles-county",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel21-voting",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Voting Machine Hashcode Testing: Unsurprisingly insecure, and surprisingly insecure",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2021,
+   "url": "https://freedom-to-tinker.com/2021/03/05/voting-machine-hashcode-testing-unsurprisingly-insecure-and-surprisingly-insecure",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel23-best",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Best practices for sorting mail-in ballots",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2023,
+   "url": "https://freedom-to-tinker.com/2023/05/03/best-practices-for-sorting-mail-in-ballots",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel24-barcodes",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Barcodes on paper ballots: the good, the bad, and the stealth",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2024,
+   "url": "https://freedom-to-tinker.com/2024/04/10/barcodes-on-paper-ballots-the-good-the-bad-and-the-stealth",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel24-suggested",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Suggested Principles for State Statutes Regarding Ballot Marking and Vote Tabulation",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2024,
+   "url": "https://freedom-to-tinker.com/2024/03/18/suggested-principles-for-state-statutes-regarding-ballot-marking-and-vote-tabulation",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "appel20-election",
+   "group": "blogs",
+   "authors": "Andrew W. Appel",
+   "title": "Election Audits in NJ 2020",
+   "venue": "Freedom to Tinker (blog)",
+   "year": 2020,
+   "url": "https://freedom-to-tinker.com/2020/09/16/election-audits-in-nj-2020",
+   "source": "A.W. Appel's voting publications page (cs.princeton.edu/~appel/voting)"
+  },
+  {
+   "key": "ville39-etude",
+   "group": "stats",
+   "authors": "Jean Ville",
+   "title": "Étude critique de la notion de collectif",
+   "venue": "Gauthier-Villars, Paris",
+   "year": 1939,
+   "note": "The inequality for nonnegative supermartingales behind sequential audit tests.",
+   "source": "Crossref records of contemporary reviews of the monograph (J.L. Doob, 1939; H.T.H. Piaggio, 1939)"
+  },
+  {
+   "key": "saltman88-accuracy",
+   "group": "grey",
+   "authors": "Roy G. Saltman",
+   "title": "Accuracy, Integrity, and Security in Computerized Vote-Tallying",
+   "venue": "NBS Special Publication 500-158",
+   "year": 1988,
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nbsspecialpublication500-158.pdf",
+   "doi": "10.6028/NBS.SP.500-158",
+   "note": "A shorter version appeared in Communications of the ACM 31(10), 1988.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "norc01-2000",
+   "group": "grey",
+   "authors": "NORC at the University of Chicago",
+   "title": "2000 Florida Ballots Project",
+   "venue": "ICPSR study 36207 (data and documentation)",
+   "year": 2001,
+   "url": "https://www.icpsr.umich.edu/web/ICPSR/studies/36207",
+   "note": "Coding of every uncertified ballot in Florida 2000 by teams of three coders; see Wolter et al. (2003).",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "bverfg09-judgment",
+   "group": "overview",
+   "authors": "Federal Constitutional Court of Germany (Bundesverfassungsgericht)",
+   "title": "Judgment of 3 March 2009, 2 BvC 3/07 and 2 BvC 4/07 (use of voting computers)",
+   "venue": "BVerfG",
+   "year": 2009,
+   "url": "https://bundesverfassungsgericht.de/SharedDocs/Entscheidungen/EN/2009/03/cs20090303_2bvc000307en.html",
+   "note": "Holds that every essential step of an election must be open to public scrutiny without specialist knowledge.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "eac21-election",
+   "group": "practice",
+   "authors": "U.S. Election Assistance Commission",
+   "title": "Election Audits Across the United States",
+   "venue": "EAC",
+   "year": 2021,
+   "url": "https://eac.gov/election-officials/election-audits-across-united-states",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "norden15-america",
+   "group": "grey",
+   "authors": "Lawrence Norden and Christopher Famighetti",
+   "title": "America's Voting Machines at Risk",
+   "venue": "Brennan Center for Justice",
+   "year": 2015,
+   "url": "https://www.brennancenter.org/our-work/research-reports/americas-voting-machines-risk",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "eac21-voluntary",
+   "group": "grey",
+   "authors": "U.S. Election Assistance Commission",
+   "title": "Voluntary Voting System Guidelines 2.0",
+   "venue": "EAC",
+   "year": 2021,
+   "url": "https://www.eac.gov/voting-equipment/voluntary-voting-system-guidelines",
+   "note": "Adopted February 2021; requires software independence and support for auditing.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "jones12-broken",
+   "group": "overview",
+   "authors": "Douglas W. Jones and Barbara Simons",
+   "title": "Broken Ballots: Will Your Vote Count?",
+   "venue": "CSLI Publications",
+   "year": 2012,
+   "url": "https://web.stanford.edu/group/cslipublications/cslipublications/site/9781575866369.shtml",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "jonesnd-voting",
+   "group": "overview",
+   "authors": "Douglas W. Jones",
+   "title": "Voting and Elections (web pages)",
+   "venue": "University of Iowa",
+   "year": null,
+   "url": "https://homepage.cs.uiowa.edu/~jones/voting/index.html",
+   "note": "Long-running collection on voting technology history, testimony and audits.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "mitelectionlab-audits-explainer",
+   "group": "overview",
+   "authors": "MIT Election Data and Science Lab",
+   "title": "Post-Election Audits (explainer)",
+   "venue": "MIT Election Lab",
+   "year": null,
+   "url": "https://electionlab.mit.edu/research/post-election-audits",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "mitelectionlab19-election",
+   "group": "overview",
+   "authors": "MIT Election Data and Science Lab",
+   "title": "Election Auditing: Key Issues and Perspectives (summary of the 2018 Election Audit Summit)",
+   "venue": "MIT Election Lab",
+   "year": 2019,
+   "url": "https://electionlab.mit.edu/sites/default/files/2019-06/Election-Auditing-Key-Issues-Perspectives.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "votingworks20-georgia",
+   "group": "pilots",
+   "authors": "VotingWorks",
+   "title": "The Georgia 2020 General Election Audit (report)",
+   "venue": "VotingWorks",
+   "year": 2020,
+   "url": "https://public-assets.voting.works/website/2020/11/georgia2020_report.pdf",
+   "note": "Statewide audit of the presidential contest by full hand count.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "mi21-2020",
+   "group": "pilots",
+   "authors": "Michigan Bureau of Elections",
+   "title": "2020 Post-Election Audit Report",
+   "venue": "Michigan Department of State",
+   "year": 2021,
+   "url": "https://www.michigan.gov/documents/sos/BOE_2020_Post_Election_Audit_Report_04_21_21_723005_7.pdf",
+   "note": "Includes the statewide ballot-polling RLA of the 2020 presidential contest.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "va25-2024",
+   "group": "pilots",
+   "authors": "Virginia Department of Elections",
+   "title": "2024 November General Election Risk-Limiting Audit Report",
+   "venue": "Virginia Department of Elections",
+   "year": 2025,
+   "url": "https://elections.es.virginia.gov/media/formswarehouse/risk-limiting-audit/2024-November-General-RLA-Report_FINAL.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "va26-2025",
+   "group": "pilots",
+   "authors": "Virginia Department of Elections",
+   "title": "2025 November General Election Risk-Limiting Audit Report",
+   "venue": "Virginia Department of Elections",
+   "year": 2026,
+   "url": "https://www.elections.virginia.gov/media/formswarehouse/risk-limiting-audit/2025-November-General-RLA-Report_FINAL.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "va-rla-program",
+   "group": "practice",
+   "authors": "Virginia Department of Elections",
+   "title": "Risk-Limiting Audits (program page, manuals and training on ballot polling and batch comparison)",
+   "venue": "Virginia Department of Elections",
+   "year": null,
+   "url": "https://www.elections.virginia.gov/resultsreports/election-security/rla",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "maricopa22-correcting",
+   "group": "grey",
+   "authors": "Maricopa County Board of Supervisors and Recorder",
+   "title": "Correcting the Record: Maricopa County’s In-Depth Analysis of the Senate Inquiry",
+   "venue": "Maricopa County, Arizona",
+   "year": 2022,
+   "url": "https://www.maricopa.gov/CivicAlerts.aspx?AID=2432",
+   "note": "Response to the Arizona Senate’s 2021 review of the 2020 election, a partisan review rather than a statistical audit.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "vv23-election",
+   "group": "grey",
+   "authors": "Verified Voting",
+   "title": "Election Night Hand Counts: Realities and Risks",
+   "venue": "Verified Voting",
+   "year": 2023,
+   "url": "https://verifiedvoting.org/wp-content/uploads/2023/11/Verified-Voting-Hand-Counts-Realities-Risks-Nov-2023.pdf",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "statesunited23-reality",
+   "group": "grey",
+   "authors": "States United Democracy Center",
+   "title": "The Reality of Full Hand Counts: A Guide for Election Officials",
+   "venue": "States United Democracy Center",
+   "year": 2023,
+   "url": "https://statesunited.org/resources/hand-counts/",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "brennannd-hand",
+   "group": "grey",
+   "authors": "Brennan Center for Justice",
+   "title": "Hand Counting Ballots",
+   "venue": "Brennan Center for Justice",
+   "year": null,
+   "url": "https://www.brennancenter.org/our-work/research-reports/hand-counting-ballots",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "votingrightslab24-ballot",
+   "group": "grey",
+   "authors": "Voting Rights Lab",
+   "title": "Ballot Hand Counts Lead to Inaccuracy",
+   "venue": "Voting Rights Lab",
+   "year": 2024,
+   "url": "https://votingrightslab.org/2024/02/27/ballot-hand-counts-lead-to-inaccuracy/",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "electionsgroup23-exploring",
+   "group": "practice",
+   "authors": "The Elections Group",
+   "title": "Exploring Audits, Part One: A Holistic Approach to Post-Election Audits",
+   "venue": "The Elections Group",
+   "year": 2023,
+   "url": "https://electionsgroup.com/wp-content/uploads/2023/09/Exploring-Audits-Part-One_230810.pdf",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "aranha18-execucao",
+   "group": "security",
+   "authors": "Diego F. Aranha, Pedro Barbosa, Thiago N. C. Cardoso, Caio Lüders and Paulo Matias",
+   "title": "Execução de código arbitrário na urna eletrônica brasileira (Arbitrary code execution on the Brazilian voting machine)",
+   "venue": "Anais do SBSeg 2018, pp. 57–70",
+   "year": 2018,
+   "url": "https://sol.sbc.org.br/index.php/sbseg/article/view/4243",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "vv25-paper",
+   "group": "overview",
+   "authors": "Verified Voting",
+   "title": "Paper Ballots and Audits: The Bedrock of Secure Elections",
+   "venue": "Verified Voting",
+   "year": 2025,
+   "url": "https://verifiedvoting.org/publication/paper-ballots-and-audits-the-bedrock-of-secure-elections/",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "vv24-recounts",
+   "group": "practice",
+   "authors": "Verified Voting",
+   "title": "Recounts and Audits in Seven 2024 Swing States",
+   "venue": "Verified Voting",
+   "year": 2024,
+   "url": "https://verifiedvoting.org/publication/recounts-audits-2024-verified-voting/",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "vv24-consensus",
+   "group": "grey",
+   "authors": "Verified Voting",
+   "title": "Consensus Studies Examining Internet Voting",
+   "venue": "Verified Voting",
+   "year": 2024,
+   "url": "https://verifiedvoting.org/publication/consensus-studies-examining-internet-voting/",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "vv23-casting",
+   "group": "grey",
+   "authors": "Verified Voting",
+   "title": "Casting Votes Safely: Examining Internet Voting's Dangers and Highlighting Safer Alternatives",
+   "venue": "Verified Voting",
+   "year": 2023,
+   "url": "https://verifiedvoting.org/publication/casting-votes-safely-oct-2023/",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "vv23-about",
+   "group": "pilots",
+   "authors": "Verified Voting",
+   "title": "About Risk-Limiting Audit Pilots",
+   "venue": "Verified Voting",
+   "year": 2023,
+   "url": "https://verifiedvoting.org/publication/about-rla-pilots/",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "vv23-electronic",
+   "group": "grey",
+   "authors": "Verified Voting",
+   "title": "Electronic Ballot Return Is Dangerously Insecure",
+   "venue": "Verified Voting",
+   "year": 2023,
+   "url": "https://verifiedvoting.org/publication/electronic-ballot-return-2023/",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "vv22-coordinating",
+   "group": "practice",
+   "authors": "Verified Voting",
+   "title": "Coordinating Audits and Recounts to Strengthen Election Verification",
+   "venue": "Verified Voting",
+   "year": 2022,
+   "url": "https://verifiedvoting.org/publication/audits-recounts-nov-2022/",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "vv22-risk",
+   "group": "overview",
+   "authors": "Verified Voting",
+   "title": "What is a Risk-Limiting Audit?",
+   "venue": "Verified Voting",
+   "year": 2022,
+   "url": "https://verifiedvoting.org/publication/what-is-a-risk-limiting-audit/",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "vv21-good",
+   "group": "practice",
+   "authors": "Verified Voting",
+   "title": "Good vs. Ugly: How to Spot True Post-Election Audits From Sham Reviews",
+   "venue": "Verified Voting",
+   "year": 2021,
+   "url": "https://verifiedvoting.org/publication/audits-vs-sham-reviews/",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "vv20-risk",
+   "group": "overview",
+   "authors": "Verified Voting",
+   "title": "Risk-Limiting Audits: Frequently Asked Questions and Answers",
+   "venue": "Verified Voting",
+   "year": 2020,
+   "url": "https://verifiedvoting.org/publication/2081/",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "vv19-policy",
+   "group": "grey",
+   "authors": "Verified Voting",
+   "title": "Policy on Direct Recording Electronic Voting Machines and Ballot Marking Devices",
+   "venue": "Verified Voting",
+   "year": 2019,
+   "url": "https://verifiedvoting.org/publication/policy-on-direct-recording-electronic-voting-machines-and-ballot-marking-devices/",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "vv19-audit",
+   "group": "pilots",
+   "authors": "Verified Voting",
+   "title": "Audit Pilots Program Overview",
+   "venue": "Verified Voting",
+   "year": 2019,
+   "url": "https://verifiedvoting.org/publication/audit-pilots-program-overview/",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "vv18-you",
+   "group": "practice",
+   "authors": "Verified Voting",
+   "title": "Are You Ready to Audit?",
+   "venue": "Verified Voting",
+   "year": 2018,
+   "url": "https://verifiedvoting.org/publication/are-you-ready-to-audit/",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "vv18-verified",
+   "group": "practice",
+   "authors": "Verified Voting",
+   "title": "A Verified Voting Flowchart for Conducting Risk-Limiting Audits",
+   "venue": "Verified Voting",
+   "year": 2018,
+   "url": "https://verifiedvoting.org/publication/a-verified-voting-flowchart-for-conducting-risk-limiting-audits/",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "vv14-recount",
+   "group": "grey",
+   "authors": "Verified Voting",
+   "title": "Recount Principles and Best Practices",
+   "venue": "Verified Voting",
+   "year": 2014,
+   "url": "https://verifiedvoting.org/publication/recount-principles-and-best-practices/",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "vv14-if",
+   "group": "grey",
+   "authors": "Verified Voting",
+   "title": "If I Can Shop and Bank Online, Why Can't I Vote Online?",
+   "venue": "Verified Voting",
+   "year": 2014,
+   "url": "https://verifiedvoting.org/publication/if-i-can-shop-and-bank-online-why-cant-i-vote-online/",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "vv11-about",
+   "group": "grey",
+   "authors": "Verified Voting",
+   "title": "What About Email and Fax Voting?",
+   "venue": "Verified Voting",
+   "year": 2011,
+   "url": "https://verifiedvoting.org/publication/what-about-email-and-fax-voting/",
+   "source": "Verified Voting publications page (verifiedvoting.org/publications)"
+  },
+  {
+   "key": "karov23-new",
+   "group": "m-poll",
+   "authors": "Bar Karov and Moni Naor",
+   "title": "New Algorithms and Applications for Risk-Limiting Audits",
+   "venue": "FORC 2023, LIPIcs 256",
+   "year": 2023,
+   "url": "https://arxiv.org/abs/2305.04050",
+   "doi": "10.4230/LIPIcs.FORC.2023.2",
+   "note": "Batchcomp: turning ballot-level audits into batch-level audits; applied to Israeli Knesset elections.",
+   "source": "arXiv abstract page"
+  },
+  {
+   "key": "fuller26-sublinear",
+   "group": "m-comp",
+   "authors": "Benjamin Fuller, Abigail Harrison and Alexander Russell",
+   "title": "Sublinear Risk-Limiting Audits from Direct Ballot Selection and Statistical Ballot Manifests",
+   "venue": "arXiv:2605.18670",
+   "year": 2026,
+   "url": "https://arxiv.org/abs/2605.18670",
+   "doi": "10.1145/3830454.3846678",
+   "source": "arXiv abstract page"
+  },
+  {
+   "key": "spertus24-sequential",
+   "group": "m-comp",
+   "authors": "Jacob V. Spertus, Mayuri Sridhar and Philip B. Stark",
+   "title": "Sequential stratified inference for the mean",
+   "venue": "arXiv:2409.06680 (submitted to Annals of Applied Statistics)",
+   "year": 2024,
+   "url": "https://arxiv.org/abs/2409.06680",
+   "source": "arXiv abstract page"
+  },
+  {
+   "key": "spertus23-cobra",
+   "group": "m-comp",
+   "authors": "Jacob V. Spertus",
+   "title": "COBRA: Comparison-Optimal Betting for Risk-limiting Audits",
+   "venue": "Voting 2023 (FC workshops), LNCS 13953",
+   "year": 2023,
+   "url": "https://arxiv.org/abs/2304.01010",
+   "doi": "10.1007/978-3-031-48806-1_7",
+   "source": "arXiv abstract page"
+  },
+  {
+   "key": "freestone26-risk",
+   "group": "m-complex",
+   "authors": "Jack Freestone, Dennis Leung and Damjan Vukcevic",
+   "title": "Risk-Limiting Audits for Parliamentary Majorities",
+   "venue": "Lecture Notes in Computer Science",
+   "year": 2026,
+   "url": "https://arxiv.org/abs/2607.21082",
+   "doi": "10.1007/978-3-032-39512-2_4",
+   "source": "arXiv abstract page"
+  },
+  {
+   "key": "okamoto98-receipt",
+   "group": "e2e",
+   "authors": "Tatsuaki Okamoto",
+   "title": "Receipt-free electronic voting schemes for large scale elections",
+   "venue": "Security Protocols Workshop 1997",
+   "year": 1998,
+   "doi": "10.1007/BFB0028157",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "boneh02-almost",
+   "group": "e2e",
+   "authors": "Dan Boneh and Philippe Golle",
+   "title": "Almost entirely correct mixing with applications to voting",
+   "venue": "ACM CCS 2002",
+   "year": 2002,
+   "doi": "10.1145/586110.586121",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "furukawa03-implementation",
+   "group": "e2e",
+   "authors": "Jun Furukawa, Hiroshi Miyauchi, Kengo Mori, Satoshi Obana and Kazue Sako",
+   "title": "An Implementation of a Universally Verifiable Electronic Voting Scheme Based on Shuffling",
+   "venue": "Financial Cryptography 2002",
+   "year": 2003,
+   "doi": "10.1007/3-540-36504-4_2",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "malkhi03-e",
+   "group": "e2e",
+   "authors": "Dahlia Malkhi, Ofer Margo and Elan Pavlov",
+   "title": "E-voting without ‘Cryptography’ (extended abstract)",
+   "venue": "Financial Cryptography 2002",
+   "year": 2003,
+   "doi": "10.1007/3-540-36504-4_1",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "fouque01-sharing",
+   "group": "e2e",
+   "authors": "Pierre-Alain Fouque, Guillaume Poupard and Jacques Stern",
+   "title": "Sharing Decryption in the Context of Voting or Lotteries",
+   "venue": "Financial Cryptography 2000",
+   "year": 2001,
+   "doi": "10.1007/3-540-45472-1_7",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "groth04-efficient",
+   "group": "e2e",
+   "authors": "Jens Groth",
+   "title": "Efficient Maximal Privacy in Boardroom Voting and Anonymous Broadcast",
+   "venue": "Financial Cryptography 2004",
+   "year": 2004,
+   "doi": "10.1007/978-3-540-27809-2_10",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "kiayias04-vector",
+   "group": "e2e",
+   "authors": "Aggelos Kiayias and Moti Yung",
+   "title": "The Vector-Ballot e-Voting Approach",
+   "venue": "Financial Cryptography 2004",
+   "year": 2004,
+   "doi": "10.1007/978-3-540-27809-2_9",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "moran07-split",
+   "group": "e2e",
+   "authors": "Tal Moran and Moni Naor",
+   "title": "Split-ballot voting: everlasting privacy with distributed trust",
+   "venue": "ACM CCS 2007",
+   "year": 2007,
+   "doi": "10.1145/1315245.1315277",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "kusters09-epistemic",
+   "group": "e2e",
+   "authors": "Ralf Küsters and Tomasz Truderung",
+   "title": "An Epistemic Approach to Coercion-Resistance for Electronic Voting Protocols",
+   "venue": "IEEE Symposium on Security and Privacy 2009",
+   "year": 2009,
+   "doi": "10.1109/sp.2009.13",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "gardner09-coercion",
+   "group": "e2e",
+   "authors": "Ryan W. Gardner, Sujata Garera and Aviel D. Rubin",
+   "title": "Coercion Resistant End-to-end Voting",
+   "venue": "Financial Cryptography 2009",
+   "year": 2009,
+   "doi": "10.1007/978-3-642-03549-4_21",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "kusters09-improving",
+   "group": "e2e",
+   "authors": "Ralf Küsters, Tomasz Truderung and Andreas Vogt",
+   "title": "Improving and Simplifying a Variant of Prêt à Voter",
+   "venue": "VoteID 2009",
+   "year": 2009,
+   "doi": "10.1007/978-3-642-04135-8_3",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "wen09-masked",
+   "group": "e2e",
+   "authors": "Roland Wen and Richard Buckland",
+   "title": "Masked Ballot Voting for Receipt-Free Online Elections",
+   "venue": "VoteID 2009",
+   "year": 2009,
+   "doi": "10.1007/978-3-642-04135-8_2",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "wen09-minimum",
+   "group": "e2e",
+   "authors": "Roland Wen and Richard Buckland",
+   "title": "Minimum Disclosure Counting for the Alternative Vote",
+   "venue": "VoteID 2009",
+   "year": 2009,
+   "doi": "10.1007/978-3-642-04135-8_8",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "clark09-not",
+   "group": "e2e",
+   "authors": "Jeremy Clark, Urs Hengartner and Kate Larson",
+   "title": "Not-So Hidden Information: Optimal Contracts for Undue Influence in E2E Voting Systems",
+   "venue": "VoteID 2009",
+   "year": 2009,
+   "doi": "10.1007/978-3-642-04135-8_1",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "chaum10-towards",
+   "group": "e2e",
+   "authors": "David Chaum, Markus Jakobsson, Ronald L. Rivest, Peter Y. A. Ryan, Josh Benaloh, Mirosław Kutyłowski and Ben Adida (eds.)",
+   "title": "Towards Trustworthy Elections: New Directions in Electronic Voting",
+   "venue": "LNCS 6000",
+   "year": 2010,
+   "doi": "10.1007/978-3-642-12980-3",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "bruck10-modular",
+   "group": "e2e",
+   "authors": "Shuki Bruck, David Jefferson and Ronald L. Rivest",
+   "title": "A Modular Voting Architecture (“Frog Voting”)",
+   "venue": "Towards Trustworthy Elections",
+   "year": 2010,
+   "doi": "10.1007/978-3-642-12980-3_5",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "kelsey10-attacking",
+   "group": "e2e",
+   "authors": "John Kelsey, Andrew Regenscheid, Tal Moran and David Chaum",
+   "title": "Attacking Paper-Based E2E Voting Systems",
+   "venue": "Towards Trustworthy Elections",
+   "year": 2010,
+   "doi": "10.1007/978-3-642-12980-3_23",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "popoveniuc10-securing",
+   "group": "e2e",
+   "authors": "Stefan Popoveniuc, Jeremy Clark, Richard Carback, Aleks Essex and David Chaum",
+   "title": "Securing Optical-Scan Voting",
+   "venue": "Towards Trustworthy Elections",
+   "year": 2010,
+   "doi": "10.1007/978-3-642-12980-3_22",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "essex10-aperio",
+   "group": "e2e",
+   "authors": "Aleks Essex, Jeremy Clark and Carlisle Adams",
+   "title": "Aperio: High Integrity Elections for Developing Countries",
+   "venue": "Towards Trustworthy Elections",
+   "year": 2010,
+   "doi": "10.1007/978-3-642-12980-3_24",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "ryan10-threat",
+   "group": "e2e",
+   "authors": "Peter Y. A. Ryan and Thea Peacock",
+   "title": "A Threat Analysis of Prêt à Voter",
+   "venue": "Towards Trustworthy Elections",
+   "year": 2010,
+   "doi": "10.1007/978-3-642-12980-3_12",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "kutyowski10-scratch",
+   "group": "e2e",
+   "authors": "Mirosław Kutyłowski and Filip Zagórski",
+   "title": "Scratch, Click & Vote: E2E Voting over the Internet",
+   "venue": "Towards Trustworthy Elections",
+   "year": 2010,
+   "doi": "10.1007/978-3-642-12980-3_21",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "kremer10-election",
+   "group": "e2e",
+   "authors": "Steve Kremer, Mark Ryan and Ben Smyth",
+   "title": "Election Verifiability in Electronic Voting Protocols",
+   "venue": "ESORICS 2010",
+   "year": 2010,
+   "doi": "10.1007/978-3-642-15497-3_24",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "spycher12-new",
+   "group": "e2e",
+   "authors": "Oliver Spycher, Reto Koenig, Rolf Haenni and Michael Schläpfer",
+   "title": "A New Approach towards Coercion-Resistant Remote E-Voting in Linear Time",
+   "venue": "Financial Cryptography 2011",
+   "year": 2012,
+   "doi": "10.1007/978-3-642-27576-0_15",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "clark12-selections",
+   "group": "e2e",
+   "authors": "Jeremy Clark and Urs Hengartner",
+   "title": "Selections: Internet Voting with Over-the-Shoulder Coercion-Resistance",
+   "venue": "Financial Cryptography 2011",
+   "year": 2012,
+   "doi": "10.1007/978-3-642-27576-0_4",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "essex12-single",
+   "group": "e2e",
+   "authors": "Aleksander Essex, Christian Henrich and Urs Hengartner",
+   "title": "Single Layer Optical-Scan Voting with Fully Distributed Trust",
+   "venue": "VoteID 2011",
+   "year": 2012,
+   "doi": "10.1007/978-3-642-32747-6_8",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "bursuc12-trivitas",
+   "group": "e2e",
+   "authors": "Sergiu Bursuc, Gurchetan S. Grewal and Mark D. Ryan",
+   "title": "Trivitas: Voters Directly Verifying Votes",
+   "venue": "VoteID 2011",
+   "year": 2012,
+   "doi": "10.1007/978-3-642-32747-6_12",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "schneider12-pret",
+   "group": "e2e",
+   "authors": "Steve Schneider, Sriramkrishnan Srinivasan, Chris Culnane, James Heather and Zhe Xia",
+   "title": "Prêt à Voter with Write-Ins",
+   "venue": "VoteID 2011",
+   "year": 2012,
+   "doi": "10.1007/978-3-642-32747-6_11",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "gjsteen12-norwegian",
+   "group": "internet",
+   "authors": "Kristian Gjøsteen",
+   "title": "The Norwegian Internet Voting Protocol",
+   "venue": "VoteID 2011",
+   "year": 2012,
+   "doi": "10.1007/978-3-642-32747-6_1",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "spycher12-transparency",
+   "group": "internet",
+   "authors": "Oliver Spycher, Melanie Volkamer and Reto Koenig",
+   "title": "Transparency and Technical Measures to Establish Trust in Norwegian Internet Voting",
+   "venue": "VoteID 2011",
+   "year": 2012,
+   "doi": "10.1007/978-3-642-32747-6_2",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "heiderich12-bug",
+   "group": "internet",
+   "authors": "Mario Heiderich, Tilman Frosch, Marcus Niemietz and Jörg Schwenk",
+   "title": "The Bug That Made Me President: A Browser- and Web-Security Case Study on Helios Voting",
+   "venue": "VoteID 2011",
+   "year": 2012,
+   "doi": "10.1007/978-3-642-32747-6_6",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "heiberg12-application",
+   "group": "internet",
+   "authors": "Sven Heiberg, Peeter Laud and Jan Willemson",
+   "title": "The Application of I-Voting for Estonian Parliamentary Elections of 2011",
+   "venue": "VoteID 2011",
+   "year": 2012,
+   "doi": "10.1007/978-3-642-32747-6_13",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "buckland12-towards",
+   "group": "internet",
+   "authors": "Richard Buckland, Vanessa Teague and Roland Wen",
+   "title": "Towards Best Practice for E-election Systems: Lessons from Trial and Error in Australian Elections",
+   "venue": "VoteID 2011",
+   "year": 2012,
+   "doi": "10.1007/978-3-642-32747-6_14",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "heather12-side",
+   "group": "internet",
+   "authors": "James Heather, Morgan Llewellyn, Vanessa Teague and Roland Wen",
+   "title": "On the Side-Effects of Introducing E-Voting",
+   "venue": "VoteID 2011",
+   "year": 2012,
+   "doi": "10.1007/978-3-642-32747-6_15",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "allepuz12-internet",
+   "group": "internet",
+   "authors": "Jordi Puiggalí Allepuz and Sandra Guasch Castelló",
+   "title": "Internet Voting System with Cast as Intended Verification",
+   "venue": "VoteID 2011",
+   "year": 2012,
+   "doi": "10.1007/978-3-642-32747-6_3",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "kusters12-clash",
+   "group": "e2e",
+   "authors": "Ralf Küsters, Tomasz Truderung and Andreas Vogt",
+   "title": "Clash Attacks on the Verifiability of E-Voting Systems",
+   "venue": "IEEE Symposium on Security and Privacy 2012",
+   "year": 2012,
+   "doi": "10.1109/sp.2012.32",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "grewal13-caveat",
+   "group": "e2e",
+   "authors": "Gurchetan S. Grewal, Mark D. Ryan, Sergiu Bursuc and Peter Y. A. Ryan",
+   "title": "Caveat Coercitor: Coercion-Evidence in Electronic Voting",
+   "venue": "IEEE Symposium on Security and Privacy 2013",
+   "year": 2013,
+   "doi": "10.1109/sp.2013.32",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "cuvelier13-election",
+   "group": "e2e",
+   "authors": "Édouard Cuvelier, Olivier Pereira and Thomas Peters",
+   "title": "Election Verifiability or Ballot Privacy: Do We Need to Choose?",
+   "venue": "ESORICS 2013",
+   "year": 2013,
+   "doi": "10.1007/978-3-642-40203-6_27",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "olembo13-mental",
+   "group": "e2e",
+   "authors": "Maina M. Olembo, Steffen Bartsch and Melanie Volkamer",
+   "title": "Mental Models of Verifiability in Voting",
+   "venue": "VoteID 2013",
+   "year": 2013,
+   "doi": "10.1007/978-3-642-39185-9_9",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "koenig13-attacking",
+   "group": "internet",
+   "authors": "Reto E. Koenig, Philipp Locher and Rolf Haenni",
+   "title": "Attacking the Verification Code Mechanism in the Norwegian Internet Voting System",
+   "venue": "VoteID 2013",
+   "year": 2013,
+   "doi": "10.1007/978-3-642-39185-9_5",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "cochran13-formal",
+   "group": "security",
+   "authors": "Dermot Cochran and Joseph R. Kiniry",
+   "title": "Formal Model-Based Validation for Tally Systems",
+   "venue": "VoteID 2013",
+   "year": 2013,
+   "doi": "10.1007/978-3-642-39185-9_3",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "ashur13-anonymity",
+   "group": "security",
+   "authors": "Tomer Ashur and Orr Dunkelman",
+   "title": "On the anonymity of Israel's general elections (poster)",
+   "venue": "ACM CCS 2013",
+   "year": 2013,
+   "doi": "10.1145/2508859.2512510",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "chase13-verifiable",
+   "group": "e2e",
+   "authors": "Melissa Chase, Markulf Kohlweiss, Anna Lysyanskaya and Sarah Meiklejohn",
+   "title": "Verifiable Elections That Scale for Free",
+   "venue": "PKC 2013",
+   "year": 2013,
+   "doi": "10.1007/978-3-642-36362-7_29",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "cortier14-election",
+   "group": "e2e",
+   "authors": "Véronique Cortier, David Galindo, Stéphane Glondu and Malika Izabachène",
+   "title": "Election Verifiability for Helios under Weaker Trust Assumptions",
+   "venue": "ESORICS 2014",
+   "year": 2014,
+   "doi": "10.1007/978-3-319-11212-1_19",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "springall14-security",
+   "group": "internet",
+   "authors": "Drew Springall, Travis Finkenauer, Zakir Durumeric, Jason Kitcat, Harri Hursti, Margaret MacAlpine and J. Alex Halderman",
+   "title": "Security Analysis of the Estonian Internet Voting System",
+   "venue": "ACM CCS 2014",
+   "year": 2014,
+   "doi": "10.1145/2660267.2660315",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "kiayias15-demos",
+   "group": "e2e",
+   "authors": "Aggelos Kiayias, Thomas Zacharias and Bingsheng Zhang",
+   "title": "DEMOS-2: Scalable E2E Verifiable Elections without Random Oracles",
+   "venue": "ACM CCS 2015",
+   "year": 2015,
+   "doi": "10.1145/2810103.2813727",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "kiayias15-end",
+   "group": "e2e",
+   "authors": "Aggelos Kiayias, Thomas Zacharias and Bingsheng Zhang",
+   "title": "End-to-End Verifiable Elections in the Standard Model",
+   "venue": "EUROCRYPT 2015",
+   "year": 2015,
+   "doi": "10.1007/978-3-662-46803-6_16",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "kiayias17-ceremonies",
+   "group": "e2e",
+   "authors": "Aggelos Kiayias, Thomas Zacharias and Bingsheng Zhang",
+   "title": "Ceremonies for End-to-End Verifiable Elections",
+   "venue": "PKC 2017",
+   "year": 2017,
+   "doi": "10.1007/978-3-662-54388-7_11",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "hill15-challenging",
+   "group": "practice",
+   "authors": "Richard Hill",
+   "title": "Challenging an E-voting System in Court: An Experience Report",
+   "venue": "VoteID 2015",
+   "year": 2015,
+   "doi": "10.1007/978-3-319-22270-7_10",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "heiberg15-log",
+   "group": "internet",
+   "authors": "Sven Heiberg, Arnis Parsovs and Jan Willemson",
+   "title": "Log Analysis of Estonian Internet Voting 2013–2014",
+   "venue": "VoteID 2015",
+   "year": 2015,
+   "doi": "10.1007/978-3-319-22270-7_2",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "toledo15-document",
+   "group": "handcount",
+   "authors": "J. Ignacio Toledo, Jordi Cucurull, Jordi Puiggalí, Alicia Fornés and Josep Lladós",
+   "title": "Document Analysis Techniques for Automatic Electoral Document Processing: A Survey",
+   "venue": "VoteID 2015",
+   "year": 2015,
+   "doi": "10.1007/978-3-319-22270-7_8",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "kiayias15-necessity",
+   "group": "e2e",
+   "authors": "Aggelos Kiayias, Thomas Zacharias and Bingsheng Zhang",
+   "title": "On the Necessity of Auditing for Election Privacy in e-Voting Systems",
+   "venue": "E-Democracy 2015, CCIS 570",
+   "year": 2015,
+   "doi": "10.1007/978-3-319-27164-4_1",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "quesenbery15-poll",
+   "group": "practice",
+   "authors": "Whitney Quesenbery and Dana Chisnell",
+   "title": "Poll Workers and Election Integrity: Security as if People Mattered",
+   "venue": "HAS 2015 (HCI International)",
+   "year": 2015,
+   "doi": "10.1007/978-3-319-20376-8_50",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "chaidos16-beleniosrf",
+   "group": "e2e",
+   "authors": "Pyrros Chaidos, Véronique Cortier, Georg Fuchsbauer and David Galindo",
+   "title": "BeleniosRF: A Non-interactive Receipt-Free Electronic Voting Scheme",
+   "venue": "ACM CCS 2016",
+   "year": 2016,
+   "doi": "10.1145/2976749.2978337",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "aranha16-crowdsourced",
+   "group": "forensics",
+   "authors": "Diego F. Aranha, Helder Ribeiro and André Luis Ogando Paraense",
+   "title": "Crowdsourced integrity verification of election results: An experience from Brazilian elections",
+   "venue": "Annals of Telecommunications 71(7-8):287–297",
+   "year": 2016,
+   "doi": "10.1007/S12243-016-0511-1",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "ryan16-selene",
+   "group": "e2e",
+   "authors": "Peter Y. A. Ryan, Peter B. Rønne and Vincenzo Iovino",
+   "title": "Selene: Voting with Transparent Verifiability and Coercion-Mitigation",
+   "venue": "Voting 2016 (FC workshops)",
+   "year": 2016,
+   "doi": "10.1007/978-3-662-53357-4_12",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "cortier16-sok",
+   "group": "e2e",
+   "authors": "Véronique Cortier, David Galindo, Ralf Küsters, Johannes Müller and Tomasz Truderung",
+   "title": "SoK: Verifiability Notions for E-Voting Protocols",
+   "venue": "IEEE Symposium on Security and Privacy 2016",
+   "year": 2016,
+   "doi": "10.1109/sp.2016.52",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "culnane16-strategies",
+   "group": "practice",
+   "authors": "Chris Culnane and Vanessa Teague",
+   "title": "Strategies for Voter-Initiated Election Audits",
+   "venue": "GameSec 2016",
+   "year": 2016,
+   "doi": "10.1007/978-3-319-47413-7_14",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "gjsteen17-roadmap",
+   "group": "e2e",
+   "authors": "Kristian Gjøsteen and Martin Strand",
+   "title": "A Roadmap to Fully Homomorphic Elections: Stronger Security, Better Verifiability",
+   "venue": "Voting 2017 (FC workshops)",
+   "year": 2017,
+   "doi": "10.1007/978-3-319-70278-0_25",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "basin17-election",
+   "group": "overview",
+   "authors": "David Basin, Hans Gersbach, Akaki Mamageishvili, Lara Schmid and Oriol Tejada",
+   "title": "Election Security and Economics: It’s All About Eve",
+   "venue": "E-Vote-ID 2017, LNCS 10615",
+   "year": 2017,
+   "doi": "10.1007/978-3-319-68687-5_1",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "osterweil17-iterative",
+   "group": "practice",
+   "authors": "Leon J. Osterweil, Matt Bishop, Heather M. Conboy, Huong Phan, Borislava I. Simidchieva, George S. Avrunin, Lori A. Clarke and Sean Peisert",
+   "title": "Iterative Analysis to Improve Key Properties of Critical Human-Intensive Processes: An Election Security Example",
+   "venue": "ACM Transactions on Privacy and Security 20(2):1–31",
+   "year": 2017,
+   "doi": "10.1145/3041041",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "cortier17-machine",
+   "group": "e2e",
+   "authors": "Véronique Cortier, Constantin Cătălin Drăgan, François Dupressoir, Benedikt Schmidt, Pierre-Yves Strub and Bogdan Warinschi",
+   "title": "Machine-Checked Proofs of Privacy for Electronic Voting Protocols",
+   "venue": "IEEE Symposium on Security and Privacy 2017",
+   "year": 2017,
+   "doi": "10.1109/sp.2017.28",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "yang17-practical",
+   "group": "e2e",
+   "authors": "Nan Yang and Jeremy Clark",
+   "title": "Practical Governmental Voting with Unconditional Integrity and Privacy",
+   "venue": "Voting 2017 (FC workshops)",
+   "year": 2017,
+   "doi": "10.1007/978-3-319-70278-0_27",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "haenni18-process",
+   "group": "e2e",
+   "authors": "Rolf Haenni, Eric Dubuis, Reto E. Koenig and Philipp Locher",
+   "title": "Process Models for Universally Verifiable Elections",
+   "venue": "E-Vote-ID 2018",
+   "year": 2018,
+   "doi": "10.1007/978-3-030-00419-4_6",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "cortier18-voting",
+   "group": "e2e",
+   "authors": "Véronique Cortier and Joseph Lallemand",
+   "title": "Voting: You Can't Have Privacy without Individual Verifiability",
+   "venue": "ACM CCS 2018",
+   "year": 2018,
+   "doi": "10.1145/3243734.3243762",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "cortier19-belenios",
+   "group": "e2e",
+   "authors": "Véronique Cortier, Pierrick Gaudry and Stéphane Glondu",
+   "title": "Belenios: A Simple Private and Verifiable Electronic Voting System",
+   "venue": "Foundations of Security, Protocols, and Equational Reasoning",
+   "year": 2019,
+   "doi": "10.1007/978-3-030-19052-1_14",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "elkind21-protecting",
+   "group": "handcount",
+   "authors": "Edith Elkind, Jiarui Gan, Svetlana Obraztsova, Zinovi Rabinovich and Alexandros A. Voudouris",
+   "title": "Protecting elections by recounting ballots",
+   "venue": "Artificial Intelligence 290:103401",
+   "year": 2021,
+   "doi": "10.1016/j.artint.2020.103401",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "haines19-verified",
+   "group": "e2e",
+   "authors": "Thomas Haines, Rajeev Goré and Mukesh Tiwari",
+   "title": "Verified Verifiers for Verifying Elections",
+   "venue": "ACM CCS 2019",
+   "year": 2019,
+   "doi": "10.1145/3319535.3354247",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "bishop12-security",
+   "group": "security",
+   "authors": "Matt Bishop and Sean Peisert",
+   "title": "Security and Elections",
+   "venue": "IEEE Security & Privacy 10(5):64–67",
+   "year": 2012,
+   "doi": "10.1109/msp.2012.127",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "evans04-election",
+   "group": "security",
+   "authors": "David Evans and Nathanael Paul",
+   "title": "Election security: perception and reality",
+   "venue": "IEEE Security & Privacy 2(1):24–31",
+   "year": 2004,
+   "doi": "10.1109/msecp.2004.1264850",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "garera07-independent",
+   "group": "security",
+   "authors": "Sujata Garera and Aviel D. Rubin",
+   "title": "An independent audit framework for software dependent voting systems",
+   "venue": "ACM CCS 2007",
+   "year": 2007,
+   "doi": "10.1145/1315245.1315278",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "molnar06-tamper",
+   "group": "security",
+   "authors": "David Molnar, Tadayoshi Kohno, Naveen Sastry and David Wagner",
+   "title": "Tamper-evident, history-independent, subliminal-free data structures on PROM storage, or how to store ballots on a voting machine",
+   "venue": "IEEE Symposium on Security and Privacy 2006",
+   "year": 2006,
+   "doi": "10.1109/sp.2006.39",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "ansari08-evaluating",
+   "group": "security",
+   "authors": "Nirwan Ansari, Pitipatana Sakarindr, Ehsan Haghani, Chao Zhang, Aridaman K. Jain and Yun Q. Shi",
+   "title": "Evaluating Electronic Voting Systems Equipped with Voter-Verified Paper Records",
+   "venue": "IEEE Security & Privacy 6(3):30–39",
+   "year": 2008,
+   "doi": "10.1109/msp.2008.62",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "schryen09-security",
+   "group": "internet",
+   "authors": "Guido Schryen and Eliot Rich",
+   "title": "Security in Large-Scale Internet Elections: A Retrospective Analysis of Elections in Estonia, The Netherlands, and Switzerland",
+   "venue": "IEEE Transactions on Information Forensics and Security 4(4):729–744",
+   "year": 2009,
+   "doi": "10.1109/tifs.2009.2033230",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "antonyan09-state",
+   "group": "security",
+   "authors": "Tigran Antonyan, Seda Davtyan, Sotiris Kentros, Aggelos Kiayias, Laurent Michel, Nicolas Nicolaou, Alexander Russell and Alexander A. Shvartsman",
+   "title": "State-Wide Elections, Optical Scan Voting Systems, and the Pursuit of Integrity",
+   "venue": "IEEE Transactions on Information Forensics and Security 4(4):597–610",
+   "year": 2009,
+   "doi": "10.1109/tifs.2009.2033232",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "sturton09-voting",
+   "group": "security",
+   "authors": "Cynthia Sturton, Susmit Jha, Sanjit A. Seshia and David Wagner",
+   "title": "On voting machine design for verification and testability",
+   "venue": "ACM CCS 2009",
+   "year": 2009,
+   "doi": "10.1145/1653662.1653719",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "lopresti09-document",
+   "group": "handcount",
+   "authors": "Daniel Lopresti, Xiang Zhou, Xiaolei Huang and Gang Tan",
+   "title": "Document Analysis Support for the Manual Auditing of Elections",
+   "venue": "ICDAR 2009",
+   "year": 2009,
+   "doi": "10.1109/icdar.2009.279",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "lopresti10-document",
+   "group": "handcount",
+   "authors": "Daniel Lopresti, George Nagy and Elisa Barney Smith",
+   "title": "Document analysis issues in reading optical scan ballots",
+   "venue": "IAPR Workshop on Document Analysis Systems (DAS) 2010",
+   "year": 2010,
+   "doi": "10.1145/1815330.1815344",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "gardner10-designing",
+   "group": "security",
+   "authors": "Ryan W. Gardner, Sujata Garera and Aviel D. Rubin",
+   "title": "Designing for Audit: A Voting Machine with a Tiny TCB (short paper)",
+   "venue": "Financial Cryptography 2010",
+   "year": 2010,
+   "doi": "10.1007/978-3-642-14577-3_24",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "pieters09-combatting",
+   "group": "security",
+   "authors": "Wolter Pieters",
+   "title": "Combatting Electoral Traces: The Dutch Tempest Discussion and Beyond",
+   "venue": "VoteID 2009",
+   "year": 2009,
+   "doi": "10.1007/978-3-642-04135-8_11",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "gonggrijp09-ries",
+   "group": "security",
+   "authors": "Rop Gonggrijp, Willem-Jan Hengeveld, Eelco Hotting, Sebastian Schmidt and Frederik Weidemann",
+   "title": "RIES - Rijnland Internet Election System: A Cursory Study of Published Source Code",
+   "venue": "VoteID 2009",
+   "year": 2009,
+   "doi": "10.1007/978-3-642-04135-8_10",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "robinson12-ethical",
+   "group": "security",
+   "authors": "David G. Robinson and J. Alex Halderman",
+   "title": "Ethical Issues in E-Voting Security Analysis",
+   "venue": "FC 2011 workshops (WECSR)",
+   "year": 2012,
+   "doi": "10.1007/978-3-642-29889-9_10",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "appel11-security",
+   "group": "practice",
+   "authors": "Andrew W. Appel",
+   "title": "Security Seals on Voting Machines: A Case Study",
+   "venue": "ACM Transactions on Information and System Security 14(2):1–29",
+   "year": 2011,
+   "doi": "10.1145/2019599.2019603",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "wolchok12-attacking",
+   "group": "internet",
+   "authors": "Scott Wolchok, Eric Wustrow, Dawn Isabel and J. Alex Halderman",
+   "title": "Attacking the Washington, D.C. Internet Voting System",
+   "venue": "Financial Cryptography 2012",
+   "year": 2012,
+   "doi": "10.1007/978-3-642-32946-3_10",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "gaudry20-breaking",
+   "group": "internet",
+   "authors": "Pierrick Gaudry and Alexander Golovnev",
+   "title": "Breaking the Encryption Scheme of the Moscow Internet Voting System",
+   "venue": "Financial Cryptography 2020",
+   "year": 2020,
+   "doi": "10.1007/978-3-030-51280-4_3",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "haenni20-chvote",
+   "group": "internet",
+   "authors": "Rolf Haenni, Eric Dubuis, Reto E. Koenig and Philipp Locher",
+   "title": "CHVote: Sixteen Best Practices and Lessons Learned",
+   "venue": "E-Vote-ID 2020",
+   "year": 2020,
+   "doi": "10.1007/978-3-030-60347-2_7",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "solvak20-does",
+   "group": "internet",
+   "authors": "Mihkel Solvak",
+   "title": "Does Vote Verification Work: Usage and Impact of Confidence Building Technology in Internet Voting",
+   "venue": "E-Vote-ID 2020",
+   "year": 2020,
+   "doi": "10.1007/978-3-030-60347-2_14",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "duenascid20-tripped",
+   "group": "internet",
+   "authors": "David Duenas-Cid, Iuliia Krivonosova, Radu Serrano, Marlon Freire and Robert Krimmer",
+   "title": "Tripped at the Finishing Line: The Åland Islands Internet Voting Project",
+   "venue": "E-Vote-ID 2020",
+   "year": 2020,
+   "doi": "10.1007/978-3-030-60347-2_3",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "heiberg21-mobile",
+   "group": "internet",
+   "authors": "Sven Heiberg, Kristjan Krips and Jan Willemson",
+   "title": "Mobile Voting – Still Too Risky?",
+   "venue": "Voting 2021 (FC workshops)",
+   "year": 2021,
+   "doi": "10.1007/978-3-662-63958-0_23",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "muller23-breaking",
+   "group": "internet",
+   "authors": "Johannes Müller",
+   "title": "Breaking and Fixing Vote Privacy of the Estonian E-Voting Protocol IVXV",
+   "venue": "Voting 2022 (FC workshops)",
+   "year": 2023,
+   "doi": "10.1007/978-3-031-32415-4_22",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "pereira23-individual",
+   "group": "internet",
+   "authors": "Olivier Pereira",
+   "title": "Individual Verifiability and Revoting in the Estonian Internet Voting System",
+   "venue": "Voting 2022 (FC workshops)",
+   "year": 2023,
+   "doi": "10.1007/978-3-031-32415-4_21",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "blanchard22-analysis",
+   "group": "internet",
+   "authors": "Enka Blanchard, Antoine Gallais, Emmanuel Leblond, Djohar Sidhoum-Rahal and Juliette Walter",
+   "title": "An Analysis of the Security and Privacy Issues of the Neovote Online Voting System",
+   "venue": "E-Vote-ID 2022",
+   "year": 2022,
+   "doi": "10.1007/978-3-031-15911-4_1",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "brunet22-review",
+   "group": "internet",
+   "authors": "James Brunet, Athanasios Demetri Pananos and Aleksander Essex",
+   "title": "Review Your Choices: When Confirmation Pages Break Ballot Secrecy in Online Elections",
+   "venue": "E-Vote-ID 2022",
+   "year": 2022,
+   "doi": "10.1007/978-3-031-15911-4_3",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "brunet23-online",
+   "group": "internet",
+   "authors": "James Brunet and Aleksander Essex",
+   "title": "Online Voting in Ontario Municipalities: A Standards-Based Review",
+   "venue": "E-Vote-ID 2023",
+   "year": 2023,
+   "doi": "10.1007/978-3-031-43756-4_4",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "schurmann20-effective",
+   "group": "practice",
+   "authors": "Carsten Schürmann, Lisa Hartmann Jensen and Rósa María Sigbjörnsdóttir",
+   "title": "Effective Cybersecurity Awareness Training for Election Officials",
+   "venue": "E-Vote-ID 2020",
+   "year": 2020,
+   "doi": "10.1007/978-3-030-60347-2_13",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "chanussot21-cyber",
+   "group": "practice",
+   "authors": "Thomas Chanussot and Carsten Schürmann",
+   "title": "Cyber Awareness Training for Election Staff Using Constructive Alignment",
+   "venue": "E-Vote-ID 2021",
+   "year": 2021,
+   "doi": "10.1007/978-3-030-86942-7_5",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "hao20-end",
+   "group": "e2e",
+   "authors": "Feng Hao, Shen Wang, Samiran Bag, Rob Procter, Siamak F. Shahandashti, Maryam Mehrnezhad, Ehsan Toreini, Roberto Metere and Lana Y. J. Liu",
+   "title": "End-to-End Verifiable E-Voting Trial for Polling Station Voting",
+   "venue": "IEEE Security & Privacy 18(6):6–13",
+   "year": 2020,
+   "doi": "10.1109/msec.2020.3002728",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "haines21-machine",
+   "group": "e2e",
+   "authors": "Thomas Haines, Rajeev Goré and Jack Stodart",
+   "title": "Machine-Checking the Universal Verifiability of ElectionGuard",
+   "venue": "NordSec 2020",
+   "year": 2021,
+   "doi": "10.1007/978-3-030-70852-8_4",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "kusters20-ordinos",
+   "group": "e2e",
+   "authors": "Ralf Küsters, Julian Liedtke, Johannes Müller, Daniel Rausch and Andreas Vogt",
+   "title": "Ordinos: A Verifiable Tally-Hiding E-Voting System",
+   "venue": "IEEE EuroS&P 2020",
+   "year": 2020,
+   "doi": "10.1109/eurosp48549.2020.00022",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "blanchard20-origami",
+   "group": "e2e",
+   "authors": "Enka Blanchard and Ted Selker",
+   "title": "Origami Voting: A Non-cryptographic Approach to Transparent Ballot Verification",
+   "venue": "Voting 2020 (FC workshops)",
+   "year": 2020,
+   "doi": "10.1007/978-3-030-54455-3_20",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "giustolisi20-privacy",
+   "group": "e2e",
+   "authors": "Rosario Giustolisi and Alessandro Bruni",
+   "title": "Privacy-Preserving Dispute Resolution in the Improved Bingo Voting",
+   "venue": "E-Vote-ID 2020",
+   "year": 2020,
+   "doi": "10.1007/978-3-030-60347-2_5",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "estaji20-revisiting",
+   "group": "e2e",
+   "authors": "Ehsan Estaji, Thomas Haines, Kristian Gjøsteen, Peter B. Rønne, Peter Y. A. Ryan and Najmeh Soroush",
+   "title": "Revisiting Practical and Usable Coercion-Resistant Remote E-Voting",
+   "venue": "E-Vote-ID 2020",
+   "year": 2020,
+   "doi": "10.1007/978-3-030-60347-2_4",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "boyd20-vote",
+   "group": "e2e",
+   "authors": "Colin Boyd, Thomas Haines and Peter B. Rønne",
+   "title": "Vote Selling Resistant Voting",
+   "venue": "Voting 2020 (FC workshops)",
+   "year": 2020,
+   "doi": "10.1007/978-3-030-54455-3_25",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "zollinger21-just",
+   "group": "e2e",
+   "authors": "Marie-Laure Zollinger, Ehsan Estaji, Peter Y. A. Ryan and Karola Marky",
+   "title": "“Just for the Sake of Transparency”: Exploring Voter Mental Models of Verifiability",
+   "venue": "E-Vote-ID 2021",
+   "year": 2021,
+   "doi": "10.1007/978-3-030-86942-7_11",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "haines21-did",
+   "group": "e2e",
+   "authors": "Thomas Haines, Rajeev Goré and Bhavesh Sharma",
+   "title": "Did you mix me? Formally Verifying Verifiable Mix Nets in Electronic Voting",
+   "venue": "IEEE Symposium on Security and Privacy 2021",
+   "year": 2021,
+   "doi": "10.1109/sp40001.2021.00033",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "baloglu21-election",
+   "group": "e2e",
+   "authors": "Sevdenur Baloglu, Sergiu Bursuc, Sjouke Mauw and Jun Pang",
+   "title": "Election Verifiability Revisited: Automated Security Proofs and Attacks on Helios and Belenios",
+   "venue": "IEEE CSF 2021",
+   "year": 2021,
+   "doi": "10.1109/csf51468.2021.00019",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "boyen21-epoque",
+   "group": "e2e",
+   "authors": "Xavier Boyen, Thomas Haines and Johannes Müller",
+   "title": "Epoque: Practical End-to-End Verifiable Post-Quantum-Secure E-Voting",
+   "venue": "IEEE EuroS&P 2021",
+   "year": 2021,
+   "doi": "10.1109/eurosp51992.2021.00027",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "marky21-investigating",
+   "group": "internet",
+   "authors": "Karola Marky, Marie-Laure Zollinger, Peter Roenne, Peter Y. A. Ryan, Tim Grube and Kai Kunze",
+   "title": "Investigating Usability and User Experience of Individually Verifiable Internet Voting Schemes",
+   "venue": "ACM Transactions on Computer-Human Interaction 28(5):1–36",
+   "year": 2021,
+   "doi": "10.1145/3459604",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "haines21-new",
+   "group": "security",
+   "authors": "Thomas Haines and Peter Roenne",
+   "title": "New Standards for E-Voting Systems: Reflections on Source Code Examinations",
+   "venue": "Voting 2021 (FC workshops)",
+   "year": 2021,
+   "doi": "10.1007/978-3-662-63958-0_24",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "baloglu21-provably",
+   "group": "e2e",
+   "authors": "Sevdenur Baloglu, Sergiu Bursuc, Sjouke Mauw and Jun Pang",
+   "title": "Provably Improving Election Verifiability in Belenios",
+   "venue": "E-Vote-ID 2021",
+   "year": 2021,
+   "doi": "10.1007/978-3-030-86942-7_1",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "benaloh21-strobe",
+   "group": "e2e",
+   "authors": "Josh Benaloh",
+   "title": "STROBE-Voting: Send Two, Receive One Ballot Encoding",
+   "venue": "E-Vote-ID 2021",
+   "year": 2021,
+   "doi": "10.1007/978-3-030-86942-7_3",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "basin21-verifying",
+   "group": "e2e",
+   "authors": "David Basin, Jannik Dreier, Sofia Giampietro and Saša Radomirović",
+   "title": "Verifying Table-Based Elections",
+   "venue": "ACM CCS 2021",
+   "year": 2021,
+   "doi": "10.1145/3460120.3484555",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "koitmae21-vote",
+   "group": "internet",
+   "authors": "Arne Koitmäe, Jan Willemson and Priit Vinkel",
+   "title": "Vote Secrecy and Voter Feedback in Remote Voting – Can We Have Both?",
+   "venue": "E-Vote-ID 2021",
+   "year": 2021,
+   "doi": "10.1007/978-3-030-86942-7_10",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "cortier22-toolbox",
+   "group": "e2e",
+   "authors": "Véronique Cortier, Pierrick Gaudry and Quentin Yang",
+   "title": "A Toolbox for Verifiable Tally-Hiding E-Voting Systems",
+   "venue": "ESORICS 2022",
+   "year": 2022,
+   "doi": "10.1007/978-3-031-17146-8_31",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "huber22-kryvos",
+   "group": "e2e",
+   "authors": "Nicolas Huber, Ralf Küsters, Toomas Krips, Julian Liedtke, Johannes Müller, Daniel Rausch, Pascal Reisert and Andreas Vogt",
+   "title": "Kryvos: Publicly Tally-Hiding Verifiable E-Voting",
+   "venue": "ACM CCS 2022",
+   "year": 2022,
+   "doi": "10.1145/3548606.3560701",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "bougon22-themis",
+   "group": "e2e",
+   "authors": "Mikael Bougon, Hervé Chabanne, Véronique Cortier, Alexandre Debant, Emmanuelle Dottax, Jannik Dreier, Pierrick Gaudry and Mathieu Turuani",
+   "title": "Themis: An On-Site Voting System with Systematic Cast-as-intended Verification and Partial Accountability",
+   "venue": "ACM CCS 2022",
+   "year": 2022,
+   "doi": "10.1145/3548606.3560563",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "smyth22-surveying",
+   "group": "e2e",
+   "authors": "Ben Smyth and Michael R. Clarkson",
+   "title": "Surveying definitions of election verifiability",
+   "venue": "Information Processing Letters 177:106267",
+   "year": 2022,
+   "doi": "10.1016/j.ipl.2022.106267",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "baloglu23-election",
+   "group": "e2e",
+   "authors": "Sevdenur Baloglu, Sergiu Bursuc, Sjouke Mauw and Jun Pang",
+   "title": "Election Verifiability in Receipt-Free Voting Protocols",
+   "venue": "IEEE CSF 2023",
+   "year": 2023,
+   "doi": "10.1109/csf57540.2023.00005",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "cheval23-election",
+   "group": "e2e",
+   "authors": "Vincent Cheval, Véronique Cortier and Alexandre Debant",
+   "title": "Election Verifiability with ProVerif",
+   "venue": "IEEE CSF 2023",
+   "year": 2023,
+   "doi": "10.1109/csf57540.2023.00032",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "gjsteen23-coercion",
+   "group": "e2e",
+   "authors": "Kristian Gjøsteen, Thomas Haines and Morten Rotvold Solberg",
+   "title": "Coercion Mitigation for Voting Systems with Trackers: A Selene Case Study",
+   "venue": "E-Vote-ID 2023",
+   "year": 2023,
+   "doi": "10.1007/978-3-031-43756-4_5",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "agrawal23-openvoting",
+   "group": "e2e",
+   "authors": "Prashant Agrawal, Kabir Tomer, Abhinav Nakarmi, Mahabir Prasad Jhanwar, Subodh Vishnu Sharma and Subhashis Banerjee",
+   "title": "OpenVoting: Recoverability from Failures in Dual Voting",
+   "venue": "E-Vote-ID 2023",
+   "year": 2023,
+   "doi": "10.1007/978-3-031-43756-4_2",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "haenni23-private",
+   "group": "internet",
+   "authors": "Rolf Haenni, Reto E. Koenig and Philipp Locher",
+   "title": "Private Internet Voting on Untrusted Voting Devices",
+   "venue": "Voting 2023 (FC workshops)",
+   "year": 2023,
+   "doi": "10.1007/978-3-031-48806-1_4",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "craver22-video",
+   "group": "security",
+   "authors": "Scott A. Craver and Gurinder Bal",
+   "title": "A video auditing system for display-based voting machines",
+   "venue": "Electronic Imaging (Media Watermarking, Security, and Forensics) 34(4):323–1–323–4",
+   "year": 2022,
+   "doi": "10.2352/ei.2022.34.4.mwsf-323",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "barretto21-improving",
+   "group": "security",
+   "authors": "Sameer Barretto, William Chown, David Meyer, Aditya Soni, Atreya Tata and J. Alex Halderman",
+   "title": "Improving the Accuracy of Ballot Scanners Using Supervised Learning",
+   "venue": "E-Vote-ID 2021",
+   "year": 2021,
+   "doi": "10.1007/978-3-030-86942-7_2",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "blom20-shifting",
+   "group": "m-complex",
+   "authors": "Michelle Blom, Andrew Conway, Peter J. Stuckey and Vanessa J. Teague",
+   "title": "Shifting the Balance-of-Power in STV Elections",
+   "venue": "E-Vote-ID 2020",
+   "year": 2020,
+   "doi": "10.1007/978-3-030-60347-2_1",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "yamin23-novelty",
+   "group": "forensics",
+   "authors": "Khurram Yamin, Nima Jadali, Yao Xie and Dima Nazzal",
+   "title": "Novelty detection for election fraud: A case study with agent-based simulation data",
+   "venue": "AI Magazine 44(3):255–262",
+   "year": 2023,
+   "doi": "10.1002/aaai.12112",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "silva23-ocrs",
+   "group": "security",
+   "authors": "Jonas Silva, Grennda Guerra, Yves Rodrigues, Paulo Veloso, Cecília Silva, Pedro Souza and Marcondes da Silva",
+   "title": "OCRs for Extracting Characters from Ballots in the Process of Automating the Integrity Test in the Brazilian Elections",
+   "venue": "Future Technologies Conference (FTC) 2023",
+   "year": 2023,
+   "doi": "10.1007/978-3-031-47454-5_42",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "junior23-automatic",
+   "group": "security",
+   "authors": "Marcondes Silva Júnior, Jonas Silva and João Teixeira",
+   "title": "Automatic Robotic Arm Calibration for the Integrity Test of Voting Machines in the Brazilian 2022 Election Context",
+   "venue": "VISIGRAPP 2023 (VISAPP)",
+   "year": 2023,
+   "doi": "10.5220/0011787400003417",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "bernhard22-acm",
+   "group": "overview",
+   "authors": "Matthew Bernhard and Dan S. Wallach",
+   "title": "ACM TechBrief: Election Security: Risk-Limiting Audits",
+   "venue": "ACM Technology Policy Council",
+   "year": 2022,
+   "doi": "10.1145/3568005",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "goodman23-verifiability",
+   "group": "internet",
+   "authors": "Nicole Goodman, Iuliia Spycher-Krivonosova, Aleksander Essex and James Brunet",
+   "title": "Verifiability Experiences in Ontario’s 2022 Online Elections",
+   "venue": "E-Vote-ID 2023",
+   "year": 2023,
+   "doi": "10.1007/978-3-031-43756-4_6",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "aranha23-verifiable",
+   "group": "e2e",
+   "authors": "Diego F. Aranha, Carsten Baum, Kristian Gjøsteen and Tjerand Silde",
+   "title": "Verifiable Mix-Nets and Distributed Decryption for Voting from Lattice-Based Assumptions",
+   "venue": "ACM CCS 2023",
+   "year": 2023,
+   "doi": "10.1145/3576915.3616683",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "merino24-e",
+   "group": "e2e",
+   "authors": "Louis-Henri Merino, Alaleh Azhir, Haoqian Zhang, Simone Colombo, Bernhard Tellenbach, Vero Estrada-Galiñanes and Bryan Ford",
+   "title": "E-Vote Your Conscience: Perceptions of Coercion and Vote Buying, and the Usability of Fake Credentials in Online Voting",
+   "venue": "IEEE Symposium on Security and Privacy 2024",
+   "year": 2024,
+   "doi": "10.1109/sp54263.2024.00252",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "schurmann25-election",
+   "group": "security",
+   "authors": "Carsten Schürmann",
+   "title": "Election Security-by-Design",
+   "venue": "SecITC 2024",
+   "year": 2025,
+   "doi": "10.1007/978-3-031-87760-5_2",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "marky24-investigating",
+   "group": "internet",
+   "authors": "Karola Marky, Nina Gerber, Henry John Krumb, Mohamed Khamis and Max Mühlhäuser",
+   "title": "Investigating Voter Perceptions of Printed Physical Audit Trails for Online Voting",
+   "venue": "IEEE Symposium on Security and Privacy 2024",
+   "year": 2024,
+   "doi": "10.1109/sp54263.2024.00136",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "mahmood25-busting",
+   "group": "security",
+   "authors": "Kaleel Mahmood, Caleb Manicke, Ethan Rathbun, Aayushi Verma, Sohaib Ahmad, Nicholas Stamatakis, Laurent Michel and Benjamin Fuller",
+   "title": "Busting the Paper Ballot: Voting Meets Adversarial Machine Learning",
+   "venue": "ACM CCS 2025",
+   "year": 2025,
+   "doi": "10.1145/3719027.3744882",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "klassen25-credential",
+   "group": "internet",
+   "authors": "Eric Klassen, James Brunet, Nicole Goodman and Aleksander Essex",
+   "title": "Credential Attacks in Ontario’s Online Elections",
+   "venue": "E-Vote-ID 2025",
+   "year": 2025,
+   "doi": "10.1007/978-3-032-05036-6_9",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "benaloh25-reactive",
+   "group": "e2e",
+   "authors": "Josh Benaloh, Michael Naehrig and Olivier Pereira",
+   "title": "REACTIVE: Rethinking Effective Approaches Concerning Trustees in Verifiable Elections",
+   "venue": "E-Vote-ID 2025",
+   "year": 2025,
+   "doi": "10.1007/978-3-032-05036-6_2",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "treier25-beyond",
+   "group": "internet",
+   "authors": "Tarvo Treier",
+   "title": "Beyond the Happy Path: A Safety-Critical Audit Methodology for Estonia’s I-Voting Processing Application",
+   "venue": "IEEE Access 13:203429–203443",
+   "year": 2025,
+   "doi": "10.1109/access.2025.3638663",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "starbird25-going",
+   "group": "forensics",
+   "authors": "Kate Starbird, Stephen Prochaska and Ben Yamron",
+   "title": "What is going on? An evidence-frame framework for analyzing online rumors about election integrity",
+   "venue": "Proceedings of the ACM on Human-Computer Interaction 9(7):1–37",
+   "year": 2025,
+   "doi": "10.1145/3757522",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "blom18-ballot",
+   "group": "m-complex",
+   "authors": "Michelle Blom, Peter J. Stuckey and Vanessa J. Teague",
+   "title": "Ballot-Polling Risk Limiting Audits for IRV Elections",
+   "venue": "E-Vote-ID 2018",
+   "year": 2018,
+   "doi": "10.1007/978-3-030-00419-4_2",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "blom18-computing",
+   "group": "m-complex",
+   "authors": "Michelle Blom, Peter J. Stuckey and Vanessa J. Teague",
+   "title": "Computing the Margin of Victory in Preferential Parliamentary Elections",
+   "venue": "E-Vote-ID 2018",
+   "year": 2018,
+   "doi": "10.1007/978-3-030-00419-4_1",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "blom19-toward",
+   "group": "m-complex",
+   "authors": "Michelle Blom, Peter J. Stuckey and Vanessa J. Teague",
+   "title": "Toward Computing the Margin of Victory in Single Transferable Vote Elections",
+   "venue": "INFORMS Journal on Computing 31(4):636–653",
+   "year": 2019,
+   "doi": "10.1287/ijoc.2018.0853",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "sarwate13-risk",
+   "group": "m-complex",
+   "authors": "Anand D. Sarwate, Stephen Checkoway and Hovav Shacham",
+   "title": "Risk-limiting Audits and the Margin of Victory in Nonplurality Elections",
+   "venue": "Statistics, Politics and Policy 4(1)",
+   "year": 2013,
+   "doi": "10.1515/spp-2012-0003",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "xia12-computing",
+   "group": "m-complex",
+   "authors": "Lirong Xia",
+   "title": "Computing the margin of victory for various voting rules",
+   "venue": "ACM EC 2012",
+   "year": 2012,
+   "doi": "10.1145/2229012.2229086",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "beckert17-automatic",
+   "group": "m-complex",
+   "authors": "Bernhard Beckert, Michael Kirsten, Vladimir Klebanov and Carsten Schürmann",
+   "title": "Automatic Margin Computation for Risk-Limiting Audits",
+   "venue": "E-Vote-ID 2016",
+   "year": 2017,
+   "doi": "10.1007/978-3-319-52240-1_2",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "schurmann17-risk",
+   "group": "pilots",
+   "authors": "Carsten Schürmann",
+   "title": "A Risk-Limiting Audit in Denmark: A Pilot",
+   "venue": "E-Vote-ID 2016",
+   "year": 2017,
+   "doi": "10.1007/978-3-319-52240-1_12",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "hedison20-ballot",
+   "group": "m-poll",
+   "authors": "Gilbert Hedison and Ari Saptawijaya",
+   "title": "Ballot-polling Risk-limiting Audit for Selection of Condorcet Winner",
+   "venue": "ICACSIS 2020",
+   "year": 2020,
+   "doi": "10.1109/icacsis51025.2020.9263223",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "mccarthy08-percentage",
+   "group": "m-found",
+   "authors": "John McCarthy, Howard Stanislevic, Mark Lindeman, Arlene S. Ash, Vittorio Addona and Mary Batcher",
+   "title": "Percentage-Based versus Statistical-Power-Based Vote Tabulation Audits",
+   "venue": "The American Statistician 62(1):11–16",
+   "year": 2008,
+   "doi": "10.1198/000313008x273779",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "jones04-auditing",
+   "group": "m-found",
+   "authors": "Douglas W. Jones",
+   "title": "Auditing elections",
+   "venue": "Communications of the ACM 47(10):46–50",
+   "year": 2004,
+   "doi": "10.1145/1022594.1022622",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "kortum21-voter",
+   "group": "handcount",
+   "authors": "Philip Kortum, Michael D. Byrne and Julie Whitmore",
+   "title": "Voter Verification of Ballot Marking Device Ballots Is a Two-Part Question: Can They? Mostly, They Can. Do They? Mostly, They Don't",
+   "venue": "Election Law Journal 20(3):243–253",
+   "year": 2021,
+   "doi": "10.1089/elj.2020.0632",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "demillo18-voters",
+   "group": "grey",
+   "authors": "Richard DeMillo, Robert Kadel and Marilyn Marks",
+   "title": "What Voters are Asked to Verify Affects Ballot Verification: A Quantitative Analysis of Voters' Memories of Their Ballots",
+   "venue": "SSRN working paper",
+   "year": 2018,
+   "doi": "10.2139/ssrn.3292208",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "everett08-electronic",
+   "group": "handcount",
+   "authors": "Sarah P. Everett, Kristen K. Greene, Michael D. Byrne, Dan S. Wallach, Kyle Derr, Daniel Sandler and Ted Torous",
+   "title": "Electronic voting machines versus traditional methods: improved preference, similar performance",
+   "venue": "ACM CHI 2008",
+   "year": 2008,
+   "doi": "10.1145/1357054.1357195",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "ansolabehere05-residual",
+   "group": "handcount",
+   "authors": "Stephen Ansolabehere and Charles Stewart III",
+   "title": "Residual Votes Attributable to Technology",
+   "venue": "The Journal of Politics 67(2):365–389",
+   "year": 2005,
+   "doi": "10.1111/j.1468-2508.2005.00321.x",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "kimball05-ballot",
+   "group": "handcount",
+   "authors": "David C. Kimball and Martha Kropf",
+   "title": "Ballot Design and Unrecorded Votes on Paper-Based Ballots",
+   "venue": "Public Opinion Quarterly 69(4):508–529",
+   "year": 2005,
+   "doi": "10.1093/poq/nfi054",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "wand01-butterfly",
+   "group": "handcount",
+   "authors": "Jonathan N. Wand, Kenneth W. Shotts, Jasjeet S. Sekhon, Walter R. Mebane Jr., Michael C. Herron and Henry E. Brady",
+   "title": "The Butterfly Did It: The Aberrant Vote for Buchanan in Palm Beach County, Florida",
+   "venue": "American Political Science Review 95(4):793–810",
+   "year": 2001,
+   "doi": "10.1017/s000305540040002x",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "brady01-law",
+   "group": "handcount",
+   "authors": "Henry E. Brady, Michael C. Herron, Walter R. Mebane Jr., Jasjeet S. Sekhon, Kenneth W. Shotts and Jonathan Wand",
+   "title": "Law and Data: The Butterfly Ballot Episode",
+   "venue": "PS: Political Science & Politics 34(1):59–69",
+   "year": 2001,
+   "doi": "10.1017/s1049096501000099",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "wolter03-reliability",
+   "group": "handcount",
+   "authors": "Kirk Wolter, Diana Jergovic, Whitney Moore, Joe Murphy and Colm O'Muircheartaigh",
+   "title": "Reliability of the Uncertified Ballots in the 2000 Presidential Election in Florida",
+   "venue": "The American Statistician 57(1):1–14",
+   "year": 2003,
+   "doi": "10.1198/0003130031144",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "alvarez12-evaluating",
+   "group": "overview",
+   "authors": "R. Michael Alvarez, Lonna Rae Atkeson and Thad E. Hall",
+   "title": "Evaluating Elections: A Handbook of Methods and Standards",
+   "venue": "Cambridge University Press",
+   "year": 2012,
+   "doi": "10.1017/cbo9781139226547",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "atkeson15-voter",
+   "group": "practice",
+   "authors": "Lonna Rae Atkeson, R. Michael Alvarez and Thad E. Hall",
+   "title": "Voter Confidence: How to Measure It and How It Differs from Government Support",
+   "venue": "Election Law Journal 14(3):207–219",
+   "year": 2015,
+   "doi": "10.1089/elj.2014.0293",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "alvarez08-americans",
+   "group": "practice",
+   "authors": "R. Michael Alvarez, Thad E. Hall and Morgan H. Llewellyn",
+   "title": "Are Americans Confident Their Ballots Are Counted?",
+   "venue": "The Journal of Politics 70(3):754–766",
+   "year": 2008,
+   "doi": "10.1017/s0022381608080730",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "deckert11-benford",
+   "group": "forensics",
+   "authors": "Joseph Deckert, Mikhail Myagkov and Peter C. Ordeshook",
+   "title": "Benford's Law and the Detection of Election Fraud",
+   "venue": "Political Analysis 19(3):245–268",
+   "year": 2011,
+   "doi": "10.1093/pan/mpr014",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "myagkov09-forensics",
+   "group": "forensics",
+   "authors": "Mikhail Myagkov, Peter C. Ordeshook and Dimitri Shakin",
+   "title": "The Forensics of Election Fraud: Russia and Ukraine",
+   "venue": "Cambridge University Press",
+   "year": 2009,
+   "doi": "10.1017/cbo9780511626807",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "klimek12-statistical",
+   "group": "forensics",
+   "authors": "Peter Klimek, Yuri Yegorov, Rudolf Hanel and Stefan Thurner",
+   "title": "Statistical detection of systematic election irregularities",
+   "venue": "Proceedings of the National Academy of Sciences 109(41):16469–16473",
+   "year": 2012,
+   "doi": "10.1073/pnas.1210722109",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "beber12-numbers",
+   "group": "forensics",
+   "authors": "Bernd Beber and Alexandra Scacco",
+   "title": "What the Numbers Say: A Digit-Based Test for Election Fraud",
+   "venue": "Political Analysis 20(2):211–234",
+   "year": 2012,
+   "doi": "10.1093/pan/mps003",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "mebane10-fraud",
+   "group": "forensics",
+   "authors": "Walter R. Mebane Jr.",
+   "title": "Fraud in the 2009 Presidential Election in Iran?",
+   "venue": "CHANCE 23(1):6–15",
+   "year": 2010,
+   "doi": "10.1080/09332480.2010.10739785",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "leemann14-systematic",
+   "group": "forensics",
+   "authors": "Lucas Leemann and Daniel Bochsler",
+   "title": "A systematic approach to study electoral fraud",
+   "venue": "Electoral Studies 35:33–47",
+   "year": 2014,
+   "doi": "10.1016/j.electstud.2014.03.005",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "kiayias07-tampering",
+   "group": "security",
+   "authors": "Aggelos Kiayias, Laurent Michel, Alexander Russell, Narasimha Shashidhar, Andrew See, Alexander Shvartsman and Seda Davtyan",
+   "title": "Tampering with Special Purpose Trusted Computing Devices: A Case Study in Optical Scan E-Voting",
+   "venue": "ACSAC 2007",
+   "year": 2007,
+   "doi": "10.1109/acsac.2007.4412974",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "davtyan09-taking",
+   "group": "security",
+   "authors": "Seda Davtyan, Sotiris Kentros, Aggelos Kiayias, Laurent Michel, Nicolas Nicolaou, Alexander Russell, Andrew See, Narasimha Shashidhar and Alexander A. Shvartsman",
+   "title": "Taking total control of voting systems: firmware manipulations on an optical scan voting terminal",
+   "venue": "ACM SAC 2009",
+   "year": 2009,
+   "doi": "10.1145/1529282.1529736",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "jefferson04-analyzing",
+   "group": "internet",
+   "authors": "David Jefferson, Aviel D. Rubin, Barbara Simons and David Wagner",
+   "title": "Analyzing internet voting security",
+   "venue": "Communications of the ACM 47(10):59–64",
+   "year": 2004,
+   "doi": "10.1145/1022594.1022624",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "clarkson08-civitas",
+   "group": "e2e",
+   "authors": "Michael R. Clarkson, Stephen Chong and Andrew C. Myers",
+   "title": "Civitas: Toward a Secure Voting System",
+   "venue": "IEEE Symposium on Security and Privacy 2008",
+   "year": 2008,
+   "doi": "10.1109/sp.2008.32",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "juels05-coercion",
+   "group": "e2e",
+   "authors": "Ari Juels, Dario Catalano and Markus Jakobsson",
+   "title": "Coercion-resistant electronic elections",
+   "venue": "ACM Workshop on Privacy in the Electronic Society (WPES) 2005",
+   "year": 2005,
+   "doi": "10.1145/1102199.1102213",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "chaum04-secret",
+   "group": "e2e",
+   "authors": "David Chaum",
+   "title": "Secret-ballot receipts: true voter-verifiable elections",
+   "venue": "IEEE Security & Privacy 2(1):38–47",
+   "year": 2004,
+   "doi": "10.1109/msecp.2004.1264852",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "chaum81-untraceable",
+   "group": "e2e",
+   "authors": "David L. Chaum",
+   "title": "Untraceable electronic mail, return addresses, and digital pseudonyms",
+   "venue": "Communications of the ACM 24(2):84–90",
+   "year": 1981,
+   "doi": "10.1145/358549.358563",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "neff01-verifiable",
+   "group": "e2e",
+   "authors": "C. Andrew Neff",
+   "title": "A verifiable secret shuffle and its application to e-voting",
+   "venue": "ACM CCS 2001",
+   "year": 2001,
+   "doi": "10.1145/501983.502000",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "ryan09-pret",
+   "group": "e2e",
+   "authors": "Peter Y. A. Ryan, David Bismark, James Heather, Steve Schneider and Zhe Xia",
+   "title": "Prêt à Voter: a Voter-Verifiable Voting System",
+   "venue": "IEEE Transactions on Information Forensics and Security 4(4):662–673",
+   "year": 2009,
+   "doi": "10.1109/tifs.2009.2033233",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "cramer97-secure",
+   "group": "e2e",
+   "authors": "Ronald Cramer, Rosario Gennaro and Berry Schoenmakers",
+   "title": "A Secure and Optimally Efficient Multi-Authority Election Scheme",
+   "venue": "EUROCRYPT 1997",
+   "year": 1997,
+   "doi": "10.1007/3-540-69053-0_9",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "bowler15-election",
+   "group": "practice",
+   "authors": "Shaun Bowler, Thomas Brunell, Todd Donovan and Paul Gronke",
+   "title": "Election administration and perceptions of fair elections",
+   "venue": "Electoral Studies 38:1–9",
+   "year": 2015,
+   "doi": "10.1016/j.electstud.2015.01.004",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "sances15-partisanship",
+   "group": "practice",
+   "authors": "Michael W. Sances and Charles Stewart III",
+   "title": "Partisanship and confidence in the vote count: Evidence from U.S. national elections since 2000",
+   "venue": "Electoral Studies 40:176–188",
+   "year": 2015,
+   "doi": "10.1016/j.electstud.2015.08.004",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "hale15-administering",
+   "group": "practice",
+   "authors": "Kathleen Hale, Robert Montjoy and Mitchell Brown",
+   "title": "Administering Elections: How American Elections Work",
+   "venue": "Palgrave Macmillan",
+   "year": 2015,
+   "doi": "10.1057/9781137388452",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "wald45-sequential",
+   "group": "stats",
+   "authors": "Abraham Wald",
+   "title": "Sequential Tests of Statistical Hypotheses",
+   "venue": "The Annals of Mathematical Statistics 16(2):117–186",
+   "year": 1945,
+   "doi": "10.1214/aoms/1177731118",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "kaplan87-method",
+   "group": "stats",
+   "authors": "Harold M. Kaplan",
+   "title": "A Method of One-Sided Nonparametric Inference for the Mean of a Nonnegative Population",
+   "venue": "The American Statistician 41(2):157–158",
+   "year": 1987,
+   "doi": "10.1080/00031305.1987.10475470",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "waudbysmith24-estimating",
+   "group": "stats",
+   "authors": "Ian Waudby-Smith and Aaditya Ramdas",
+   "title": "Estimating means of bounded random variables by betting",
+   "venue": "Journal of the Royal Statistical Society Series B 86(1):1–27",
+   "year": 2024,
+   "doi": "10.1093/jrsssb/qkad009",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "ramdas23-game",
+   "group": "stats",
+   "authors": "Aaditya Ramdas, Peter Grünwald, Vladimir Vovk and Glenn Shafer",
+   "title": "Game-Theoretic Statistics and Safe Anytime-Valid Inference",
+   "venue": "Statistical Science 38(4):576–601",
+   "year": 2023,
+   "doi": "10.1214/23-sts894",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "howard21-time",
+   "group": "stats",
+   "authors": "Steven R. Howard, Aaditya Ramdas, Jon McAuliffe and Jasjeet Sekhon",
+   "title": "Time-uniform, nonparametric, nonasymptotic confidence sequences",
+   "venue": "The Annals of Statistics 49(2):1055–1080",
+   "year": 2021,
+   "doi": "10.1214/20-aos1991",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "shafer21-testing",
+   "group": "stats",
+   "authors": "Glenn Shafer",
+   "title": "Testing by Betting: A Strategy for Statistical and Scientific Communication",
+   "venue": "Journal of the Royal Statistical Society Series A 184(2):407–431",
+   "year": 2021,
+   "doi": "10.1111/rssa.12647",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "dopp19-critique",
+   "group": "grey",
+   "authors": "Kathy Anne Dopp",
+   "title": "Critique of Lindeman, Stark, Yates’ “BRAVO” and of Ottoboni, Bernhard, Halderman, Rivest & Stark’s “Bernoulli Ballot Polling”",
+   "venue": "SSRN working paper",
+   "year": 2019,
+   "doi": "10.2139/ssrn.3393931",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "jaffe24-trust",
+   "group": "practice",
+   "authors": "Jacob Jaffe, Joseph R. Loffredo, Samuel Baltz, Alejandro Flores and Charles Stewart III",
+   "title": "Trust in the Count: Improving Voter Confidence with Post-election Audits",
+   "venue": "Public Opinion Quarterly 88(SI):585–607",
+   "year": 2024,
+   "doi": "10.1093/poq/nfae029",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "shandler26-hacking",
+   "group": "practice",
+   "authors": "Ryan Shandler, Iris Ong, Olivia Leu and Anthony DeMattee",
+   "title": "Hacking Voters’ Trust in Democracy: Panel Evidence on Safeguarding Confidence in Election Integrity",
+   "venue": "Political Behavior",
+   "year": 2026,
+   "doi": "10.1007/s11109-026-10147-6",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "blom20-did",
+   "group": "m-complex",
+   "authors": "Michelle Blom, Andrew Conway, Peter J. Stuckey and Vanessa J. Teague",
+   "title": "Did That Lost Ballot Box Cost Me a Seat? Computing Manipulations of STV Elections",
+   "venue": "AAAI 2020 (IAAI) 34(8):13235–13240",
+   "year": 2020,
+   "doi": "10.1609/aaai.v34i08.7029",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "bishop07-risks",
+   "group": "security",
+   "authors": "Matt Bishop and David Wagner",
+   "title": "Risks of e-voting",
+   "venue": "Communications of the ACM 50(11):120",
+   "year": 2007,
+   "doi": "10.1145/1297797.1297827",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "sandler08-finding",
+   "group": "security",
+   "authors": "Daniel Sandler, Kyle Derr, Scott Crosby and Dan S. Wallach",
+   "title": "Finding the Evidence in Tamper-Evident Logs",
+   "venue": "SADFE 2008",
+   "year": 2008,
+   "doi": "10.1109/sadfe.2008.22",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "yasinsac08-dynamics",
+   "group": "handcount",
+   "authors": "Alec Yasinsac and Matt Bishop",
+   "title": "The Dynamics of Counting and Recounting Votes",
+   "venue": "IEEE Security & Privacy 6(3):22–29",
+   "year": 2008,
+   "doi": "10.1109/msp.2008.75",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "ash08-florida",
+   "group": "forensics",
+   "authors": "Arlene Ash and John Lamperti",
+   "title": "Florida 2006: Can Statistics Tell Us Who Won Congressional District-13?",
+   "venue": "CHANCE 21(2):18–24",
+   "year": 2008,
+   "doi": "10.1080/09332480.2008.10722895",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "frisina08-ballot",
+   "group": "handcount",
+   "authors": "Laurin Frisina, Michael C. Herron, James Honaker and Jeffrey B. Lewis",
+   "title": "Ballot Formats, Touchscreens, and Undervotes: A Study of the 2006 Midterm Elections in Florida",
+   "venue": "Election Law Journal 7(1):25–47",
+   "year": 2008,
+   "doi": "10.1089/elj.2008.7103",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "herron07-assessing",
+   "group": "handcount",
+   "authors": "Michael C. Herron and Jonathan Wand",
+   "title": "Assessing partisan bias in voting technology: The case of the 2004 New Hampshire recount",
+   "venue": "Electoral Studies 26(2):247–261",
+   "year": 2007,
+   "doi": "10.1016/j.electstud.2006.02.004",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "hood12-they",
+   "group": "forensics",
+   "authors": "M. V. Hood III and William Gillespie",
+   "title": "They Just Do Not Vote Like They Used To: A Methodology to Empirically Assess Election Fraud",
+   "venue": "Social Science Quarterly 93(1):76–94",
+   "year": 2012,
+   "doi": "10.1111/j.1540-6237.2011.00837.x",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "stewart19-elections",
+   "group": "practice",
+   "authors": "Charles Stewart III",
+   "title": "The Elections Performance Index: Past, Present, and Future",
+   "venue": "The Future of Election Administration (Palgrave Macmillan)",
+   "year": 2019,
+   "doi": "10.1007/978-3-030-14947-5_8",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "baltz24-audits",
+   "group": "pilots",
+   "authors": "Samuel Baltz, Fernanda Gonzalez, Kevin Guo, Jacob Jaffe and Charles Stewart III",
+   "title": "Audits of the 2020 American Election Show an Accurate Vote Count",
+   "venue": "SSRN working paper",
+   "year": 2024,
+   "doi": "10.2139/ssrn.4956762",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "gaudette25-official",
+   "group": "practice",
+   "authors": "Jennifer Gaudette, Seth J. Hill, Thad Kousser, Mackenzie Lockhart and Mindy Romero",
+   "title": "Can Official Messaging on Trust in Elections Break Through Partisan Polarization?",
+   "venue": "British Journal of Political Science 55",
+   "year": 2025,
+   "doi": "10.1017/s0007123424000681",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "rozenas17-detecting",
+   "group": "grey",
+   "authors": "Arturas Rozenas",
+   "title": "Detecting Election Fraud from Irregularities in Vote-Share Distributions",
+   "venue": "SSRN working paper",
+   "year": 2017,
+   "doi": "10.2139/ssrn.2934485",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "dopp10-checking",
+   "group": "grey",
+   "authors": "Kathy Anne Dopp",
+   "title": "Checking Election Outcome Accuracy: Post-Election Audit Sampling Methods",
+   "venue": "SSRN working paper",
+   "year": 2010,
+   "doi": "10.2139/ssrn.1579182",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "dopp19-random",
+   "group": "grey",
+   "authors": "Kathy Anne Dopp",
+   "title": "Random Manual Risk-limiting Post-election Audits",
+   "venue": "SSRN working paper",
+   "year": 2019,
+   "doi": "10.2139/ssrn.3362885",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "glazer20-start",
+   "group": "practice",
+   "authors": "Amanda Glazer and Jacob Spertus",
+   "title": "Start Spreading the News: New York’s Post-Election Audit Has Major Flaws",
+   "venue": "SSRN working paper",
+   "year": 2020,
+   "doi": "10.2139/ssrn.3536011",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "dopp20-testing",
+   "group": "grey",
+   "authors": "Kathy Anne Dopp",
+   "title": "Testing Post-Election Audit Methods",
+   "venue": "SSRN working paper",
+   "year": 2020,
+   "doi": "10.2139/ssrn.3531205",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "alvarez11-verifiable",
+   "group": "grey",
+   "authors": "R. Michael Alvarez, Josh Benaloh, Alon Rosen and Peter Y. A. Ryan",
+   "title": "Verifiable Elections and the Public (Dagstuhl Seminar 11281)",
+   "venue": "Dagstuhl Reports 1(7)",
+   "year": 2011,
+   "url": "https://drops.dagstuhl.de/entities/document/10.4230/DagRep.1.7.36",
+   "doi": "10.4230/DAGREP.1.7.36",
+   "source": "DataCite record for the DOI"
+  },
+  {
+   "key": "wallach19-security",
+   "group": "security",
+   "authors": "Dan S. Wallach",
+   "title": "On the security of ballot marking devices",
+   "venue": "arXiv:1908.01897",
+   "year": 2019,
+   "url": "https://arxiv.org/abs/1908.01897",
+   "doi": "10.48550/ARXIV.1908.01897",
+   "source": "DataCite record for the DOI"
+  },
+  {
+   "key": "cortier23-french",
+   "group": "internet",
+   "authors": "Véronique Cortier, Pierrick Gaudry, Stéphane Glondu and Sylvain Ruhault",
+   "title": "French 2022 legislatives elections",
+   "venue": "E-Vote-ID 2023, GI Lecture Notes in Informatics",
+   "year": 2023,
+   "url": "https://dl.gi.de/handle/20.500.12116/45432",
+   "doi": "10.18420/E-VOTE-ID2023_10",
+   "source": "DataCite record for the DOI"
+  },
+  {
+   "key": "esseiva23-improving",
+   "group": "internet",
+   "authors": "Olivier Esseiva, Audhild Høgåsen and Xavier Monnat",
+   "title": "Improving the Swiss Post Voting System",
+   "venue": "E-Vote-ID 2023, GI Lecture Notes in Informatics",
+   "year": 2023,
+   "url": "https://dl.gi.de/handle/20.500.12116/45446",
+   "doi": "10.18420/E-VOTE-ID2023_09",
+   "source": "DataCite record for the DOI"
+  },
+  {
+   "key": "blessing20-security",
+   "group": "security",
+   "authors": "Jenny Blessing, Julian Gomez, McCoy Patiño and Tran Nguyen",
+   "title": "Security Survey and Analysis of Vote-by-Mail Systems",
+   "venue": "arXiv:2005.08427",
+   "year": 2020,
+   "url": "https://arxiv.org/abs/2005.08427",
+   "doi": "10.48550/ARXIV.2005.08427",
+   "source": "DataCite record for the DOI"
+  },
+  {
+   "key": "dalela21-voter",
+   "group": "practice",
+   "authors": "Asmita Dalela, Oksana Kulyk and Carsten Schürmann",
+   "title": "Voter Perceptions of Trust in Risk-Limiting Audits",
+   "venue": "arXiv:2109.07918",
+   "year": 2021,
+   "url": "https://arxiv.org/abs/2109.07918",
+   "doi": "10.48550/ARXIV.2109.07918",
+   "source": "DataCite record for the DOI"
+  },
+  {
+   "key": "spycher23-swiss",
+   "group": "internet",
+   "authors": "Oliver Spycher",
+   "title": "Swiss Online Voting Redesigned",
+   "venue": "E-Vote-ID 2023, GI Lecture Notes in Informatics",
+   "year": 2023,
+   "url": "https://dl.gi.de/handle/20.500.12116/45436",
+   "doi": "10.18420/E-VOTE-ID2023_14",
+   "source": "DataCite record for the DOI"
+  },
+  {
+   "key": "hilt23-voter",
+   "group": "e2e",
+   "authors": "Tobias Hilt, Kati Sein, Tanel Mällo, Jan Willemson and Melanie Volkamer",
+   "title": "Voter Perception of Cast-as-Intended Verifiability",
+   "venue": "E-Vote-ID 2023, GI Lecture Notes in Informatics",
+   "year": 2023,
+   "url": "https://dl.gi.de/handle/20.500.12116/45433",
+   "doi": "10.18420/E-VOTE-ID2023_11",
+   "source": "DataCite record for the DOI"
+  },
+  {
+   "key": "kuriwaki24-cast",
+   "group": "tools",
+   "authors": "Shiro Kuriwaki, Mason Reece, Samuel Baltz, Aleksandra Conevska, Joseph R. Loffredo, Can Mutlu, Taran Samarth, Kevin E. Acevedo Jetter, Zachary Djanogly Garai, Kate Murray, Shigeo Hirano, Jeffrey B. Lewis, James M. Snyder and Charles H. Stewart",
+   "title": "Cast vote records: A database of ballots from the 2020 U.S. Election",
+   "venue": "arXiv:2411.05020",
+   "year": 2024,
+   "url": "https://arxiv.org/abs/2411.05020",
+   "doi": "10.48550/ARXIV.2411.05020",
+   "source": "DataCite record for the DOI"
+  },
+  {
+   "key": "duenascid24-challenging",
+   "group": "internet",
+   "authors": "David Duenas-Cid and Vladimir Misev",
+   "title": "Challenging the idea that internet voting verification tools create trust - they serve as distrust mitigation tools",
+   "venue": "E-Vote-ID 2024, GI Lecture Notes in Informatics",
+   "year": 2024,
+   "url": "https://dl.gi.de/handle/20.500.12116/45867",
+   "doi": "10.18420/E-VOTE-ID2024_08",
+   "source": "DataCite record for the DOI"
+  },
+  {
+   "key": "moser24-sok",
+   "group": "internet",
+   "authors": "Florian Moser, Michael Kirsten and Felix Dörre",
+   "title": "SoK - Mechanisms Used in Practice for Verifiable Internet Voting",
+   "venue": "E-Vote-ID 2024, GI Lecture Notes in Informatics",
+   "year": 2024,
+   "url": "https://dl.gi.de/handle/20.500.12116/45854",
+   "doi": "10.18420/E-VOTE-ID2024_10",
+   "source": "DataCite record for the DOI"
+  },
+  {
+   "key": "jensen24-verifying",
+   "group": "e2e",
+   "authors": "Markus V. G. Jensen, Hans-Christian Kjeldsen, Andreas S. Nielsen, Niklas B. Olesen and Diego F. Aranha",
+   "title": "Verifying ElectionGuard - a theoretical and empirical analysis",
+   "venue": "E-Vote-ID 2024, GI Lecture Notes in Informatics",
+   "year": 2024,
+   "url": "https://dl.gi.de/handle/20.500.12116/45853",
+   "doi": "10.18420/E-VOTE-ID2024_01",
+   "source": "DataCite record for the DOI"
+  },
+  {
+   "key": "duenascid24-trust",
+   "group": "security",
+   "authors": "David Duenas-Cid",
+   "title": "Trust, distrust and failure - Revisiting the use of electronic voting in the Netherlands (2006/07)",
+   "venue": "E-Vote-ID 2024, GI Lecture Notes in Informatics",
+   "year": 2024,
+   "url": "https://dl.gi.de/handle/20.500.12116/45866",
+   "doi": "10.18420/E-VOTE-ID2024_07",
+   "source": "DataCite record for the DOI"
+  },
+  {
+   "key": "misev24-improving",
+   "group": "practice",
+   "authors": "Vladimir Misev, Beata Martin-Rozumilowicz and Liisa Past",
+   "title": "Improving the Observation of ICT in Elections - Widening the Methodological Scope",
+   "venue": "E-Vote-ID 2024, GI Lecture Notes in Informatics",
+   "year": 2024,
+   "url": "https://dl.gi.de/handle/20.500.12116/45858",
+   "doi": "10.18420/E-VOTE-ID2024_14",
+   "source": "DataCite record for the DOI"
+  },
+  {
+   "key": "heitzmann26-graph",
+   "group": "m-complex",
+   "authors": "Edouard Heitzmann",
+   "title": "Graph-Based Audits for Meek Single Transferable Vote Elections",
+   "venue": "arXiv:2602.04527",
+   "year": 2026,
+   "url": "https://arxiv.org/abs/2602.04527",
+   "doi": "10.48550/ARXIV.2602.04527",
+   "source": "DataCite record for the DOI"
+  },
+  {
+   "key": "heitzmann26-stv",
+   "group": "m-complex",
+   "authors": "Edouard Heitzmann",
+   "title": "STV Audit Graphs: A Visual Tool to Measure Election Stability",
+   "venue": "arXiv:2609.10887",
+   "year": 2026,
+   "url": "https://arxiv.org/abs/2609.10887",
+   "doi": "10.48550/ARXIV.2609.10887",
+   "source": "DataCite record for the DOI"
+  },
+  {
+   "key": "hyeda26-coordinated",
+   "group": "security",
+   "authors": "Leandro Hyeda, Kleber V. Cardoso, Antonio Oliveira-Jr and Saulo Queiroz",
+   "title": "Coordinated Electromagnetic Side-Channel Attacks for Voter–Ballot Linking: A Case Study of the Brazilian E-Polling System",
+   "venue": "arXiv:2609.32988",
+   "year": 2026,
+   "url": "https://arxiv.org/abs/2609.32988",
+   "doi": "10.48550/ARXIV.2609.32988",
+   "source": "DataCite record for the DOI"
+  },
+  {
+   "key": "alvarez12-confirming",
+   "group": "overview",
+   "authors": "R. Michael Alvarez, Lonna Rae Atkeson and Thad E. Hall",
+   "title": "Confirming Elections: Creating Confidence and Integrity through Election Auditing",
+   "venue": "Palgrave Macmillan (Elections, Voting, Technology series)",
+   "year": 2012,
+   "url": "https://palgrave.com/us/book/9780230341210",
+   "note": "ISBN 978-0-230-34121-0.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "mitelectionlab-mapping-audits",
+   "group": "overview",
+   "authors": "MIT Election Data and Science Lab",
+   "title": "Mapping Election Science: Election Auditing (literature review)",
+   "venue": "MIT Election Lab",
+   "year": null,
+   "url": "https://electionlab.mit.edu/research/projects/mapping-election-science/resources/election-auditing",
+   "note": "Another place to look for political-science work on audits.",
+   "source": "checked against the document or its publisher"
   }
  ]
 }
