@@ -32,6 +32,14 @@ Interactive diagrams for explaining risk-limiting audits, worked out alongside [
 
 The page is a single self-contained HTML file. Open it in a browser, or turn on GitHub Pages (Settings → Pages, deploy from the `main` branch) to serve it.
 
+## Reading list
+
+[`references.html`](references.html) collects every source cited in the series, plus the risk-limiting audit papers later pages will build on, grouped by topic.
+
+## Citations
+
+Citations are written as `<sup class="fn" data-ref="KEY">` (or the placeholder `[[KEY]]`) with a matching `<li data-ref="KEY">` in the page's References section. Run `python3 tools/refs.py page.html` after editing to renumber citations in order of appearance and reorder the list.
+
 ## Notes
 
 [`notes/sampling.md`](notes/sampling.md) covers the sampling page: its structure, the feedback behind it, and open items, including a planned page on software independence.
