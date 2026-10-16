@@ -138,13 +138,13 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
 
   <section class="prose" aria-labelledby="s0">
     <h2 id="s0">An election, drawn as a picture</h2>
-    <p>Every example on this page is the simplest election there is. Two candidates, <span class="who-a">Alice</span> and <span class="who-b">Bob</span>, are on the ballot. Each voter marks one ballot for one of them. When the counting is done, the result is just two numbers: how many ballots Alice got, and how many Bob got.</p>
-    <p>Two numbers make a point on a grid, so we can draw any result as a place: Alice's count across, Bob's count up. Counting builds the picture one ballot at a time. Each <span class="who-a">Alice</span> ballot is one step to the right, and each <span class="who-b">Bob</span> ballot is one step up.</p>
+    <p>Every example on this page uses the simplest contest there is: two candidates, <span class="who-a">Alice</span> and <span class="who-b">Bob</span>, and each voter votes for one of them. Real ballots usually list many contests, and some contests let voters choose more than one candidate, so a ballot and a vote aren't the same thing. Here we follow just this one contest, and every ballot has exactly one vote in it. When the counting is done, the result is two numbers: how many votes Alice got, and how many Bob got.</p>
+    <p>Two numbers make a point on a grid, so we can draw any result as a place: Alice's count across, Bob's count up. Counting builds the picture one ballot at a time. Each ballot with a vote for <span class="who-a">Alice</span> is one step to the right, and each ballot with a vote for <span class="who-b">Bob</span> is one step up.</p>
   </section>
 
   <section class="figure" aria-labelledby="zTitle">
     <h2 id="zTitle">Counting ten ballots</h2>
-    <p>Ten voters cast ten ballots. Count them one by one and watch where the steps lead. The diagonal splits the grid in two: below it Alice has more ballots, above it Bob does, and on it the election is tied. Every ten-ballot result lands on the dashed line where the two counts add up to ten.</p>
+    <p>Ten voters cast ten ballots. Count them one by one and watch where the steps lead. The diagonal splits the grid in two: below it Alice has more votes, above it Bob does, and on it the election is tied. Every ten-ballot result lands on the dashed line where the two counts add up to ten.</p>
     <div id="zChips" class="chips"></div>
     <div class="canvas-box"><canvas id="zCv" role="img" aria-label="Ten ballots counted as steps on a grid: right for Alice, up for Bob, ending at the result"></canvas></div>
     <div class="row">
@@ -161,7 +161,7 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
 
   <section class="prose" aria-labelledby="s1">
     <h2 id="s1">There is no order of voting</h2>
-    <p>Counting in a different order draws a different path, but every path ends at the same result. Ten ballots, six for Alice and four for Bob, can be put in 210 different orders, and here they all are at once.</p>
+    <p>Counting in a different order draws a different path, but every path ends at the same result. Ten ballots, six with a vote for Alice and four with a vote for Bob, can be put in 210 different orders, and here they all are at once.</p>
   </section>
 
   <section class="figure" aria-labelledby="oTitle">
@@ -169,9 +169,9 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
       <h2 id="oTitle">Every order of the same ten ballots</h2>
       <button id="oPick" type="button">Trace one order</button>
     </div>
-    <div class="canvas-box"><canvas id="oCv" role="img" aria-label="All 210 orders of six Alice ballots and four Bob ballots drawn as paths, thicker where more orders pass"></canvas></div>
+    <div class="canvas-box"><canvas id="oCv" role="img" aria-label="All 210 orders of ten ballots, six with votes for Alice and four with votes for Bob, drawn as paths, thicker where more orders pass"></canvas></div>
     <div id="oChips" class="chips"></div>
-    <p class="caption">Each one of these paths represents the same election outcome: 6 for Alice, 4 for Bob. Lines are thicker where more orders pass, and the number at each point counts how many of the 210 orders go through it. They all start at (0, 0) and all end at (6, 4). The steps toward Alice tend to be thicker because she got more ballots: 126 of the 210 orders start with an Alice ballot and only 84 with a Bob ballot. At every point, the orders leaving it split in proportion to the Alice and Bob ballots still left to count.</p>
+    <p class="caption">Each one of these paths represents the same election outcome: 6 for Alice, 4 for Bob. Lines are thicker where more orders pass, and the number at each point counts how many of the 210 orders go through it. They all start at (0, 0) and all end at (6, 4). The steps toward Alice tend to be thicker because she got more votes: 126 of the 210 orders start with a vote for Alice and only 84 with a vote for Bob. At every point, the orders leaving it split in proportion to the votes for Alice and for Bob still left to count.</p>
   </section>
 
   <section class="prose" aria-label="Why the order of voting doesn't matter">
@@ -182,7 +182,7 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
 
   <section class="figure" aria-labelledby="aTitle">
     <h2 id="aTitle">Reading a box that hasn't been mixed</h2>
-    <p>This box holds 40 ballots: 22 for <span class="who-a">Alice</span> and 18 for <span class="who-b">Bob</span>. They are still stacked the way they arrived, one precinct after another, and the first precinct leaned toward Bob. Each ballot read moves the path one step: right for Alice, up for Bob. The blue arrow points at the full count.</p>
+    <p>This box holds 40 ballots: 22 with a vote for <span class="who-a">Alice</span> and 18 with a vote for <span class="who-b">Bob</span>. They are still stacked the way they arrived, one precinct after another, and the first precinct leaned toward Bob. Each ballot read moves the path one step: right for Alice, up for Bob. The blue arrow points at the full count.</p>
     <div class="row">
       <div class="seg" role="group" aria-label="Order of the ballots">
         <button id="aBox" type="button" aria-pressed="true">Box order</button>
@@ -272,7 +272,7 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
 
   <section class="figure" aria-labelledby="bTitle">
     <h2 id="bTitle">Six ballots, every possible order</h2>
-    <p>With six ballots, four for Alice and two for Bob, we can list every order a fair shuffle could produce. There are 15. A fair shuffle makes each one equally likely, so counting orders is the same as working out chances. Lines are thicker where more orders pass, and the number at each point counts the orders that go through it.</p>
+    <p>With six ballots, four with a vote for Alice and two with a vote for Bob, we can list every order a fair shuffle could produce. There are 15. A fair shuffle makes each one equally likely, so counting orders is the same as working out chances. Lines are thicker where more orders pass, and the number at each point counts the orders that go through it.</p>
     <div class="pair">
       <div class="canvas-box"><canvas id="bCv" role="img" aria-label="All 15 orders of six ballots drawn as paths, with counts at each point"></canvas></div>
       <div class="canvas-box"><canvas id="bBar" role="img" aria-label="Bar chart: how the 15 orders split after the chosen number of ballots"></canvas></div>
@@ -290,10 +290,10 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
       <h2 id="cTitle">A box of 100, shuffled 200 times</h2>
       <button id="cShuffle" type="button">Shuffle again</button>
     </div>
-    <p>Each faint path is one shuffle of a box with 60 Alice ballots and 40 Bob ballots. The darker path is a single shuffle, the kind one audit actually walks. Move the slider to choose how many ballots have been read. The dots show where each shuffle stands at that point, and the bars count them.</p>
+    <p>Each faint path is one shuffle of a box of 100 ballots: 60 with a vote for Alice and 40 with a vote for Bob. The darker path is a single shuffle, the kind one audit actually walks. Move the slider to choose how many ballots have been read. The dots show where each shuffle stands at that point, and the bars count them.</p>
     <div class="pair">
       <div class="canvas-box"><canvas id="cCv" role="img" aria-label="200 shuffles of a 100-ballot box drawn as paths"></canvas></div>
-      <div class="canvas-box"><canvas id="cHist" role="img" aria-label="How many of the 200 shuffles hold each number of Alice ballots after the chosen number read"></canvas></div>
+      <div class="canvas-box"><canvas id="cHist" role="img" aria-label="How many of the 200 shuffles hold each number of votes for Alice after the chosen number of ballots read"></canvas></div>
     </div>
     <div class="legend">
       <span class="key"><span class="sw bar"></span>shuffles out of 200</span>
@@ -304,7 +304,7 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
       <input id="cK" type="range" min="1" max="100" step="1" value="20">
     </div>
     <div id="cOut" class="out" aria-live="polite"></div>
-    <p class="caption">The spread in Alice ballots grows at first, then shrinks: near the end there are few ballots left to vary, and after all 100 every shuffle lands on exactly 60. As a share of the ballots read, the spread shrinks the whole way. The more you read, the closer the sample sits to 60%.</p>
+    <p class="caption">The spread in Alice's vote count grows at first, then shrinks: near the end there are few ballots left to vary, and after all 100 every shuffle lands on exactly 60. As a share of the ballots read, the spread shrinks the whole way. The more you read, the closer the sample sits to 60%.</p>
   </section>
 
   <section class="prose" aria-labelledby="s3">
@@ -315,7 +315,7 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
 
   <section class="figure" aria-labelledby="dTitle">
     <h2 id="dTitle">Which boxes could have produced this sample?</h2>
-    <p>This box holds 1,000 ballots. The reported result is 600 for Alice and 400 for Bob, but the auditor can't see inside. Each draw adds one ballot to the sample. The curve shows, for every possible number of Alice ballots in the box, how often a fair draw would produce exactly this sample.</p>
+    <p>This box holds 1,000 ballots. The reported result is 600 votes for Alice and 400 for Bob, but the auditor can't see inside. Each draw adds one ballot to the sample. The curve shows, for every possible number of votes for Alice in the box, how often a fair draw would produce exactly this sample.</p>
     <div class="row">
       <div class="actions">
         <button id="dDraw1" class="primary" type="button">Draw a ballot</button>
@@ -325,9 +325,9 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
       </div>
       <div class="readout"><span>drawn <b id="dM">0</b></span><span>Alice <b id="dA">0</b> · Bob <b id="dB">0</b></span></div>
     </div>
-    <div class="canvas-box"><canvas id="dCv" role="img" aria-label="For each possible count of Alice ballots in the box, the chance of drawing exactly this sample"></canvas><div id="dTip" class="tip" hidden></div></div>
+    <div class="canvas-box"><canvas id="dCv" role="img" aria-label="For each possible count of votes for Alice in the box, the chance of drawing exactly this sample"></canvas><div id="dTip" class="tip" hidden></div></div>
     <div id="dOut" class="out" aria-live="polite"></div>
-    <p class="caption">Start over and draw one ballot. If it's Alice's, the curve becomes a straight ramp: a box with more Alice ballots hands you an Alice ballot more often. One ballot does tell you something; it just doesn't tell you much. As the sample grows, the curve narrows around boxes that look like the sample.</p>
+    <p class="caption">Start over and draw one ballot. If it has a vote for Alice, the curve becomes a straight ramp: a box with more votes for Alice hands you a ballot with a vote for Alice more often. One ballot does tell you something; it just doesn't tell you much. As the sample grows, the curve narrows around boxes that look like the sample.</p>
     <div class="row">
       <span class="chips-label" id="dTruthLbl">What's really in the box</span>
       <div class="seg" role="group" aria-labelledby="dTruthLbl">
@@ -344,7 +344,7 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
     <p>There are two natural ways to make that case. The first asks only how surprising the sample would be if the box were tied. Flip a coin 100 times, get 60 heads, and you'll doubt the coin without doing any math. The second also uses the reported result, and asks how much more often a 600–400 box would produce the sample than a tied one. Both lead to valid audits.</p>
     <p>One trap catches both. An audit that checks after every ballot gets many chances to be fooled, so it can't simply stop the first time the sample looks rare. The next part shows how ballot polling audits handle that.</p>
     <a class="next" href="index.html">Next: ballot polling audits →</a>
-    <p class="fine" style="margin-top:1rem">Simplifications on this page: two candidates, no blank or invalid ballots, and ballots aren't put back after they're drawn.</p>
+    <p class="fine" style="margin-top:1rem">Simplifications on this page: one contest, two candidates, one vote per ballot, no blank or invalid ballots, and ballots aren't put back after they're drawn.</p>
   </section>
 </div>
 
@@ -364,7 +364,7 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
   const LF = [0];
   const logFact = n => { for (let i = LF.length; i <= n; i++) LF[i] = LF[i - 1] + Math.log(i); return LF[n]; };
   const lchoose = (n, k) => (k < 0 || k > n) ? -Infinity : logFact(n) - logFact(k) - logFact(n - k);
-  // chance that k draws from a box of N (A for Alice) hold exactly a Alice ballots
+  // chance that k draws from a box of N (A for Alice) hold exactly a votes for Alice
   const hyp = (N, A, k, a) => { const b = k - a; if (a < 0 || b < 0 || a > A || b > N - A) return 0; return Math.exp(lchoose(A, a) + lchoose(N - A, b) - lchoose(N, k)); };
   logFact(1000);
   const shuffle = arr => { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = arr[i]; arr[i] = arr[j]; arr[j] = t; } return arr; };
@@ -387,7 +387,7 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
     const ang = Math.atan2(q[1] - p[1], q[0] - p[0]), s = 11;
     ctx.beginPath(); ctx.moveTo(q[0], q[1]); ctx.lineTo(q[0] - s * Math.cos(ang - .4), q[1] - s * Math.sin(ang - .4)); ctx.lineTo(q[0] - s * Math.cos(ang + .4), q[1] - s * Math.sin(ang + .4)); ctx.closePath(); ctx.fill();
   }
-  // the outcome plane: Alice ballots to the right, Bob ballots up, one unit the same length both ways
+  // the outcome plane: votes for Alice to the right, votes for Bob up, one unit the same length both ways
   function plane(ctx, w, h, extA, extB, step) {
     const pad = { l: 46, r: 16, t: 14, b: 44 };
     const pw = w - pad.l - pad.r, ph = h - pad.t - pad.b, s = Math.min(pw / extA, ph / extB);
@@ -404,8 +404,8 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
     }
     ctx.strokeStyle = C.ink3; ctx.lineWidth = 1.5; seg(ctx, P(0, 0), P(extA, 0)); seg(ctx, P(0, 0), P(0, extB));
     ctx.font = '12px ' + C.mono;
-    { const q = P(extA / 2, 0); ctx.fillStyle = C.alice; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText('Alice ballots →', q[0], q[1] + 23); }
-    { const q = P(0, extB / 2); ctx.save(); ctx.translate(q[0] - 30, q[1]); ctx.rotate(-Math.PI / 2); ctx.fillStyle = C.bob; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.fillText('Bob ballots →', 0, 0); ctx.restore(); }
+    { const q = P(extA / 2, 0); ctx.fillStyle = C.alice; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText('votes for Alice →', q[0], q[1] + 23); }
+    { const q = P(0, extB / 2); ctx.save(); ctx.translate(q[0] - 30, q[1]); ctx.rotate(-Math.PI / 2); ctx.fillStyle = C.bob; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.fillText('votes for Bob →', 0, 0); ctx.restore(); }
     ctx.font = '11px ' + C.mono;
     return { P, s };
   }
@@ -450,8 +450,8 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
         `<span>Alice's share so far <b>${st.m ? Math.round(100 * a / st.m) + '%' : '–'}</b> (whole box 55%)</span>`;
       const pill = $('aPill');
       if (!st.m) { pill.className = 'pill'; pill.textContent = 'Nothing read yet'; }
-      else if (a > b) { pill.className = 'pill a'; pill.textContent = 'Alice ahead in the ballots read'; }
-      else if (b > a) { pill.className = 'pill b'; pill.textContent = 'Bob ahead in the ballots read'; }
+      else if (a > b) { pill.className = 'pill a'; pill.textContent = 'Alice ahead so far'; }
+      else if (b > a) { pill.className = 'pill b'; pill.textContent = 'Bob ahead so far'; }
       else { pill.className = 'pill'; pill.textContent = 'Even so far'; }
       $('aNote').textContent = st.mode === 'box'
         ? 'Read in box order, the first precinct makes Bob look like the winner. The path climbs above the even-split line and stays there for 16 ballots, until the second precinct drags it back toward the full count.'
@@ -595,7 +595,7 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
       const sx = Math.max(1, niceStep(n, 5));
       for (let a = Math.ceil(x0 / sx) * sx; a <= x1; a += sx) { ctx.fillStyle = C.ink3; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(a, X(a), Y(0) + 6); }
       ctx.fillStyle = C.alice; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.font = '12px ' + C.mono;
-      ctx.fillText(`Alice ballots in the first ${k}`, pad.l + pw / 2, h - 2);
+      ctx.fillText(`votes for Alice in the first ${k} ballots`, pad.l + pw / 2, h - 2);
       ctx.fillStyle = C.ink2; ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.font = '11px ' + C.mono; ctx.fillText('shuffles', pad.l, 0);
       ctx.fillStyle = C.ink3; ctx.textAlign = 'right'; ctx.fillText('shaded: middle 90%', pad.l + pw, 0);
       return { lo, hi };
@@ -604,8 +604,8 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
       const k = st.k;
       $('cKVal').textContent = k;
       $('cOut').innerHTML = k === N
-        ? `<p>After all 100 ballots, every shuffle holds exactly <b>60</b> Alice ballots.</p>`
-        : `<p>After ${k} ballot${k > 1 ? 's' : ''}, at least 9 shuffles in 10 hold between <b>${lo}</b> and <b>${hi}</b> Alice ballots, ` +
+        ? `<p>After all 100 ballots, every shuffle holds exactly <b>60</b> votes for Alice.</p>`
+        : `<p>After ${k} ballot${k > 1 ? 's' : ''}, at least 9 shuffles in 10 hold between <b>${lo}</b> and <b>${hi}</b> votes for Alice, ` +
           `${Math.round(100 * lo / k)}% to ${Math.round(100 * hi / k)}% of the ballots read. The whole box is 60% Alice.</p>`;
     }
     const render = () => { const cnt = draw(); out(hist(cnt)); };
@@ -646,7 +646,7 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
       dot(ctx, [X(REP), Y(curve[REP])], 4, C.ink2);
       if (st.m) { dot(ctx, [X(peak), Y(mx)], 6, C.panel); dot(ctx, [X(peak), Y(mx)], 4, C.path); }
       ctx.fillStyle = C.alice; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.font = '12px ' + C.mono;
-      ctx.fillText('Alice ballots in the box, out of 1,000', pad.l + pw / 2, h - 2);
+      ctx.fillText('votes for Alice in the box, out of 1,000 ballots', pad.l + pw / 2, h - 2);
       ctx.save(); ctx.translate(13, pad.t + ph / 2); ctx.rotate(-Math.PI / 2); ctx.fillStyle = C.ink2; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = '11px ' + C.mono;
       ctx.fillText('chance of exactly this sample', 0, 0); ctx.restore();
     }
@@ -659,9 +659,9 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
       if (pt === 0) rel = 'A tied box could never produce it.';
       else { const r = pr / pt; rel = r >= 1 ? `The reported result produces it about <b>${r >= 100 ? Math.round(r).toLocaleString() : r.toFixed(2)} times</b> as often.` : 'The reported result produces it less often than a tie would.'; }
       $('dOut').innerHTML =
-        `<p>Boxes holding about <b>${peak}</b> Alice ballots produce this sample most often.</p>` +
+        `<p>Boxes holding about <b>${peak}</b> votes for Alice produce this sample most often.</p>` +
         `<p>From a tied box, this exact sample turns up <b class="tie">${fmtPct(pt)}</b> of the time; from a 600–400 box, <b class="rep">${fmtPct(pr)}</b>. ${rel}</p>` +
-        `<p>From a tied box, a sample with <b>${st.a} or more</b> Alice ballots out of ${st.m} turns up <b>${fmtPct(Math.min(1, tail))}</b> of the time.</p>`;
+        `<p>From a tied box, a sample with <b>${st.a} or more</b> votes for Alice out of ${st.m} ballots turns up <b>${fmtPct(Math.min(1, tail))}</b> of the time.</p>`;
     }
     const render = () => { const r = compute(); chart(r); out(r); };
     const pick = key => { st.box = key; for (const [id, k] of [['dBoxRep', 'rep'], ['dBoxTie', 'tie'], ['dBoxBob', 'bob']]) $(id).setAttribute('aria-pressed', String(k === key));
@@ -723,7 +723,7 @@ input[type=range] { width: 100%; accent-color: var(--ink); }
       $('zNote').textContent = st.m === 0
         ? 'Nothing counted yet, so the point sits at the corner, (0, 0).'
         : st.m < N ? `So far ${a} Alice and ${b} Bob, so the point is at (${a}, ${b}): ${a} steps across and ${b} steps up.`
-        : st.prev ? 'A different counting order draws a different path (the faint one is the last order), but it ends at the same point. The result only depends on how many ballots each candidate got.'
+        : st.prev ? 'A different counting order draws a different path (the faint one is the last order), but it ends at the same point. The result only depends on how many votes each candidate got.'
         : 'All ten counted: 6 for Alice and 4 for Bob. The blue arrow points from the start to the result, (6, 4), which sits on the ten-ballot line in Alice\'s half of the grid. Alice wins.';
     }
     const render = () => { chips(); draw(); readout(); };
