@@ -2881,6 +2881,27 @@
    "year": 2015,
    "url": "https://nvlpubs.nist.gov/nistpubs/ir/2015/NIST.IR.8069.pdf",
    "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "ga-image-2024",
+   "group": "pilots",
+   "authors": "Aaron Wilson, Steven Musick, Keir Holeman and Matt Bernhard (Enhanced Voting)",
+   "title": "Ballot Image Audit Report – November 2024 (Georgia general election)",
+   "venue": "For the Georgia Secretary of State",
+   "year": 2024,
+   "url": "https://blog.citp.princeton.edu/wp-content/uploads/sites/952/2026/04/georgia_ballot_image_audit_report_-_november_general_0.pdf",
+   "note": "Copy hosted by Princeton CITP.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "ga-image-2025",
+   "group": "pilots",
+   "authors": "Aaron Wilson, Steven Musick, Matt Bernhard and Mike Garcia (Enhanced Voting)",
+   "title": "Ballot Image Audit Report – November 2025 (Georgia special and municipal elections)",
+   "venue": "For the Georgia Secretary of State",
+   "year": 2025,
+   "url": "https://sos.ga.gov/sites/default/files/2025-12/georgia_image_audit_report_2025.pdf",
+   "source": "checked against the document or its publisher"
   }
  ]
 }
