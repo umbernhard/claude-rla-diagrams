@@ -55,8 +55,8 @@ a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
   <header class="prose">
     <div class="eyebrow">Risk-limiting audits from the ground up · Reading list</div>
     <h1>Reading list</h1>
-    <p>Everything cited in the series so far, plus the papers later pages will build on, grouped by topic. Entries cited on a page link back to where they're used.</p>
-    <p>This list is a work in progress and far from complete. For a longer bibliography of election audit research, see the MIT Election Data and Science Lab's <a href="https://electionlab.mit.edu/election-audit-references">election audit references</a>.</p>
+    <p>Every source the series relies on, grouped by topic: everything cited on the pages so far, plus the papers later pages will build on. Each entry was checked against the paper itself or its publisher. Entries cited on a page link back to where they're used.</p>
+    <p>The list grows as the series does, and the goal is for it to cover the literature on its own. If you know of work that belongs here, please open an issue on <a href="https://github.com/umbernhard/claude-rla-diagrams">GitHub</a>.</p>
   </header>
 
   <section class="group" aria-labelledby="g0">
@@ -118,12 +118,20 @@ a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
     <h2 id="g4">Risk-limiting audit methods</h2>
     <p class="gdesc">The statistics behind risk-limiting audits. Later pages in the series build on these.</p>
     <ul>
-        <li id="stark2008">Philip B. Stark, <a href="https://arxiv.org/abs/0807.4005">"Conservative Statistical Post-Election Audits,"</a> <i>Annals of Applied Statistics</i> 2(2):550–581, 2008.</li>
-        <li id="stark2009">Philip B. Stark, <a href="https://www.stat.berkeley.edu/~stark/Preprints/pvalues09.pdf">"Risk-Limiting Postelection Audits: Conservative P-Values From Common Probability Inequalities,"</a> <i>IEEE Transactions on Information Forensics and Security</i> 4(4), 2009.</li>
-        <li id="super-simple">Philip B. Stark, <a href="https://www.stat.berkeley.edu/~stark/Preprints/superSimple10.pdf">"Super-Simple Simultaneous Single-Ballot Risk-Limiting Audits,"</a> EVT/WOTE '10, 2010.</li>
-        <li id="bravo">Mark Lindeman, Philip B. Stark and Vincent S. Yates, <a href="https://www.stat.berkeley.edu/~stark/Preprints/bpa2pp.pdf">"BRAVO: Ballot-polling Risk-limiting Audits to Verify Outcomes,"</a> EVT/WOTE '12, 2012.</li>
+        <li id="stark2008">Philip B. Stark, "Conservative Statistical Post-Election Audits," <i>Annals of Applied Statistics</i> 2(2), 2008. <a href="https://doi.org/10.1214/08-AOAS161">doi:10.1214/08-AOAS161</a>; <a href="https://arxiv.org/abs/0807.4005">arXiv</a>.</li>
+        <li id="stark2009">Philip B. Stark, <a href="https://www.stat.berkeley.edu/~stark/Preprints/pvalues09.pdf">"Risk-Limiting Postelection Audits: Conservative P-Values From Common Probability Inequalities,"</a> <i>IEEE Transactions on Information Forensics and Security</i> 4(4):1005–1014, 2009. <a href="https://doi.org/10.1109/TIFS.2009.2034190">doi:10.1109/TIFS.2009.2034190</a>.</li>
+        <li id="super-simple">Philip B. Stark, <a href="https://usenix.org/conference/evtwote-10/super-simple-simultaneous-single-ballot-risk-limiting-audits">"Super-Simple Simultaneous Single-Ballot Risk-Limiting Audits,"</a> EVT/WOTE '10, 2010.</li>
+        <li id="bravo">Mark Lindeman, Philip B. Stark and Vincent S. Yates, <a href="https://www.usenix.org/system/files/conference/evtwote12/evtwote12-final27.pdf">"BRAVO: Ballot-polling Risk-limiting Audits to Verify Outcomes,"</a> EVT/WOTE '12, 2012.</li>
         <li id="shangrla">Philip B. Stark, "Sets of Half-Average Nulls Generate Risk-Limiting Audits: SHANGRLA," <i>Voting '20</i> (Financial Cryptography workshops), 2020. <a href="https://doi.org/10.1007/978-3-030-54455-3_23">doi:10.1007/978-3-030-54455-3_23</a>; <a href="https://arxiv.org/abs/1911.10035">arXiv</a>.</li>
         <li id="minerva">Filip Zagórski, Grant McClearn, Sarah Morin, Neal McBurnett and Poorvi L. Vora, <a href="https://www.usenix.org/conference/usenixsecurity21/presentation/zagorski">"Minerva: An Efficient Risk-Limiting Ballot Polling Audit,"</a> <i>30th USENIX Security Symposium</i>, 2021.</li>
+    </ul>
+  </section>
+
+  <section class="group" aria-labelledby="gElse">
+    <h2 id="gElse">Other places to look</h2>
+    <p class="gdesc">Not relied on here, but useful for exploring further.</p>
+    <ul>
+        <li>MIT Election Data and Science Lab, <a href="https://electionlab.mit.edu/election-audit-references">election audit references</a>.</li>
     </ul>
   </section>
 </div>
