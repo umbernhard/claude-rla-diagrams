@@ -2,6 +2,10 @@
 
 Interactive diagrams for explaining risk-limiting audits, worked out alongside [rlamath](https://github.com/umbernhard/rlamath).
 
+> **Under construction, made with AI.** Much of this site was written and coded with help from an AI model (Claude) and hasn't been fully checked. It may contain errors; every page carries a warning banner saying so.
+
+[`index.html`](index.html) is the landing page: it lists the parts in reading order (0 why paper, 1 sampling basics, 2 ballot polling) and the planned pages.
+
 ## Why paper
 
 [`why-paper.html`](why-paper.html) comes first: why audits check paper ballots rather than electronic records (software independence).
@@ -20,7 +24,7 @@ Interactive diagrams for explaining risk-limiting audits, worked out alongside [
 
 ## Ballot polling
 
-[`index.html`](index.html) shows ballot polling audits as stacks of ballot sequences ("ballot landscapes"):
+[`ballot-polling.html`](ballot-polling.html) (part 2, older draft being reworked) shows ballot polling audits as stacks of ballot sequences ("ballot landscapes"):
 
 - **Six ballots:** every sequence of a 4–2 election drawn as a path, stacked into towers, and compared with a 3–3 tie.
 - **1,000 ballots:** the same steps at scale, where the stacks become a ridge of bell curves.

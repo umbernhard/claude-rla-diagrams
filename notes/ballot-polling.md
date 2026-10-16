@@ -4,7 +4,7 @@ Last updated 2026-10-13. This work builds on `Old/Geometry of Post-election Audi
 
 ## Where things are
 
-- **Interactive page:** [`index.html`](../index.html) in this repo. It is one self-contained HTML file with no build step: open it in a browser, or turn on GitHub Pages to serve it.
+- **Interactive page:** [`ballot-polling.html`](../ballot-polling.html) in this repo. It is one self-contained HTML file with no build step: open it in a browser, or turn on GitHub Pages to serve it.
 - **Drafts:** a private copy is also published as a claude.ai artifact, and a copy is kept in the "RLA Math" Claude project.
 
 ## The core idea: the ballot landscape

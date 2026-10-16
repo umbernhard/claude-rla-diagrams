@@ -109,9 +109,26 @@ sup.fn a:hover { text-decoration: underline; }
 .next { display: inline-flex; align-items: center; gap: .5em; font: 600 1rem/1.3 var(--f-body); color: var(--ink); text-decoration: none; border: 1px solid var(--ink); border-radius: 6px; padding: .7rem 1rem; justify-self: start; margin-top: .5rem; }
 .next:hover { background: var(--ink); color: var(--bg); }
 .fine { font-size: .85rem; color: var(--ink-3); }
+/* site-wide warning banner; carries its own colors so it reads the same on every page */
+.disclaimer { --dz-bg: #fff3d1; --dz-ink: #4a2a00; --dz-edge: #b45309; --dz-a: #f2b705; --dz-b: #1d1d1d;
+  background: var(--dz-bg); color: var(--dz-ink); border: 2px solid var(--dz-edge); border-radius: 8px; overflow: hidden; display: grid; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .disclaimer { --dz-bg: #2d1f05; --dz-ink: #fde8b3; --dz-edge: #f59e0b; --dz-b: #0b0b0b; } }
+:root[data-theme="dark"] .disclaimer { --dz-bg: #2d1f05; --dz-ink: #fde8b3; --dz-edge: #f59e0b; --dz-b: #0b0b0b; }
+.disclaimer .dz-stripe { height: 10px; background: repeating-linear-gradient(135deg, var(--dz-a) 0 14px, var(--dz-b) 14px 28px); }
+.disclaimer .dz-body { padding: .8rem 1rem .9rem; display: grid; gap: .35rem; }
+.disclaimer .dz-title { font: 700 .95rem/1.25 var(--f-body, system-ui, sans-serif); letter-spacing: .06em; text-transform: uppercase; margin: 0; color: var(--dz-ink); }
+.disclaimer p { margin: 0; color: var(--dz-ink); font-size: .95rem; line-height: 1.5; max-width: 50rem; }
+.disclaimer a { color: var(--dz-ink); font-weight: 600; }
 </style>
 
 <div class="wrap">
+  <aside class="disclaimer" role="note" aria-labelledby="dzTitle">
+    <div class="dz-stripe" aria-hidden="true"></div>
+    <div class="dz-body">
+      <p class="dz-title" id="dzTitle">Under construction · Made with AI · May contain errors</p>
+      <p>This site is a work in progress and changes often. Much of it was written and coded with the help of an AI model (Claude), and it has not yet been fully checked. The math, the explanations, the citations and the interactive demos may all contain mistakes. Please don't treat it as an authoritative source on election audits. <a href="index.html">All pages</a></p>
+    </div>
+  </aside>
   <header class="prose">
     <div class="eyebrow">Risk-limiting audits from the ground up · Part 0: why paper</div>
     <h1>Why do audits check paper ballots?</h1>

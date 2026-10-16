@@ -133,9 +133,26 @@ sup.fn a:hover { text-decoration: underline; }
 .pick.hit { border-color: var(--good); background: var(--good-bg); color: var(--good); }
 .pill.go { color: var(--good); background: var(--good-bg); }
 .fine { font-size: .85rem; color: var(--ink-3); }
+/* site-wide warning banner; carries its own colors so it reads the same on every page */
+.disclaimer { --dz-bg: #fff3d1; --dz-ink: #4a2a00; --dz-edge: #b45309; --dz-a: #f2b705; --dz-b: #1d1d1d;
+  background: var(--dz-bg); color: var(--dz-ink); border: 2px solid var(--dz-edge); border-radius: 8px; overflow: hidden; display: grid; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .disclaimer { --dz-bg: #2d1f05; --dz-ink: #fde8b3; --dz-edge: #f59e0b; --dz-b: #0b0b0b; } }
+:root[data-theme="dark"] .disclaimer { --dz-bg: #2d1f05; --dz-ink: #fde8b3; --dz-edge: #f59e0b; --dz-b: #0b0b0b; }
+.disclaimer .dz-stripe { height: 10px; background: repeating-linear-gradient(135deg, var(--dz-a) 0 14px, var(--dz-b) 14px 28px); }
+.disclaimer .dz-body { padding: .8rem 1rem .9rem; display: grid; gap: .35rem; }
+.disclaimer .dz-title { font: 700 .95rem/1.25 var(--f-body, system-ui, sans-serif); letter-spacing: .06em; text-transform: uppercase; margin: 0; color: var(--dz-ink); }
+.disclaimer p { margin: 0; color: var(--dz-ink); font-size: .95rem; line-height: 1.5; max-width: 50rem; }
+.disclaimer a { color: var(--dz-ink); font-weight: 600; }
 </style>
 
 <div class="wrap">
+  <aside class="disclaimer" role="note" aria-labelledby="dzTitle">
+    <div class="dz-stripe" aria-hidden="true"></div>
+    <div class="dz-body">
+      <p class="dz-title" id="dzTitle">Under construction · Made with AI · May contain errors</p>
+      <p>This site is a work in progress and changes often. Much of it was written and coded with the help of an AI model (Claude), and it has not yet been fully checked. The math, the explanations, the citations and the interactive demos may all contain mistakes. Please don't treat it as an authoritative source on election audits. <a href="index.html">All pages</a></p>
+    </div>
+  </aside>
   <header class="prose">
     <div class="eyebrow">Risk-limiting audits from the ground up · Part 1: sampling</div>
     <h1>What can a few ballots tell you?</h1>
@@ -351,7 +368,7 @@ sup.fn a:hover { text-decoration: underline; }
     <p>An audit doesn't need the exact count. It only needs to rule out the results in which the reported winner lost. The hardest of those to rule out is a tie, 500 to 500, because it sits closest to an Alice win. If an Alice-leaning sample would be rare from a tied box, it's rarer still from any box where Bob won. Making the case against the tie is enough.</p>
     <p>There are two natural ways to make that case. The first asks only how surprising the sample would be if the box were tied. Flip a coin 100 times, get 60 heads, and you'll doubt the coin without doing any math. The second also uses the reported result, and asks how much more often a 600–400 box would produce the sample than a tied one. Both lead to valid audits.</p>
     <p>One trap catches both. An audit that checks after every ballot gets many chances to be fooled, so it can't simply stop the first time the sample looks rare. The next part shows how ballot polling audits handle that.</p>
-    <a class="next" href="index.html">Next: ballot polling audits →</a>
+    <a class="next" href="ballot-polling.html">Next: ballot polling audits →</a>
     <p class="fine" style="margin-top:1rem">Simplifications on this page: one contest, two candidates, one vote per ballot, no blank or invalid ballots, and ballots aren't put back after they're drawn.</p>
   </section>
   <section class="refs" aria-labelledby="refsT">

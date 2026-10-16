@@ -1,6 +1,6 @@
 # Sampling basics: working notes
 
-Last updated 2026-10-15. Page: [`sampling.html`](../sampling.html). It comes before the ballot polling page ([`index.html`](../index.html)) and links forward to it.
+Last updated 2026-10-15. Page: [`sampling.html`](../sampling.html). It comes before the ballot polling page ([`ballot-polling.html`](../ballot-polling.html)) and links forward to it.
 
 ## Why this page exists
 
@@ -43,3 +43,7 @@ Last updated 2026-10-15. Page: [`sampling.html`](../sampling.html). It comes bef
 - **Planned page: chain of custody** (user wants a whole page on it).
 - References added 2026-10-16 (numbered notes + References list on both pages): Rivest 2008 / Rivest & Wack 2006 (definition now quoted exactly), Goggin et al. 2012, Ansolabehere et al. 2018, EAC chain of custody best practices 2021, Stark & Wagner 2012 (compliance audits), Colorado SOS seed notice (20+ digits, ten-sided die, public rolls, after Election Day). The sampling page no longer claims the seed comes after the manifest is final; the notice doesn't say.
 - To check: the "most votes in the US are counted by machines" opener; whether to say more about ballot-marking devices (the page only says voters "marked or checked" the paper).
+
+## Site structure (2026-10-16)
+
+- `index.html` is a landing page; the old ballot polling page moved to `ballot-polling.html`. Every page has an "Under construction · Made with AI · May contain errors" banner (self-contained CSS, hazard stripe) with a link back to the landing page.
