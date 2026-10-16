@@ -113,19 +113,19 @@ button.cell:disabled { cursor: default; }
 
   <section class="figure" aria-labelledby="t1">
     <h2 id="t1">One vote, two records</h2>
-    <p>One hundred voters cast ballots. Every ballot leaves two records: an electronic record the machine counts (top half of each square), and the paper ballot the voter checked (bottom half, sealed in the box until an audit). On paper, <span class="who-a">Alice</span> won 55 to 45. Use the slider to make the software quietly record some Alice votes as Bob votes.</p>
+    <p>One hundred voters cast ballots. Every ballot leaves two records: an electronic record the machine counts (top half of each square), and the paper ballot the voter checked (bottom half, sealed in the box). On paper, <span class="who-a">Alice</span> won 55 to 45. Use the slider to make the software quietly record some Alice votes as Bob votes.</p>
     <div class="slider">
       <label for="flip" class="lbl">Alice votes the software records as Bob: <b id="flipVal">8</b></label>
       <input id="flip" type="range" min="0" max="30" step="1" value="8">
     </div>
     <div class="tallies">
-      <div class="tally"><span class="lbl">Electronic count (reported)</span><span class="nums" id="eNums"></span><span class="win" id="eWin"></span></div>
-      <div class="tally" id="pTally"><span class="lbl">Paper ballots (in the box)</span><span class="nums" id="pNums"></span><span class="win" id="pWin"></span></div>
+      <div class="tally"><span class="lbl">Machine count (reported)</span><span class="nums" id="eNums"></span><span class="win" id="eWin"></span></div>
+      <div class="tally" id="pTally"><span class="lbl" id="pLbl">Hand count of the paper</span><span class="nums" id="pNums"></span><span class="win" id="pWin"></span></div>
     </div>
     <div class="row">
       <div class="actions">
-        <button id="draw1" class="primary" type="button">Check 10 paper ballots</button>
-        <button id="clear1" type="button">Put them back</button>
+        <button id="count1" class="primary" type="button">Count the paper by hand</button>
+        <button id="clear1" type="button">Seal it again</button>
       </div>
       <div class="actions">
         <span class="lbl" id="paperLbl">Paper ballots</span>
@@ -137,23 +137,22 @@ button.cell:disabled { cursor: default; }
     </div>
     <div class="ballots" id="grid1" aria-label="One hundred ballots"></div>
     <div class="key">
-      <span><span class="mini hid"><i></i><i></i></span>record over sealed paper</span>
-      <span><span class="mini bad"><i></i><i></i></span>record doesn't match its paper</span>
+      <span><span class="mini hid"><i></i><i></i></span>electronic record over sealed paper</span>
     </div>
     <div id="out1" class="out" aria-live="polite"></div>
   </section>
 
   <section class="prose" aria-labelledby="s2">
     <h2 id="s2">The paper doesn't move</h2>
-    <p>However many records the software changes, the paper stays where the voters left it. That's what makes the paper worth auditing: it is a record of the vote that doesn't depend on the software being right.</p>
-    <p>Switch to "No paper" and try again. Now every record you pull agrees with the count, because the count was made from those same records. Without an independent record, a check can only ask the software whether the software was right.</p>
+    <p>However many records the software changes, the paper stays where the voters left it. That's what makes the paper worth checking: it is a record of the vote that doesn't depend on the software being right.</p>
+    <p>Switch to "No paper" and count again. Now the only thing left to count is the electronic records, and recounting them gives back the same wrong answer. Without an independent record, a check can only ask the software whether the software was right.</p>
   </section>
 
   <section class="figure" aria-labelledby="t2">
     <h2 id="t2">Try to change the outcome</h2>
-    <p>Now you're the one with access to the software. Click Alice's electronic records to change them to Bob. You can't touch the paper: it's sealed in the box, and each voter already checked their own. Your goal is a reported win for <span class="who-b">Bob</span> that gets past the audit.</p>
+    <p>Now you're the one with access to the software. Click Alice's electronic records to change them to Bob. You can't touch the paper: it's sealed in the box, and each voter already checked their own. Your goal is a reported win for <span class="who-b">Bob</span>.</p>
     <div class="tallies">
-      <div class="tally"><span class="lbl">Electronic count (reported)</span><span class="nums" id="hNums"></span><span class="win" id="hWin"></span></div>
+      <div class="tally"><span class="lbl">Machine count (reported)</span><span class="nums" id="hNums"></span><span class="win" id="hWin"></span></div>
       <div class="tally"><span class="lbl">Your changes</span><span class="nums" id="hEdits"></span><span class="win" id="hNeed"></span></div>
     </div>
     <div class="actions">
@@ -161,23 +160,24 @@ button.cell:disabled { cursor: default; }
       <button id="hUndo" type="button">Undo all changes</button>
     </div>
     <div class="ballots" id="grid2" aria-label="One hundred ballots; click Alice records to change them"></div>
-    <div class="slider">
-      <label for="hN" class="lbl">Paper ballots the audit checks: <b id="hNVal">20</b></label>
-      <input id="hN" type="range" min="1" max="100" step="1" value="20">
-    </div>
+    <p>Counting all 100 paper ballots by hand would settle it, but real elections have millions of ballots. Instead, draw a handful of paper ballots at random and see whether they look like they came from the election that was reported.</p>
     <div class="row">
-      <button id="hAudit" class="primary" type="button">Run the audit</button>
-      <span id="hPill" class="pill">Audit not run yet</span>
+      <div class="actions">
+        <button id="hDraw" class="primary" type="button">Draw 10 paper ballots</button>
+        <button id="hCount" type="button">Count all the paper</button>
+        <button id="hReset" type="button">Seal it again</button>
+      </div>
+      <span id="hPill" class="pill">No paper drawn yet</span>
     </div>
     <div id="out2" class="out" aria-live="polite"></div>
   </section>
 
   <section class="prose" aria-labelledby="s3">
     <h2 id="s3">Where this leaves us</h2>
-    <p>To get past the audit, a change to the electronic records has to dodge every paper ballot the audit pulls. The more records you change, the harder that is, and changing the outcome takes a lot of changed records when the margin is wide. The rest of the series is about the other side of the bargain: how many paper ballots an audit needs to check so that a wrong outcome would almost certainly be caught, while a right one can be confirmed without counting everything.</p>
+    <p>Whatever happens to the electronic records, every paper ballot drawn comes from a box where Alice won 55 to 45. If the reported result is wrong, the paper will, sooner or later, start to disagree with it. The question the rest of the series answers is how much paper you need to look at before you can say, with a known level of confidence, that the reported winner really won, without counting everything.</p>
     <p>One thing has to be true for any of this to work. The paper has to be a trustworthy record of the vote, which means voters marked or checked it, and the boxes are kept secure until the audit. An audit is only as good as the paper it checks.</p>
     <a class="next" href="sampling.html">Next: what can a few ballots tell you? →</a>
-    <p class="fine" style="margin-top:1rem">The audit on this page compares each checked paper ballot with its own electronic record, the way a ballot comparison audit does. Ballot polling audits look only at the paper; later pages cover both.</p>
+    <p class="fine" style="margin-top:1rem">The checks on this page only look at the paper: a full hand count, or a sample of paper ballots compared with the reported totals. That's how a ballot polling audit works. Another kind, the ballot comparison audit, checks each sampled paper ballot against its own electronic record; a later page covers it.</p>
   </section>
 </div>
 
@@ -186,9 +186,6 @@ button.cell:disabled { cursor: default; }
   const $ = id => document.getElementById(id);
   const N = 100, PA = 55, PB = 45;
   const shuffle = arr => { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; };
-  const LF = [0]; const lf = n => { for (let i = LF.length; i <= n; i++) LF[i] = LF[i - 1] + Math.log(i); return LF[n]; };
-  const lc = (n, k) => k < 0 || k > n ? -Infinity : lf(n) - lf(k) - lf(n - k);
-  const pct = x => { const p = 100 * x; return (p >= 99.5 && p < 100 ? '>99' : p > 0 && p < 1 ? '<1' : Math.round(p)) + '%'; };
   const winner = (a, b) => a > b ? '<span class="who-a">Alice wins</span>' : b > a ? '<span class="who-b">Bob wins</span>' : 'Tie';
   const letter = v => `<span class="${v === 'A' ? 'a' : 'b'}">${v}</span>`;
 
@@ -196,32 +193,34 @@ button.cell:disabled { cursor: default; }
   (() => {
     const paper = shuffle([...Array(PA).fill('A'), ...Array(PB).fill('B')]);
     const aliceIdx = shuffle(paper.map((v, i) => v === 'A' ? i : -1).filter(i => i >= 0)); // order the software flips them in
-    const st = { k: 8, hasPaper: true, drawn: new Set() };
+    const st = { k: 8, hasPaper: true, counted: false };
     const record = i => (aliceIdx.indexOf(i) > -1 && aliceIdx.indexOf(i) < st.k) ? 'B' : paper[i];
     function render() {
       $('flipVal').textContent = st.k;
       const eA = PA - st.k, eB = PB + st.k;
       $('eNums').textContent = `Alice ${eA} · Bob ${eB}`; $('eWin').innerHTML = winner(eA, eB);
-      $('pNums').textContent = st.hasPaper ? `Alice ${PA} · Bob ${PB}` : 'No paper record'; $('pWin').innerHTML = st.hasPaper ? winner(PA, PB) : 'Nothing to check against';
-      $('pTally').classList.toggle('off', !st.hasPaper);
-      let bad = 0;
+      $('pLbl').textContent = st.hasPaper ? 'Hand count of the paper' : 'Recount of the electronic records';
+      if (!st.counted) { $('pNums').textContent = st.hasPaper ? 'Sealed' : 'Not recounted yet'; $('pWin').textContent = ''; }
+      else if (st.hasPaper) { $('pNums').textContent = `Alice ${PA} · Bob ${PB}`; $('pWin').innerHTML = winner(PA, PB); }
+      else { $('pNums').textContent = `Alice ${eA} · Bob ${eB}`; $('pWin').innerHTML = winner(eA, eB); }
+      $('count1').textContent = st.hasPaper ? 'Count the paper by hand' : 'Recount the records';
       $('grid1').innerHTML = paper.map((p, i) => {
-        const r = record(i), d = st.drawn.has(i), mism = d && st.hasPaper && r !== p; if (mism) bad++;
-        const pap = !st.hasPaper ? '<span class="paper none">·</span>' : d ? `<span class="paper">${letter(p)}</span>` : '<span class="paper hidden"></span>';
-        return `<div class="cell${d ? ' drawn' : ''}${mism ? ' bad' : ''}" role="img" aria-label="Record ${r}${d && st.hasPaper ? ', paper ' + p : ''}"><span class="rec">${letter(r)}</span>${pap}</div>`;
+        const r = record(i);
+        const pap = !st.hasPaper ? '<span class="paper none">·</span>' : st.counted ? `<span class="paper">${letter(p)}</span>` : '<span class="paper hidden"></span>';
+        return `<div class="cell" role="img" aria-label="Record ${r}${st.counted && st.hasPaper ? ', paper ' + p : ''}"><span class="rec">${letter(r)}</span>${pap}</div>`;
       }).join('');
-      const n = st.drawn.size;
+      const flipped = eB > eA, tie = eA === eB;
       let html;
-      if (!n) html = `<p>The software changed <b>${st.k}</b> record${st.k === 1 ? '' : 's'}. From the outside, nothing looks wrong: the count adds up and every record is a valid vote. ${st.k >= 6 ? 'The reported winner is now Bob, though more voters chose Alice.' : st.k === 5 ? 'The reported result is now a tie.' : 'Alice still wins the reported count, by less than she should.'}</p>`;
-      else if (!st.hasPaper) html = `<p>You checked <b>${n}</b> records. With no paper, there's nothing to compare them to, so every one looks fine. The changed records are invisible.</p>`;
-      else html = `<p>You checked <b>${n}</b> paper ballots against their electronic records. <b>${bad}</b> ${bad === 1 ? "doesn't" : "don't"} match.` +
-        (bad ? ' One mismatch is enough to show the electronic records can\'t be trusted as they stand, and the audit keeps going, up to a full hand count of the paper if needed.</p>' : (st.k ? ' None of the changed records happened to be in this sample. Check more and the chance of missing them drops fast.</p>' : ' With the slider at 0, there are no changes to find.</p>'));
+      if (!st.counted) html = `<p>The software changed <b>${st.k}</b> record${st.k === 1 ? '' : 's'}. From the outside, nothing looks wrong: the count adds up and every record is a valid vote. ${flipped ? 'The reported winner is now Bob, though more voters chose Alice.' : tie ? 'The reported result is now a tie.' : 'Alice still wins the reported count, by less than she should.'}</p>`;
+      else if (!st.hasPaper) html = `<p>The recount of the electronic records comes out exactly like the machine count: <b>Alice ${eA}, Bob ${eB}</b>. Of course it does. It's the same records, counted again. ${st.k ? `The ${st.k} changed records are invisible.` : ''}</p>`;
+      else html = `<p>The hand count of the paper says <b>Alice ${PA}, Bob ${PB}</b>. The machine count says <b>Alice ${eA}, Bob ${eB}</b>.` +
+        (st.k ? ` They disagree, and the paper is the record the voters checked, so the paper's count is the one that stands.${flipped || tie ? ' Here that changes who won.' : ''}</p>` : ' They agree, because the slider is at 0 and nothing was changed.</p>');
       $('out1').innerHTML = html;
     }
     $('flip').addEventListener('input', e => { st.k = +e.target.value; render(); });
-    $('draw1').addEventListener('click', () => { const left = [...Array(N).keys()].filter(i => !st.drawn.has(i)); shuffle(left).slice(0, 10).forEach(i => st.drawn.add(i)); render(); });
-    $('clear1').addEventListener('click', () => { st.drawn.clear(); render(); });
-    const setPaper = v => { st.hasPaper = v; $('paperYes').setAttribute('aria-pressed', String(v)); $('paperNo').setAttribute('aria-pressed', String(!v)); render(); };
+    $('count1').addEventListener('click', () => { st.counted = true; render(); });
+    $('clear1').addEventListener('click', () => { st.counted = false; render(); });
+    const setPaper = v => { st.hasPaper = v; st.counted = false; $('paperYes').setAttribute('aria-pressed', String(v)); $('paperNo').setAttribute('aria-pressed', String(!v)); render(); };
     $('paperYes').addEventListener('click', () => setPaper(true)); $('paperNo').addEventListener('click', () => setPaper(false));
     render();
   })();
@@ -229,48 +228,50 @@ button.cell:disabled { cursor: default; }
   // ============================================================ 2: try to change the outcome
   (() => {
     const paper = shuffle([...Array(PA).fill('A'), ...Array(PB).fill('B')]);
-    const st = { edits: new Set(), n: 20, drawn: new Set() };
+    const st = { edits: new Set(), order: [], drawn: 0 };
     const grid = $('grid2');
+    const drawnSet = () => new Set(st.order.slice(0, st.drawn));
     function render() {
       const k = st.edits.size, eA = PA - k, eB = PB + k, need = Math.max(0, Math.floor((PA - PB) / 2) + 1 - k);
-      $('hNVal').textContent = st.n; $('hAudit').textContent = st.drawn.size ? 'Reset the audit' : 'Run the audit';
       $('hNums').textContent = `Alice ${eA} · Bob ${eB}`; $('hWin').innerHTML = winner(eA, eB);
       $('hEdits').textContent = `${k} record${k === 1 ? '' : 's'} changed`;
       $('hNeed').textContent = need ? `${need} more for Bob to win` : 'Enough for Bob to win';
+      const D = drawnSet(), locked = st.drawn > 0;
       grid.innerHTML = paper.map((p, i) => {
-        const ed = st.edits.has(i), r = ed ? 'B' : p, d = st.drawn.has(i), bad = d && ed;
+        const ed = st.edits.has(i), r = ed ? 'B' : p, d = D.has(i);
         const pap = d ? `<span class="paper">${letter(p)}</span>` : '<span class="paper hidden"></span>';
-        return `<button type="button" class="cell${ed ? ' edited' : ''}${d ? ' drawn' : ''}${bad ? ' bad' : ''}" data-i="${i}" ${p === 'A' && !st.drawn.size ? '' : 'disabled'} aria-label="${p === 'A' ? (ed ? 'Changed to Bob; click to change back' : 'Alice record; click to change to Bob') : 'Bob record'}"><span class="rec">${letter(r)}</span>${pap}</button>`;
+        return `<button type="button" class="cell${ed ? ' edited' : ''}${d ? ' drawn' : ''}" data-i="${i}" ${p === 'A' && !locked ? '' : 'disabled'} aria-label="${d ? 'Drawn paper ballot: ' + (p === 'A' ? 'Alice' : 'Bob') : p === 'A' ? (ed ? 'Changed to Bob; click to change back' : 'Alice record; click to change to Bob') : 'Bob record'}"><span class="rec">${letter(r)}</span>${pap}</button>`;
       }).join('');
-      const pCatch = 1 - Math.exp(lc(N - k, st.n) - lc(N, st.n));
+      const sa = [...D].filter(i => paper[i] === 'A').length, sb = st.drawn - sa;
       const pill = $('hPill'), out = $('out2');
-      if (!st.drawn.size) {
-        pill.className = 'pill'; pill.textContent = 'Audit not run yet';
-        out.innerHTML = k
-          ? `<p>An audit that checks <b>${st.n}</b> paper ballots will pull at least one of your ${k} changed records <b>${pct(pCatch)}</b> of the time.</p>`
-          : '<p>Click some of Alice\'s records (the purple A\'s) to change them.</p>';
-      } else {
-        const caught = [...st.drawn].filter(i => st.edits.has(i)).length;
-        if (caught) { pill.className = 'pill bad'; pill.textContent = `Caught: ${caught} mismatch${caught === 1 ? '' : 'es'}`; }
-        else { pill.className = 'pill good'; pill.textContent = k ? 'Got past this time' : 'No changes to find'; }
-        out.innerHTML = caught
-          ? `<p>The audit pulled <b>${st.n}</b> paper ballots and <b>${caught}</b> didn't match their records. Once the records are shown to be wrong, the audit keeps checking paper, all the way to a full hand count if needed, and the paper says <span class="who-a">Alice</span> won.</p>`
-          : k ? `<p>None of your changes were in this sample of ${st.n}. That happens ${pct(1 - pCatch)} of the time with this many changes and this many ballots checked, which is why real audits choose how many ballots to check based on the margin and the risk they're willing to accept.</p>`
-          : '<p>Nothing was changed, so every paper ballot matched its record.</p>';
+      $('hDraw').disabled = st.drawn >= 100;
+      $('hDraw').textContent = st.drawn ? 'Draw 10 more' : 'Draw 10 paper ballots';
+      if (!st.drawn) {
+        pill.className = 'pill'; pill.textContent = 'No paper drawn yet';
+        out.innerHTML = k ? `<p>The machine count now says <b>Alice ${eA}, Bob ${eB}</b>. The paper in the box still says Alice ${PA}, Bob ${PB}; your changes can't reach it.</p>`
+          : '<p>Click some of Alice\'s records (the purple A\'s) to change them. Drawing paper locks the records in place.</p>';
+        return;
       }
+      const repShare = Math.round(100 * eA / 100), smpShare = Math.round(100 * sa / st.drawn);
+      pill.className = 'pill'; pill.textContent = `Paper drawn: Alice ${sa} · Bob ${sb}`;
+      if (st.drawn >= 100) {
+        pill.className = eB > eA ? 'pill bad' : 'pill good';
+        out.innerHTML = `<p>Every paper ballot is counted: <b>Alice ${PA}, Bob ${PB}</b>. ${k ? `The machine count said Alice ${eA}, Bob ${eB}. None of your ${k} changes survived a full count of the paper.` : 'It matches the machine count, because nothing was changed.'}</p>`;
+        return;
+      }
+      out.innerHTML = `<p>Of the <b>${st.drawn}</b> paper ballots drawn, <b>${sa}</b> have a vote for Alice (${smpShare}%). The reported count gives Alice <b>${repShare}%</b>.</p>` +
+        `<p>${k ? `Your changes moved the reported count, but not one paper ballot, so the sample keeps coming from a box where Alice has 55%. ` : ''}Does a sample like this look like it came from the reported election? With only ${st.drawn} ballots it can be hard to say, which is what the rest of the series is about: how surprised to be by a sample, and how many ballots to draw before deciding.</p>`;
     }
     grid.addEventListener('click', e => { const b = e.target.closest('button.cell'); if (!b || b.disabled) return; const i = +b.dataset.i; st.edits.has(i) ? st.edits.delete(i) : st.edits.add(i); render(); });
     $('hAuto').addEventListener('click', () => {
-      st.drawn.clear(); const need = Math.floor((PA - PB) / 2) + 1;
+      if (st.drawn) return; const need = Math.floor((PA - PB) / 2) + 1;
       const free = shuffle(paper.map((v, i) => v === 'A' && !st.edits.has(i) ? i : -1).filter(i => i >= 0));
       while (st.edits.size < need && free.length) st.edits.add(free.pop()); render();
     });
-    $('hUndo').addEventListener('click', () => { st.edits.clear(); st.drawn.clear(); render(); });
-    $('hN').addEventListener('input', e => { st.n = +e.target.value; st.drawn.clear(); render(); });
-    $('hAudit').addEventListener('click', () => {
-      if (st.drawn.size) { st.drawn.clear(); render(); return; }
-      shuffle([...Array(N).keys()]).slice(0, st.n).forEach(i => st.drawn.add(i)); render();
-    });
+    $('hUndo').addEventListener('click', () => { st.edits.clear(); st.drawn = 0; render(); });
+    $('hDraw').addEventListener('click', () => { if (!st.drawn) st.order = shuffle([...Array(N).keys()]); st.drawn = Math.min(N, st.drawn + 10); render(); });
+    $('hCount').addEventListener('click', () => { if (!st.drawn) st.order = shuffle([...Array(N).keys()]); st.drawn = N; render(); });
+    $('hReset').addEventListener('click', () => { st.drawn = 0; render(); });
     render();
   })();
 })();
