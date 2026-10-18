@@ -2,7 +2,7 @@
 
 Interactive diagrams for explaining risk-limiting audits, worked out alongside [rlamath](https://github.com/umbernhard/rlamath).
 
-> **Under construction, made with AI.** Much of this site was written and coded with help from an AI model (Claude) and hasn't been fully checked. It may contain errors; every page carries a warning banner saying so.
+> **Under construction, made with AI.** Much of this site was written and coded with help from an AI model (Claude) and hasn't been fully checked. It may contain errors; every page carries a banner saying so. Pages the author has reviewed (so far, the why-paper page) say so in their banner; the rest are still drafts.
 
 [`index.html`](index.html) is the landing page: it lists the parts in reading order (0 why paper, 1 sampling basics, 2 ballot polling) and the planned pages.
 
