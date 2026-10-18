@@ -119,6 +119,10 @@ sup.fn a:hover { text-decoration: underline; }
 .disclaimer .dz-title { font: 700 .95rem/1.25 var(--f-body, system-ui, sans-serif); letter-spacing: .06em; text-transform: uppercase; margin: 0; color: var(--dz-ink); }
 .disclaimer p { margin: 0; color: var(--dz-ink); font-size: .95rem; line-height: 1.5; max-width: 50rem; }
 .disclaimer a { color: var(--dz-ink); font-weight: 600; }
+.caveat { margin: 1.25rem 0; padding: .85rem 1.1rem .95rem; background: var(--panel); border: 1px solid var(--rule); border-left: 6px solid var(--tie); border-radius: 6px; }
+.caveat .cv-title { margin: 0 0 .35rem; font: 700 .9rem/1.3 var(--f-body); letter-spacing: .05em; text-transform: uppercase; color: var(--ink); }
+.caveat p { margin: 0; font-size: .97rem; line-height: 1.55; }
+.caveat p + p { margin-top: .5rem; }
 </style>
 
 <div class="wrap">
@@ -241,7 +245,12 @@ sup.fn a:hover { text-decoration: underline; }
   <section class="prose" aria-labelledby="s4">
     <h2 id="s4">Paper has to be protected</h2>
     <p>Paper is harder to change than software, but it isn't impossible. Someone with access to the ballots after the polls close could fill in an empty oval on a ballot where the voter skipped a contest, add ballots that were never cast, or make ballots disappear. A hand count of altered paper finds the altered result. Handling mistakes happen too: in Wisconsin's 2016 presidential recount, local officials' minutes cited lost ballots in 23 wards and ballots found during the recount in 72.<sup class="fn" data-ref="mebane-bernhard"><a href="#ref-mebane-bernhard" id="cite-mebane-bernhard" aria-label="Reference 19">19</a></sup></p>
-    <p>So the paper is only as trustworthy as the way it's handled. Election offices keep a <b>chain of custody</b>: a record of where the ballots are, who has had access to them, and when, from the moment they're cast until the audit is finished. Containers are sealed and logged, materials change hands in front of at least two people, and the number of ballots is reconciled against the number of voters who signed in.<sup class="fn" data-ref="eac-custody"><a href="#ref-eac-custody" id="cite-eac-custody" aria-label="Reference 20">20</a></sup> Checking that these steps were actually followed is sometimes called a compliance audit, and it comes before any count of the paper.<sup class="fn" data-ref="stark-wagner"><a href="#ref-stark-wagner" id="cite-stark-wagner" aria-label="Reference 21">21</a></sup> A later page will look at chain of custody in more detail.</p>
+    <p>So the paper is only as trustworthy as the way it's handled. Election offices keep a <b>chain of custody</b>: a record of where the ballots are, who has had access to them, and when, from the moment they're cast until the audit is finished. Containers are sealed and logged, ballots change hands only with more than one person present, and the number of ballots is reconciled against the number of voters who signed in.<sup class="fn" data-ref="eac-custody"><a href="#ref-eac-custody" id="cite-eac-custody" aria-label="Reference 20">20</a></sup> Checking that these steps were actually followed is sometimes called a compliance audit, and it comes before any count of the paper.<sup class="fn" data-ref="stark-wagner"><a href="#ref-stark-wagner" id="cite-stark-wagner" aria-label="Reference 21">21</a></sup> A later page will look at chain of custody in more detail.</p>
+    <aside class="caveat" role="note" aria-labelledby="cvCustody">
+      <p class="cv-title" id="cvCustody">This is an idealized picture</p>
+      <p>The steps above describe chain of custody in general terms. The actual rules are set by state law and by each election office's policies, and they look different from place to place. Take "more than one person present": depending on the jurisdiction, that can mean the two people handing ballots off, those two plus additional observers, or workers from different political parties. Which containers get sealed, how seals are logged, and how ballots are counted and reconciled vary in the same way.</p>
+      <p>That variation is normal, and usually fine. What an audit depends on is that the jurisdiction has written procedures, follows them, and keeps records that show it did.</p>
+    </aside>
   </section>
 
   <section class="prose" aria-labelledby="sNotEqual">
