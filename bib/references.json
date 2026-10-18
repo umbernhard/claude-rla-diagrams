@@ -126,7 +126,7 @@
   },
   {
    "key": "gentle",
-   "group": "overview",
+   "group": "m-found",
    "authors": "Mark Lindeman and Philip B. Stark",
    "title": "A Gentle Introduction to Risk-Limiting Audits",
    "venue": "IEEE Security & Privacy 10(5):42–49",
