@@ -7807,6 +7807,28 @@
    "url": "https://electionlab.mit.edu/research/projects/mapping-election-science/resources/election-auditing",
    "note": "Another place to look for political-science work on audits.",
    "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "votebeat-hamtramck-25",
+   "group": "forensics",
+   "authors": "Hayley Harding",
+   "title": "Hamtramck mayoral election in limbo as uncounted ballots await resolution",
+   "venue": "Votebeat",
+   "year": 2025,
+   "url": "https://www.votebeat.org/michigan/2025/11/12/hamtramck-clerk-rana-faraj-missing-ballots",
+   "note": "37 absentee ballots left uncounted in the November 2025 Hamtramck, Michigan, mayoral election.",
+   "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "votebeat-hamtramck-26",
+   "group": "forensics",
+   "authors": "Hayley Harding",
+   "title": "Mayoral election result from 2025 overturned after 37 disputed ballots are finally counted",
+   "venue": "Votebeat",
+   "year": 2026,
+   "url": "https://www.votebeat.org/michigan/2026/10/16/hamtramck-mayor-election-2025-overturned-alharbi-mahmood/",
+   "note": "The ballots, excluded after their chain of custody was broken, were counted in October 2026 and reversed the 11-vote result.",
+   "source": "checked against the document or its publisher"
   }
  ]
 }
