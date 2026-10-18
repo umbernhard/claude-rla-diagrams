@@ -92,8 +92,8 @@
   },
   {
    "id": "blogs",
-   "title": "Blog posts and commentary",
-   "description": "Shorter, informal writing by researchers on audits, voting machines and specific elections. Not peer reviewed."
+   "title": "Blog posts, explainers and commentary",
+   "description": "Shorter, informal writing on audits, voting machines and specific elections: blog posts, magazine columns, explainers and position statements. Not peer reviewed."
   },
   {
    "id": "tools",
@@ -258,7 +258,7 @@
   },
   {
    "key": "ash-pierson-stark",
-   "group": "overview",
+   "group": "blogs",
    "authors": "A. Ash, S. Pierson and P.B. Stark",
    "title": "Thinking outside the urn: Statisticians make their marks on U.S. Ballots",
    "venue": "Amstat News 384:37–40",
@@ -586,7 +586,7 @@
   },
   {
    "key": "spectrum-online",
-   "group": "grey",
+   "group": "blogs",
    "authors": "Robert Cunningham, Matthew Bernhard and J. Alex Halderman",
    "title": "The Security Challenges of Online Voting Have Not Gone Away",
    "venue": "IEEE Spectrum",
@@ -5416,7 +5416,7 @@
   },
   {
    "key": "vv22-risk",
-   "group": "overview",
+   "group": "blogs",
    "authors": "Verified Voting",
    "title": "What is a Risk-Limiting Audit?",
    "venue": "Verified Voting",
@@ -5436,7 +5436,7 @@
   },
   {
    "key": "vv20-risk",
-   "group": "overview",
+   "group": "blogs",
    "authors": "Verified Voting",
    "title": "Risk-Limiting Audits: Frequently Asked Questions and Answers",
    "venue": "Verified Voting",
@@ -5446,7 +5446,7 @@
   },
   {
    "key": "vv19-policy",
-   "group": "grey",
+   "group": "blogs",
    "authors": "Verified Voting",
    "title": "Policy on Direct Recording Electronic Voting Machines and Ballot Marking Devices",
    "venue": "Verified Voting",
@@ -5496,7 +5496,7 @@
   },
   {
    "key": "vv14-if",
-   "group": "grey",
+   "group": "blogs",
    "authors": "Verified Voting",
    "title": "If I Can Shop and Bank Online, Why Can't I Vote Online?",
    "venue": "Verified Voting",
@@ -5506,7 +5506,7 @@
   },
   {
    "key": "vv11-about",
-   "group": "grey",
+   "group": "blogs",
    "authors": "Verified Voting",
    "title": "What About Email and Fax Voting?",
    "venue": "Verified Voting",
@@ -7451,7 +7451,7 @@
   },
   {
    "key": "bishop07-risks",
-   "group": "security",
+   "group": "blogs",
    "authors": "Matt Bishop and David Wagner",
    "title": "Risks of e-voting",
    "venue": "Communications of the ACM 50(11):120",
