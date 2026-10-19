@@ -27,6 +27,7 @@ Last updated 2026-10-15. Page: [`sampling.html`](../sampling.html). It comes bef
 - Avoid the word "fix" in election writing (it can imply fraud).
 
 ## Open items
+- **Combined-uncertainty calculation (future page or appendix).** Put the imperfect links together: hand-count error rates, how often voters check BMD printouts, ballot-accounting/manifest error, and custody gaps (lost or found ballots). Estimate how far an outcome could shift without the audit noticing, i.e. what margin each source eats into. Ballot manifest independence (added to sampling page 2026-10-19) is one input.
 
 - Connect PRNG output to choosing a ballot from the manifest (deliberately left for later).
 - Check the claim that Colorado's seed is rolled after the manifest is final.
