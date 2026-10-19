@@ -7829,6 +7829,17 @@
    "url": "https://www.votebeat.org/michigan/2026/10/16/hamtramck-mayor-election-2025-overturned-alharbi-mahmood/",
    "note": "The ballots, excluded after their chain of custody was broken, were counted in October 2026 and reversed the 11-vote result.",
    "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "azfamily-chandler-26",
+   "group": "forensics",
+   "authors": "David Baker",
+   "title": "Tampering or human error? Chandler voting equipment investigated",
+   "venue": "AZFamily",
+   "year": 2026,
+   "url": "https://www.azfamily.com/2026/10/17/tampering-or-human-error-chandler-voting-equipment-investigated/",
+   "note": "Paper trays of three ballot-on-demand printers found opened overnight at an early voting site in Maricopa County, Arizona; under investigation.",
+   "source": "checked against the document or its publisher"
   }
  ]
 }
