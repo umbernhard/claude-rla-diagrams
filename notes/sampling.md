@@ -28,6 +28,7 @@ Last updated 2026-10-15. Page: [`sampling.html`](../sampling.html). It comes bef
 
 ## Open items
 - **Combined-uncertainty calculation (future page or appendix).** Put the imperfect links together: hand-count error rates, how often voters check BMD printouts, ballot-accounting/manifest error, and custody gaps (lost or found ballots). Estimate how far an outcome could shift without the audit noticing, i.e. what margin each source eats into. Ballot manifest independence (added to sampling page 2026-10-19) is one input.
+  - Possible extension beyond tabulation: a tabulation audit only checks that the ballots that were cast were counted right. A holistic view would also cover who got to cast a ballot: eligibility and voter-roll errors, check-in and poll book problems, provisional ballots, and long lines that send voters home. Far afield for this site, but connects to holistic audits and election performance measures. Starting points already in the bibliography: electionsgroup23-exploring (holistic audits), stewart19-elections (Elections Performance Index), edelstein10-queuing and buell13-analysis (lines), alvarez09-interstate (voter roll matching).
 
 - Connect PRNG output to choosing a ballot from the manifest (deliberately left for later).
 - Check the claim that Colorado's seed is rolled after the manifest is final.
