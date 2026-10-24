@@ -42,6 +42,7 @@
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 body { background: var(--bg); color: var(--ink); font: 400 1rem/1.6 var(--f-body); }
 .wrap { max-width: 60rem; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 2rem 4rem; display: grid; gap: 1.75rem; }
 .prose { max-width: 40rem; display: grid; gap: .1rem; }
@@ -133,6 +134,23 @@ sup.fn a:hover { text-decoration: underline; }
 .pick.hit { border-color: var(--good); background: var(--good-bg); color: var(--good); }
 .pill.go { color: var(--good); background: var(--good-bg); }
 .fine { font-size: .85rem; color: var(--ink-3); }
+/* ballot manifest figures */
+.mtab { width: 100%; border-collapse: collapse; font-size: .88rem; font-variant-numeric: tabular-nums; }
+.mtab th { font: 500 .7rem/1.2 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); text-align: left; padding: .35rem .5rem; border-bottom: 1px solid var(--rule); }
+.mtab td { padding: .4rem .5rem; border-bottom: 1px solid var(--grid); color: var(--ink-2); vertical-align: top; }
+.mtab td.num, .mtab th.num { text-align: right; font-family: var(--f-mono); }
+.mtab td b { color: var(--ink); font-weight: 500; }
+.mtab td small { display: block; color: var(--ink-3); font-size: .78rem; }
+.mtab tr.pending td { color: var(--ink-3); }
+.mtab tr.hit td { background: color-mix(in srgb, var(--reported) 12%, transparent); }
+.mtab tfoot td { border-bottom: 0; font-weight: 600; color: var(--ink); }
+.bal.n { color: var(--ink-3); font-size: .62rem; opacity: 1; }
+.bal.n.read { background: var(--reported); border-color: var(--reported); color: var(--panel); }
+.bal.off { opacity: .28; border-style: dashed; }
+.bal.ghost { opacity: 1; border-style: dashed; color: var(--ink-3); background: transparent; }
+.bal.ghost.read { background: var(--tie); border-color: var(--tie); color: var(--panel); border-style: solid; }
+.mrow-note { font: 400 .8rem/1.3 var(--f-body); color: var(--tie); }
+.mrow-note.ok { color: var(--ink-3); }
 /* site-wide warning banner; carries its own colors so it reads the same on every page */
 .disclaimer { --dz-bg: #fff3d1; --dz-ink: #4a2a00; --dz-edge: #b45309; --dz-a: #f2b705; --dz-b: #1d1d1d;
   background: var(--dz-bg); color: var(--dz-ink); border: 2px solid var(--dz-edge); border-radius: 8px; overflow: hidden; display: grid; }
@@ -292,7 +310,69 @@ sup.fn a:hover { text-decoration: underline; }
 
   <section class="prose" aria-label="Seeds in a real audit">
     <p>In a real audit, then, the shuffle happens on paper rather than by shaking a box. Election offices keep a list of where every ballot is stored, called a ballot manifest, and use the PRNG's numbers to pick ballots from that list. In Colorado, for example, the seed is a number of at least 20 digits, made at a public meeting after Election Day by rolling a ten-sided die once per digit, and members of the public are invited to do the rolling.<sup class="fn" data-ref="co-seed"><a href="#ref-co-seed" id="cite-co-seed" aria-label="Reference 1">1</a></sup> Rhode Island's 2019 audit pilots did the same: observers rolled 20 ten-sided dice in public, which took about 14 minutes.<sup class="fn" data-ref="ri-pilot"><a href="#ref-ri-pilot" id="cite-ri-pilot" aria-label="Reference 2">2</a></sup> The public part matters. If anyone could predict which ballots would be picked, a mistake or a tampered batch could be kept out of the sample. Because the seed is rolled in the open after the election, nobody could have known in advance where the auditor would look.</p>
-    <p>The manifest does a second job, too. Every box on this page had a known number of ballots, and a real audit needs that number as well, or at least a trustworthy upper limit on it. If the count is off, some ballots can't be drawn at all, or the audit draws numbers that point to ballots nobody can find, and either way the sample no longer stands for the whole election. When a listed ballot can't be found, careful audits assume the worst: they treat it as the ballot most damaging to the reported outcome, so a missing ballot can only make the audit harder to pass, never easier.<sup class="fn" data-ref="evil-zombies"><a href="#ref-evil-zombies" id="cite-evil-zombies" aria-label="Reference 3">3</a></sup> But that only works if the manifest itself can be trusted. It has to be built independently of the voting system, from the ballot accounting election workers do by hand: how many ballots are in each container, reconciled against how many voters checked in.<sup class="fn" data-ref="kir-4"><a href="#ref-kir-4" id="cite-kir-4" aria-label="Reference 4">4</a></sup> If the manifest simply copied the voting system's own totals, an attacker who controlled the system would control the manifest too. They could, for example, leave a batch of altered ballots off the list so the audit could never pick them.</p>
+  </section>
+
+  <section class="prose" aria-labelledby="sM">
+    <h2 id="sM">Know what you're drawing from</h2>
+    <p>Every box on this page so far came with a known number of ballots. A real election doesn't. Its ballots are spread across hundreds of containers: boxes from each polling place, trays of mail ballots, bags of provisional ballots. Before an audit can draw a random ballot, someone has to know every container that exists and how many ballots are in each one. That list is the ballot manifest.</p>
+    <p>A random sample is only random over the list it's drawn from. The dice and the generator pick numbers, and the manifest turns each number into a particular ballot in a particular container. A ballot that isn't on the list can never be picked, however good the dice are. Notice what the manifest doesn't record, too: it says where the ballots are, not how anyone voted.</p>
+  </section>
+
+  <section class="figure" aria-labelledby="mTitle">
+    <h2 id="mTitle">Build a ballot manifest</h2>
+    <p>A small election has four containers of ballots. Count each one by hand, and check the count against an independent record: the poll book voters signed at each polling place, or the log of mail ballot envelopes accepted. Each container then gets a block of ballot numbers.</p>
+    <div id="mBoxes" class="chips"></div>
+    <table class="mtab" aria-label="Ballot manifest">
+      <thead><tr><th scope="col">Container</th><th scope="col" class="num">Ballots</th><th scope="col" class="num">Ballot numbers</th></tr></thead>
+      <tbody id="mRows"></tbody>
+      <tfoot><tr><td>Total</td><td class="num" id="mTot">0</td><td></td></tr></tfoot>
+    </table>
+    <div class="actions" id="mCountActs">
+      <button id="mCount" class="primary" type="button">Count the next container</button>
+      <button id="mReset" type="button">Start over</button>
+    </div>
+    <div id="mDrawPart" class="twin" hidden>
+      <label for="mSeed" class="chips-label">Seed, rolled in public</label>
+      <input id="mSeed" class="seedbox" type="text" autocomplete="off" spellcheck="false" value="39108723654082917365">
+      <div class="actions">
+        <button id="mDraw" class="primary" type="button">Draw a ballot</button>
+        <button id="mDraw5" type="button">Draw 5</button>
+        <button id="mClear" type="button">Clear draws</button>
+      </div>
+      <div id="mPicks" class="balrow" aria-live="polite"></div>
+    </div>
+    <p id="mNote" class="caption" aria-live="polite"></p>
+  </section>
+
+  <section class="prose" aria-label="When the manifest is wrong">
+    <p>When the manifest is right, every ballot in the election has the same chance of being drawn. When it's wrong, that stops being true, and nothing in the sample itself will tell you.</p>
+    <p>To see why, take a traditional audit, the kind many states ran before risk-limiting audits: hand count a fixed percentage of the ballots, chosen at random. California's long-standing 1% manual tally, for example, hand counts every ballot from a randomly chosen 1% of precincts.<sup class="fn" data-ref="hall08-improving"><a href="#ref-hall08-improving" id="cite-hall08-improving" aria-label="Reference 3">3</a></sup> The version below draws 10% of the ballots on the manifest, one at a time, to keep it small.</p>
+  </section>
+
+  <section class="figure" aria-labelledby="wTitle">
+    <h2 id="wTitle">A 10% audit with a wrong manifest</h2>
+    <p>This election has five containers and 170 ballots. Alice won, 88 votes to 82. Pick what's wrong with the manifest, then draw samples and watch which ballots ever get picked.</p>
+    <div class="seg" role="group" aria-label="What's wrong with the manifest">
+      <button id="wOk" type="button" aria-pressed="true">Nothing</button>
+      <button id="wMissing" type="button" aria-pressed="false">A container left off</button>
+      <button id="wLow" type="button" aria-pressed="false">A count too low</button>
+      <button id="wHigh" type="button" aria-pressed="false">A count too high</button>
+    </div>
+    <div class="legend">
+      <span class="key"><span class="bal a read" aria-hidden="true">A</span>drawn this time</span>
+      <span class="key"><span class="bal b off" aria-hidden="true">B</span>can never be drawn</span>
+      <span class="key"><span class="bal ghost" aria-hidden="true">?</span>listed, but not there</span>
+    </div>
+    <div id="wBoxes" class="chips"></div>
+    <div class="actions">
+      <button id="wDraw" class="primary" type="button">Draw a new 10% sample</button>
+    </div>
+    <div id="wOut" class="out" aria-live="polite"></div>
+    <p id="wNote" class="caption"></p>
+  </section>
+
+  <section class="prose" aria-label="Missing ballots and an independent manifest">
+    <p>Two things follow. First, a ballot that the manifest lists but nobody can find can't simply be skipped. Careful audits treat it as the ballot most damaging to the reported outcome, so a missing ballot can only make the audit harder to pass, never easier.<sup class="fn" data-ref="evil-zombies"><a href="#ref-evil-zombies" id="cite-evil-zombies" aria-label="Reference 4">4</a></sup> Second, the manifest has to be built independently of the voting system, from the ballot accounting election workers do by hand: how many ballots are in each container, reconciled against how many voters checked in.<sup class="fn" data-ref="kir-4"><a href="#ref-kir-4" id="cite-kir-4" aria-label="Reference 5">5</a></sup> If the manifest simply copied the voting system's own totals, an attacker who controlled the system would control the manifest too. They could, for example, leave a container of altered ballots off the list, like the late mail ballots above, so the audit could never pick them.</p>
     <p>Drawing ballots one at a time doesn't make a sample less fair than grabbing a handful at once. Fifty ballots drawn one by one are just as random as fifty drawn together. Reading them in sequence only lets the audit stop early, as soon as it has seen enough.</p>
   </section>
 
@@ -378,6 +458,7 @@ sup.fn a:hover { text-decoration: underline; }
     <ol>
       <li id="ref-co-seed" data-ref="co-seed">Colorado Secretary of State, <a href="https://coloradosos.gov/pubs/elections/RLA/2024/primary/noticePublicMeeting.html">Notice of Public Meeting to Establish the Risk Limiting Audit Random Seed</a>, June 2024 primary election. <a href="#cite-co-seed" aria-label="Back to text">↩</a></li>
       <li id="ref-ri-pilot" data-ref="ri-pilot">Rhode Island RLA Working Group, <a href="https://www.brennancenter.org/our-work/research-reports/pilot-implementation-study-risk-limiting-audit-methods-state-rhode-island"><i>Pilot Implementation Study of Risk-Limiting Audit Methods in the State of Rhode Island</i></a>, Brennan Center for Justice, September 2019, pp. 28 and 33. <a href="#cite-ri-pilot" aria-label="Back to text">↩</a></li>
+      <li id="ref-hall08-improving" data-ref="hall08-improving">Joseph Lorenzo Hall, <a href="https://static.usenix.org/events/evt08/tech/full_papers/hall/hall.pdf">Improving the Security, Transparency, and Efficiency of California's 1% Manual Tally Procedures</a>, USENIX EVT 2008. <a href="#cite-hall08-improving" aria-label="Back to text">↩</a></li>
       <li id="ref-evil-zombies" data-ref="evil-zombies">J.H. Bañuelos and P.B. Stark, <a href="https://arxiv.org/abs/1207.3413">Limiting Risk by Turning Manifest Phantoms into Evil Zombies</a>, preprint, 2012. <a href="#cite-evil-zombies" aria-label="Back to text">↩</a></li>
       <li id="ref-kir-4" data-ref="kir-4">Democracy Fund, <a href="https://demofund.wpengine.com/wp-content/uploads/2021/02/2021_DF_KnowingItsRight_Part4.pdf"><i>Knowing It’s Right, Part Four: Ballot Accounting Audits Best Practices Guide</i></a>, 2021. <a href="#cite-kir-4" aria-label="Back to text">↩</a></li>
     </ol>
@@ -949,6 +1030,132 @@ sup.fn a:hover { text-decoration: underline; }
     $('qSeed').addEventListener('input', replay);
     $('qNew').addEventListener('click', fresh);
     fresh();
+    return { render };
+  })();
+
+
+  // ============================================================ M: build a ballot manifest
+  const FM = (() => {
+    const BOXES = [
+      { name: 'Precinct 1, Election Day', n: 14, check: '14 voters signed the poll book' },
+      { name: 'Precinct 2, Election Day', n: 9, check: '9 voters signed the poll book' },
+      { name: 'Mail ballots, tray 1', n: 20, check: '20 envelopes logged as accepted' },
+      { name: 'Mail ballots, tray 2', n: 12, check: '12 envelopes logged as accepted' }];
+    const st = { counted: 0, picks: [], ctr: 0, run: 0 };
+    const start = i => BOXES.slice(0, i).reduce((t, b) => t + b.n, 0);
+    const total = () => start(st.counted);
+    const locate = r => { let i = 0; while (r > start(i + 1)) i++; return { box: i, pos: r - start(i) }; };
+    async function pickNumber(seed, i, N) { const b = await sha(seed + ',' + i); let v = 0; for (let j = 0; j < 6; j++) v = (v * 256 + b[j]) % N; return v + 1; }
+    function render() {
+      const N = total(), last = st.picks[st.picks.length - 1];
+      $('mBoxes').innerHTML = BOXES.map((b, i) => {
+        const done = i < st.counted, s0 = start(i);
+        const chips = Array.from({ length: b.n }, (_, j) => {
+          const num = s0 + j + 1, hit = done && st.picks.includes(num);
+          return `<span class="bal n${hit ? ' read' : ''}">${done ? num : ''}</span>`;
+        }).join('');
+        return `<div class="batch"><span class="chips-label">${b.name}${done ? '' : ' · not counted yet'}</span><div class="balrow">${chips}</div></div>`;
+      }).join('');
+      $('mRows').innerHTML = BOXES.map((b, i) => {
+        const done = i < st.counted, s0 = start(i), hit = last && done && locate(last).box === i;
+        return done
+          ? `<tr class="${hit ? 'hit' : ''}"><td><b>${b.name}</b><small>Matches: ${b.check}</small></td><td class="num">${b.n}</td><td class="num">${s0 + 1}–${s0 + b.n}</td></tr>`
+          : `<tr class="pending"><td>${b.name}</td><td class="num">?</td><td class="num">?</td></tr>`;
+      }).join('');
+      $('mTot').textContent = N;
+      const doneAll = st.counted === BOXES.length;
+      $('mCount').hidden = doneAll; $('mDrawPart').hidden = !doneAll;
+      $('mPicks').innerHTML = st.picks.map(r => { const { box, pos } = locate(r); return `<span class="pick"><small>ballot ${r}</small>${['Pct 1', 'Pct 2', 'Mail 1', 'Mail 2'][box]} #${pos}</span>`; }).join('');
+      if (!doneAll) $('mNote').textContent = st.counted ? `${N} ballots on the manifest so far. Ballots in a container that hasn't been counted have no numbers yet, so nothing can pick them.` : 'Nothing counted yet, so there is nothing to draw from.';
+      else if (!last) $('mNote').textContent = `The manifest is complete: ${N} ballots, numbered 1 to ${N}. Now the seed takes over. Each draw turns the seed and a counter into a number from 1 to ${N}, the same way the generators above made numbers from 1 to 10.`;
+      else { const { box, pos } = locate(last); $('mNote').textContent = `The generator gave ${last}. Ballot numbers ${start(box) + 1}–${start(box + 1)} belong to ${BOXES[box].name}, so the auditor opens that container and counts to its ballot number ${pos}. Every one of the ${N} ballots had the same 1-in-${N} chance.`; }
+    }
+    async function draw(k) {
+      const run = ++st.run, seed = $('mSeed').value, N = total();
+      for (let t = 0; t < k && st.picks.length < N; t++) {
+        let r; do { r = await pickNumber(seed, ++st.ctr, N); if (run !== st.run) return; } while (st.picks.includes(r));
+        st.picks.push(r);
+      }
+      render();
+    }
+    $('mCount').addEventListener('click', () => { st.counted = Math.min(BOXES.length, st.counted + 1); render(); });
+    $('mReset').addEventListener('click', () => { st.counted = 0; st.picks = []; st.ctr = 0; st.run++; render(); });
+    $('mDraw').addEventListener('click', () => draw(1));
+    $('mDraw5').addEventListener('click', () => draw(5));
+    $('mClear').addEventListener('click', () => { st.picks = []; st.ctr = 0; st.run++; render(); });
+    $('mSeed').addEventListener('input', () => { st.picks = []; st.ctr = 0; st.run++; render(); });
+    render();
+    return { render };
+  })();
+
+  // ============================================================ W: a fixed-percentage audit with a wrong manifest
+  const FW = (() => {
+    // fixed ballot orders inside each container (A = vote for Alice, B = vote for Bob)
+    let seedv = 7;
+    const rnd = () => (seedv = (seedv * 16807) % 2147483647) / 2147483647;
+    const mix = (a, b) => { const arr = [...'A'.repeat(a) + 'B'.repeat(b)]; for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr.join(''); };
+    const BOXES = [
+      { id: 'p1', name: 'Precinct 1, Election Day', ballots: mix(24, 16) },
+      { id: 'p2', name: 'Precinct 2, Election Day', ballots: mix(17, 13) },
+      { id: 'm1', name: 'Mail ballots, tray 1', ballots: mix(19, 11) + mix(8, 12) },
+      { id: 'm2', name: 'Mail ballots, tray 2', ballots: mix(11, 9) },
+      { id: 'late', name: 'Late-arriving mail ballots', ballots: mix(9, 21) }];
+    // what the manifest says, per scenario: listed count for each container (null = left off)
+    const SCEN = {
+      ok: { btn: 'wOk', listed: { p1: 40, p2: 30, m1: 50, m2: 20, late: 30 } },
+      missing: { btn: 'wMissing', listed: { p1: 40, p2: 30, m1: 50, m2: 20, late: null } },
+      low: { btn: 'wLow', listed: { p1: 40, p2: 30, m1: 30, m2: 20, late: 30 } },
+      high: { btn: 'wHigh', listed: { p1: 40, p2: 30, m1: 50, m2: 20, late: 30 }, removed: { p1: 8 } } };
+    const st = { scen: 'ok', drawn: new Set() };
+    // ballots physically present in each container under the current scenario
+    const present = b => { const r = (SCEN[st.scen].removed || {})[b.id] || 0; return b.ballots.slice(0, b.ballots.length - r); };
+    function slots() { // manifest positions, in manifest order
+      const L = SCEN[st.scen].listed, out = [];
+      BOXES.forEach(b => { const n = L[b.id]; if (n == null) return; const have = present(b);
+        for (let j = 0; j < n; j++) out.push({ box: b.id, j, vote: j < have.length ? have[j] : null }); });
+      return out;
+    }
+    function sample() {
+      const S = slots(), k = Math.ceil(S.length * 0.1), idx = shuffle(S.map((_, i) => i)).slice(0, k);
+      st.drawn = new Set(idx.map(i => S[i].box + ':' + S[i].j));
+    }
+    function render() {
+      const L = SCEN[st.scen].listed, S = slots();
+      Object.entries(SCEN).forEach(([key, sc]) => $(sc.btn).setAttribute('aria-pressed', key === st.scen));
+      $('wBoxes').innerHTML = BOXES.map(b => {
+        const n = L[b.id], have = present(b), total = Math.max(have.length, n || 0);
+        const chips = Array.from({ length: total }, (_, j) => {
+          const hit = st.drawn.has(b.id + ':' + j);
+          if (j >= have.length) return `<span class="bal ghost${hit ? ' read' : ''}" title="listed on the manifest, but not in the container">?</span>`;
+          const v = have[j], off = n == null || j >= n;
+          return `<span class="bal ${v === 'A' ? 'a' : 'b'}${off ? ' off' : ''}${hit ? ' read' : ''}">${v}</span>`;
+        }).join('');
+        const note = n == null ? `<span class="mrow-note">not on the manifest · ${have.length} ballots</span>`
+          : n < have.length ? `<span class="mrow-note">manifest says ${n} · container holds ${have.length}</span>`
+          : n > have.length ? `<span class="mrow-note">manifest says ${n} · container holds ${have.length}</span>`
+          : `<span class="mrow-note ok">manifest says ${n} · container holds ${have.length}</span>`;
+        return `<div class="batch"><span class="chips-label">${b.name}</span>${note}<div class="balrow">${chips}</div></div>`;
+      }).join('');
+      // numbers
+      const all = BOXES.flatMap(b => [...present(b)]), A = all.filter(v => v === 'A').length, T = all.length;
+      const reach = S.filter(x => x.vote), RA = reach.filter(x => x.vote === 'A').length, R = reach.length;
+      const ghosts = S.length - R, k = Math.ceil(S.length * 0.1);
+      let sa = 0, sb = 0, sg = 0; S.forEach(x => { if (!st.drawn.has(x.box + ':' + x.j)) return; x.vote === 'A' ? sa++ : x.vote === 'B' ? sb++ : sg++; });
+      const pct = x => (100 * x).toFixed(1) + '%';
+      $('wOut').innerHTML = `<p>The manifest lists <b>${S.length}</b> ballots; the containers hold <b>${T}</b>. A 10% audit draws <b>${k}</b> of the listed ballots.</p>` +
+        `<p>Ballots that could ever be drawn: <b>${R} of ${T}</b>${R < T ? ` (the other ${T - R} have no chance at all)` : ', every one of them'}.${ghosts ? ` Listed ballots that aren't there: <b>${ghosts}</b>.` : ''}</p>` +
+        `<p>Alice's share of the votes: <b>${pct(A / T)}</b> in the whole election, <b class="${Math.abs(RA / R - A / T) > 0.004 ? 'tie' : ''}">${pct(RA / R)}</b> among the ballots the audit can reach. Samples from this manifest average ${pct(RA / R)}.</p>` +
+        `<p>This sample: <b>${sa}</b> for Alice, <b>${sb}</b> for Bob${sg ? `, and <b class="tie">${sg}</b> draw${sg === 1 ? '' : 's'} that point to a ballot that isn't there` : ''}.</p>`;
+      $('wNote').textContent = {
+        ok: 'Every ballot has the same 10% chance of being picked. Draw a few samples: some lean toward Alice and some toward Bob, but on average they match the whole election.',
+        missing: 'The late-arriving mail ballots were never logged, so they never got ballot numbers. None of their 30 ballots can be drawn, and they leaned toward Bob, so on average, samples from this manifest make Alice look stronger than she is. The sample is random, but it\'s a random sample of the wrong list. The audit is also smaller than it should be: 10% of 140, not 10% of 170.',
+        low: 'Tray 1 was recorded as 30 ballots when it holds 50, perhaps because a second bundle was added after it was counted. Only its first 30 ballots ever get numbers. The other 20 can\'t be drawn, and because they happen to lean toward Bob, the samples lean toward Alice. Nothing in a sample would reveal this.',
+        high: 'The manifest says Precinct 1\'s box holds 40 ballots, but only 32 are there. Draws that land on the missing 8 point to nothing. A traditional audit might just draw again and move on, which hides the fact that 8 ballots have gone missing. A risk-limiting audit counts each of those draws as a vote for the candidate who reportedly lost.'
+      }[st.scen];
+    }
+    Object.entries(SCEN).forEach(([key, sc]) => $(sc.btn).addEventListener('click', () => { st.scen = key; sample(); render(); }));
+    $('wDraw').addEventListener('click', () => { sample(); render(); });
+    sample(); render();
     return { render };
   })();
 
