@@ -351,10 +351,10 @@ sup.fn a:hover { text-decoration: underline; }
 
   <section class="figure" aria-labelledby="wTitle">
     <h2 id="wTitle">A 10% audit with a wrong manifest</h2>
-    <p>This election has five containers and 170 ballots. Alice won, 88 votes to 82. Pick what's wrong with the manifest, then draw samples and watch which ballots ever get picked.</p>
+    <p>This election has five containers and 170 ballots. Counting all of them gives Alice 88 votes and Bob 82. Pick what's wrong with the manifest, then draw samples and watch which ballots ever get picked.</p>
     <div class="seg" role="group" aria-label="What's wrong with the manifest">
       <button id="wOk" type="button" aria-pressed="true">Nothing</button>
-      <button id="wMissing" type="button" aria-pressed="false">A container left off</button>
+      <button id="wMissing" type="button" aria-pressed="false">A tray never scanned</button>
       <button id="wLow" type="button" aria-pressed="false">A count too low</button>
       <button id="wHigh" type="button" aria-pressed="false">A count too high</button>
     </div>
@@ -372,7 +372,7 @@ sup.fn a:hover { text-decoration: underline; }
   </section>
 
   <section class="prose" aria-label="Missing ballots and an independent manifest">
-    <p>Two things follow. First, a ballot that the manifest lists but nobody can find can't simply be skipped. Careful audits treat it as the ballot most damaging to the reported outcome, so a missing ballot can only make the audit harder to pass, never easier.<sup class="fn" data-ref="evil-zombies"><a href="#ref-evil-zombies" id="cite-evil-zombies" aria-label="Reference 4">4</a></sup> Second, the manifest has to be built independently of the voting system, from the ballot accounting election workers do by hand: how many ballots are in each container, reconciled against how many voters checked in.<sup class="fn" data-ref="kir-4"><a href="#ref-kir-4" id="cite-kir-4" aria-label="Reference 5">5</a></sup> If the manifest simply copied the voting system's own totals, an attacker who controlled the system would control the manifest too. They could, for example, leave a container of altered ballots off the list, like the late mail ballots above, so the audit could never pick them.</p>
+    <p>Two things follow. First, a ballot that the manifest lists but nobody can find can't simply be skipped. Careful audits treat it as the ballot most damaging to the reported outcome, so a missing ballot can only make the audit harder to pass, never easier.<sup class="fn" data-ref="evil-zombies"><a href="#ref-evil-zombies" id="cite-evil-zombies" aria-label="Reference 4">4</a></sup> Second, the manifest has to be checked against records the voting system didn't produce: how many ballots are in each container, reconciled against how many voters checked in or had a mail ballot accepted.<sup class="fn" data-ref="kir-4"><a href="#ref-kir-4" id="cite-kir-4" aria-label="Reference 5">5</a></sup> A manifest copied from the voting system's own totals can't catch the voting system's own mistakes. If a tray is never scanned, like tray 3 above, the system's accounting won't flag it, because as far as the system knows, those ballots don't exist. Only independent information, like the voter check-in data, shows that ballots are unaccounted for. The same check also guards against deliberate changes to the system's totals.</p>
     <p>Drawing ballots one at a time doesn't make a sample less fair than grabbing a handful at once. Fifty ballots drawn one by one are just as random as fifty drawn together. Reading them in sequence only lets the audit stop early, as soon as it has seen enough.</p>
   </section>
 
@@ -1099,13 +1099,13 @@ sup.fn a:hover { text-decoration: underline; }
       { id: 'p2', name: 'Precinct 2, Election Day', ballots: mix(17, 13) },
       { id: 'm1', name: 'Mail ballots, tray 1', ballots: mix(19, 11) + mix(8, 12) },
       { id: 'm2', name: 'Mail ballots, tray 2', ballots: mix(11, 9) },
-      { id: 'late', name: 'Late-arriving mail ballots', ballots: mix(9, 21) }];
+      { id: 'm3', name: 'Mail ballots, tray 3', ballots: mix(9, 21) }];
     // what the manifest says, per scenario: listed count for each container (null = left off)
     const SCEN = {
-      ok: { btn: 'wOk', listed: { p1: 40, p2: 30, m1: 50, m2: 20, late: 30 } },
-      missing: { btn: 'wMissing', listed: { p1: 40, p2: 30, m1: 50, m2: 20, late: null } },
-      low: { btn: 'wLow', listed: { p1: 40, p2: 30, m1: 30, m2: 20, late: 30 } },
-      high: { btn: 'wHigh', listed: { p1: 40, p2: 30, m1: 50, m2: 20, late: 30 }, removed: { p1: 8 } } };
+      ok: { btn: 'wOk', listed: { p1: 40, p2: 30, m1: 50, m2: 20, m3: 30 } },
+      missing: { btn: 'wMissing', listed: { p1: 40, p2: 30, m1: 50, m2: 20, m3: null } },
+      low: { btn: 'wLow', listed: { p1: 40, p2: 30, m1: 30, m2: 20, m3: 30 } },
+      high: { btn: 'wHigh', listed: { p1: 40, p2: 30, m1: 50, m2: 20, m3: 30 }, removed: { p1: 8 } } };
     const st = { scen: 'ok', drawn: new Set() };
     // ballots physically present in each container under the current scenario
     const present = b => { const r = (SCEN[st.scen].removed || {})[b.id] || 0; return b.ballots.slice(0, b.ballots.length - r); };
@@ -1130,7 +1130,7 @@ sup.fn a:hover { text-decoration: underline; }
           const v = have[j], off = n == null || j >= n;
           return `<span class="bal ${v === 'A' ? 'a' : 'b'}${off ? ' off' : ''}${hit ? ' read' : ''}">${v}</span>`;
         }).join('');
-        const note = n == null ? `<span class="mrow-note">not on the manifest · ${have.length} ballots</span>`
+        const note = n == null ? `<span class="mrow-note">never scanned, so not on the manifest · ${have.length} ballots</span>`
           : n < have.length ? `<span class="mrow-note">manifest says ${n} · container holds ${have.length}</span>`
           : n > have.length ? `<span class="mrow-note">manifest says ${n} · container holds ${have.length}</span>`
           : `<span class="mrow-note ok">manifest says ${n} · container holds ${have.length}</span>`;
@@ -1142,13 +1142,14 @@ sup.fn a:hover { text-decoration: underline; }
       const ghosts = S.length - R, k = Math.ceil(S.length * 0.1);
       let sa = 0, sb = 0, sg = 0; S.forEach(x => { if (!st.drawn.has(x.box + ':' + x.j)) return; x.vote === 'A' ? sa++ : x.vote === 'B' ? sb++ : sg++; });
       const pct = x => (100 * x).toFixed(1) + '%';
-      $('wOut').innerHTML = `<p>The manifest lists <b>${S.length}</b> ballots; the containers hold <b>${T}</b>. A 10% audit draws <b>${k}</b> of the listed ballots.</p>` +
+      $('wOut').innerHTML = (st.scen === 'missing' ? (() => { const sc = BOXES.filter(b => L[b.id] != null).flatMap(b => [...present(b)]), ra = sc.filter(v => v === 'A').length;
+          return `<p>Reported result, from the ballots that were scanned: <b>${ra}</b> for Alice, <b>${sc.length - ra}</b> for Bob. Voters who checked in or had a mail ballot accepted: <b>${T}</b>.</p>`; })() : '') + `<p>The manifest lists <b>${S.length}</b> ballots; the containers hold <b>${T}</b>. A 10% audit draws <b>${k}</b> of the listed ballots.</p>` +
         `<p>Ballots that could ever be drawn: <b>${R} of ${T}</b>${R < T ? ` (the other ${T - R} have no chance at all)` : ', every one of them'}.${ghosts ? ` Listed ballots that aren't there: <b>${ghosts}</b>.` : ''}</p>` +
         `<p>Alice's share of the votes: <b>${pct(A / T)}</b> in the whole election, <b class="${Math.abs(RA / R - A / T) > 0.004 ? 'tie' : ''}">${pct(RA / R)}</b> among the ballots the audit can reach. Samples from this manifest average ${pct(RA / R)}.</p>` +
         `<p>This sample: <b>${sa}</b> for Alice, <b>${sb}</b> for Bob${sg ? `, and <b class="tie">${sg}</b> draw${sg === 1 ? '' : 's'} that point to a ballot that isn't there` : ''}.</p>`;
       $('wNote').textContent = {
         ok: 'Every ballot has the same 10% chance of being picked. Draw a few samples: some lean toward Alice and some toward Bob, but on average they match the whole election.',
-        missing: 'The late-arriving mail ballots were never logged, so they never got ballot numbers. None of their 30 ballots can be drawn, and they leaned toward Bob, so on average, samples from this manifest make Alice look stronger than she is. The sample is random, but it\'s a random sample of the wrong list. The audit is also smaller than it should be: 10% of 140, not 10% of 170.',
+        missing: 'Tray 3 was never scanned: it was moved into the room of counted ballots by mistake. The voting system never saw its 30 ballots, so they aren\'t in the reported result, and a manifest built from the voting system\'s own totals leaves them off too. Samples from that manifest agree with the reported result, because they\'re drawn from the same 140 ballots. The audit would pass, and nothing in it would hint that 30 ballots were never counted. Only a check against information the voting system didn\'t produce shows the problem: 170 voters checked in or had a mail ballot accepted, but the manifest accounts for only 140.',
         low: 'Tray 1 was recorded as 30 ballots when it holds 50, perhaps because a second bundle was added after it was counted. Only its first 30 ballots ever get numbers. The other 20 can\'t be drawn, and because they happen to lean toward Bob, the samples lean toward Alice. Nothing in a sample would reveal this.',
         high: 'The manifest says Precinct 1\'s box holds 40 ballots, but only 32 are there. Draws that land on the missing 8 point to nothing. A traditional audit might just draw again and move on, which hides the fact that 8 ballots have gone missing. A risk-limiting audit counts each of those draws as a vote for the candidate who reportedly lost.'
       }[st.scen];
