@@ -220,7 +220,7 @@ sup.fn a:hover { text-decoration: underline; }
   <section class="prose" aria-label="Why the order of voting doesn't matter">
     <p>So which of these paths is the election? None of them in particular, or all of them at once. Every one ends at the same result, and nothing about the election picks one out. It's tempting to picture an audit as replaying the election ballot by ballot, in the order people voted. There is no such order. Two people can mark their ballots at the same moment. Ballots from different polling places are handled in different rooms, and mail ballots arrive over weeks.</p>
     <p>None of that matters to the audit. Once the polls close, what's left is a pile of paper whose count no longer changes. The auditor creates an order by taking ballots out one at a time. Every sequence on this page is an order of <strong>taking ballots out</strong>, never an order of voting.</p>
-    <p>If the auditor counted every ballot, the order still wouldn't matter: every path ends at the same result. But the whole point of an audit like this is to avoid reading every ballot where possible. An auditor who stops partway sees only the start of one path, and the start of a path can be far from where it ends. So order does matter, but not in the way you might expect. The sequence itself doesn't carry any information. What matters is that the order decides which ballots the auditor has read by the time they stop. If the box isn't mixed first, that can be a very lopsided set.</p>
+    <p>If the auditor counted every ballot, the order still wouldn't matter: every path ends at the same result. But the whole point of an audit like this is to avoid reading every ballot where possible. An auditor who stops partway sees only the start of one path, and the start of a path can be far from where it ends. So order does matter, but not in the way you might expect. The sequence itself doesn't carry any information. What matters is that the order decides which ballots the auditor has read by the time they stop, and the auditor treats those ballots as a fair sample of the whole box. If the box isn't mixed first, they may not be.</p>
   </section>
 
   <section class="figure" aria-labelledby="aTitle">
@@ -246,7 +246,9 @@ sup.fn a:hover { text-decoration: underline; }
   </section>
 
   <section class="prose" aria-label="Which ballots, not which order">
-    <p>Notice that the sequence itself was never the problem. Read those same first 12 ballots in any other order and the path ends at the same point, still leaning toward Bob. What went wrong is which ballots made it into the sample. Shuffling fixes that by giving every set of ballots the same chance of being the one read. Once the set is fair, the order within it doesn't matter: any path to the same point is the same sample, read differently.</p>
+    <p>Notice that the sequence itself was never the problem. Read those same first 12 ballots in any other order and the path ends at the same point, still leaning toward Bob. What went wrong is which ballots made it into the sample, and nothing in the sample warns you.</p>
+    <p>It's like poker with a badly shuffled deck. Everyone at the table works out their chances assuming every hand was equally likely to be dealt. If the deck wasn't really shuffled, the hands still look like ordinary hands, and nobody can tell from their own cards that someone has an advantage. An auditor works the same way: the math assumes the ballots read were a fair draw from the box.</p>
+    <p>Shuffling is what makes that assumption true, by giving every set of ballots the same chance of being the one read. Once the set is fair, the order within it doesn't matter: any path to the same point is the same sample, read differently.</p>
   </section>
 
   <section class="prose" aria-labelledby="s2">
