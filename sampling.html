@@ -493,12 +493,13 @@ sup.fn a:hover { text-decoration: underline; }
   <section class="prose" aria-labelledby="s3">
     <h2 id="s3">Turning the question around</h2>
     <p>So far we knew what was in the box and asked what a sample would look like. An auditor has the opposite problem: they hold a sample and want to know what's in the box. To keep things simple, imagine the whole election is a single box of 1,000 ballots. A real election spreads its ballots across many containers, but once they're listed on a manifest and numbered, drawing from them works just like drawing from one big box.</p>
-    <p>The same counting answers it, run backwards. Each possible result of the election is a different box: 600 votes for Alice and 400 for Bob, or 550 and 450, or a tie, and so on. For each of those possible boxes, ask: if the election really came out that way, how often would a fair draw give exactly the sample we're holding? If the answer is “often,” that result explains the sample well, and it stays in the running. If the answer is “almost never,” that result has a hard time explaining the sample, and it starts to look doubtful. A sample of 50 ballots with 32 votes for Alice, for example, is just what you'd expect from a box with 600 votes for Alice, but a box with only 200 would almost never produce it. Each possible result is checked on its own, so there's no need to guess beforehand which results were likely.</p>
+    <p>The same counting answers it, run backwards. Each possible result of the election is a different box: 600 votes for Alice and 400 for Bob, or 550 and 450, or a tie, and so on. For each of those possible boxes, ask: if the election really came out that way, how often would a fair draw give a sample like the one we're holding? If the answer is “often,” that result explains the sample well, and it stays in the running. If the answer is “almost never,” that result has a hard time explaining the sample, and it starts to look doubtful. A sample of 50 ballots with 32 votes for Alice, for example, is just what you'd expect from a box with 600 votes for Alice, but a box with only 200 would almost never produce it. Each possible result is checked on its own, so there's no need to guess beforehand which results were likely.</p>
   </section>
 
   <section class="figure" aria-labelledby="dTitle">
-    <h2 id="dTitle">Which boxes could have produced this sample?</h2>
-    <p>This box holds 1,000 ballots. The reported result is 600 votes for Alice and 400 for Bob, but the auditor can't see inside. Each draw adds one ballot to the sample. The curve shows, for every possible number of votes for Alice in the box, how often a fair draw would produce exactly this sample. At first the box really does hold 600 to 400. Use the buttons under <b>What's really in the box</b>, at the bottom of the figure, to change what's inside: a tie, or a win for Bob. Then draw again and watch where the curve settles.</p>
+    <h2 id="dTitle">Which elections could have produced this sample?</h2>
+    <p>This box holds 1,000 ballots. The reported result is 600 votes for Alice and 400 for Bob, but the auditor can't see inside. Each draw adds one ballot to the sample. For every election the box could hold, from 0 votes for Alice to 1,000, the curve shows how often a fair draw would give a sample with at least as many votes for Alice as this one. Where the curve falls below the dashed line, a sample like this would turn up less than 1 time in 20, so the figure shades that election as ruled out.</p>
+    <p>The switch above the chart asks a slightly different question instead: how often each election would give exactly this sample. At first the box really does hold 600 to 400. Use the buttons under <b>What's really in the box</b>, at the bottom of the figure, to change what's inside: a tie, or a win for Bob. Then draw again and watch where the curve settles.</p>
     <div class="row">
       <div class="actions">
         <button id="dDraw1" class="primary" type="button">Draw a ballot</button>
@@ -508,9 +509,16 @@ sup.fn a:hover { text-decoration: underline; }
       </div>
       <div class="readout"><span>drawn <b id="dM">0</b></span><span>Alice <b id="dA">0</b> · Bob <b id="dB">0</b></span></div>
     </div>
-    <div class="canvas-box"><canvas id="dCv" role="img" aria-label="For each possible count of votes for Alice in the box, the chance of drawing exactly this sample"></canvas><div id="dTip" class="tip" hidden></div></div>
+    <div class="row">
+      <span class="chips-label" id="dViewLbl">The curve shows</span>
+      <div class="seg" role="group" aria-labelledby="dViewLbl">
+        <button id="dViewTail" type="button" aria-pressed="true">This many votes for Alice or more</button>
+        <button id="dViewExact" type="button" aria-pressed="false">Exactly this sample</button>
+      </div>
+    </div>
+    <div class="canvas-box"><canvas id="dCv" role="img" aria-label="For each possible count of votes for Alice in the box, the chance of a sample like this one"></canvas><div id="dTip" class="tip" hidden></div></div>
     <div id="dOut" class="out" aria-live="polite"></div>
-    <p class="caption">Start over and draw one ballot. If it has a vote for Alice, the curve becomes a straight ramp: a box with more votes for Alice hands you a ballot with a vote for Alice more often. One ballot does tell you something; it just doesn't tell you much. As the sample grows, the curve narrows around boxes that look like the sample.</p>
+    <p id="dCap" class="caption"></p>
     <div class="row">
       <span class="chips-label" id="dTruthLbl">What's really in the box</span>
       <div class="seg" role="group" aria-labelledby="dTruthLbl">
@@ -523,8 +531,8 @@ sup.fn a:hover { text-decoration: underline; }
 
   <section class="prose" aria-labelledby="s4">
     <h2 id="s4">The result that matters</h2>
-    <p>An audit doesn't need the exact count. It only needs to rule out the results in which the reported winner lost. The hardest of those to rule out is a tie, 500 to 500, because it sits closest to an Alice win. If an Alice-leaning sample would be rare from a tied box, it's rarer still from any box where Bob won. Making the case against the tie is enough.</p>
-    <p>There are two natural ways to make that case. The first asks only how surprising the sample would be if the box were tied. Flip a coin 100 times, get 60 heads, and you'll doubt the coin without doing any math. The second also uses the reported result, and asks how much more often a 600–400 box would produce the sample than a tied one. Both lead to valid audits.</p>
+    <p>An audit doesn't need the exact count. It only needs to rule out the results in which the reported winner lost. The hardest of those to rule out is a tie, 500 to 500, because it sits closest to an Alice win. If an Alice-leaning sample would be rare from a tied box, it's rarer still from any box where Bob won. You can see this in the first view of the figure: the curve only rises from left to right, so once the tie drops below the line, every election Bob won is already below it. Making the case against the tie is enough.</p>
+    <p>There are two natural ways to make that case, and they match the figure's two views. The first asks only how surprising the sample would be if the election were tied. Flip a coin 100 times, get 60 heads, and you'll doubt the coin without doing any math. The second, in the “exactly this sample” view, also uses the reported result, and asks how much more often a 600–400 election would produce the sample than a tie would. Statisticians call that comparison a likelihood ratio. Both lead to valid audits.</p>
     <p>One trap catches both. An audit that checks after every ballot gets many chances to be fooled, so it can't simply stop the first time the sample looks rare. The next part shows how ballot polling audits handle that.</p>
     <a class="next" href="ballot-polling.html">Next: ballot polling audits →</a>
     <p class="fine" style="margin-top:1rem">Simplifications on this page: one contest, two candidates, one vote per ballot, no blank or invalid ballots, and ballots aren't put back after they're drawn.</p>
@@ -815,50 +823,72 @@ sup.fn a:hover { text-decoration: underline; }
   // ============================================================ D: which boxes fit the sample
   const FD = (() => {
     const N = 1000, REP = 600, TIE = 500, BOXES = { rep: 600, tie: 500, bob: 450 };
-    const st = { box: 'rep', ballots: null, m: 0, a: 0, b: 0 };
-    let curve = new Float64Array(N + 1), geom = null;
+    const st = { box: 'rep', view: 'tail', ballots: null, m: 0, a: 0, b: 0 }, CUT = 0.05;
+    let curve = new Float64Array(N + 1), tail = new Float64Array(N + 1), geom = null;
     function refill() { const A = BOXES[st.box], arr = new Uint8Array(N); arr.fill(1, 0, A); st.ballots = shuffle(arr); st.m = 0; st.a = 0; st.b = 0; }
     function draw(k) { for (let i = 0; i < k && st.m < N; i++) { st.ballots[st.m] ? st.a++ : st.b++; st.m++; } }
-    function compute() { let mx = 0, peak = 0; for (let A = 0; A <= N; A++) { const v = hyp(N, A, st.m, st.a); curve[A] = v; if (v > mx) { mx = v; peak = A; } } return { mx, peak }; }
-    function chart({ mx, peak }) {
-      const { ctx, w, h } = setup($('dCv'), .48, 340);
-      const pad = { l: 58, r: 16, t: 28, b: 42 }, pw = w - pad.l - pad.r, ph = h - pad.t - pad.b;
-      const ymax = mx * 1.12, X = A => pad.l + A / N * pw, Y = v => pad.t + ph - v / ymax * ph;
+    function compute() { let mx = 0, peak = 0;
+      for (let A = 0; A <= N; A++) { const v = hyp(N, A, st.m, st.a); curve[A] = v; if (v > mx) { mx = v; peak = A; } }
+      // tail: chance a box with A votes for Alice gives at least st.a in a sample of st.m
+      for (let A = 0; A <= N; A++) { let t = 0; for (let x = st.a; x <= Math.min(st.m, A); x++) t += hyp(N, A, st.m, x); tail[A] = Math.min(1, t); }
+      let lo = -1; for (let A = 0; A <= N; A++) if (tail[A] < CUT) lo = A;
+      return { mx, peak, lo }; }
+    function chart({ mx, peak, lo }) {
+      const T = st.view === 'tail', val = T ? tail : curve;
+      const narrow = $('dCv').parentElement.clientWidth < 560, { ctx, w, h } = setup($('dCv'), narrow ? .85 : .48, 340);
+      const pad = { l: narrow ? 50 : 58, r: 16, t: 28, b: 42 }, pw = w - pad.l - pad.r, ph = h - pad.t - pad.b;
+      const ymax = T ? 1.08 : mx * 1.12, X = A => pad.l + A / N * pw, Y = v => pad.t + ph - v / ymax * ph;
       geom = { pad, pw };
       ctx.font = '11px ' + C.mono; ctx.lineWidth = 1;
       for (let A = 0; A <= N; A += 100) { ctx.strokeStyle = C.grid; seg(ctx, [X(A), pad.t], [X(A), pad.t + ph]);
-        ctx.fillStyle = C.ink3; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(A, X(A), pad.t + ph + 6); }
-      const sy = niceStep(ymax, 4);
+        if (narrow && A % 250) continue; ctx.fillStyle = C.ink3; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(A, X(A), pad.t + ph + 6); }
+      if (narrow) { ctx.fillStyle = C.ink3; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(250, X(250), pad.t + ph + 6); ctx.fillText(750, X(750), pad.t + ph + 6); }
+      const sy = T ? .25 : niceStep(ymax, 4);
       for (let v = 0; v <= ymax + 1e-15; v += sy) { ctx.strokeStyle = v ? C.grid : C.ink3; seg(ctx, [pad.l, Y(v)], [pad.l + pw, Y(v)]);
         ctx.fillStyle = C.ink3; ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(fmtPct(v), pad.l - 6, Y(v)); }
-      ctx.beginPath(); ctx.moveTo(X(0), Y(0)); for (let A = 0; A <= N; A++) ctx.lineTo(X(A), Y(curve[A])); ctx.lineTo(X(N), Y(0)); ctx.closePath();
+      if (T && lo >= 0) { // ruled-out elections
+        ctx.fillStyle = rgba(C.tie, .10); ctx.fillRect(X(0), pad.t, X(lo) - X(0), ph);
+        ctx.fillStyle = C.tie; ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.font = '11px ' + C.mono;
+        if (X(lo) - X(0) > 80) ctx.fillText('ruled out', X(0) + 6, pad.t + 4); }
+      ctx.beginPath(); ctx.moveTo(X(0), Y(0)); for (let A = 0; A <= N; A++) ctx.lineTo(X(A), Y(val[A])); ctx.lineTo(X(N), Y(0)); ctx.closePath();
       ctx.fillStyle = rgba(C.rep, .15); ctx.fill();
-      ctx.beginPath(); for (let A = 0; A <= N; A++) A ? ctx.lineTo(X(A), Y(curve[A])) : ctx.moveTo(X(A), Y(curve[A])); ctx.strokeStyle = C.rep; ctx.lineWidth = 2; ctx.stroke();
+      ctx.beginPath(); for (let A = 0; A <= N; A++) A ? ctx.lineTo(X(A), Y(val[A])) : ctx.moveTo(X(A), Y(val[A])); ctx.strokeStyle = C.rep; ctx.lineWidth = 2; ctx.stroke();
+      if (T) { ctx.strokeStyle = C.ink2; ctx.lineWidth = 1; ctx.setLineDash([4, 4]); seg(ctx, [pad.l, Y(CUT)], [pad.l + pw, Y(CUT)]); ctx.setLineDash([]);
+        ctx.fillStyle = C.ink2; ctx.textAlign = 'right'; ctx.textBaseline = 'bottom'; ctx.font = '11px ' + C.mono; ctx.fillText('1 in 20', pad.l + pw - 4, Y(CUT) - 3); }
       // tie and reported markers
-      const mark = (A, col, txt, dash) => { ctx.strokeStyle = col; ctx.lineWidth = 1.5; ctx.setLineDash(dash); seg(ctx, [X(A), pad.t], [X(A), pad.t + ph]); ctx.setLineDash([]);
-        ctx.fillStyle = col; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.font = '12px ' + C.mono; ctx.fillText(txt, X(A), pad.t - 6); ctx.font = '11px ' + C.mono; };
-      mark(TIE, C.tie, 'tie', []);
-      mark(REP, C.ink2, 'reported', [5, 4]);
-      dot(ctx, [X(TIE), Y(curve[TIE])], 5, C.tie);
-      dot(ctx, [X(REP), Y(curve[REP])], 4, C.ink2);
-      if (st.m) { dot(ctx, [X(peak), Y(mx)], 6, C.panel); dot(ctx, [X(peak), Y(mx)], 4, C.path); }
+      const mark = (A, col, txt, dash, side) => { ctx.strokeStyle = col; ctx.lineWidth = 1.5; ctx.setLineDash(dash); seg(ctx, [X(A), pad.t], [X(A), pad.t + ph]); ctx.setLineDash([]);
+        ctx.fillStyle = col; ctx.textAlign = side > 0 ? 'left' : side < 0 ? 'right' : 'center'; ctx.textBaseline = 'bottom'; ctx.font = '12px ' + C.mono; ctx.fillText(txt, X(A) + 3 * (side || 0), pad.t - 6); ctx.font = '11px ' + C.mono; };
+      mark(TIE, C.tie, 'tie', [], narrow ? -1 : 0);
+      mark(REP, C.ink2, 'reported', [5, 4], narrow ? 1 : 0);
+      dot(ctx, [X(TIE), Y(val[TIE])], 5, C.tie);
+      dot(ctx, [X(REP), Y(val[REP])], 4, C.ink2);
+      if (st.m && !T) { dot(ctx, [X(peak), Y(mx)], 6, C.panel); dot(ctx, [X(peak), Y(mx)], 4, C.path); }
       ctx.fillStyle = C.alice; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.font = '12px ' + C.mono;
-      ctx.fillText('votes for Alice in the box, out of 1,000 ballots', pad.l + pw / 2, h - 2);
+      ctx.fillText(narrow ? 'votes for Alice in the box' : 'votes for Alice in the box, out of 1,000 ballots', pad.l + pw / 2, h - 2);
       ctx.save(); ctx.translate(13, pad.t + ph / 2); ctx.rotate(-Math.PI / 2); ctx.fillStyle = C.ink2; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = '11px ' + C.mono;
-      ctx.fillText('chance of exactly this sample', 0, 0); ctx.restore();
+      ctx.fillText(T ? (narrow ? 'chance, this good or better' : 'chance of a sample this good for Alice') : (narrow ? 'chance of this sample' : 'chance of exactly this sample'), 0, 0); ctx.restore();
     }
-    function out({ peak }) {
+    function out({ peak, lo }) {
       $('dM').textContent = st.m; $('dA').textContent = st.a; $('dB').textContent = st.b;
-      if (!st.m) { $('dOut').innerHTML = '<p>No ballots drawn yet. Every box produces an empty sample, so every box fits and the curve is flat.</p>'; return; }
-      const pt = curve[TIE], pr = curve[REP];
-      let tail = 0; for (let x = st.a; x <= Math.min(st.m, TIE); x++) tail += hyp(N, TIE, st.m, x);
+      const T = st.view === 'tail';
+      $('dCap').textContent = T
+        ? 'Start over and draw one ballot. If it has a vote for Alice, the curve becomes a straight ramp: a box with more votes for Alice hands you a ballot with a vote for Alice more often. One ballot does tell you something; it just doesn\'t tell you much. As the sample grows, the curve steepens, and the shaded region creeps toward the elections that look like the sample. Because the curve only rises from left to right, once a tie is ruled out, so is every election Bob won.'
+        : 'Start over and draw one ballot. If it has a vote for Alice, the curve becomes a straight ramp: a box with more votes for Alice hands you a ballot with a vote for Alice more often. One ballot does tell you something; it just doesn\'t tell you much. As the sample grows, the curve narrows around elections that look like the sample. Statisticians call this curve the likelihood.';
+      if (!st.m) { $('dOut').innerHTML = T ? '<p>No ballots drawn yet. Every election gives a sample with 0 or more votes for Alice, so the curve sits at 100% and nothing is ruled out.</p>'
+        : '<p>No ballots drawn yet. Every election produces an empty sample, so every election fits and the curve is flat.</p>'; return; }
+      const pt = curve[TIE], pr = curve[REP], tt = tail[TIE];
+      if (T) {
+        const ruled = lo >= 0 ? `Elections with <b>${lo}</b> or fewer votes for Alice would give a sample this good for her less than 1 time in 20, so the sample rules them out.` : 'No election is ruled out yet: every one of them would give a sample this good for Alice at least 1 time in 20.';
+        $('dOut').innerHTML = `<p>${ruled}</p>` +
+          `<p>A tie would give a sample with <b>${st.a} or more</b> votes for Alice out of ${st.m} ballots <b class="tie">${fmtPct(tt)}</b> of the time. ` +
+          (tt < CUT ? 'The tie is ruled out, and with it every election Bob won.' : 'The tie is still in the running.') + '</p>';
+        return; }
       let rel;
-      if (pt === 0) rel = 'A tied box could never produce it.';
+      if (pt === 0) rel = 'A tie could never produce it.';
       else { const r = pr / pt; rel = r >= 1 ? `The reported result produces it about <b>${r >= 100 ? Math.round(r).toLocaleString() : r.toFixed(2)} times</b> as often.` : 'The reported result produces it less often than a tie would.'; }
       $('dOut').innerHTML =
-        `<p>Boxes holding about <b>${peak}</b> votes for Alice produce this sample most often.</p>` +
-        `<p>From a tied box, this exact sample turns up <b class="tie">${fmtPct(pt)}</b> of the time; from a 600–400 box, <b class="rep">${fmtPct(pr)}</b>. ${rel}</p>` +
-        `<p>From a tied box, a sample with <b>${st.a} or more</b> votes for Alice out of ${st.m} ballots turns up <b>${fmtPct(Math.min(1, tail))}</b> of the time.</p>`;
+        `<p>Elections with about <b>${peak}</b> votes for Alice produce this sample most often.</p>` +
+        `<p>A tie produces this exact sample <b class="tie">${fmtPct(pt)}</b> of the time; the reported 600–400 result, <b class="rep">${fmtPct(pr)}</b>. ${rel}</p>`;
     }
     const render = () => { const r = compute(); chart(r); out(r); };
     const pick = key => { st.box = key; for (const [id, k] of [['dBoxRep', 'rep'], ['dBoxTie', 'tie'], ['dBoxBob', 'bob']]) $(id).setAttribute('aria-pressed', String(k === key));
@@ -867,13 +897,16 @@ sup.fn a:hover { text-decoration: underline; }
     $('dDraw10').addEventListener('click', () => { draw(10); render(); });
     $('dDraw50').addEventListener('click', () => { draw(50); render(); });
     $('dReset').addEventListener('click', () => { refill(); render(); });
+    const view = v => { st.view = v; $('dViewTail').setAttribute('aria-pressed', String(v === 'tail')); $('dViewExact').setAttribute('aria-pressed', String(v === 'exact')); render(); };
+    $('dViewTail').addEventListener('click', () => view('tail'));
+    $('dViewExact').addEventListener('click', () => view('exact'));
     $('dBoxRep').addEventListener('click', () => pick('rep'));
     $('dBoxTie').addEventListener('click', () => pick('tie'));
     $('dBoxBob').addEventListener('click', () => pick('bob'));
     (() => { const cv = $('dCv'), tip = $('dTip');
       const move = e => { if (!geom) return; const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
         const A = Math.round((x - geom.pad.l) / geom.pw * N); if (A < 0 || A > N) { tip.hidden = true; return; }
-        tip.innerHTML = `box: ${A} Alice, ${N - A} Bob<br>this sample: ${fmtPct(curve[A])}`; tip.hidden = false;
+        tip.innerHTML = `election: ${A} Alice, ${N - A} Bob<br>${st.view === 'tail' ? `${st.a} or more for Alice: ${fmtPct(tail[A])}` : `this sample: ${fmtPct(curve[A])}`}`; tip.hidden = false;
         const tw = tip.offsetWidth; tip.style.left = Math.max(0, x + 14 + tw > r.width ? x - 14 - tw : x + 14) + 'px'; tip.style.top = Math.max(0, y - 10) + 'px'; };
       cv.addEventListener('pointermove', move); cv.addEventListener('pointerdown', move); cv.addEventListener('pointerleave', () => tip.hidden = true); })();
     refill(); draw(20);
