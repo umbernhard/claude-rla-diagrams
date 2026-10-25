@@ -123,6 +123,7 @@ sup.fn a:hover { text-decoration: underline; }
 @media (max-width: 520px) { .numpad { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
 .numpad button { font: 500 1.1rem/1 var(--f-mono); padding: .8rem 0; font-variant-numeric: tabular-nums; }
 .numpad button:disabled { opacity: .45; cursor: default; }
+.numpad button[aria-pressed=true] { background: var(--ink); color: var(--bg); border-color: var(--ink); opacity: 1; }
 .pick { font: 500 .85rem/1 var(--f-mono); font-variant-numeric: tabular-nums; min-width: 3.4em; padding: .4rem .45rem; border-radius: 5px; text-align: center; border: 1px solid var(--rule); background: var(--panel); color: var(--ink); display: inline-grid; gap: .2rem; }
 .pick small { font-size: .65rem; color: var(--ink-3); }
 .pick.prev { color: var(--ink-3); background: var(--bg); }
@@ -134,6 +135,24 @@ sup.fn a:hover { text-decoration: underline; }
 .pick.hit { border-color: var(--good); background: var(--good-bg); color: var(--good); }
 .pill.go { color: var(--good); background: var(--good-bg); }
 .fine { font-size: .85rem; color: var(--ink-3); }
+/* spot the real shuffle */
+.srows { display: grid; gap: .5rem; }
+.srow { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .35rem .75rem; align-items: center; text-align: left; width: 100%; padding: .6rem .7rem; background: var(--bg); border: 1px solid var(--rule); border-radius: 8px; font: inherit; color: var(--ink); cursor: pointer; }
+.srow:hover:not(:disabled) { border-color: var(--ink-3); }
+.srow:disabled { cursor: default; opacity: 1; }
+.srow .slab { font: 500 .72rem/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.srow .balrow { gap: 3px; }
+.srow .bal { opacity: 1; color: var(--panel); }
+.srow .bal.a { background: var(--alice); border-color: var(--alice); }
+.srow .bal.b { background: var(--bob); border-color: var(--bob); }
+.srow .bal.streak { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--tie); }
+.srow .sstat { grid-column: 2; font: 400 .82rem/1.3 var(--f-mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.srow.picked { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.srow.real { border-color: var(--good); background: var(--good-bg); }
+.srow.real.picked { box-shadow: 0 0 0 1px var(--good); }
+.srow .tag { font: 500 .75rem/1 var(--f-body); padding: .3rem .5rem; border-radius: 999px; margin-left: .4rem; text-transform: none; letter-spacing: 0; }
+.srow .tag.real { color: var(--good); background: var(--panel); }
+.srow .tag.fake { color: var(--ink-3); background: var(--panel); }
 /* ballot manifest figures */
 .mtab { width: 100%; border-collapse: collapse; font-size: .88rem; font-variant-numeric: tabular-nums; }
 .mtab th { font: 500 .7rem/1.2 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); text-align: left; padding: .35rem .5rem; border-bottom: 1px solid var(--rule); }
@@ -261,11 +280,18 @@ sup.fn a:hover { text-decoration: underline; }
     <p id="rPrompt">Go with your gut. Don't think about it too hard.</p>
     <div class="numpad" id="rPad" role="group" aria-label="Numbers 1 to 10"></div>
     <div id="rMsg" class="out" aria-live="polite"></div>
-    <div id="rCharts" class="pair" hidden>
-      <div class="canvas-box"><canvas id="rMine" role="img" aria-label="How often you picked each number"></canvas></div>
-      <div class="canvas-box"><canvas id="rDie" role="img" aria-label="How often a fair ten-sided die rolled each number"></canvas></div>
+  </section>
+
+  <section class="figure" aria-labelledby="sTitle">
+    <h2 id="sTitle">Spot the real shuffle</h2>
+    <p>Each row is 20 ballots, read one at a time from a box with as many votes for <span class="who-a">Alice</span> as for <span class="who-b">Bob</span>. Only one row came from a real shuffle. The other three were made up to look random. Which one is real?</p>
+    <div id="sRows" class="srows" role="group" aria-label="Four rows of ballots; pick the one you think came from a real shuffle"></div>
+    <div id="sOut" class="out" aria-live="polite"></div>
+    <div class="row">
+      <div class="actions"><button id="sAgain" type="button">Try another set</button></div>
+      <span id="sScore" class="readout"></span>
     </div>
-    <div class="actions"><button id="rReset" type="button">Start over</button></div>
+    <p class="caption">The page generates the made-up rows to copy what studies find when people try to write down a random sequence: they switch between the two options more often than chance would, and they avoid long streaks.<sup class="fn" data-ref="falk-konold"><a href="#ref-falk-konold" id="cite-falk-konold" aria-label="Reference 1">1</a></sup><sup class="fn" data-ref="barhillel-wagenaar"><a href="#ref-barhillel-wagenaar" id="cite-barhillel-wagenaar" aria-label="Reference 2">2</a></sup> The real row is a fresh random draw each time, so now and then it looks tame too. Over a few sets, though, it usually has the longest streak.</p>
   </section>
 
   <section class="prose" aria-label="Random numbers in a real audit">
@@ -314,7 +340,7 @@ sup.fn a:hover { text-decoration: underline; }
   </section>
 
   <section class="prose" aria-label="Seeds in a real audit">
-    <p>In a real audit, then, the shuffle happens on paper rather than by shaking a box. Election offices keep a list of where every ballot is stored, called a ballot manifest, and use the PRNG's numbers to pick ballots from that list. In Colorado, for example, the seed is a number of at least 20 digits, made at a public meeting after Election Day by rolling a ten-sided die once per digit, and members of the public are invited to do the rolling.<sup class="fn" data-ref="co-seed"><a href="#ref-co-seed" id="cite-co-seed" aria-label="Reference 1">1</a></sup> Rhode Island's 2019 audit pilots did the same: observers rolled 20 ten-sided dice in public, which took about 14 minutes.<sup class="fn" data-ref="ri-pilot"><a href="#ref-ri-pilot" id="cite-ri-pilot" aria-label="Reference 2">2</a></sup> The public part matters. If anyone could predict which ballots would be picked, a mistake or a tampered batch could be kept out of the sample. Because the seed is rolled in the open after the election, nobody could have known in advance where the auditor would look.</p>
+    <p>In a real audit, then, the shuffle happens on paper rather than by shaking a box. Election offices keep a list of where every ballot is stored, called a ballot manifest, and use the PRNG's numbers to pick ballots from that list. In Colorado, for example, the seed is a number of at least 20 digits, made at a public meeting after Election Day by rolling a ten-sided die once per digit, and members of the public are invited to do the rolling.<sup class="fn" data-ref="co-seed"><a href="#ref-co-seed" id="cite-co-seed" aria-label="Reference 3">3</a></sup> Rhode Island's 2019 audit pilots did the same: observers rolled 20 ten-sided dice in public, which took about 14 minutes.<sup class="fn" data-ref="ri-pilot"><a href="#ref-ri-pilot" id="cite-ri-pilot" aria-label="Reference 4">4</a></sup> The public part matters. If anyone could predict which ballots would be picked, a mistake or a tampered batch could be kept out of the sample. Because the seed is rolled in the open after the election, nobody could have known in advance where the auditor would look.</p>
   </section>
 
   <section class="prose" aria-labelledby="sM">
@@ -351,7 +377,7 @@ sup.fn a:hover { text-decoration: underline; }
 
   <section class="prose" aria-label="When the manifest is wrong">
     <p>When the manifest is right, every ballot in the election has the same chance of being drawn. When it's wrong, that stops being true, and nothing in the sample itself will tell you.</p>
-    <p>To see why, take a traditional audit, the kind many states ran before risk-limiting audits: hand count a fixed percentage of the ballots, chosen at random. California's long-standing 1% manual tally, for example, hand counts every ballot from a randomly chosen 1% of precincts.<sup class="fn" data-ref="hall08-improving"><a href="#ref-hall08-improving" id="cite-hall08-improving" aria-label="Reference 3">3</a></sup> The version below draws 10% of the ballots on the manifest, one at a time, to keep it small.</p>
+    <p>To see why, take a traditional audit, the kind many states ran before risk-limiting audits: hand count a fixed percentage of the ballots, chosen at random. California's long-standing 1% manual tally, for example, hand counts every ballot from a randomly chosen 1% of precincts.<sup class="fn" data-ref="hall08-improving"><a href="#ref-hall08-improving" id="cite-hall08-improving" aria-label="Reference 5">5</a></sup> The version below draws 10% of the ballots on the manifest, one at a time, to keep it small.</p>
   </section>
 
   <section class="figure" aria-labelledby="wTitle">
@@ -377,7 +403,7 @@ sup.fn a:hover { text-decoration: underline; }
   </section>
 
   <section class="prose" aria-label="Missing ballots and an independent manifest">
-    <p>Two things follow. First, a ballot that the manifest lists but nobody can find can't simply be skipped. Careful audits treat it as the ballot most damaging to the reported outcome, so a missing ballot can only make the audit harder to pass, never easier.<sup class="fn" data-ref="evil-zombies"><a href="#ref-evil-zombies" id="cite-evil-zombies" aria-label="Reference 4">4</a></sup> Second, the manifest has to be checked against records the voting system didn't produce: how many ballots are in each container, reconciled against how many voters checked in or had a mail ballot accepted.<sup class="fn" data-ref="kir-4"><a href="#ref-kir-4" id="cite-kir-4" aria-label="Reference 5">5</a></sup> A manifest copied from the voting system's own totals can't catch the voting system's own mistakes. If a tray is never scanned, like tray 3 above, the system's accounting won't flag it, because as far as the system knows, those ballots don't exist. Only independent information, like the voter check-in data, shows that ballots are unaccounted for. The same check also guards against deliberate changes to the system's totals.</p>
+    <p>Two things follow. First, a ballot that the manifest lists but nobody can find can't simply be skipped. Careful audits treat it as the ballot most damaging to the reported outcome, so a missing ballot can only make the audit harder to pass, never easier.<sup class="fn" data-ref="evil-zombies"><a href="#ref-evil-zombies" id="cite-evil-zombies" aria-label="Reference 6">6</a></sup> Second, the manifest has to be checked against records the voting system didn't produce: how many ballots are in each container, reconciled against how many voters checked in or had a mail ballot accepted.<sup class="fn" data-ref="kir-4"><a href="#ref-kir-4" id="cite-kir-4" aria-label="Reference 7">7</a></sup> A manifest copied from the voting system's own totals can't catch the voting system's own mistakes. If a tray is never scanned, like tray 3 above, the system's accounting won't flag it, because as far as the system knows, those ballots don't exist. Only independent information, like the voter check-in data, shows that ballots are unaccounted for. The same check also guards against deliberate changes to the system's totals.</p>
     <p>Drawing ballots one at a time doesn't make a sample less fair than grabbing a handful at once. Fifty ballots drawn one by one are just as random as fifty drawn together. Reading them in sequence only lets the audit stop early, as soon as it has seen enough.</p>
   </section>
 
@@ -461,6 +487,8 @@ sup.fn a:hover { text-decoration: underline; }
     <h2 id="refsT">References</h2>
     <p class="fine">See also the <a href="references.html">full reading list</a>.</p>
     <ol>
+      <li id="ref-falk-konold" data-ref="falk-konold">Ruma Falk and Clifford Konold, <a href="https://doi.org/10.1037/0033-295X.104.2.301">Making sense of randomness: Implicit encoding as a basis for judgment</a>, <i>Psychological Review</i> 104(2):301–318, 1997. <a href="#cite-falk-konold" aria-label="Back to text">↩</a></li>
+      <li id="ref-barhillel-wagenaar" data-ref="barhillel-wagenaar">Maya Bar-Hillel and Willem A. Wagenaar, <a href="https://doi.org/10.1016/0196-8858(91)90029-I">The perception of randomness</a>, <i>Advances in Applied Mathematics</i> 12(4):428–454, 1991. <a href="#cite-barhillel-wagenaar" aria-label="Back to text">↩</a></li>
       <li id="ref-co-seed" data-ref="co-seed">Colorado Secretary of State, <a href="https://coloradosos.gov/pubs/elections/RLA/2024/primary/noticePublicMeeting.html">Notice of Public Meeting to Establish the Risk Limiting Audit Random Seed</a>, June 2024 primary election. <a href="#cite-co-seed" aria-label="Back to text">↩</a></li>
       <li id="ref-ri-pilot" data-ref="ri-pilot">Rhode Island RLA Working Group, <a href="https://www.brennancenter.org/our-work/research-reports/pilot-implementation-study-risk-limiting-audit-methods-state-rhode-island"><i>Pilot Implementation Study of Risk-Limiting Audit Methods in the State of Rhode Island</i></a>, Brennan Center for Justice, September 2019, pp. 28 and 33. <a href="#cite-ri-pilot" aria-label="Back to text">↩</a></li>
       <li id="ref-hall08-improving" data-ref="hall08-improving">Joseph Lorenzo Hall, <a href="https://static.usenix.org/events/evt08/tech/full_papers/hall/hall.pdf">Improving the Security, Transparency, and Efficiency of California's 1% Manual Tally Procedures</a>, USENIX EVT 2008. <a href="#cite-hall08-improving" aria-label="Back to text">↩</a></li>
@@ -902,57 +930,58 @@ sup.fn a:hover { text-decoration: underline; }
 
   // ============================================================ R: pick a number
   const FR = (() => {
-    const N = 30, st = { picks: [], die: [] };
+    const st = { pick: null };
     const pad = $('rPad');
     pad.innerHTML = Array.from({ length: 10 }, (_, i) => `<button type="button" data-n="${i + 1}">${i + 1}</button>`).join('');
-    const repeats = arr => arr.reduce((c, v, i) => c + (i && v === arr[i - 1] ? 1 : 0), 0);
-    const counts = arr => { const c = new Array(11).fill(0); arr.forEach(v => c[v]++); return c; };
-    function chart(id, arr, title, col, ymax) {
-      const { ctx, w, h } = setup($(id), .62, 260);
-      const pad = { l: 30, r: 8, t: 22, b: 26 }, pw = w - pad.l - pad.r, ph = h - pad.t - pad.b, c = counts(arr), slot = pw / 10;
-      const Y = v => pad.t + ph - v / ymax * ph, X = n => pad.l + slot * (n - .5);
-      ctx.font = '11px ' + C.mono; ctx.lineWidth = 1;
-      const sy = Math.max(1, niceStep(ymax, 4));
-      for (let v = 0; v <= ymax; v += sy) { ctx.strokeStyle = v ? C.grid : C.ink3; seg(ctx, [pad.l, Y(v)], [pad.l + pw, Y(v)]);
-        ctx.fillStyle = C.ink3; ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(v, pad.l - 5, Y(v)); }
-      for (let n = 1; n <= 10; n++) {
-        if (c[n]) { ctx.fillStyle = rgba(col, .6); ctx.fillRect(X(n) - slot * .35, Y(c[n]), slot * .7, Y(0) - Y(c[n])); }
-        ctx.fillStyle = C.ink2; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(n, X(n), Y(0) + 6);
-      }
-      ctx.setLineDash([5, 4]); ctx.strokeStyle = C.ink2; seg(ctx, [pad.l, Y(N / 10)], [pad.l + pw, Y(N / 10)]); ctx.setLineDash([]);
-      ctx.fillStyle = C.ink; ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.font = '12px ' + C.mono; ctx.fillText(title, pad.l, 2);
-      ctx.fillStyle = C.ink3; ctx.textAlign = 'right'; ctx.font = '11px ' + C.mono; ctx.fillText('- - fair share: 3 each', pad.l + pw, 3);
-    }
     function render() {
-      const k = st.picks.length;
-      pad.querySelectorAll('button').forEach(b => b.disabled = k >= N);
-      if (k === 0) {
-        $('rPrompt').textContent = "Go with your gut. Don't think about it too hard.";
-        $('rMsg').innerHTML = ''; $('rCharts').hidden = true; return;
-      }
-      const first = st.picks[0];
-      const guess = first === 7 || first === 2
-        ? `<p>You picked <b>${first}</b>. We guessed you would: 7 and 2 are two of the most popular answers when people are asked this.</p>`
-        : `<p>You picked <b>${first}</b>. We would have guessed 7 or 2, two of the most popular answers when people are asked this.</p>`;
-      if (k < N) {
-        $('rPrompt').textContent = `Now keep going: tap ${N - k} more number${N - k === 1 ? '' : 's'}, as randomly as you can.`;
-        $('rMsg').innerHTML = guess + `<p>So far: ${st.picks.join(' ')}</p>`;
-        $('rCharts').hidden = true; return;
-      }
-      if (!st.die.length) st.die = Array.from({ length: N }, () => 1 + Math.floor(Math.random() * 10));
-      $('rPrompt').textContent = 'Here are your 30 picks next to 30 rolls of a fair ten-sided die.';
-      const rm = repeats(st.picks), rd = repeats(st.die);
-      const missM = counts(st.picks).slice(1).map((c, i) => c ? null : i + 1).filter(Boolean);
-      $('rMsg').innerHTML = guess +
-        `<p>You picked the same number twice in a row <b>${rm}</b> time${rm === 1 ? '' : 's'}. A fair die repeats about 1 roll in 10, so about <b>3</b> times in 30 rolls (this one did it ${rd} time${rd === 1 ? '' : 's'}). Most people repeat much less than that, because a repeat doesn't feel random.</p>` +
-        (missM.length ? `<p>You never picked ${missM.join(', ')}.</p>` : '');
-      $('rCharts').hidden = false;
-      const ymax = Math.max(6, ...counts(st.picks), ...counts(st.die)) + 1;
-      chart('rMine', st.picks, 'Your picks', C.alice, ymax);
-      chart('rDie', st.die, 'A fair die', C.rep, ymax);
+      pad.querySelectorAll('button').forEach(b => { b.disabled = st.pick !== null; b.setAttribute('aria-pressed', +b.dataset.n === st.pick); });
+      if (st.pick === null) { $('rPrompt').textContent = "Go with your gut. Don't think about it too hard."; $('rMsg').innerHTML = ''; return; }
+      $('rPrompt').textContent = 'Got it.';
+      $('rMsg').innerHTML = (st.pick === 7 || st.pick === 2
+        ? `<p>You picked <b>${st.pick}</b>. We guessed you would: 7 and 2 are two of the most popular answers when people are asked this.</p>`
+        : `<p>You picked <b>${st.pick}</b>. We would have guessed 7 or 2, two of the most popular answers when people are asked this.</p>`) +
+        `<p>One pick can't show much on its own. The next figure is a better test.</p>`;
     }
-    pad.addEventListener('click', e => { const b = e.target.closest('button'); if (!b || st.picks.length >= N) return; st.picks.push(+b.dataset.n); render(); });
-    $('rReset').addEventListener('click', () => { st.picks = []; st.die = []; render(); });
+    pad.addEventListener('click', e => { const b = e.target.closest('button'); if (!b || st.pick !== null) return; st.pick = +b.dataset.n; render(); });
+    render();
+    return { render };
+  })();
+
+  // ============================================================ S: spot the real shuffle
+  const FS = (() => {
+    const LEN = 20, ROWS = 4, st = { rows: [], real: 0, pick: null, tries: 0, hits: 0 };
+    const real = () => Array.from({ length: LEN }, () => Math.random() < .5 ? 'A' : 'B');
+    // what people tend to write when faking randomness: switch about two times in three, never more than 3 in a row
+    const fake = () => { const out = [Math.random() < .5 ? 'A' : 'B']; let run = 1;
+      while (out.length < LEN) { const prev = out[out.length - 1], sw = run >= 3 || Math.random() < .65, next = sw ? (prev === 'A' ? 'B' : 'A') : prev;
+        run = next === prev ? run + 1 : 1; out.push(next); }
+      return out; };
+    const stats = r => { let best = 1, bi = 0, cur = 1, sw = 0;
+      for (let i = 1; i < r.length; i++) { if (r[i] === r[i - 1]) { cur++; } else { cur = 1; sw++; } if (cur > best) { best = cur; bi = i - cur + 1; } }
+      return { best, from: bi, who: r[bi], sw }; };
+    function deal() { st.real = Math.floor(Math.random() * ROWS); st.rows = Array.from({ length: ROWS }, (_, i) => i === st.real ? real() : fake()); st.pick = null; render(); }
+    function render() {
+      const done = st.pick !== null;
+      $('sRows').innerHTML = st.rows.map((r, i) => {
+        const t = stats(r), isReal = i === st.real;
+        const chips = r.map((c, j) => `<span class="bal ${c === 'A' ? 'a' : 'b'}${done && j >= t.from && j < t.from + t.best ? ' streak' : ''}">${c}</span>`).join('');
+        const tag = done ? (isReal ? '<span class="tag real">real shuffle</span>' : '<span class="tag fake">made up</span>') : '';
+        const stat = done ? `<span class="sstat">longest streak ${t.best} (${t.who === 'A' ? 'Alice' : 'Bob'}) · switches ${t.sw} of ${LEN - 1}</span>` : '';
+        return `<button type="button" class="srow${done && i === st.pick ? ' picked' : ''}${done && isReal ? ' real' : ''}" data-i="${i}"${done ? ' disabled' : ''} aria-label="Row ${i + 1}">
+          <span class="slab">Row ${i + 1}${tag}</span><span class="balrow">${chips}</span>${stat}</button>`;
+      }).join('');
+      const R = stats(st.rows[st.real]);
+      const streak = `a streak of <b>${R.best}</b> votes for ${R.who === 'A' ? 'Alice' : 'Bob'} in a row and switches <b>${R.sw}</b> times out of ${LEN - 1}`;
+      $('sOut').innerHTML = !done ? '<p>Tap the row you think came from a real shuffle.</p>'
+        : st.pick === st.real
+          ? `<p>You found it. Row ${st.real + 1} is the real shuffle: it has ${streak}. The made-up rows switch about two times in three and never run more than 3 in a row.</p>`
+          : `<p>Row ${st.pick + 1} was made up. Row ${st.real + 1} is the real shuffle: it has ${streak}.</p><p>Most people pick a row that switches back and forth a lot, because streaks don't feel random. But in 20 truly random ballots, a streak of 4 or more happens about 3 times out of 4, and a real sequence switches only about half the time.</p>`;
+      $('sScore').innerHTML = st.tries ? `spotted <b>${st.hits} of ${st.tries}</b>` : '';
+    }
+    $('sRows').addEventListener('click', e => { const b = e.target.closest('.srow'); if (!b || st.pick !== null) return;
+      st.pick = +b.dataset.i; st.tries++; if (st.pick === st.real) st.hits++; render(); });
+    $('sAgain').addEventListener('click', deal);
+    deal();
     return { render };
   })();
 

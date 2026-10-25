@@ -7840,6 +7840,28 @@
    "url": "https://www.azfamily.com/2026/10/17/tampering-or-human-error-chandler-voting-equipment-investigated/",
    "note": "Paper trays of three ballot-on-demand printers found opened overnight at an early voting site in Maricopa County, Arizona; under investigation.",
    "source": "checked against the document or its publisher"
+  },
+  {
+   "key": "falk-konold",
+   "group": "sampling",
+   "authors": "Ruma Falk and Clifford Konold",
+   "title": "Making sense of randomness: Implicit encoding as a basis for judgment",
+   "venue": "Psychological Review 104(2):301–318",
+   "year": 1997,
+   "doi": "10.1037/0033-295X.104.2.301",
+   "note": "People judge sequences that switch more often than chance as the most random.",
+   "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "barhillel-wagenaar",
+   "group": "sampling",
+   "authors": "Maya Bar-Hillel and Willem A. Wagenaar",
+   "title": "The perception of randomness",
+   "venue": "Advances in Applied Mathematics 12(4):428–454",
+   "year": 1991,
+   "doi": "10.1016/0196-8858(91)90029-I",
+   "note": "Review of how people produce and judge random sequences.",
+   "source": "Crossref record for the DOI"
   }
  ]
 }
