@@ -576,7 +576,10 @@ sup.fn a:hover { text-decoration: underline; }
   logFact(1000);
   const shuffle = arr => { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = arr[i]; arr[i] = arr[j]; arr[j] = t; } return arr; };
   const fmtPct = x => { const p = x * 100; if (p === 0) return '0%'; if (p >= 99.95 && p <= 100) return '100%';
-    return (p >= 10 ? p.toFixed(0) : p >= 1 ? p.toFixed(1) : p >= 0.01 ? p.toPrecision(2) : p.toExponential(1)) + '%'; };
+    if (p < 0.01) return x < 1e-9 ? 'less than 1 in a billion' : `1 in ${Number((1 / x).toPrecision(2)).toLocaleString('en-US')}`;
+    return (p >= 10 ? p.toFixed(0) : p >= 1 ? p.toFixed(1) : p.toPrecision(2)) + '%'; };
+  // in a sentence: "12% of the time", "about 1 time in 83,000", "less than 1 time in a billion"
+  const often = x => { const f = fmtPct(x); return f.startsWith('less') ? 'less than 1 time in a billion' : f.startsWith('1 in') ? `about 1 time in ${f.slice(5)}` : `${f} of the time`; };
 
   // ------------------------------------------------------------- drawing helpers
   function setup(cv, aspect, maxH) {
@@ -887,7 +890,7 @@ sup.fn a:hover { text-decoration: underline; }
       const bal = `${st.m} ballot${st.m === 1 ? '' : 's'}`;
       if (one) {
         const ruled = lo >= 0 ? `Elections with <b>${lo}</b> or fewer votes for Alice would give a sample with ${st.a} or more of them less than 1 time in 20, so the sample rules them out.` : 'No election is ruled out yet: every one of them would give a sample this good for Alice at least 1 time in 20.';
-        $('dOut').innerHTML = `<p>${ruled}</p><p>A tie would give a sample with <b>${st.a} or more</b> votes for Alice out of ${bal} <b class="tie">${fmtPct(up[TIE])}</b> of the time. ` +
+        $('dOut').innerHTML = `<p>${ruled}</p><p>A tie would give a sample with <b>${st.a} or more</b> votes for Alice out of ${bal} <b class="tie">${often(up[TIE])}</b>. ` +
           (up[TIE] < CUT ? 'The tie is ruled out, and with it every election Bob won.' : 'The tie is still in the running.') + '</p>';
         return; }
       const pt = curve[TIE], pr = curve[REP], tt = tail[TIE];
@@ -897,8 +900,8 @@ sup.fn a:hover { text-decoration: underline; }
         if (hi <= N) parts.push(`elections with <b>${hi}</b> or more${lo >= 0 ? '' : ' votes for Alice'} would give ${st.a} or fewer${lo >= 0 ? '' : ' of them'} less than 1 time in 20`);
         const ruled = parts.length ? `${parts.join('; ')}. The sample rules ${parts.length > 1 ? 'both groups' : 'them'} out.` : 'No election is ruled out yet: every one of them would give a sample like this at least 1 time in 20.';
         const tieLine = down[TIE] < up[TIE]
-          ? `A tie would give a sample with <b>${st.a} or fewer</b> votes for Alice out of ${bal} <b class="tie">${fmtPct(down[TIE])}</b> of the time. ` + (down[TIE] < CUT ? 'The tie is ruled out, but from Bob\'s side: this sample points to Bob having won.' : 'The tie is still in the running.')
-          : `A tie would give a sample with <b>${st.a} or more</b> votes for Alice out of ${bal} <b class="tie">${fmtPct(up[TIE])}</b> of the time. ` + (up[TIE] < CUT ? 'The tie is ruled out, and with it every election Bob won.' : 'The tie is still in the running.');
+          ? `A tie would give a sample with <b>${st.a} or fewer</b> votes for Alice out of ${bal} <b class="tie">${often(down[TIE])}</b>. ` + (down[TIE] < CUT ? 'The tie is ruled out, but from Bob\'s side: this sample points to Bob having won.' : 'The tie is still in the running.')
+          : `A tie would give a sample with <b>${st.a} or more</b> votes for Alice out of ${bal} <b class="tie">${often(up[TIE])}</b>. ` + (up[TIE] < CUT ? 'The tie is ruled out, and with it every election Bob won.' : 'The tie is still in the running.');
         $('dOut').innerHTML = `<p>${ruled[0].toUpperCase() + ruled.slice(1)}</p><p>${tieLine}</p>`;
         return; }
       let rel;
@@ -906,7 +909,7 @@ sup.fn a:hover { text-decoration: underline; }
       else { const r = pr / pt; rel = r >= 1 ? `The reported result produces it about <b>${r >= 100 ? Math.round(r).toLocaleString() : r.toFixed(2)} times</b> as often.` : 'The reported result produces it less often than a tie would.'; }
       $('dOut').innerHTML =
         `<p>Elections with about <b>${peak}</b> votes for Alice produce this sample most often.</p>` +
-        `<p>A tie produces this exact sample <b class="tie">${fmtPct(pt)}</b> of the time; the reported 600–400 result, <b class="rep">${fmtPct(pr)}</b>. ${rel}</p>`;
+        `<p>A tie produces this exact sample <b class="tie">${often(pt)}</b>; the reported 600–400 result, <b class="rep">${often(pr)}</b>. ${rel}</p>`;
     }
     const render = () => { const r = compute(); chart(r); out(r); };
     const pick = key => { st.box = key; for (const [id, k] of [['dBoxRep', 'rep'], ['dBoxTie', 'tie'], ['dBoxBob', 'bob']]) $(id).setAttribute('aria-pressed', String(k === key));
