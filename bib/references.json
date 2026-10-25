@@ -7862,6 +7862,17 @@
    "doi": "10.1016/0196-8858(91)90029-I",
    "note": "Review of how people produce and judge random sequences.",
    "source": "Crossref record for the DOI"
+  },
+  {
+   "key": "spotify-shuffle",
+   "group": "blogs",
+   "authors": "Spotify Engineering",
+   "title": "How to shuffle songs?",
+   "venue": "Spotify Engineering blog",
+   "year": 2014,
+   "url": "https://engineering.atspotify.com/2014/02/how-to-shuffle-songs",
+   "note": "Listeners complained that a truly random shuffle sometimes played the same artist several times in a row, so Spotify switched to a shuffle that spreads each artist's songs out.",
+   "source": "checked against the document or its publisher"
   }
  ]
 }
