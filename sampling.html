@@ -163,8 +163,24 @@ sup.fn a:hover { text-decoration: underline; }
 .mtab tr.pending td { color: var(--ink-3); }
 .mtab tr.hit td { background: color-mix(in srgb, var(--reported) 12%, transparent); }
 .mtab tfoot td { border-bottom: 0; font-weight: 600; color: var(--ink); }
-.bal.n { color: var(--ink-3); font-size: .62rem; opacity: 1; }
+.bal.n { color: var(--ink-3); font-size: .62rem; opacity: 1; transition: border-color .2s, color .2s, background .2s; }
+.bal.n.c { border-color: var(--ink-3); color: var(--ink-2); }
 .bal.n.read { background: var(--reported); border-color: var(--reported); color: var(--panel); }
+.bal.n.was { border-color: var(--reported); color: var(--reported); }
+.mstage { display: grid; gap: .7rem; }
+.mgrp { display: grid; gap: .35rem; }
+.mhead { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .7rem; }
+.mhead button { padding: .35rem .6rem; font-size: .82rem; }
+.mstatus { font: 400 .8rem/1.3 var(--f-body); color: var(--good); }
+.mtag { display: none; }
+.mstage.line { display: flex; flex-wrap: wrap; gap: 3px; align-items: center; }
+.mstage.line .mgrp, .mstage.line .mrow { display: contents; }
+.mstage.line .mhead { display: none; }
+.mstage.line .mtag { display: inline-flex; align-items: center; height: 1.6em; padding: 0 .35rem 0 .4rem; margin-left: .3rem; border-left: 2px solid var(--ink-3); font: 500 .62rem/1 var(--f-mono); letter-spacing: .04em; color: var(--ink-3); white-space: nowrap; }
+.mstage.line .mtag.first { margin-left: 0; }
+.nbig { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem 1rem; }
+.nbig .num { font: 600 1.7rem/1 var(--f-mono); color: var(--reported); font-variant-numeric: tabular-nums; }
+.nbig .where { font-size: .95rem; color: var(--ink-2); }
 .bal.off { opacity: .28; border-style: dashed; }
 .bal.ghost { opacity: 1; border-style: dashed; color: var(--ink-3); background: transparent; }
 .bal.ghost.read { background: var(--tie); border-color: var(--tie); color: var(--panel); border-style: solid; }
@@ -353,26 +369,16 @@ sup.fn a:hover { text-decoration: underline; }
 
   <section class="figure" aria-labelledby="mTitle">
     <h2 id="mTitle">Build a ballot manifest</h2>
-    <p>A small election has four containers of ballots. Count each one by hand, and check the count against an independent record: the poll book voters signed at each polling place, or the log of mail ballot envelopes accepted. Each container then gets a block of ballot numbers.</p>
-    <div id="mBoxes" class="chips"></div>
+    <p>A small election has four containers of ballots. Tap <b>Count</b> on each one to count its ballots by hand. Each count is then checked against a record kept separately from the ballots: the poll book voters signed at each polling place, or the log of mail ballot envelopes accepted.</p>
+    <div id="mStage" class="mstage"></div>
     <table class="mtab" aria-label="Ballot manifest">
-      <thead><tr><th scope="col">Container</th><th scope="col" class="num">Ballots</th><th scope="col" class="num">Ballot numbers</th></tr></thead>
+      <thead><tr><th scope="col">Container</th><th scope="col" class="num">Ballots</th><th scope="col">Checked against</th></tr></thead>
       <tbody id="mRows"></tbody>
       <tfoot><tr><td>Total</td><td class="num" id="mTot">0</td><td></td></tr></tfoot>
     </table>
-    <div class="actions" id="mCountActs">
-      <button id="mCount" class="primary" type="button">Count the next container</button>
+    <div class="actions">
+      <button id="mAll" type="button">Count the rest</button>
       <button id="mReset" type="button">Start over</button>
-    </div>
-    <div id="mDrawPart" class="twin" hidden>
-      <label for="mSeed" class="chips-label">Seed, rolled in public</label>
-      <input id="mSeed" class="seedbox" type="text" autocomplete="off" spellcheck="false" value="39108723654082917365">
-      <div class="actions">
-        <button id="mDraw" class="primary" type="button">Draw a ballot</button>
-        <button id="mDraw5" type="button">Draw 5</button>
-        <button id="mClear" type="button">Clear draws</button>
-      </div>
-      <div id="mPicks" class="balrow" aria-live="polite"></div>
     </div>
     <p id="mNote" class="caption" aria-live="polite"></p>
   </section>
@@ -406,6 +412,35 @@ sup.fn a:hover { text-decoration: underline; }
 
   <section class="prose" aria-label="Missing ballots and an independent manifest">
     <p>Two things follow. First, a ballot that the manifest lists but nobody can find can't simply be skipped. Careful audits treat it as the ballot most damaging to the reported outcome, so a missing ballot can only make the audit harder to pass, never easier.<sup class="fn" data-ref="evil-zombies"><a href="#ref-evil-zombies" id="cite-evil-zombies" aria-label="Reference 7">7</a></sup> Second, the manifest has to be checked against records the voting system didn't produce: how many ballots are in each container, reconciled against how many voters checked in or had a mail ballot accepted.<sup class="fn" data-ref="kir-4"><a href="#ref-kir-4" id="cite-kir-4" aria-label="Reference 8">8</a></sup> A manifest copied from the voting system's own totals can't catch the voting system's own mistakes. If a tray is never scanned, like tray 3 above, the system's accounting won't flag it, because as far as the system knows, those ballots don't exist. Only independent information, like the voter check-in data, shows that ballots are unaccounted for. The same check also guards against deliberate changes to the system's totals.</p>
+  </section>
+
+  <section class="prose" aria-labelledby="sN">
+    <h2 id="sN">From a manifest to a sample</h2>
+    <p>With a manifest the auditor can trust, the seed can finally do its job. Notice what the manifest from earlier doesn't have: ballot numbers. Nobody writes a number on each ballot. The numbers are made up when the sample is drawn, by imagining every container on the manifest laid end to end, in the manifest's order, and counting along the line.</p>
+  </section>
+
+  <section class="figure" aria-labelledby="nTitle">
+    <h2 id="nTitle">Number the ballots, then draw</h2>
+    <p>Here is the same four-container election, counted and checked. Line the ballots up to give each one a number, then use the seed to draw.</p>
+    <div id="nStage" class="mstage"></div>
+    <div id="nBig" class="nbig" aria-live="polite" hidden></div>
+    <div class="actions" id="nLineActs">
+      <button id="nLine" class="primary" type="button">Line up the ballots and number them</button>
+    </div>
+    <div id="nDrawPart" class="twin" hidden>
+      <label for="nSeed" class="chips-label">Seed, rolled in public</label>
+      <input id="nSeed" class="seedbox" type="text" autocomplete="off" spellcheck="false" value="39108723654082917365">
+      <div class="actions">
+        <button id="nDraw" class="primary" type="button">Draw a ballot</button>
+        <button id="nDraw5" type="button">Draw 5</button>
+        <button id="nReset" type="button">Start over</button>
+      </div>
+      <div id="nPicks" class="balrow"></div>
+    </div>
+    <p id="nNote" class="caption" aria-live="polite"></p>
+  </section>
+
+  <section class="prose" aria-label="Drawing one at a time">
     <p>Drawing ballots one at a time doesn't make a sample less fair than grabbing a handful at once. Fifty ballots drawn one by one are just as random as fifty drawn together. Reading them in sequence only lets the audit stop early, as soon as it has seen enough.</p>
   </section>
 
@@ -1071,58 +1106,114 @@ sup.fn a:hover { text-decoration: underline; }
   })();
 
 
-  // ============================================================ M: build a ballot manifest
+  // ============================================================ M: build a ballot manifest (counting only)
+  const MBOXES = [
+    { name: 'Precinct 1, Election Day', tag: 'Pct 1', n: 14, check: 'Poll book: 14 voters signed' },
+    { name: 'Precinct 2, Election Day', tag: 'Pct 2', n: 9, check: 'Poll book: 9 voters signed' },
+    { name: 'Mail ballots, tray 1', tag: 'Mail 1', n: 20, check: 'Envelope log: 20 accepted' },
+    { name: 'Mail ballots, tray 2', tag: 'Mail 2', n: 12, check: 'Envelope log: 12 accepted' }];
+  const calm = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wait = ms => new Promise(r => setTimeout(r, calm() ? 0 : ms));
+  const stageHTML = (prefix, withButtons) => MBOXES.map((b, i) =>
+    `<div class="mgrp" data-b="${i}"><div class="mhead"><span class="chips-label">${b.name}</span>${withButtons ? `<button type="button" data-count="${i}">Count</button>` : ''}<span class="mstatus" id="${prefix}St${i}"></span></div>` +
+    `<div class="balrow mrow"><span class="mtag${i ? '' : ' first'}">${b.tag}</span>${Array.from({ length: b.n }, (_, j) => `<span class="bal n" data-g="${i}" data-j="${j}"></span>`).join('')}</div></div>`).join('');
+
   const FM = (() => {
-    const BOXES = [
-      { name: 'Precinct 1, Election Day', n: 14, check: '14 voters signed the poll book' },
-      { name: 'Precinct 2, Election Day', n: 9, check: '9 voters signed the poll book' },
-      { name: 'Mail ballots, tray 1', n: 20, check: '20 envelopes logged as accepted' },
-      { name: 'Mail ballots, tray 2', n: 12, check: '12 envelopes logged as accepted' }];
-    const st = { counted: 0, picks: [], ctr: 0, run: 0 };
-    const start = i => BOXES.slice(0, i).reduce((t, b) => t + b.n, 0);
-    const total = () => start(st.counted);
+    const st = { done: [], busy: new Set(), run: 0 };
+    function table() {
+      const tot = MBOXES.reduce((t, b, i) => t + (st.done[i] ? b.n : 0), 0);
+      $('mRows').innerHTML = MBOXES.map((b, i) => st.done[i]
+        ? `<tr><td><b>${b.name}</b></td><td class="num">${b.n}</td><td>${b.check} ✓</td></tr>`
+        : `<tr class="pending"><td>${b.name}</td><td class="num">?</td><td>not counted yet</td></tr>`).join('');
+      $('mTot').textContent = tot;
+      const k = st.done.filter(Boolean).length;
+      $('mAll').hidden = k === MBOXES.length;
+      $('mNote').textContent = k === 0 ? 'Nothing counted yet.'
+        : k < MBOXES.length ? `${k} of ${MBOXES.length} containers counted.`
+        : `The manifest is complete: four containers, ${tot} ballots, and every count matches a record kept apart from the ballots and the voting system. Notice what's not on it: how anyone voted, or any number for an individual ballot. A manifest only says what containers exist and how many ballots are in each.`;
+    }
+    async function count(i) {
+      if (st.done[i] || st.busy.has(i)) return;
+      st.busy.add(i); const run = st.run;
+      const btn = $('mStage').querySelector(`[data-count="${i}"]`); if (btn) { btn.disabled = true; btn.textContent = 'Counting…'; }
+      const chips = [...$('mStage').querySelectorAll(`.bal[data-g="${i}"]`)];
+      for (let j = 0; j < chips.length; j++) { if (run !== st.run) return; chips[j].textContent = j + 1; chips[j].classList.add('c'); await wait(45); }
+      if (run !== st.run) return;
+      await wait(350); if (run !== st.run) return;
+      chips.forEach(c => { c.textContent = ''; });
+      st.busy.delete(i); st.done[i] = true;
+      if (btn) btn.remove();
+      $('mSt' + i).textContent = `${MBOXES[i].n} ballots · ${MBOXES[i].check.toLowerCase()} ✓`;
+      table();
+    }
+    function reset() { st.run++; st.done = []; st.busy.clear(); $('mStage').innerHTML = stageHTML('m', true); table(); }
+    $('mStage').addEventListener('click', e => { const b = e.target.closest('[data-count]'); if (b) count(+b.dataset.count); });
+    $('mAll').addEventListener('click', async () => { for (let i = 0; i < MBOXES.length; i++) if (!st.done[i]) count(i); });
+    $('mReset').addEventListener('click', reset);
+    reset();
+    return { render: () => {} };
+  })();
+
+  // ============================================================ N: number the ballots, then draw
+  const FN = (() => {
+    const N = MBOXES.reduce((t, b) => t + b.n, 0);
+    const start = i => MBOXES.slice(0, i).reduce((t, b) => t + b.n, 0);
     const locate = r => { let i = 0; while (r > start(i + 1)) i++; return { box: i, pos: r - start(i) }; };
-    async function pickNumber(seed, i, N) { const b = await sha(seed + ',' + i); let v = 0; for (let j = 0; j < 6; j++) v = (v * 256 + b[j]) % N; return v + 1; }
-    function render() {
-      const N = total(), last = st.picks[st.picks.length - 1];
-      $('mBoxes').innerHTML = BOXES.map((b, i) => {
-        const done = i < st.counted, s0 = start(i);
-        const chips = Array.from({ length: b.n }, (_, j) => {
-          const num = s0 + j + 1, hit = done && st.picks.includes(num);
-          return `<span class="bal n${hit ? ' read' : ''}">${done ? num : ''}</span>`;
-        }).join('');
-        return `<div class="batch"><span class="chips-label">${b.name}${done ? '' : ' · not counted yet'}</span><div class="balrow">${chips}</div></div>`;
-      }).join('');
-      $('mRows').innerHTML = BOXES.map((b, i) => {
-        const done = i < st.counted, s0 = start(i), hit = last && done && locate(last).box === i;
-        return done
-          ? `<tr class="${hit ? 'hit' : ''}"><td><b>${b.name}</b><small>Matches: ${b.check}</small></td><td class="num">${b.n}</td><td class="num">${s0 + 1}–${s0 + b.n}</td></tr>`
-          : `<tr class="pending"><td>${b.name}</td><td class="num">?</td><td class="num">?</td></tr>`;
-      }).join('');
-      $('mTot').textContent = N;
-      const doneAll = st.counted === BOXES.length;
-      $('mCount').hidden = doneAll; $('mDrawPart').hidden = !doneAll;
-      $('mPicks').innerHTML = st.picks.map(r => { const { box, pos } = locate(r); return `<span class="pick"><small>ballot ${r}</small>${['Pct 1', 'Pct 2', 'Mail 1', 'Mail 2'][box]} #${pos}</span>`; }).join('');
-      if (!doneAll) $('mNote').textContent = st.counted ? `${N} ballots on the manifest so far. Ballots in a container that hasn't been counted have no numbers yet, so nothing can pick them.` : 'Nothing counted yet, so there is nothing to draw from.';
-      else if (!last) $('mNote').textContent = `The manifest is complete: ${N} ballots, numbered 1 to ${N}. Now the seed takes over. Each draw turns the seed and a counter into a number from 1 to ${N}, the same way the generators above made numbers from 1 to 10.`;
-      else { const { box, pos } = locate(last); $('mNote').textContent = `The generator gave ${last}. Ballot numbers ${start(box) + 1}–${start(box + 1)} belong to ${BOXES[box].name}, so the auditor opens that container and counts to its ballot number ${pos}. Every one of the ${N} ballots had the same 1-in-${N} chance.`; }
+    const st = { phase: 'counted', picks: [], ctr: 0, run: 0 };
+    async function pickNumber(seed, i) { const b = await sha(seed + ',' + i); let v = 0; for (let j = 0; j < 6; j++) v = (v * 256 + b[j]) % N; return v + 1; }
+    const chips = () => [...$('nStage').querySelectorAll('.bal')];
+    function base() {
+      const stage = $('nStage'); stage.className = 'mstage'; stage.innerHTML = stageHTML('n', false);
+      MBOXES.forEach((b, i) => { $('nSt' + i).textContent = `${b.n} ballots`; });
+      chips().forEach(c => { c.textContent = ''; c.classList.add('c'); });
+    }
+    async function lineUp() {
+      const run = ++st.run; st.phase = 'lining'; $('nLine').disabled = true;
+      const stage = $('nStage'), cs = chips();
+      const before = cs.map(c => c.getBoundingClientRect());
+      stage.classList.add('line');
+      if (!calm()) {
+        const after = cs.map(c => c.getBoundingClientRect());
+        cs.forEach((c, k) => { c.style.transition = 'none'; c.style.transform = `translate(${before[k].left - after[k].left}px, ${before[k].top - after[k].top}px)`; });
+        stage.offsetWidth;
+        cs.forEach((c, k) => { c.style.transition = `transform 650ms cubic-bezier(.2,.7,.2,1) ${k * 6}ms`; c.style.transform = ''; });
+        await wait(650 + cs.length * 6);
+      }
+      $('nNote').textContent = 'Now count along the line. The first ballot in the first container is ballot 1, and the numbering carries straight on from one container into the next.';
+      for (let k = 0; k < cs.length; k++) { if (run !== st.run) return; cs[k].style.transition = ''; cs[k].textContent = k + 1; await wait(28); }
+      if (run !== st.run) return;
+      st.phase = 'numbered'; render();
     }
     async function draw(k) {
-      const run = ++st.run, seed = $('mSeed').value, N = total();
+      const run = ++st.run, seed = $('nSeed').value;
       for (let t = 0; t < k && st.picks.length < N; t++) {
-        let r; do { r = await pickNumber(seed, ++st.ctr, N); if (run !== st.run) return; } while (st.picks.includes(r));
+        let r; do { r = await pickNumber(seed, ++st.ctr); if (run !== st.run) return; } while (st.picks.includes(r));
         st.picks.push(r);
       }
       render();
     }
-    $('mCount').addEventListener('click', () => { st.counted = Math.min(BOXES.length, st.counted + 1); render(); });
-    $('mReset').addEventListener('click', () => { st.counted = 0; st.picks = []; st.ctr = 0; st.run++; render(); });
-    $('mDraw').addEventListener('click', () => draw(1));
-    $('mDraw5').addEventListener('click', () => draw(5));
-    $('mClear').addEventListener('click', () => { st.picks = []; st.ctr = 0; st.run++; render(); });
-    $('mSeed').addEventListener('input', () => { st.picks = []; st.ctr = 0; st.run++; render(); });
-    render();
-    return { render };
+    function render() {
+      const numbered = st.phase === 'numbered';
+      $('nLineActs').hidden = numbered; $('nDrawPart').hidden = !numbered;
+      if (st.phase === 'counted') { $('nBig').hidden = true; $('nNote').textContent = 'The manifest lists four containers and 55 ballots, but no ballot has a number yet.'; return; }
+      if (!numbered) return;
+      const last = st.picks[st.picks.length - 1];
+      chips().forEach((c, k) => { c.classList.toggle('read', k + 1 === last); c.classList.toggle('was', k + 1 !== last && st.picks.includes(k + 1)); });
+      $('nPicks').innerHTML = st.picks.map(r => { const { box, pos } = locate(r); return `<span class="pick"><small>ballot ${r}</small>${MBOXES[box].tag} #${pos}</span>`; }).join('');
+      if (!last) { $('nBig').hidden = true; $('nNote').textContent = `Every ballot now has a number from 1 to ${N}. The seed and a counter turn into numbers in that range, the same way the generators above made numbers from 1 to 10.`; return; }
+      const { box, pos } = locate(last);
+      $('nBig').hidden = false;
+      $('nBig').innerHTML = `<span class="num">Ballot ${last}</span><span class="where">${MBOXES[box].name}, ballot ${pos} in that container</span>`;
+      $('nNote').textContent = `Ballots ${start(box) + 1} to ${start(box + 1)} are in ${MBOXES[box].name}, so the auditor opens that container and counts to its ballot ${pos}. Each of the ${N} ballots had the same 1-in-${N} chance.`;
+    }
+    function reset() { st.run++; st.phase = 'counted'; st.picks = []; st.ctr = 0; $('nLine').disabled = false; base(); render(); }
+    $('nLine').addEventListener('click', lineUp);
+    $('nDraw').addEventListener('click', () => draw(1));
+    $('nDraw5').addEventListener('click', () => draw(5));
+    $('nReset').addEventListener('click', reset);
+    $('nSeed').addEventListener('input', () => { st.run++; st.picks = []; st.ctr = 0; render(); });
+    reset();
+    return { render: () => {} };
   })();
 
   // ============================================================ W: a fixed-percentage audit with a wrong manifest
@@ -1187,7 +1278,7 @@ sup.fn a:hover { text-decoration: underline; }
       $('wNote').textContent = {
         ok: 'Every ballot has the same 10% chance of being picked. Draw a few samples: some lean toward Alice and some toward Bob, but on average they match the whole election.',
         missing: 'Tray 3 was never scanned: it was moved into the room of counted ballots by mistake. The voting system never saw its 30 ballots, so they aren\'t in the reported result, and a manifest built from the voting system\'s own totals leaves them off too. Samples from that manifest agree with the reported result, because they\'re drawn from the same 140 ballots. The audit would pass, and nothing in it would hint that 30 ballots were never counted. Only a check against information the voting system didn\'t produce shows the problem: 170 voters checked in or had a mail ballot accepted, but the manifest accounts for only 140.',
-        low: 'Tray 1 was recorded as 30 ballots when it holds 50, perhaps because a second bundle was added after it was counted. Only its first 30 ballots ever get numbers. The other 20 can\'t be drawn, and because they happen to lean toward Bob, the samples lean toward Alice. Nothing in a sample would reveal this.',
+        low: 'Tray 1 was recorded as 30 ballots when it holds 50, perhaps because a second bundle was added after it was counted. Only its first 30 ballots are on the list. The other 20 can\'t be drawn, and because they happen to lean toward Bob, the samples lean toward Alice. Nothing in a sample would reveal this.',
         high: 'The manifest says Precinct 1\'s box holds 40 ballots, but only 32 are there. Draws that land on the missing 8 point to nothing. A traditional audit might just draw again and move on, which hides the fact that 8 ballots have gone missing. A risk-limiting audit counts each of those draws as a vote for the candidate who reportedly lost.'
       }[st.scen];
     }

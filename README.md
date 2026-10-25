@@ -20,7 +20,8 @@ Interactive diagrams for explaining risk-limiting audits, worked out alongside [
 
 - **An election as a picture:** counting ballots as steps on a grid, and every order of the same ballots ending at the same result.
 - **Why mix the ballots:** an unshuffled box can mislead a partial read; people are bad at randomness; seeded pseudo-random number generators, with interactive demos.
-- **Know what you're drawing from:** building a ballot manifest and drawing ballots from it with a public seed, then a fixed-percentage audit with a wrong manifest (a container left off, a count too low, a count too high).
+- **Know what you're drawing from:** building a ballot manifest by counting containers and checking each count against an independent record, then a fixed-percentage audit with a wrong manifest (a tray never scanned, a count too low, a count too high).
+- **From a manifest to a sample:** lining the ballots up end to end, numbering them, and drawing ballot numbers with a public seed.
 - **What a sample can say:** every order of a small election, sampling distributions from many shuffles, and which results could have produced a given sample, ending at the tie.
 
 ## Ballot polling
