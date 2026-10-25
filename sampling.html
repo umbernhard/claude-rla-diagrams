@@ -454,6 +454,7 @@ sup.fn a:hover { text-decoration: underline; }
   <section class="figure" aria-labelledby="bTitle">
     <h2 id="bTitle">Six ballots, every possible order</h2>
     <p>With six ballots, four with a vote for Alice and two with a vote for Bob, we can list every order a fair shuffle could produce. There are 15, each equally likely. Lines are thicker where more orders pass, and the number at each point counts the orders that go through it.</p>
+    <p>Move the slider to choose how many ballots have been read. The shaded diagonal marks every point an order can be at after that many ballots, and the chart on the right stands that diagonal up as bars: one bar for each point, as tall as the number of orders passing through it. Because every order is equally likely, the bars also show the chances of each possible sample.</p>
     <div class="pair">
       <div class="canvas-box"><canvas id="bCv" role="img" aria-label="All 15 orders of six ballots drawn as paths, with counts at each point"></canvas></div>
       <div class="canvas-box"><canvas id="bBar" role="img" aria-label="Bar chart: how the 15 orders split after the chosen number of ballots"></canvas></div>
@@ -471,7 +472,8 @@ sup.fn a:hover { text-decoration: underline; }
       <h2 id="cTitle">A box of 100, shuffled 200 times</h2>
       <button id="cShuffle" type="button">Shuffle again</button>
     </div>
-    <p>This is the same picture as the six-ballot example, just with more ballots, closer to the size of a real audit. A box of 100 can be put in far too many orders to draw them all (more than 10<sup>28</sup>), so instead the figure draws 200 of them at random. Each faint path is one shuffle of a box of 100 ballots: 60 with a vote for Alice and 40 with a vote for Bob. The darker path is a single shuffle, the kind one audit actually walks. Move the slider to choose how many ballots have been read. The dots show where each shuffle stands at that point, and the bars count them.</p>
+    <p>This is the same picture as the six-ballot example, just with more ballots, closer to the size of a real audit. A box of 100 can be put in far too many orders to draw them all (more than 10<sup>28</sup>), so instead the figure draws 200 of them at random. Each faint path is one shuffle of a box of 100 ballots: 60 with a vote for Alice and 40 with a vote for Bob. The darker path is a single shuffle, the kind one audit actually walks. Move the slider to choose how many ballots have been read. The dots on the gray diagonal show where each shuffle stands at that point.</p>
+    <p>The chart on the right works like the six-ballot one: each bar counts how many of the 200 shuffles hold that many votes for Alice at that point. The black line shows what those counts would be on average if we could use every possible order instead of 200 random ones, so it shows the exact chances. The bars wobble around the line because 200 shuffles is itself a sample; press <b>Shuffle again</b> and they wobble differently, while the line stays put. The shaded band covers the middle 90% of the chances.</p>
     <div class="pair">
       <div class="canvas-box"><canvas id="cCv" role="img" aria-label="200 shuffles of a 100-ballot box drawn as paths"></canvas></div>
       <div class="canvas-box"><canvas id="cHist" role="img" aria-label="How many of the 200 shuffles hold each number of votes for Alice after the chosen number of ballots read"></canvas></div>
