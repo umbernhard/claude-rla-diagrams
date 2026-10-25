@@ -363,24 +363,51 @@ sup.fn a:hover { text-decoration: underline; }
 
   <section class="prose" aria-labelledby="sM">
     <h2 id="sM">Know what you're drawing from</h2>
-    <p>Every box on this page so far came with a known number of ballots. A real election doesn't. Its ballots are spread across hundreds of containers: boxes from each polling place, trays of mail ballots, bags of provisional ballots. Before an audit can draw a random ballot, someone has to know every container that exists and how many ballots are in each one. That list is the ballot manifest.</p>
+    <p>Every box on this page so far came with a known number of ballots. A real election doesn't. Its ballots are spread across hundreds of containers: boxes from each polling place, trays of mail ballots, bags of provisional ballots. Before an audit can draw a random ballot, someone has to know every container that exists and how many ballots are in each one. That list is the ballot manifest. Election offices build it from the records they keep as ballots are handled, not by counting every ballot again, but any entry can be checked by opening the container and counting.</p>
     <p>A random sample is only random over the list it's drawn from. The dice and the generator pick numbers, and the manifest turns each number into a particular ballot in a particular container. A ballot that isn't on the list can never be picked, no matter what PRNG is used or what the initial seed was. Notice what the manifest doesn't record, too: it says where the ballots are, not how anyone voted.</p>
   </section>
 
   <section class="figure" aria-labelledby="mTitle">
-    <h2 id="mTitle">Build a ballot manifest</h2>
-    <p>A small election has four containers of ballots. Tap <b>Count</b> on each one to count its ballots by hand. Each count is then checked against a record kept separately from the ballots: the poll book voters signed at each polling place, or the log of mail ballot envelopes accepted.</p>
-    <div id="mStage" class="mstage"></div>
+    <h2 id="mTitle">Check a ballot manifest</h2>
+    <p>Here is the manifest for a small election with four containers. Each entry was recorded as the ballots were handled, and matches a record kept separately from the ballots: the poll book voters signed at each polling place, or the log of mail ballot envelopes accepted. Nobody hand counted these ballots to make the list, but anyone can check an entry: tap <b>Count to check</b> to open a container and count it.</p>
     <table class="mtab" aria-label="Ballot manifest">
-      <thead><tr><th scope="col">Container</th><th scope="col" class="num">Ballots</th><th scope="col">Checked against</th></tr></thead>
+      <thead><tr><th scope="col">Container</th><th scope="col" class="num">Ballots</th><th scope="col">Matches</th><th scope="col">Hand count</th></tr></thead>
       <tbody id="mRows"></tbody>
-      <tfoot><tr><td>Total</td><td class="num" id="mTot">0</td><td></td></tr></tfoot>
+      <tfoot><tr><td>Total</td><td class="num" id="mTot">0</td><td></td><td></td></tr></tfoot>
     </table>
+    <div id="mStage" class="mstage"></div>
     <div class="actions">
-      <button id="mAll" type="button">Count the rest</button>
+      <button id="mAll" type="button">Check the rest</button>
       <button id="mReset" type="button">Start over</button>
     </div>
     <p id="mNote" class="caption" aria-live="polite"></p>
+  </section>
+
+  <section class="prose" aria-labelledby="sN">
+    <h2 id="sN">From a manifest to a sample</h2>
+    <p>Now the seed can do its job. Notice what the manifest above doesn't have: ballot numbers. Nobody writes a number on each ballot. The numbers are made up when the sample is drawn, by imagining every container on the manifest laid end to end, in the manifest's order, and counting along the line.</p>
+  </section>
+
+  <section class="figure" aria-labelledby="nTitle">
+    <h2 id="nTitle">Number the ballots, then draw</h2>
+    <p>Here is the same four-container election, counted and checked. Line the ballots up to give each one a number, then use the seed to draw.</p>
+    <div id="nStage" class="mstage"></div>
+    <div id="nBig" class="nbig" aria-live="polite" hidden></div>
+    <div class="actions" id="nLineActs">
+      <button id="nLine" class="primary" type="button">Line up the ballots and number them</button>
+    </div>
+    <div id="nDrawPart" class="twin" hidden>
+      <label for="nSeed" class="chips-label">Seed, rolled in public</label>
+      <input id="nSeed" class="seedbox" type="text" autocomplete="off" spellcheck="false" value="39108723654082917365">
+      <div class="actions">
+        <button id="nDraw" class="primary" type="button">Draw a ballot</button>
+        <button id="nDraw5" type="button">Draw 5</button>
+        <button id="nReset" type="button">Start over</button>
+      </div>
+      <div id="nPicks" class="balrow"></div>
+    </div>
+    <p id="nNote" class="caption" aria-live="polite"></p>
+    <p class="caption">Draw a few more and you may see several ballots in a row from the same container. That's normal. As the “Spot the real shuffle” figure showed, real randomness is streakier than it feels, and a generator that never repeated a container would be the suspicious one.</p>
   </section>
 
   <section class="prose" aria-label="When the manifest is wrong">
@@ -412,32 +439,6 @@ sup.fn a:hover { text-decoration: underline; }
 
   <section class="prose" aria-label="Missing ballots and an independent manifest">
     <p>Two things follow. First, a ballot that the manifest lists but nobody can find can't simply be skipped. Careful audits treat it as the ballot most damaging to the reported outcome, so a missing ballot can only make the audit harder to pass, never easier.<sup class="fn" data-ref="evil-zombies"><a href="#ref-evil-zombies" id="cite-evil-zombies" aria-label="Reference 7">7</a></sup> Second, the manifest has to be checked against records the voting system didn't produce: how many ballots are in each container, reconciled against how many voters checked in or had a mail ballot accepted.<sup class="fn" data-ref="kir-4"><a href="#ref-kir-4" id="cite-kir-4" aria-label="Reference 8">8</a></sup> A manifest copied from the voting system's own totals can't catch the voting system's own mistakes. If a tray is never scanned, like tray 3 above, the system's accounting won't flag it, because as far as the system knows, those ballots don't exist. Only independent information, like the voter check-in data, shows that ballots are unaccounted for. The same check also guards against deliberate changes to the system's totals.</p>
-  </section>
-
-  <section class="prose" aria-labelledby="sN">
-    <h2 id="sN">From a manifest to a sample</h2>
-    <p>With a manifest the auditor can trust, the seed can finally do its job. Notice what the manifest from earlier doesn't have: ballot numbers. Nobody writes a number on each ballot. The numbers are made up when the sample is drawn, by imagining every container on the manifest laid end to end, in the manifest's order, and counting along the line.</p>
-  </section>
-
-  <section class="figure" aria-labelledby="nTitle">
-    <h2 id="nTitle">Number the ballots, then draw</h2>
-    <p>Here is the same four-container election, counted and checked. Line the ballots up to give each one a number, then use the seed to draw.</p>
-    <div id="nStage" class="mstage"></div>
-    <div id="nBig" class="nbig" aria-live="polite" hidden></div>
-    <div class="actions" id="nLineActs">
-      <button id="nLine" class="primary" type="button">Line up the ballots and number them</button>
-    </div>
-    <div id="nDrawPart" class="twin" hidden>
-      <label for="nSeed" class="chips-label">Seed, rolled in public</label>
-      <input id="nSeed" class="seedbox" type="text" autocomplete="off" spellcheck="false" value="39108723654082917365">
-      <div class="actions">
-        <button id="nDraw" class="primary" type="button">Draw a ballot</button>
-        <button id="nDraw5" type="button">Draw 5</button>
-        <button id="nReset" type="button">Start over</button>
-      </div>
-      <div id="nPicks" class="balrow"></div>
-    </div>
-    <p id="nNote" class="caption" aria-live="polite"></p>
   </section>
 
   <section class="prose" aria-label="Drawing one at a time">
@@ -1121,34 +1122,36 @@ sup.fn a:hover { text-decoration: underline; }
   const FM = (() => {
     const st = { done: [], busy: new Set(), run: 0 };
     function table() {
-      const tot = MBOXES.reduce((t, b, i) => t + (st.done[i] ? b.n : 0), 0);
-      $('mRows').innerHTML = MBOXES.map((b, i) => st.done[i]
-        ? `<tr><td><b>${b.name}</b></td><td class="num">${b.n}</td><td>${b.check} ✓</td></tr>`
-        : `<tr class="pending"><td>${b.name}</td><td class="num">?</td><td>not counted yet</td></tr>`).join('');
-      $('mTot').textContent = tot;
+      $('mRows').innerHTML = MBOXES.map((b, i) => `<tr><td><b>${b.name}</b></td><td class="num">${b.n}</td><td>${b.check}</td><td>${st.done[i] ? `<b>${b.n}</b> ✓` : st.busy.has(i) ? 'counting…' : '–'}</td></tr>`).join('');
+      $('mTot').textContent = MBOXES.reduce((t, b) => t + b.n, 0);
       const k = st.done.filter(Boolean).length;
       $('mAll').hidden = k === MBOXES.length;
-      $('mNote').textContent = k === 0 ? 'Nothing counted yet.'
-        : k < MBOXES.length ? `${k} of ${MBOXES.length} containers counted.`
-        : `The manifest is complete: four containers, ${tot} ballots, and every count matches a record kept apart from the ballots and the voting system. Notice what's not on it: how anyone voted, or any number for an individual ballot. A manifest only says what containers exist and how many ballots are in each.`;
+      $('mNote').textContent = k === 0 ? 'Nothing checked yet. The manifest says 55 ballots in all.'
+        : k < MBOXES.length ? `${k} of ${MBOXES.length} containers checked, and every count so far matches the manifest.`
+        : 'Every container holds exactly what the manifest says. Notice what\'s not on the manifest: how anyone voted, or any number for an individual ballot. A manifest only says what containers exist and how many ballots are in each.';
     }
     async function count(i) {
       if (st.done[i] || st.busy.has(i)) return;
-      st.busy.add(i); const run = st.run;
+      st.busy.add(i); const run = st.run; table();
       const btn = $('mStage').querySelector(`[data-count="${i}"]`); if (btn) { btn.disabled = true; btn.textContent = 'Counting…'; }
       const chips = [...$('mStage').querySelectorAll(`.bal[data-g="${i}"]`)];
       for (let j = 0; j < chips.length; j++) { if (run !== st.run) return; chips[j].textContent = j + 1; chips[j].classList.add('c'); await wait(45); }
-      if (run !== st.run) return;
       await wait(350); if (run !== st.run) return;
       chips.forEach(c => { c.textContent = ''; });
       st.busy.delete(i); st.done[i] = true;
       if (btn) btn.remove();
-      $('mSt' + i).textContent = `${MBOXES[i].n} ballots · ${MBOXES[i].check.toLowerCase()} ✓`;
+      $('mSt' + i).textContent = `${MBOXES[i].n} counted · matches the manifest ✓`; $('mSt' + i).style.color = '';
       table();
     }
-    function reset() { st.run++; st.done = []; st.busy.clear(); $('mStage').innerHTML = stageHTML('m', true); table(); }
+    function reset() {
+      st.run++; st.done = []; st.busy.clear();
+      $('mStage').innerHTML = stageHTML('m', true);
+      $('mStage').querySelectorAll('[data-count]').forEach(b => { b.textContent = 'Count to check'; });
+      MBOXES.forEach((b, i) => { $('mSt' + i).textContent = `manifest says ${b.n}`; $('mSt' + i).style.color = 'var(--ink-3)'; });
+      table();
+    }
     $('mStage').addEventListener('click', e => { const b = e.target.closest('[data-count]'); if (b) count(+b.dataset.count); });
-    $('mAll').addEventListener('click', async () => { for (let i = 0; i < MBOXES.length; i++) if (!st.done[i]) count(i); });
+    $('mAll').addEventListener('click', () => { for (let i = 0; i < MBOXES.length; i++) if (!st.done[i]) count(i); });
     $('mReset').addEventListener('click', reset);
     reset();
     return { render: () => {} };
@@ -1204,7 +1207,10 @@ sup.fn a:hover { text-decoration: underline; }
       const { box, pos } = locate(last);
       $('nBig').hidden = false;
       $('nBig').innerHTML = `<span class="num">Ballot ${last}</span><span class="where">${MBOXES[box].name}, ballot ${pos} in that container</span>`;
-      $('nNote').textContent = `Ballots ${start(box) + 1} to ${start(box + 1)} are in ${MBOXES[box].name}, so the auditor opens that container and counts to its ballot ${pos}. Each of the ${N} ballots had the same 1-in-${N} chance.`;
+      let best = 1, bestBox = box, cur = 1;
+      for (let q = 1; q < st.picks.length; q++) { const bq = locate(st.picks[q]).box; cur = bq === locate(st.picks[q - 1]).box ? cur + 1 : 1; if (cur > best) { best = cur; bestBox = bq; } }
+      $('nNote').textContent = `Ballots ${start(box) + 1} to ${start(box + 1)} are in ${MBOXES[box].name}, so the auditor opens that container and counts to its ballot ${pos}. Each of the ${N} ballots had the same 1-in-${N} chance.` +
+        (best >= 3 ? ` So far, ${best} draws in a row came from ${MBOXES[bestBox].name}. Streaks like that are what real randomness looks like.` : '');
     }
     function reset() { st.run++; st.phase = 'counted'; st.picks = []; st.ctr = 0; $('nLine').disabled = false; base(); render(); }
     $('nLine').addEventListener('click', lineUp);
