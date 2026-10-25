@@ -445,9 +445,15 @@ sup.fn a:hover { text-decoration: underline; }
     <p>Drawing ballots one at a time doesn't make a sample less fair than grabbing a handful at once. Fifty ballots drawn one by one are just as random as fifty drawn together. Reading them in sequence only lets the audit stop early, as soon as it has seen enough. That doesn't mean every audit stops at the first moment it could. Some jurisdictions deliberately draw more ballots than the math calls for: to make it very likely the audit finishes in a single round instead of going back for more, to meet other requirements in state law (such as a minimum number of ballots to check), or to make sure every county or town in the contest has some ballots to examine, so every local team gets practice. Extra ballots don't weaken the audit, as long as every ballot drawn gets examined and counted.</p>
   </section>
 
+  <section class="prose" aria-labelledby="sF">
+    <h2 id="sF">What a fair sample looks like</h2>
+    <p>How much is enough? Before an auditor can judge an unknown box from a sample, it helps to see what samples look like when we already know what's in the box.</p>
+    <p>Go back to the picture of every order of the same ballots. A fair shuffle makes each of those orders equally likely, so the share of paths passing through a point is the chance that a sample lands there. Counting paths is the same as working out chances. The next figure starts with a box small enough to count every path by hand. The one after it scales up to see the pattern that makes sampling work: a small sample can land almost anywhere, but the more ballots you read, the closer it sits to what's in the box.</p>
+  </section>
+
   <section class="figure" aria-labelledby="bTitle">
     <h2 id="bTitle">Six ballots, every possible order</h2>
-    <p>With six ballots, four with a vote for Alice and two with a vote for Bob, we can list every order a fair shuffle could produce. There are 15. A fair shuffle makes each one equally likely, so counting orders is the same as working out chances. Lines are thicker where more orders pass, and the number at each point counts the orders that go through it.</p>
+    <p>With six ballots, four with a vote for Alice and two with a vote for Bob, we can list every order a fair shuffle could produce. There are 15, each equally likely. Lines are thicker where more orders pass, and the number at each point counts the orders that go through it.</p>
     <div class="pair">
       <div class="canvas-box"><canvas id="bCv" role="img" aria-label="All 15 orders of six ballots drawn as paths, with counts at each point"></canvas></div>
       <div class="canvas-box"><canvas id="bBar" role="img" aria-label="Bar chart: how the 15 orders split after the chosen number of ballots"></canvas></div>

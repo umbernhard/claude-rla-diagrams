@@ -23,7 +23,7 @@ Interactive diagrams for explaining risk-limiting audits, worked out alongside [
 - **Know what you're drawing from:** what a ballot manifest is, and checking one by counting a container.
 - **From a manifest to a sample:** lining the ballots up end to end, numbering them, and drawing ballot numbers with a public seed.
 - **When the manifest is wrong:** a fixed-percentage audit with a box never scanned, a count too low, or a count too high.
-- **What a sample can say:** every order of a small election, sampling distributions from many shuffles, and which results could have produced a given sample, ending at the tie.
+- **What a fair sample looks like / What a sample can say:** every order of a small election, sampling distributions from many shuffles, and which results could have produced a given sample, ending at the tie.
 
 ## Ballot polling
 
