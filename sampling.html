@@ -494,7 +494,41 @@ sup.fn a:hover { text-decoration: underline; }
     <h2 id="s3">Turning the question around</h2>
     <p>So far we knew what was in the box and asked what a sample would look like. An auditor has the opposite problem: they hold a sample and want to know what's in the box. To keep things simple, imagine the whole election is a single box of 1,000 ballots. A real election spreads its ballots across many containers, but once they're listed on a manifest and numbered, drawing from them works just like drawing from one big box.</p>
     <p>To work out what's in the box, the auditor can use the same counting as the last two figures, where every order of the ballots was equally likely, just run backwards. Each possible result of the election is a different box: 600 votes for Alice and 400 for Bob, or 550 and 450, or a tie, and so on. For each of those possible boxes, ask: if the election really came out that way, how often would a random sample of the same size look like the one we're holding? A result that often produces samples like ours stays in the running. A result that almost never does starts to look doubtful. Each possible result is checked on its own, so there's no need to guess beforehand which results were likely.</p>
-    <p>Here's a small example. Say the auditor draws 10 ballots and 8 of them have a vote for Alice. That's 80%, so the sample suggests that about 800 of the 1,000 ballots in the box have a vote for Alice. An election where Alice received fewer votes than that would usually give samples with fewer votes for her, so the question is how often it would give 8 or more. If Alice received 600 votes, that happens about 17% of the time, roughly 1 time in 6: nothing surprising. If the election was a tie, it happens about 5% of the time, a little more often than 1 time in 20: surprising, but not very. If Alice received only 300 votes, it happens about 1 time in 670: very surprising. For an election where Alice received more votes than the sample suggests, the question flips: how often would it give 8 or fewer? If she received 980 votes, only about 1.6% of the time, because nearly every ballot in that box has a vote for her.</p>
+    <p>Here's a small example. Say the auditor draws 10 ballots and 8 of them have a vote for Alice. That's 80%, so the sample suggests that about 800 of the 1,000 ballots in the box have a vote for Alice. An election where Alice received fewer votes than that would usually give samples with fewer votes for her, so the question is how often it would give 8 or more. For an election where she received more, the question flips: how often would it give 8 or fewer? The next figure lets you find out by drawing samples yourself.</p>
+  </section>
+
+  <section class="figure" aria-labelledby="eTitle">
+    <h2 id="eTitle">How surprising is 8 out of 10?</h2>
+    <p>Pick an election, then draw random samples of 10 ballots from it. A sample counts as “at least as surprising” as 8 out of 10 if it has 8 or more votes for Alice, or, for an election where Alice received more than 800 votes, 8 or fewer. Those samples are marked in orange. Over many samples, the share marked in orange is how surprising 8 out of 10 would be if that election were the truth.</p>
+    <div class="row">
+      <span class="chips-label" id="eElLbl">The election</span>
+      <div class="seg" role="group" aria-labelledby="eElLbl">
+        <button id="eA300" type="button" aria-pressed="false">Alice 300, Bob 700</button>
+        <button id="eTie" type="button" aria-pressed="true">A tie, 500–500</button>
+        <button id="eA600" type="button" aria-pressed="false">Alice 600, Bob 400</button>
+        <button id="eA980" type="button" aria-pressed="false">Alice 980, Bob 20</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="actions">
+        <button id="eDraw1" class="primary" type="button">Draw a sample of 10</button>
+        <button id="eDraw100" type="button">Draw 100 samples</button>
+        <button id="eReset" type="button">Start over</button>
+      </div>
+    </div>
+    <div class="row"><span class="chips-label">Latest sample</span><span id="eLast" class="balrow"></span></div>
+    <div class="canvas-box"><canvas id="eCv" role="img" aria-label="Bar chart: how many of the samples drawn had each number of votes for Alice, with the samples at least as surprising as 8 out of 10 marked"></canvas></div>
+    <div class="legend">
+      <span class="key"><span class="sw bar"></span>samples drawn</span>
+      <span class="key"><span class="sw" style="background: color-mix(in srgb, var(--tie) 60%, var(--panel))"></span>at least as surprising as 8 out of 10</span>
+      <span class="key"><span class="sw path"></span>exact chance, scaled to the samples drawn</span>
+    </div>
+    <div id="eOut" class="out" aria-live="polite"></div>
+    <p class="caption">After a few samples the orange share bounces around; after a few hundred it settles near the exact chance. From a 600–400 election, 8 out of 10 comes up about 1 time in 6, so it's no surprise. From a tie, it's a little more often than 1 time in 20. From an election where Alice received only 300 votes, it's about 1 time in 660. And from one where she received 980, asked the other way, a sample with 8 or fewer votes for her turns up only about 1 time in 64, because nearly every ballot in that box has a vote for her.</p>
+  </section>
+
+  <section class="prose" aria-label="Ruling elections out">
+
     <p>None of these numbers proves anything. A tie really could produce 8 votes for Alice out of 10; it just usually doesn't. Ruling an election out is a decision, not a proof: we agree to stop taking seriously any election that would rarely produce a sample like ours. The figure below draws that line at 1 in 20. Wherever the line goes, it comes with a cost. If the true election is one of the unlucky ones, bad luck will sometimes rule it out, about as often as the line allows. A stricter line, like 1 in 100, makes that mistake less often but needs more ballots before it can rule anything out. Audits draw a line like this too, called the risk limit, and the next part comes back to it.</p>
   </section>
 
@@ -1365,7 +1399,50 @@ sup.fn a:hover { text-decoration: underline; }
     return { render };
   })();
 
-  const renderAll = () => { FZ.render(); FO.render(); FR.render(); FA.render(); FB.render(); FC.render(); FD.render(); };
+  // ============================================================ E: how surprising is 8 out of 10?
+  const FE = (() => {
+    const N = 1000, M = 10, OBS = 8, ELS = [['eA300', 300], ['eTie', 500], ['eA600', 600], ['eA980', 980]];
+    const st = { A: 500, cnt: new Array(M + 1).fill(0), n: 0, last: null };
+    const far = x => st.A < N * OBS / M ? x >= OBS : x <= OBS;
+    const exact = () => { let t = 0; for (let x = 0; x <= M; x++) if (far(x)) t += hyp(N, st.A, M, x); return t; };
+    function one() { const idx = new Set(); while (idx.size < M) idx.add(Math.floor(Math.random() * N));
+      const smp = [...idx].map(i => i < st.A ? 'A' : 'B'); st.last = smp; st.cnt[smp.filter(v => v === 'A').length]++; st.n++; }
+    function chart() {
+      const { ctx, w, h } = setup($('eCv'), $('eCv').parentElement.clientWidth < 560 ? .7 : .42, 260);
+      const pad = { l: 44, r: 12, t: 22, b: 40 }, pw = w - pad.l - pad.r, ph = h - pad.t - pad.b, bw = pw / (M + 1);
+      const pm = Array.from({ length: M + 1 }, (_, x) => hyp(N, st.A, M, x) * Math.max(st.n, 1));
+      const ymax = Math.max(4, ...st.cnt, ...(st.n ? pm : [0])) * 1.12, X = x => pad.l + (x + .5) * bw, Y = v => pad.t + ph - v / ymax * ph;
+      ctx.font = '11px ' + C.mono; ctx.lineWidth = 1;
+      const sy = niceStep(ymax, 4);
+      for (let v = 0; v <= ymax; v += sy) { ctx.strokeStyle = v ? C.grid : C.ink3; seg(ctx, [pad.l, Y(v)], [pad.l + pw, Y(v)]);
+        ctx.fillStyle = C.ink3; ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(Math.round(v), pad.l - 6, Y(v)); }
+      for (let x = 0; x <= M; x++) { const c = st.cnt[x];
+        if (c) { ctx.fillStyle = far(x) ? rgba(C.tie, .6) : rgba(C.rep, .45); ctx.fillRect(X(x) - bw * .38, Y(c), bw * .76, Y(0) - Y(c)); }
+        ctx.fillStyle = far(x) ? C.tie : C.ink3; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(x, X(x), Y(0) + 6); }
+      if (st.n) { ctx.strokeStyle = C.path; ctx.lineWidth = 1.5; ctx.beginPath(); for (let x = 0; x <= M; x++) x ? ctx.lineTo(X(x), Y(pm[x])) : ctx.moveTo(X(x), Y(pm[x])); ctx.stroke();
+        for (let x = 0; x <= M; x++) dot(ctx, [X(x), Y(pm[x])], 2.2, C.path); }
+      ctx.fillStyle = C.alice; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.font = '12px ' + C.mono;
+      ctx.fillText('votes for Alice in a sample of 10', pad.l + pw / 2, h - 2);
+      ctx.fillStyle = C.ink2; ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.font = '11px ' + C.mono; ctx.fillText('samples', pad.l, 0);
+    }
+    function render() {
+      ELS.forEach(([id, A]) => $(id).setAttribute('aria-pressed', String(A === st.A)));
+      $('eLast').innerHTML = st.last ? st.last.map(v => `<span class="bal read ${v === 'A' ? 'a' : 'b'}">${v}</span>`).join('') : '<span class="readout">none yet</span>';
+      chart();
+      const k = st.cnt.reduce((t, c, x) => t + (far(x) ? c : 0), 0), q = exact(), dir = st.A < 800 ? '8 or more' : '8 or fewer';
+      const exactTxt = `The exact chance is <b class="tie">${fmtPct(q)}</b>, about 1 time in ${Math.round(1 / q).toLocaleString('en-US')}.`;
+      $('eOut').innerHTML = !st.n ? `<p>No samples yet. From this election, a sample of 10 with ${dir} votes for Alice is what counts as at least as surprising as 8 out of 10.</p><p>${exactTxt}</p>`
+        : `<p>Samples drawn: <b>${st.n}</b>. With ${dir} votes for Alice: <b>${k}</b>, or <b>${fmtPct(k / st.n)}</b> of them.</p><p>${exactTxt}</p>`;
+    }
+    const reset = () => { st.cnt.fill(0); st.n = 0; st.last = null; render(); };
+    ELS.forEach(([id, A]) => $(id).addEventListener('click', () => { st.A = A; reset(); }));
+    $('eDraw1').addEventListener('click', () => { one(); render(); });
+    $('eDraw100').addEventListener('click', () => { for (let i = 0; i < 100; i++) one(); render(); });
+    $('eReset').addEventListener('click', reset);
+    return { render };
+  })();
+
+  const renderAll = () => { FZ.render(); FO.render(); FR.render(); FA.render(); FB.render(); FC.render(); FE.render(); FD.render(); };
   renderAll();
   new ResizeObserver(renderAll).observe(document.querySelector('.wrap'));
   const recolor = () => { C = css(); renderAll(); };
