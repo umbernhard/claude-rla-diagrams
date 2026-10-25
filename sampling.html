@@ -417,10 +417,10 @@ sup.fn a:hover { text-decoration: underline; }
 
   <section class="figure" aria-labelledby="wTitle">
     <h2 id="wTitle">A 10% audit with a wrong manifest</h2>
-    <p>This election has five containers and 170 ballots. Counting all of them gives Alice 88 votes and Bob 82. Pick what's wrong with the manifest, then draw samples and watch which ballots ever get picked.</p>
+    <p>This election has six containers and 170 ballots. Counting all of them gives Alice 88 votes and Bob 82. Pick what's wrong with the manifest, then draw samples and watch which ballots ever get picked.</p>
     <div class="seg" role="group" aria-label="What's wrong with the manifest">
       <button id="wOk" type="button" aria-pressed="true">Nothing</button>
-      <button id="wMissing" type="button" aria-pressed="false">A tray never scanned</button>
+      <button id="wMissing" type="button" aria-pressed="false">A box never scanned</button>
       <button id="wLow" type="button" aria-pressed="false">A count too low</button>
       <button id="wHigh" type="button" aria-pressed="false">A count too high</button>
     </div>
@@ -438,7 +438,7 @@ sup.fn a:hover { text-decoration: underline; }
   </section>
 
   <section class="prose" aria-label="Missing ballots and an independent manifest">
-    <p>Two things follow. First, a ballot that the manifest lists but nobody can find can't simply be skipped. Careful audits treat it as the ballot most damaging to the reported outcome, so a missing ballot can only make the audit harder to pass, never easier.<sup class="fn" data-ref="evil-zombies"><a href="#ref-evil-zombies" id="cite-evil-zombies" aria-label="Reference 7">7</a></sup> Second, the manifest has to be checked against records the voting system didn't produce: how many ballots are in each container, reconciled against how many voters checked in or had a mail ballot accepted.<sup class="fn" data-ref="kir-4"><a href="#ref-kir-4" id="cite-kir-4" aria-label="Reference 8">8</a></sup> A manifest copied from the voting system's own totals can't catch the voting system's own mistakes. If a tray is never scanned, like tray 3 above, the system's accounting won't flag it, because as far as the system knows, those ballots don't exist. Only independent information, like the voter check-in data, shows that ballots are unaccounted for. The same check also guards against deliberate changes to the system's totals.</p>
+    <p>Two things follow. First, a ballot that the manifest lists but nobody can find can't simply be skipped. Careful audits treat it as the ballot most damaging to the reported outcome, so a missing ballot can only make the audit harder to pass, never easier.<sup class="fn" data-ref="evil-zombies"><a href="#ref-evil-zombies" id="cite-evil-zombies" aria-label="Reference 7">7</a></sup> Second, the manifest has to be checked against records the voting system didn't produce: how many ballots are in each container, reconciled against how many voters checked in or had a mail ballot accepted.<sup class="fn" data-ref="kir-4"><a href="#ref-kir-4" id="cite-kir-4" aria-label="Reference 8">8</a></sup> A manifest copied from the voting system's own totals can't catch the voting system's own mistakes. If a box is never scanned, like early voting box 2 above, the system's accounting won't flag it, because as far as the system knows, those ballots don't exist. Only independent information, like the voter check-in data, shows that ballots are unaccounted for. The same check also guards against deliberate changes to the system's totals.</p>
   </section>
 
   <section class="prose" aria-label="Drawing one at a time">
@@ -1109,10 +1109,10 @@ sup.fn a:hover { text-decoration: underline; }
 
   // ============================================================ M: build a ballot manifest (counting only)
   const MBOXES = [
-    { name: 'Precinct 1, Election Day', tag: 'Pct 1', n: 14, check: 'Poll book: 14 voters signed' },
+    { name: 'Precinct 1, Election Day', tag: 'Pct 1', n: 10, check: 'Poll book: 10 voters signed' },
     { name: 'Precinct 2, Election Day', tag: 'Pct 2', n: 9, check: 'Poll book: 9 voters signed' },
-    { name: 'Mail ballots, tray 1', tag: 'Mail 1', n: 20, check: 'Envelope log: 20 accepted' },
-    { name: 'Mail ballots, tray 2', tag: 'Mail 2', n: 12, check: 'Envelope log: 12 accepted' }];
+    { name: 'Early voting, box 1', tag: 'Early', n: 19, check: 'Poll book: 19 voters signed' },
+    { name: 'Mail ballots, tray 1', tag: 'Mail', n: 17, check: 'Envelope log: 17 accepted' }];
   const calm = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
   const wait = ms => new Promise(r => setTimeout(r, calm() ? 0 : ms));
   const stageHTML = (prefix, withButtons) => MBOXES.map((b, i) =>
@@ -1229,17 +1229,18 @@ sup.fn a:hover { text-decoration: underline; }
     const rnd = () => (seedv = (seedv * 16807) % 2147483647) / 2147483647;
     const mix = (a, b) => { const arr = [...'A'.repeat(a) + 'B'.repeat(b)]; for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr.join(''); };
     const BOXES = [
-      { id: 'p1', name: 'Precinct 1, Election Day', ballots: mix(24, 16) },
-      { id: 'p2', name: 'Precinct 2, Election Day', ballots: mix(17, 13) },
-      { id: 'm1', name: 'Mail ballots, tray 1', ballots: mix(19, 11) + mix(8, 12) },
-      { id: 'm2', name: 'Mail ballots, tray 2', ballots: mix(11, 9) },
-      { id: 'm3', name: 'Mail ballots, tray 3', ballots: mix(9, 21) }];
+      { id: 'p1', name: 'Precinct 1, Election Day', ballots: mix(17, 13) },
+      { id: 'p2', name: 'Precinct 2, Election Day', ballots: mix(15, 13) },
+      { id: 'e1', name: 'Early voting, box 1', ballots: mix(16, 14) },
+      { id: 'e2', name: 'Early voting, box 2', ballots: mix(10, 20) },
+      { id: 'm1', name: 'Mail ballots, tray 1', ballots: mix(11, 5) + mix(4, 6) },
+      { id: 'm2', name: 'Mail ballots, tray 2', ballots: mix(15, 11) }];
     // what the manifest says, per scenario: listed count for each container (null = left off)
     const SCEN = {
-      ok: { btn: 'wOk', listed: { p1: 40, p2: 30, m1: 50, m2: 20, m3: 30 } },
-      missing: { btn: 'wMissing', listed: { p1: 40, p2: 30, m1: 50, m2: 20, m3: null } },
-      low: { btn: 'wLow', listed: { p1: 40, p2: 30, m1: 30, m2: 20, m3: 30 } },
-      high: { btn: 'wHigh', listed: { p1: 40, p2: 30, m1: 50, m2: 20, m3: 30 }, removed: { p1: 8 } } };
+      ok: { btn: 'wOk', listed: { p1: 30, p2: 28, e1: 30, e2: 30, m1: 26, m2: 26 } },
+      missing: { btn: 'wMissing', listed: { p1: 30, p2: 28, e1: 30, e2: null, m1: 26, m2: 26 } },
+      low: { btn: 'wLow', listed: { p1: 30, p2: 28, e1: 30, e2: 30, m1: 16, m2: 26 } },
+      high: { btn: 'wHigh', listed: { p1: 30, p2: 28, e1: 30, e2: 30, m1: 26, m2: 26 }, removed: { p1: 8 } } };
     const st = { scen: 'ok', drawn: new Set() };
     // ballots physically present in each container under the current scenario
     const present = b => { const r = (SCEN[st.scen].removed || {})[b.id] || 0; return b.ballots.slice(0, b.ballots.length - r); };
@@ -1283,9 +1284,9 @@ sup.fn a:hover { text-decoration: underline; }
         `<p>This sample: <b>${sa}</b> for Alice, <b>${sb}</b> for Bob${sg ? `, and <b class="tie">${sg}</b> draw${sg === 1 ? '' : 's'} that point to a ballot that isn't there` : ''}.</p>`;
       $('wNote').textContent = {
         ok: 'Every ballot has the same 10% chance of being picked. Draw a few samples: some lean toward Alice and some toward Bob, but on average they match the whole election.',
-        missing: 'Tray 3 was never scanned: it was moved into the room of counted ballots by mistake. The voting system never saw its 30 ballots, so they aren\'t in the reported result, and a manifest built from the voting system\'s own totals leaves them off too. Samples from that manifest agree with the reported result, because they\'re drawn from the same 140 ballots. The audit would pass, and nothing in it would hint that 30 ballots were never counted. Only a check against information the voting system didn\'t produce shows the problem: 170 voters checked in or had a mail ballot accepted, but the manifest accounts for only 140.',
-        low: 'Tray 1 was recorded as 30 ballots when it holds 50, perhaps because a second bundle was added after it was counted. Only its first 30 ballots are on the list. The other 20 can\'t be drawn, and because they happen to lean toward Bob, the samples lean toward Alice. Nothing in a sample would reveal this.',
-        high: 'The manifest says Precinct 1\'s box holds 40 ballots, but only 32 are there. Draws that land on the missing 8 point to nothing. A traditional audit might just draw again and move on, which hides the fact that 8 ballots have gone missing. A risk-limiting audit counts each of those draws as a vote for the candidate who reportedly lost.'
+        missing: 'Early voting box 2 was never scanned: it was moved into the room of counted ballots by mistake. The voting system never saw its 30 ballots, so they aren\'t in the reported result, and a manifest built from the voting system\'s own totals leaves them off too. Samples from that manifest agree with the reported result, because they\'re drawn from the same 140 ballots. The audit would pass, and nothing in it would hint that 30 ballots were never counted. Only a check against information the voting system didn\'t produce shows the problem: 170 voters checked in or had a mail ballot accepted, but the manifest accounts for only 140.',
+        low: 'Mail tray 1 was recorded as 16 ballots when it holds 26, perhaps because a second bundle was added after it was counted. Only its first 16 ballots are on the list. The other 10 can\'t be drawn, and because they happen to lean toward Bob, the samples lean toward Alice. Nothing in a sample would reveal this.',
+        high: 'The manifest says Precinct 1\'s box holds 30 ballots, but only 22 are there. Draws that land on the missing 8 point to nothing. A traditional audit might just draw again and move on, which hides the fact that 8 ballots have gone missing. A risk-limiting audit counts each of those draws as a vote for the candidate who reportedly lost.'
       }[st.scen];
     }
     Object.entries(SCEN).forEach(([key, sc]) => $(sc.btn).addEventListener('click', () => { st.scen = key; sample(); render(); }));
