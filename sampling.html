@@ -348,7 +348,7 @@ sup.fn a:hover { text-decoration: underline; }
   <section class="prose" aria-labelledby="sM">
     <h2 id="sM">Know what you're drawing from</h2>
     <p>Every box on this page so far came with a known number of ballots. A real election doesn't. Its ballots are spread across hundreds of containers: boxes from each polling place, trays of mail ballots, bags of provisional ballots. Before an audit can draw a random ballot, someone has to know every container that exists and how many ballots are in each one. That list is the ballot manifest.</p>
-    <p>A random sample is only random over the list it's drawn from. The dice and the generator pick numbers, and the manifest turns each number into a particular ballot in a particular container. A ballot that isn't on the list can never be picked, however good the dice are. Notice what the manifest doesn't record, too: it says where the ballots are, not how anyone voted.</p>
+    <p>A random sample is only random over the list it's drawn from. The dice and the generator pick numbers, and the manifest turns each number into a particular ballot in a particular container. A ballot that isn't on the list can never be picked, no matter what PRNG is used or what the initial seed was. Notice what the manifest doesn't record, too: it says where the ballots are, not how anyone voted.</p>
   </section>
 
   <section class="figure" aria-labelledby="mTitle">
