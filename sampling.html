@@ -499,7 +499,7 @@ sup.fn a:hover { text-decoration: underline; }
   <section class="figure" aria-labelledby="dTitle">
     <h2 id="dTitle">Which elections could have produced this sample?</h2>
     <p>This box holds 1,000 ballots. The reported result is 600 votes for Alice and 400 for Bob, but the auditor can't see inside. Each draw adds one ballot to the sample. For every election the box could hold, from 0 votes for Alice to 1,000, the curve shows how surprising this sample would be. For an election with fewer votes for Alice than the sample suggests, that means how often a fair draw would give at least as many votes for Alice as this sample has. For an election with more, it means how often a draw would give this many or fewer. Where the curve falls below the dashed line, a sample like this would turn up less than 1 time in 20, so the figure shades that election as ruled out.</p>
-    <p>The switch above the chart asks a slightly different question instead: how often each election would give exactly this sample. At first the box really does hold 600 to 400. Use the buttons under <b>What's really in the box</b>, at the bottom of the figure, to change what's inside: a tie, or a win for Bob. Then draw again and watch where the curve settles.</p>
+    <p>The switch above the chart changes the question. <b>Too good for Alice</b> keeps only the first half: it asks only whether an election could have produced this many votes for Alice or more, so it can only rule out elections that are worse for Alice. <b>Exactly this sample</b> asks how often each election would give exactly this sample. At first the box really does hold 600 to 400. Use the buttons under <b>What's really in the box</b>, at the bottom of the figure, to change what's inside: a tie, or a win for Bob. Then draw again and watch where the curve settles.</p>
     <div class="row">
       <div class="actions">
         <button id="dDraw1" class="primary" type="button">Draw a ballot</button>
@@ -512,7 +512,8 @@ sup.fn a:hover { text-decoration: underline; }
     <div class="row">
       <span class="chips-label" id="dViewLbl">The curve shows</span>
       <div class="seg" role="group" aria-labelledby="dViewLbl">
-        <button id="dViewTail" type="button" aria-pressed="true">How surprising this sample is</button>
+        <button id="dViewTail" type="button" aria-pressed="true">Surprising either way</button>
+        <button id="dViewOne" type="button" aria-pressed="false">Too good for Alice</button>
         <button id="dViewExact" type="button" aria-pressed="false">Exactly this sample</button>
       </div>
     </div>
@@ -531,8 +532,9 @@ sup.fn a:hover { text-decoration: underline; }
 
   <section class="prose" aria-labelledby="s4">
     <h2 id="s4">The result that matters</h2>
-    <p>An audit doesn't need the exact count. It only needs to rule out the results in which the reported winner lost. The hardest of those to rule out is a tie, 500 to 500, because it sits closest to an Alice win. If an Alice-leaning sample would be rare from a tied box, it's rarer still from any box where Bob won. You can see this in the first view of the figure: left of its peak, the curve only rises, so once the tie drops below the line, every election Bob won is already below it. Making the case against the tie is enough.</p>
-    <p>There are two natural ways to make that case, and they match the figure's two views. The first asks only how surprising the sample would be if the election were tied. Flip a coin 100 times, get 60 heads, and you'll doubt the coin without doing any math. The second, in the “exactly this sample” view, also uses the reported result, and asks how much more often a 600–400 election would produce the sample than a tie would. Statisticians call that comparison a likelihood ratio. Both lead to valid audits.</p>
+    <p>An audit doesn't need the exact count. It only needs to rule out the results in which the reported winner lost. The hardest of those to rule out is a tie, 500 to 500, because it sits closest to an Alice win. If an Alice-leaning sample would be rare from a tied box, it's rarer still from any box where Bob won. You can see this in the figure: left of its peak, the curve only rises, so once the tie drops below the line, every election Bob won is already below it. Making the case against the tie is enough.</p>
+    <p>That also means an audit can ignore the right side of the curve. An election even better for Alice than the sample suggests isn't a problem: Alice still won it. The <b>Too good for Alice</b> view keeps only the side that matters. It also changes how often the figure is wrong. With a 1-in-20 cutoff on each side, bad luck puts the true result in one of the shaded regions about 1 time in 10. But the mistake an audit has to guard against is confirming the wrong winner, and that can only happen on the left side. If Bob really won, a sample rules out every election Bob won at most 1 time in 20.</p>
+    <p>There are two natural ways to make that case. The first, in the “too good for Alice” view, asks only how surprising the sample would be if the election were tied. Flip a coin 100 times, get 60 heads, and you'll doubt the coin without doing any math. The second, in the “exactly this sample” view, also uses the reported result, and asks how much more often a 600–400 election would produce the sample than a tie would. Statisticians call that comparison a likelihood ratio. Both lead to valid audits.</p>
     <p>One trap catches both. An audit that checks after every ballot gets many chances to be fooled, so it can't simply stop the first time the sample looks rare. The next part shows how ballot polling audits handle that.</p>
     <a class="next" href="ballot-polling.html">Next: ballot polling audits →</a>
     <p class="fine" style="margin-top:1rem">Simplifications on this page: one contest, two candidates, one vote per ballot, no blank or invalid ballots, and ballots aren't put back after they're drawn.</p>
@@ -836,9 +838,10 @@ sup.fn a:hover { text-decoration: underline; }
         up[A] = Math.min(1, u); down[A] = Math.min(1, d); tail[A] = Math.min(up[A], down[A]); }
       let lo = -1, hi = N + 1;
       for (let A = 0; A <= N; A++) { if (up[A] < CUT && up[A] <= down[A]) lo = A; if (down[A] < CUT && down[A] < up[A] && hi > N) hi = A; }
-      return { mx, peak, lo, hi }; }
+      let lo1 = -1; for (let A = 0; A <= N; A++) if (up[A] < CUT) lo1 = A;
+      return st.view === 'one' ? { mx, peak, lo: lo1, hi: N + 1 } : { mx, peak, lo, hi }; }
     function chart({ mx, peak, lo, hi }) {
-      const T = st.view === 'tail', val = T ? tail : curve;
+      const T = st.view !== 'exact', one = st.view === 'one', val = !T ? curve : one ? up : tail;
       const narrow = $('dCv').parentElement.clientWidth < 560, { ctx, w, h } = setup($('dCv'), narrow ? .85 : .48, 340);
       const pad = { l: narrow ? 50 : 58, r: 16, t: 28, b: 42 }, pw = w - pad.l - pad.r, ph = h - pad.t - pad.b;
       const ymax = T ? 1.08 : mx * 1.12, X = A => pad.l + A / N * pw, Y = v => pad.t + ph - v / ymax * ph;
@@ -874,19 +877,25 @@ sup.fn a:hover { text-decoration: underline; }
     }
     function out({ peak, lo, hi }) {
       $('dM').textContent = st.m; $('dA').textContent = st.a; $('dB').textContent = st.b;
-      const T = st.view === 'tail';
-      $('dCap').textContent = T
-        ? 'Start over and draw one ballot. If it has a vote for Alice, the curve becomes a straight ramp up: an election with more votes for Alice hands you a ballot with a vote for Alice more often. A vote for Bob gives the mirror image. Either way, the election that ballot rules out completely is the one with no votes for that candidate. One ballot does tell you something; it just doesn\'t tell you much. As the sample grows, the curve narrows into a peak near the elections that look like the sample, and the shaded regions close in from both sides. Left of the peak, the curve only rises, so once a tie is ruled out there, so is every election Bob won.'
-        : 'Start over and draw one ballot. If it has a vote for Alice, the curve becomes a straight ramp: a box with more votes for Alice hands you a ballot with a vote for Alice more often. One ballot does tell you something; it just doesn\'t tell you much. As the sample grows, the curve narrows around elections that look like the sample. Statisticians call this curve the likelihood.';
+      const T = st.view !== 'exact', one = st.view === 'one';
+      $('dCap').textContent = {
+        tail: 'Start over and draw one ballot. If it has a vote for Alice, the curve becomes a straight ramp up: an election with more votes for Alice hands you a ballot with a vote for Alice more often. A vote for Bob gives the mirror image. Either way, the election that ballot rules out completely is the one with no votes for that candidate. One ballot does tell you something; it just doesn\'t tell you much. As the sample grows, the curve narrows into a peak near the elections that look like the sample, and the shaded regions close in from both sides. Left of the peak, the curve only rises, so once a tie is ruled out there, so is every election Bob won.',
+        one: 'This view asks the left-side question of the first view, could this election give this many votes for Alice or more, of every election. Left of the sample it matches the first view; to the right it climbs to 100% instead of falling. The curve only rises from left to right, so once a tie is ruled out, so is every election Bob won. Votes for Bob still count: they pull the curve to the right and make it harder to rule anything out. But an election that\'s even better for Alice than the sample is never ruled out here, because an audit doesn\'t need to rule it out: if Alice did even better, she still won.',
+        exact: 'Start over and draw one ballot. If it has a vote for Alice, the curve becomes a straight ramp: a box with more votes for Alice hands you a ballot with a vote for Alice more often. One ballot does tell you something; it just doesn\'t tell you much. As the sample grows, the curve narrows around elections that look like the sample. Statisticians call this curve the likelihood.' }[st.view];
       if (!st.m) { $('dOut').innerHTML = T ? '<p>No ballots drawn yet. An empty sample can\'t surprise anyone, so the curve sits at 100% and nothing is ruled out.</p>'
         : '<p>No ballots drawn yet. Every election produces an empty sample, so every election fits and the curve is flat.</p>'; return; }
+      const bal = `${st.m} ballot${st.m === 1 ? '' : 's'}`;
+      if (one) {
+        const ruled = lo >= 0 ? `Elections with <b>${lo}</b> or fewer votes for Alice would give a sample with ${st.a} or more of them less than 1 time in 20, so the sample rules them out.` : 'No election is ruled out yet: every one of them would give a sample this good for Alice at least 1 time in 20.';
+        $('dOut').innerHTML = `<p>${ruled}</p><p>A tie would give a sample with <b>${st.a} or more</b> votes for Alice out of ${bal} <b class="tie">${fmtPct(up[TIE])}</b> of the time. ` +
+          (up[TIE] < CUT ? 'The tie is ruled out, and with it every election Bob won.' : 'The tie is still in the running.') + '</p>';
+        return; }
       const pt = curve[TIE], pr = curve[REP], tt = tail[TIE];
       if (T) {
         const parts = [];
         if (lo >= 0) parts.push(`elections with <b>${lo}</b> or fewer votes for Alice would give a sample with ${st.a} or more of them less than 1 time in 20`);
         if (hi <= N) parts.push(`elections with <b>${hi}</b> or more${lo >= 0 ? '' : ' votes for Alice'} would give ${st.a} or fewer${lo >= 0 ? '' : ' of them'} less than 1 time in 20`);
         const ruled = parts.length ? `${parts.join('; ')}. The sample rules ${parts.length > 1 ? 'both groups' : 'them'} out.` : 'No election is ruled out yet: every one of them would give a sample like this at least 1 time in 20.';
-        const bal = `${st.m} ballot${st.m === 1 ? '' : 's'}`;
         const tieLine = down[TIE] < up[TIE]
           ? `A tie would give a sample with <b>${st.a} or fewer</b> votes for Alice out of ${bal} <b class="tie">${fmtPct(down[TIE])}</b> of the time. ` + (down[TIE] < CUT ? 'The tie is ruled out, but from Bob\'s side: this sample points to Bob having won.' : 'The tie is still in the running.')
           : `A tie would give a sample with <b>${st.a} or more</b> votes for Alice out of ${bal} <b class="tie">${fmtPct(up[TIE])}</b> of the time. ` + (up[TIE] < CUT ? 'The tie is ruled out, and with it every election Bob won.' : 'The tie is still in the running.');
@@ -906,8 +915,9 @@ sup.fn a:hover { text-decoration: underline; }
     $('dDraw10').addEventListener('click', () => { draw(10); render(); });
     $('dDraw50').addEventListener('click', () => { draw(50); render(); });
     $('dReset').addEventListener('click', () => { refill(); render(); });
-    const view = v => { st.view = v; $('dViewTail').setAttribute('aria-pressed', String(v === 'tail')); $('dViewExact').setAttribute('aria-pressed', String(v === 'exact')); render(); };
+    const view = v => { st.view = v; for (const [id, k] of [['dViewTail', 'tail'], ['dViewOne', 'one'], ['dViewExact', 'exact']]) $(id).setAttribute('aria-pressed', String(k === v)); render(); };
     $('dViewTail').addEventListener('click', () => view('tail'));
+    $('dViewOne').addEventListener('click', () => view('one'));
     $('dViewExact').addEventListener('click', () => view('exact'));
     $('dBoxRep').addEventListener('click', () => pick('rep'));
     $('dBoxTie').addEventListener('click', () => pick('tie'));
@@ -915,7 +925,7 @@ sup.fn a:hover { text-decoration: underline; }
     (() => { const cv = $('dCv'), tip = $('dTip');
       const move = e => { if (!geom) return; const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
         const A = Math.round((x - geom.pad.l) / geom.pw * N); if (A < 0 || A > N) { tip.hidden = true; return; }
-        tip.innerHTML = `election: ${A} Alice, ${N - A} Bob<br>${st.view === 'tail' ? `${up[A] <= down[A] ? `${st.a} or more` : `${st.a} or fewer`} for Alice: ${fmtPct(tail[A])}` : `this sample: ${fmtPct(curve[A])}`}`; tip.hidden = false;
+        tip.innerHTML = `election: ${A} Alice, ${N - A} Bob<br>${st.view === 'one' ? `${st.a} or more for Alice: ${fmtPct(up[A])}` : st.view === 'tail' ? `${up[A] <= down[A] ? `${st.a} or more` : `${st.a} or fewer`} for Alice: ${fmtPct(tail[A])}` : `this sample: ${fmtPct(curve[A])}`}`; tip.hidden = false;
         const tw = tip.offsetWidth; tip.style.left = Math.max(0, x + 14 + tw > r.width ? x - 14 - tw : x + 14) + 'px'; tip.style.top = Math.max(0, y - 10) + 'px'; };
       cv.addEventListener('pointermove', move); cv.addEventListener('pointerdown', move); cv.addEventListener('pointerleave', () => tip.hidden = true); })();
     refill(); draw(20);
