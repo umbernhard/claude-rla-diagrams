@@ -155,7 +155,7 @@ sup.fn a:hover { text-decoration: underline; }
 .srow .tag.real { color: var(--good); background: var(--panel); }
 .srow .tag.fake { color: var(--ink-3); background: var(--panel); }
 /* random samples look like the box */
-.erows { display: grid; gap: .3rem; }
+.erows { display: grid; gap: .3rem .5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); }
 .erow { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .75rem; padding: .35rem .5rem; border: 1px solid var(--rule); border-radius: 6px; }
 .erow .bal { opacity: 1; }
 .erow .ecount { font: 400 .82rem/1.2 var(--f-mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
@@ -527,6 +527,7 @@ sup.fn a:hover { text-decoration: underline; }
     </div>
     <div class="canvas-box"><canvas id="eBox" role="img" aria-label="All 1,000 ballots in the box as small squares colored by candidate, with the 10 most recently sampled ballots highlighted"></canvas></div>
     <div id="eOut" class="out" aria-live="polite"></div>
+    <p id="eRowsLbl" class="chips-label" style="margin:0" hidden></p>
     <div id="eRows" class="erows" aria-label="Most recent samples, newest first"></div>
     <p class="caption">Switch elections and the samples change with the box. From the tie, most rows hold 4, 5 or 6 votes for Alice. From the 980 box, nearly every row is all Alice, and a row with two votes for Bob is the surprise. Every election produces a surprising sample now and then: depending on the box, somewhere between about 1 time in 15 and 1 time in 65.</p>
   </section>
@@ -1405,7 +1406,7 @@ sup.fn a:hover { text-decoration: underline; }
 
   // ============================================================ E: random samples look like the box
   const FE = (() => {
-    const N = 1000, M = 10, KEEP = 12, CUT = 0.05, ELS = [['eA300', 300], ['eTie', 500], ['eA600', 600], ['eA980', 980]];
+    const N = 1000, M = 10, KEEP = 20, CUT = 0.05, ELS = [['eA300', 300], ['eTie', 500], ['eA600', 600], ['eA980', 980]];
     const st = { A: 500, rows: [], n: 0, k: 0, idx: [], box: null };
     const fill = () => { const arr = new Uint8Array(N); arr.fill(1, 0, st.A); st.box = shuffle(arr); };
     // a count is surprising if a sample at least that far out, in its direction, turns up less than 1 time in 20
@@ -1430,6 +1431,7 @@ sup.fn a:hover { text-decoration: underline; }
       const avg = (M * st.A / N).toFixed(1).replace(/\.0$/, ''), q = rate();
       const base = `This box is ${Math.round(100 * st.A / N)}% votes for Alice, so a sample of 10 holds ${avg} on average. From this election, about 1 sample in ${Math.round(1 / q)} is surprising.`;
       $('eOut').innerHTML = `<p>${base}</p>` + (st.n ? `<p>Samples drawn: <b>${st.n}</b>. Surprising: <b class="tie">${st.k}</b>${st.n >= 20 ? `, or ${fmtPct(st.k / st.n)}` : ''}.</p>` : '<p>No samples drawn yet.</p>');
+      $('eRowsLbl').hidden = !st.n; $('eRowsLbl').textContent = st.n > KEEP ? `Your latest ${KEEP} samples, newest first (all ${st.n} are in the tally above)` : `Your samples, newest first`;
       $('eRows').innerHTML = st.rows.map(r => `<div class="erow${r.s ? ' sur' : ''}"><span class="balrow">${Array.from({ length: M }, (_, j) => `<span class="bal read ${j < r.a ? 'a' : 'b'}">${j < r.a ? 'A' : 'B'}</span>`).join('')}</span><span class="ecount">${r.a} for Alice${r.s ? ' · surprising' : ''}</span></div>`).join('');
     }
     const reset = () => { st.rows = []; st.n = 0; st.k = 0; st.idx = []; fill(); render(); };
