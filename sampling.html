@@ -162,6 +162,10 @@ sup.fn a:hover { text-decoration: underline; }
 .erow.sur { border-color: var(--tie); background: color-mix(in srgb, var(--tie) 8%, var(--panel)); }
 .erow.sur .ecount { color: var(--tie); }
 .who-t { color: var(--tie); font-weight: 600; }
+.erow.wide { flex-direction: column; align-items: stretch; gap: .25rem; }
+.ebar { position: relative; flex: none; width: 100%; height: .9rem; border-radius: 3px; overflow: hidden; background: color-mix(in srgb, var(--bob) 70%, var(--panel)); }
+.ebar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--alice); }
+.ebar u { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--ink); }
 /* ballot manifest figures */
 .mtab { width: 100%; border-collapse: collapse; font-size: .88rem; font-variant-numeric: tabular-nums; }
 .mtab th { font: 500 .7rem/1.2 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); text-align: left; padding: .35rem .5rem; border-bottom: 1px solid var(--rule); }
@@ -508,7 +512,7 @@ sup.fn a:hover { text-decoration: underline; }
 
   <section class="figure" aria-labelledby="eTitle">
     <h2 id="eTitle">Random samples look like the box</h2>
-    <p>Pick an election, then draw random samples of 10 ballots. The squares show every ballot in the box, with the latest sample picked out. Each sample also gets its own row, with its votes for Alice grouped first so you can read the mix at a glance. A row is marked <span class="who-t">surprising</span> when a sample that far from the box would turn up less than 1 time in 20.</p>
+    <p>Pick an election and a sample size, then draw random samples. The squares show every ballot in the box, with the latest sample picked out. Each sample also gets its own row. For samples of 10, the row shows the ballots with the votes for Alice grouped first, so you can read the mix at a glance. Bigger samples are shown as a bar of Alice's share, with a line marking her share of the box. A row is marked <span class="who-t">surprising</span> when a sample that far from the box, in that direction, would turn up less than 1 time in 20.</p>
     <div class="row">
       <span class="chips-label" id="eElLbl">The election</span>
       <div class="seg" role="group" aria-labelledby="eElLbl">
@@ -519,8 +523,16 @@ sup.fn a:hover { text-decoration: underline; }
       </div>
     </div>
     <div class="row">
+      <span class="chips-label" id="eSzLbl">Sample size</span>
+      <div class="seg" role="group" aria-labelledby="eSzLbl">
+        <button id="eM10" type="button" aria-pressed="true">10 ballots</button>
+        <button id="eM50" type="button" aria-pressed="false">50 ballots</button>
+        <button id="eM200" type="button" aria-pressed="false">200 ballots</button>
+      </div>
+    </div>
+    <div class="row">
       <div class="actions">
-        <button id="eDraw1" class="primary" type="button">Draw a sample of 10</button>
+        <button id="eDraw1" class="primary" type="button">Draw a sample</button>
         <button id="eDraw20" type="button">Draw 20 samples</button>
         <button id="eReset" type="button">Start over</button>
       </div>
@@ -529,10 +541,11 @@ sup.fn a:hover { text-decoration: underline; }
     <div id="eOut" class="out" aria-live="polite"></div>
     <p id="eRowsLbl" class="chips-label" style="margin:0" hidden></p>
     <div id="eRows" class="erows" aria-label="Most recent samples, newest first"></div>
-    <p class="caption">Switch elections and the samples change with the box. From the tie, most rows hold 4, 5 or 6 votes for Alice. From the 980 box, nearly every row is all Alice, and a row with two votes for Bob is the surprise. Every election produces a surprising sample now and then: depending on the box, somewhere between about 1 time in 15 and 1 time in 65.</p>
+    <p class="caption">Switch elections and the samples change with the box. From the tie, most samples of 10 hold 4, 5 or 6 votes for Alice. From the 980 box, nearly every one is all Alice, and two votes for Bob is the surprise. Then switch to bigger samples: the bars crowd closer to the line. With 10 ballots from the tie, 7 for Alice (70%) is nothing special. With 200, a sample even 58% Alice is surprising. Every election produces a surprising sample now and then. A sample can be surprising in either direction, so that happens up to about 1 time in 10.</p>
   </section>
 
   <section class="prose" aria-label="Ruling elections out">
+    <p>Bigger samples hug the box more tightly, which is why an auditor's sample can't be too small. But how big is big enough depends mostly on how close the election is, not on how many ballots were cast. A random sample of a few hundred ballots tells you nearly as much about a box of a million ballots as about a box of 1,000. A landslide shows up in a small sample; a close race needs a much bigger one before a tie starts to look surprising. The ballot polling page works out how big.</p>
 
     <p>A surprising sample doesn't prove anything. As the figure shows, every election produces one now and then; it just rarely does. Ruling an election out is a decision, not a proof: we agree to stop taking seriously any election for which our sample would be surprising. The figure below draws that line at 1 in 20. Wherever the line goes, it comes with a cost. If the true election is one of the unlucky ones, bad luck will sometimes rule it out, about as often as the line allows. A stricter line, like 1 in 100, makes that mistake less often but needs more ballots before it can rule anything out. Audits draw a line like this too, called the risk limit, and the next part comes back to it.</p>
   </section>
@@ -1406,16 +1419,19 @@ sup.fn a:hover { text-decoration: underline; }
 
   // ============================================================ E: random samples look like the box
   const FE = (() => {
-    const N = 1000, M = 10, KEEP = 20, CUT = 0.05, ELS = [['eA300', 300], ['eTie', 500], ['eA600', 600], ['eA980', 980]];
+    const N = 1000, KEEP = 20, CUT = 0.05, ELS = [['eA300', 300], ['eTie', 500], ['eA600', 600], ['eA980', 980]], SZ = [['eM10', 10], ['eM50', 50], ['eM200', 200]];
+    let M = 10;
     const st = { A: 500, rows: [], n: 0, k: 0, idx: [], box: null };
     const fill = () => { const arr = new Uint8Array(N); arr.fill(1, 0, st.A); st.box = shuffle(arr); };
     // a count is surprising if a sample at least that far out, in its direction, turns up less than 1 time in 20
-    const pmf = x => hyp(N, st.A, M, x);
-    const sur = x => { let u = 0, d = 0; for (let y = 0; y <= M; y++) { const v = pmf(y); if (y >= x) u += v; if (y <= x) d += v; } return Math.min(u, d) < CUT; };
-    const rate = () => { let t = 0; for (let x = 0; x <= M; x++) if (sur(x)) t += pmf(x); return t; };
+    let memo = null; const pmf = x => hyp(N, st.A, M, x);
+    const tails = () => { if (memo && memo.A === st.A && memo.M === M) return memo; const p_ = Array.from({ length: M + 1 }, (_, x) => pmf(x)), up = [], dn = [];
+      let c = 0; for (let x = 0; x <= M; x++) { c += p_[x]; dn[x] = c; } c = 0; for (let x = M; x >= 0; x--) { c += p_[x]; up[x] = c; } return memo = { A: st.A, M, p_, up, dn }; };
+    const sur = x => { const t = tails(); return Math.min(t.up[x], t.dn[x]) < CUT; };
+    const rate = () => { const t = tails(); let r = 0; for (let x = 0; x <= M; x++) if (sur(x)) r += t.p_[x]; return r; };
     function one() { const idx = new Set(); while (idx.size < M) idx.add(Math.floor(Math.random() * N));
       st.idx = [...idx]; const a = st.idx.filter(i => st.box[i]).length, s_ = sur(a);
-      st.rows.unshift({ a, s: s_ }); if (st.rows.length > KEEP) st.rows.pop(); st.n++; if (s_) st.k++; }
+      st.rows.unshift({ a, m: M, s: s_ }); if (st.rows.length > KEEP) st.rows.pop(); st.n++; if (s_) st.k++; }
     function boxChart() {
       const cv = $('eBox'), cols = cv.parentElement.clientWidth < 560 ? 40 : 50, rows = N / cols;
       const { ctx, w } = setup(cv, rows / cols, 9999), cs = w / cols, pick = new Set(st.idx), r = Math.max(1, cs * .18);
@@ -1428,13 +1444,18 @@ sup.fn a:hover { text-decoration: underline; }
     function render() {
       ELS.forEach(([id, A]) => $(id).setAttribute('aria-pressed', String(A === st.A)));
       boxChart();
+      SZ.forEach(([id, m]) => $(id).setAttribute('aria-pressed', String(m === M)));
       const avg = (M * st.A / N).toFixed(1).replace(/\.0$/, ''), q = rate();
-      const base = `This box is ${Math.round(100 * st.A / N)}% votes for Alice, so a sample of 10 holds ${avg} on average. From this election, about 1 sample in ${Math.round(1 / q)} is surprising.`;
+      const base = `This box is ${Math.round(100 * st.A / N)}% votes for Alice, so a sample of ${M} holds ${avg} on average. From this election, about 1 sample in ${Math.round(1 / q)} is surprising.`;
       $('eOut').innerHTML = `<p>${base}</p>` + (st.n ? `<p>Samples drawn: <b>${st.n}</b>. Surprising: <b class="tie">${st.k}</b>${st.n >= 20 ? `, or ${fmtPct(st.k / st.n)}` : ''}.</p>` : '<p>No samples drawn yet.</p>');
       $('eRowsLbl').hidden = !st.n; $('eRowsLbl').textContent = st.n > KEEP ? `Your latest ${KEEP} samples, newest first (all ${st.n} are in the tally above)` : `Your samples, newest first`;
-      $('eRows').innerHTML = st.rows.map(r => `<div class="erow${r.s ? ' sur' : ''}"><span class="balrow">${Array.from({ length: M }, (_, j) => `<span class="bal read ${j < r.a ? 'a' : 'b'}">${j < r.a ? 'A' : 'B'}</span>`).join('')}</span><span class="ecount">${r.a} for Alice${r.s ? ' · surprising' : ''}</span></div>`).join('');
+      const boxPct = 100 * st.A / N;
+      $('eRows').innerHTML = st.rows.map(r => `<div class="erow${r.s ? ' sur' : ''}${r.m > 10 ? ' wide' : ''}">` + (r.m <= 10
+        ? `<span class="balrow">${Array.from({ length: r.m }, (_, j) => `<span class="bal read ${j < r.a ? 'a' : 'b'}">${j < r.a ? 'A' : 'B'}</span>`).join('')}</span><span class="ecount">${r.a} for Alice${r.s ? ' · surprising' : ''}</span>`
+        : `<span class="ebar" aria-hidden="true"><i style="width:${100 * r.a / r.m}%"></i><u style="left:${boxPct}%"></u></span><span class="ecount">${r.a} of ${r.m} for Alice, ${Math.round(100 * r.a / r.m)}%${r.s ? ' · surprising' : ''}</span>`) + `</div>`).join('');
     }
     const reset = () => { st.rows = []; st.n = 0; st.k = 0; st.idx = []; fill(); render(); };
+    SZ.forEach(([id, m]) => $(id).addEventListener('click', () => { M = m; reset(); }));
     ELS.forEach(([id, A]) => $(id).addEventListener('click', () => { st.A = A; reset(); }));
     $('eDraw1').addEventListener('click', () => { one(); render(); });
     $('eDraw20').addEventListener('click', () => { for (let i = 0; i < 20; i++) one(); render(); });
