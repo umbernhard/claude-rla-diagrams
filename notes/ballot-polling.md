@@ -112,3 +112,4 @@ For six ballots, the chance that Alice won (final count > 3) works out as:
 ## Planned rework (author, 2026-10-25)
 
 - Redo the page to also show ballot polling evidence as one-sided p-values (following the sampling page's "Too good for Alice" view), and explain the other test statistics methods like ALPHA and SHANGRLA rely on and how they work for ballot polling. The sampling page keeps the likelihood view as a preview of the LR/SPRT (BRAVO) approach.
+- Compare efficiency of sequential methods there (BRAVO's LR vs ALPHA-style one-sided martingales): expected ballots when the reported margin is right vs when the true margin is smaller. The sampling page now ends by asking "can an audit check as it goes, keep its risk limit, and use even fewer ballots?" and drops its likelihood view.

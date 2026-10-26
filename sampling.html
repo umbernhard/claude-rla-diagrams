@@ -169,6 +169,7 @@ sup.fn a:hover { text-decoration: underline; }
 /* ballot manifest figures */
 .mtab { width: 100%; border-collapse: collapse; font-size: .88rem; font-variant-numeric: tabular-nums; }
 .mtab th { font: 500 .7rem/1.2 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); text-align: left; padding: .35rem .5rem; border-bottom: 1px solid var(--rule); }
+.mtab tbody th { font: 500 .88rem/1.35 var(--f-body); letter-spacing: 0; text-transform: none; color: var(--ink); border-bottom: 1px solid var(--grid); vertical-align: top; }
 .mtab td { padding: .4rem .5rem; border-bottom: 1px solid var(--grid); color: var(--ink-2); vertical-align: top; }
 .mtab td.num, .mtab th.num { text-align: right; font-family: var(--f-mono); }
 .mtab td b { color: var(--ink); font-weight: 500; }
@@ -512,7 +513,7 @@ sup.fn a:hover { text-decoration: underline; }
 
   <section class="figure" aria-labelledby="eTitle">
     <h2 id="eTitle">Random samples look like the box</h2>
-    <p>Pick an election and a sample size, then draw random samples. The squares show every ballot in the box, with the latest sample picked out. Each sample also gets its own row. For samples of 10, the row shows the ballots with the votes for Alice grouped first, so you can read the mix at a glance. Bigger samples are shown as a bar of Alice's share, with a line marking her share of the box. A row is marked <span class="who-t">surprising</span> when a sample that far from the box, in that direction, would turn up less than 1 time in 20.</p>
+    <p>Pick an election and a sample size, then draw random samples. The squares show every ballot in the box, with the latest sample picked out. Each sample also gets its own row. For samples of 10, the row shows the ballots with the votes for Alice grouped first, so you can read the mix at a glance. Bigger samples are shown as a bar of Alice's share, with a line marking her share of the box. A row is marked <span class="who-t">surprising</span> when a sample that far from the box, in that direction, would turn up less than 1 time in 40. A sample can be surprising in either direction, so all together, surprising samples turn up less than 1 time in 20.</p>
     <div class="row">
       <span class="chips-label" id="eElLbl">The election</span>
       <div class="seg" role="group" aria-labelledby="eElLbl">
@@ -541,7 +542,7 @@ sup.fn a:hover { text-decoration: underline; }
     <div id="eOut" class="out" aria-live="polite"></div>
     <p id="eRowsLbl" class="chips-label" style="margin:0" hidden></p>
     <div id="eRows" class="erows" aria-label="Most recent samples, newest first"></div>
-    <p class="caption">Switch elections and the samples change with the box. From the tie, most samples of 10 hold 4, 5 or 6 votes for Alice. From the 980 box, nearly every one is all Alice, and two votes for Bob is the surprise. Then switch to bigger samples: the bars crowd closer to the line. With 10 ballots from the tie, 7 for Alice (70%) is nothing special. With 200, a sample even 58% Alice is surprising. Every election produces a surprising sample now and then. A sample can be surprising in either direction, so that happens up to about 1 time in 10.</p>
+    <p class="caption">Switch elections and the samples change with the box. From the tie, most samples of 10 hold 4, 5 or 6 votes for Alice. From the 980 box, nearly every one is all Alice, and two votes for Bob is the surprise. Then switch to bigger samples: the bars crowd closer to the line. With 10 ballots from the tie, 7 for Alice (70%) is nothing special. With 200, a sample 58% Alice is surprising. Every election produces a surprising sample now and then, but less than 1 time in 20.</p>
   </section>
 
   <section class="prose" aria-label="Ruling elections out">
@@ -552,8 +553,8 @@ sup.fn a:hover { text-decoration: underline; }
 
   <section class="figure" aria-labelledby="dTitle">
     <h2 id="dTitle">Which elections could have produced this sample?</h2>
-    <p>This box holds 1,000 ballots. The reported result is 600 votes for Alice and 400 for Bob, but the auditor can't see inside. Each draw adds one ballot to the sample. For every election the box could hold, from 0 votes for Alice to 1,000, the curve shows how surprising the sample would be, asked in whichever direction applies. Elections that fall below the dashed 1-in-20 line are shaded as ruled out, for now.</p>
-    <p>The switch above the chart changes the question. <b>Too good for Alice</b> asks only the first direction: could this election give a sample with this many votes for Alice or more? <b>Exactly this sample</b> asks how often each election would give exactly this sample. At first the box really does hold 600 to 400. Use the buttons under <b>What's really in the box</b>, at the bottom of the figure, to put a tie or a win for Bob inside instead, then draw again and watch where the curve settles.</p>
+    <p>This box holds 1,000 ballots. The reported result is 600 votes for Alice and 400 for Bob, but the auditor can't see inside. Each draw adds one ballot to the sample. For every election the box could hold, from 0 votes for Alice to 1,000, the curve shows how surprising the sample would be, asked in whichever direction applies. The figure compares two ways to rule elections out, both wrong at most 1 time in 20. A <b>two-sided test</b> rules out elections on both sides of the sample, so it has to split that 1 in 20: it rules out an election when the sample would turn up less than 1 time in 40 in either direction. A <b>one-sided test</b> only asks whether an election could have given this many votes for Alice or more, so it can spend the whole 1 in 20 on that one side.</p>
+    <p>The vertical scale is stretched near the bottom so the small chances are easy to see: each step down is 10 times rarer. At first the box really does hold 600 to 400. Use the buttons under <b>What's really in the box</b>, at the bottom of the figure, to put a tie or a win for Bob inside instead, then draw again and watch where the curve settles.</p>
     <div class="row">
       <div class="actions">
         <button id="dDraw1" class="primary" type="button">Draw a ballot</button>
@@ -563,17 +564,13 @@ sup.fn a:hover { text-decoration: underline; }
       </div>
       <div class="readout"><span>drawn <b id="dM">0</b></span><span>Alice <b id="dA">0</b> · Bob <b id="dB">0</b></span></div>
     </div>
-    <div class="row">
-      <span class="chips-label" id="dViewLbl">The curve shows</span>
-      <div class="seg" role="group" aria-labelledby="dViewLbl">
-        <button id="dViewTail" type="button" aria-pressed="true">Surprising either way</button>
-        <button id="dViewOne" type="button" aria-pressed="false">Too good for Alice</button>
-        <button id="dViewExact" type="button" aria-pressed="false">Exactly this sample</button>
-      </div>
+    <div class="legend">
+      <span class="key"><span class="sw" style="background: color-mix(in srgb, var(--tie) 14%, var(--panel)); border: 1px solid color-mix(in srgb, var(--tie) 40%, var(--panel))"></span>ruled out by the one-sided test only</span>
+      <span class="key"><span class="sw" style="background: color-mix(in srgb, var(--tie) 34%, var(--panel))"></span>ruled out by the two-sided test</span>
     </div>
     <div class="canvas-box"><canvas id="dCv" role="img" aria-label="For each possible count of votes for Alice in the box, the chance of a sample like this one"></canvas><div id="dTip" class="tip" hidden></div></div>
     <div id="dOut" class="out" aria-live="polite"></div>
-    <p id="dCap" class="caption"></p>
+    <p class="caption">Start over and draw a few ballots at a time. Left of the peak, the two tests share one curve; the only difference is the line. The one-sided test puts all of its 1 in 20 on the side that matters, so its line sits higher, and it reaches the tie first. In simulations of the 600–400 box, the two-sided test needed about a third more ballots, on average, before it first ruled out the tie. On the right, the two-sided test also rules out elections even better for Alice than the sample suggests, work an audit doesn't need. Statisticians call this curve a p-value function. The range the two-sided test leaves unshaded is a 95% confidence interval for what's in the box, and the point where the curve crosses the one-sided line is a 95% lower confidence bound: Alice received at least that many votes.</p>
     <div class="row">
       <span class="chips-label" id="dTruthLbl">What's really in the box</span>
       <div class="seg" role="group" aria-labelledby="dTruthLbl">
@@ -590,10 +587,18 @@ sup.fn a:hover { text-decoration: underline; }
 
   <section class="prose" aria-labelledby="s4">
     <h2 id="s4">The result that matters</h2>
-    <p>An audit doesn't need the exact count. It only needs to rule out the results in which the reported winner lost. The hardest of those to rule out is a tie, 500 to 500, because it sits closest to an Alice win. If an Alice-leaning sample would be rare from a tied box, it's rarer still from any box where Bob won. You can see this in the figure: left of its peak, the curve only rises, so once the tie drops below the line, every election Bob won is already below it. Making the case against the tie is enough.</p>
-    <p>That also means an audit can ignore the right side of the curve. An election even better for Alice than the sample suggests isn't a problem: Alice still won it. The <b>Too good for Alice</b> view keeps only the side that matters. It also changes how often the figure is wrong. With a 1-in-20 cutoff on each side, bad luck puts the true result in one of the shaded regions about 1 time in 10. But the mistake an audit has to guard against is confirming the wrong winner, and that can only happen on the left side. If Bob really won, a sample rules out every election Bob won at most 1 time in 20.</p>
-    <p>There are two natural ways to make that case. The first, in the “too good for Alice” view, asks only how surprising the sample would be if the election were tied. Flip a coin 100 times, get 60 heads, and you'll doubt the coin without doing any math. The second, in the “exactly this sample” view, also uses the reported result, and asks how much more often a 600–400 election would produce the sample than a tie would. Statisticians call that comparison a likelihood ratio. Both lead to valid audits.</p>
-    <p>One trap catches both, the one the figure showed: an audit that checks after every ballot gets many chances to be fooled, so it can't simply stop the first time the sample looks rare. The next part shows how ballot polling audits handle that.</p>
+    <p>An audit doesn't need the exact count. It only needs to rule out the results in which the reported winner lost. The hardest of those to rule out is a tie, 500 to 500, because it sits closest to an Alice win. If an Alice-leaning sample would be rare from a tied box, it's rarer still from any box where Bob won. You can see this in the figure: left of its peak, the curve only rises, so once the tie drops below a line, every election Bob won is already below it. Making the case against the tie is enough.</p>
+    <p>That's why an audit uses the one-sided test. An election even better for Alice than the sample suggests isn't a problem, because Alice still won it, so there's no reason to spend any of the 1 in 20 ruling it out. Putting all of it on the side that matters lets the audit rule out the tie with fewer ballots.</p>
+    <p>It helps to be precise about what can go wrong. A risk-limiting audit only ever does one of two things: it confirms the reported outcome and stops, or it keeps going, all the way to a full hand count if it has to, and the hand count decides. The audit itself never declares a different winner. That leaves four possibilities:</p>
+    <table class="mtab" style="margin: .5rem 0 1rem" aria-label="What an audit can get right and wrong">
+      <thead><tr><th scope="col"></th><th scope="col">The audit confirms</th><th scope="col">The audit goes to a full hand count</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">The reported winner really won</th><td>Right, and cheap</td><td>Right, but expensive: the hand count agrees with the reported result</td></tr>
+        <tr><th scope="row">The reported winner really lost</th><td><b>The one mistake that matters.</b> Its chance is capped by the line, 1 in 20 here</td><td>Right: the hand count corrects the outcome</td></tr>
+      </tbody>
+    </table>
+    <p>So an audit can't overturn a correct outcome. The worst it can do to one is cost a full hand count. The only harmful mistake is confirming an outcome that's wrong, and that's the chance the one-sided test keeps below its line. That chance is the audit's <i>risk limit</i>. Everything else is about efficiency: how often, and how soon, an audit confirms an outcome that's right.</p>
+    <p>One trap remains, the one the figure showed: an audit that checks after every ballot gets many chances to be fooled, so it can't simply stop the first time the sample looks rare. That raises the question the next part takes up: can an audit check as it goes, keep its risk limit, and use even fewer ballots? One way weighs the reported result against a tie, with what statisticians call a likelihood ratio. Others build on the one-sided tests from this page.</p>
     <a class="next" href="ballot-polling.html">Next: ballot polling audits →</a>
     <p class="fine" style="margin-top:1rem">Simplifications on this page: one contest, two candidates, one vote per ballot, no blank or invalid ballots, and ballots aren't put back after they're drawn.</p>
   </section>
@@ -885,90 +890,71 @@ sup.fn a:hover { text-decoration: underline; }
 
   // ============================================================ D: which boxes fit the sample
   const FD = (() => {
-    const N = 1000, REP = 600, TIE = 500, BOXES = { rep: 600, tie: 500, bob: 450 };
-    const st = { box: 'rep', view: 'tail', ballots: null, m: 0, a: 0, b: 0 }, CUT = 0.05;
-    let curve = new Float64Array(N + 1), tail = new Float64Array(N + 1), up = new Float64Array(N + 1), down = new Float64Array(N + 1), geom = null;
+    const N = 1000, REP = 600, TIE = 500, BOXES = { rep: 600, tie: 500, bob: 450 }, ONE = 1 / 20, TWO = 1 / 40, YMIN = 1e-4;
+    const st = { box: 'rep', ballots: null, m: 0, a: 0, b: 0 };
+    let tail = new Float64Array(N + 1), up = new Float64Array(N + 1), down = new Float64Array(N + 1), geom = null;
     function refill() { const A = BOXES[st.box], arr = new Uint8Array(N); arr.fill(1, 0, A); st.ballots = shuffle(arr); st.m = 0; st.a = 0; st.b = 0; }
     function draw(k) { for (let i = 0; i < k && st.m < N; i++) { st.ballots[st.m] ? st.a++ : st.b++; st.m++; } }
-    function compute() { let mx = 0, peak = 0;
-      for (let A = 0; A <= N; A++) { const v = hyp(N, A, st.m, st.a); curve[A] = v; if (v > mx) { mx = v; peak = A; } }
-      // tail: chance a box with A votes for Alice gives at least st.a in a sample of st.m
-      // for each election: chance of at least st.a votes for Alice (up) and of at most st.a (down); the curve is the smaller
+    function compute() {
+      // for each election: chance of at least st.a votes for Alice (up) and of at most st.a (down)
       for (let A = 0; A <= N; A++) { let u = 0, d = 0;
         for (let x = Math.max(0, st.m - (N - A)); x <= Math.min(st.m, A); x++) { const v = hyp(N, A, st.m, x); if (x >= st.a) u += v; if (x <= st.a) d += v; }
         up[A] = Math.min(1, u); down[A] = Math.min(1, d); tail[A] = Math.min(up[A], down[A]); }
-      let lo = -1, hi = N + 1;
-      for (let A = 0; A <= N; A++) { if (up[A] < CUT && up[A] <= down[A]) lo = A; if (down[A] < CUT && down[A] < up[A] && hi > N) hi = A; }
-      let lo1 = -1; for (let A = 0; A <= N; A++) if (up[A] < CUT) lo1 = A;
-      return st.view === 'one' ? { mx, peak, lo: lo1, hi: N + 1 } : { mx, peak, lo, hi }; }
-    function chart({ mx, peak, lo, hi }) {
-      const T = st.view !== 'exact', one = st.view === 'one', val = !T ? curve : one ? up : tail;
-      const narrow = $('dCv').parentElement.clientWidth < 560, { ctx, w, h } = setup($('dCv'), narrow ? .85 : .48, 340);
-      const pad = { l: narrow ? 50 : 58, r: 16, t: 28, b: 42 }, pw = w - pad.l - pad.r, ph = h - pad.t - pad.b;
-      const ymax = T ? 1.08 : mx * 1.12, X = A => pad.l + A / N * pw, Y = v => pad.t + ph - v / ymax * ph;
+      let lo1 = -1, lo2 = -1, hi2 = N + 1;
+      for (let A = 0; A <= N; A++) { if (up[A] < ONE) lo1 = A; if (up[A] < TWO && up[A] <= down[A]) lo2 = A; if (down[A] < TWO && down[A] < up[A] && hi2 > N) hi2 = A; }
+      return { lo1, lo2, hi2 };
+    }
+    function chart({ lo1, lo2, hi2 }) {
+      const narrow = $('dCv').parentElement.clientWidth < 560, { ctx, w, h } = setup($('dCv'), narrow ? .85 : .5, 360);
+      const pad = { l: narrow ? 58 : 80, r: 16, t: 34, b: 42 }, pw = w - pad.l - pad.r, ph = h - pad.t - pad.b;
+      const L = Math.log10, X = A => pad.l + A / N * pw, Y = v => pad.t + ph * (L(Math.max(v, YMIN)) / L(YMIN));
       geom = { pad, pw };
+      // shading: one-sided only (light), two-sided (darker)
+      if (lo1 >= 0) { ctx.fillStyle = rgba(C.tie, .10); ctx.fillRect(X(0), pad.t, X(lo1) - X(0), ph); }
+      ctx.fillStyle = rgba(C.tie, .22);
+      if (lo2 >= 0) ctx.fillRect(X(0), pad.t, X(lo2) - X(0), ph);
+      if (hi2 <= N) ctx.fillRect(X(hi2), pad.t, X(N) - X(hi2), ph);
       ctx.font = '11px ' + C.mono; ctx.lineWidth = 1;
       for (let A = 0; A <= N; A += 100) { ctx.strokeStyle = C.grid; seg(ctx, [X(A), pad.t], [X(A), pad.t + ph]);
         if (narrow && A % 250) continue; ctx.fillStyle = C.ink3; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(A, X(A), pad.t + ph + 6); }
       if (narrow) { ctx.fillStyle = C.ink3; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(250, X(250), pad.t + ph + 6); ctx.fillText(750, X(750), pad.t + ph + 6); }
-      const sy = T ? .25 : niceStep(ymax, 4);
-      for (let v = 0; v <= ymax + 1e-15; v += sy) { ctx.strokeStyle = v ? C.grid : C.ink3; seg(ctx, [pad.l, Y(v)], [pad.l + pw, Y(v)]);
-        ctx.fillStyle = C.ink3; ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(fmtPct(v), pad.l - 6, Y(v)); }
-      if (T) { // ruled-out elections, on either side
-        ctx.fillStyle = rgba(C.tie, .10); ctx.textBaseline = 'top'; ctx.font = '11px ' + C.mono;
-        if (lo >= 0) { ctx.fillRect(X(0), pad.t, X(lo) - X(0), ph); if (X(lo) - X(0) > 110) { ctx.fillStyle = C.tie; ctx.textAlign = 'left'; ctx.fillText('ruled out, for now', X(0) + 6, pad.t + 4); ctx.fillStyle = rgba(C.tie, .10); } }
-        if (hi <= N) { ctx.fillRect(X(hi), pad.t, X(N) - X(hi), ph); if (X(N) - X(hi) > 110) { ctx.fillStyle = C.tie; ctx.textAlign = 'right'; ctx.fillText('ruled out, for now', X(N) - 6, pad.t + 4); } } }
-      ctx.beginPath(); ctx.moveTo(X(0), Y(0)); for (let A = 0; A <= N; A++) ctx.lineTo(X(A), Y(val[A])); ctx.lineTo(X(N), Y(0)); ctx.closePath();
-      ctx.fillStyle = rgba(C.rep, .15); ctx.fill();
-      ctx.beginPath(); for (let A = 0; A <= N; A++) A ? ctx.lineTo(X(A), Y(val[A])) : ctx.moveTo(X(A), Y(val[A])); ctx.strokeStyle = C.rep; ctx.lineWidth = 2; ctx.stroke();
-      if (T) { ctx.strokeStyle = C.ink2; ctx.lineWidth = 1; ctx.setLineDash([4, 4]); seg(ctx, [pad.l, Y(CUT)], [pad.l + pw, Y(CUT)]); ctx.setLineDash([]);
-        ctx.fillStyle = C.ink2; ctx.textAlign = 'right'; ctx.textBaseline = 'bottom'; ctx.font = '11px ' + C.mono; ctx.fillText('1 in 20', pad.l + pw - 4, Y(CUT) - 3); }
-      // tie and reported markers
+      for (const [v, t] of [[1, 'always'], [.1, '1 in 10'], [.01, '1 in 100'], [.001, narrow ? '1 in 1k' : '1 in 1,000'], [.0001, narrow ? '1 in 10k' : '1 in 10,000']]) {
+        ctx.strokeStyle = v === YMIN ? C.ink3 : C.grid; seg(ctx, [pad.l, Y(v)], [pad.l + pw, Y(v)]);
+        ctx.fillStyle = C.ink3; ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(t, pad.l - 6, Y(v)); }
+      // the two lines
+      const hline = (v, dash, col, txt) => { ctx.strokeStyle = col; ctx.lineWidth = 1.2; ctx.setLineDash(dash); seg(ctx, [pad.l, Y(v)], [pad.l + pw, Y(v)]); ctx.setLineDash([]);
+        ctx.fillStyle = col; ctx.textAlign = 'right'; ctx.textBaseline = 'bottom'; ctx.font = '11px ' + C.mono; ctx.fillText(txt, pad.l + pw - 4, Y(v) - 2); };
+      hline(ONE, [5, 4], C.ink2, narrow ? '1 in 20' : 'one-sided line: 1 in 20');
+      hline(TWO, [2, 3], C.tie, narrow ? '1 in 40' : 'two-sided line: 1 in 40');
+      // curve: shared on the left; on the right the two-sided curve falls (solid) and the one-sided one keeps rising (dashed)
+      ctx.beginPath(); for (let A = 0; A <= N; A++) A ? ctx.lineTo(X(A), Y(tail[A])) : ctx.moveTo(X(A), Y(tail[A])); ctx.strokeStyle = C.rep; ctx.lineWidth = 2; ctx.stroke();
+      ctx.beginPath(); let on = false; for (let A = 0; A <= N; A++) { if (up[A] > down[A]) { on ? ctx.lineTo(X(A), Y(up[A])) : ctx.moveTo(X(A), Y(up[A])); on = true; } }
+      ctx.setLineDash([4, 3]); ctx.strokeStyle = rgba(C.rep, .7); ctx.lineWidth = 1.5; ctx.stroke(); ctx.setLineDash([]);
       const mark = (A, col, txt, dash, side) => { ctx.strokeStyle = col; ctx.lineWidth = 1.5; ctx.setLineDash(dash); seg(ctx, [X(A), pad.t], [X(A), pad.t + ph]); ctx.setLineDash([]);
         ctx.fillStyle = col; ctx.textAlign = side > 0 ? 'left' : side < 0 ? 'right' : 'center'; ctx.textBaseline = 'bottom'; ctx.font = '12px ' + C.mono; ctx.fillText(txt, X(A) + 3 * (side || 0), pad.t - 6); ctx.font = '11px ' + C.mono; };
       mark(TIE, C.tie, 'tie', [], narrow ? -1 : 0);
       mark(REP, C.ink2, 'reported', [5, 4], narrow ? 1 : 0);
-      dot(ctx, [X(TIE), Y(val[TIE])], 5, C.tie);
-      dot(ctx, [X(REP), Y(val[REP])], 4, C.ink2);
-      if (st.m && !T) { dot(ctx, [X(peak), Y(mx)], 6, C.panel); dot(ctx, [X(peak), Y(mx)], 4, C.path); }
+      dot(ctx, [X(TIE), Y(tail[TIE])], 5, C.tie);
       ctx.fillStyle = C.alice; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.font = '12px ' + C.mono;
       ctx.fillText(narrow ? 'votes for Alice in the box' : 'votes for Alice in the box, out of 1,000 ballots', pad.l + pw / 2, h - 2);
-      ctx.save(); ctx.translate(13, pad.t + ph / 2); ctx.rotate(-Math.PI / 2); ctx.fillStyle = C.ink2; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = '11px ' + C.mono;
-      ctx.fillText(T ? (narrow ? 'chance, this far or further' : 'chance of a sample this far out') : (narrow ? 'chance of this sample' : 'chance of exactly this sample'), 0, 0); ctx.restore();
+      ctx.fillStyle = C.ink2; ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.font = '11px ' + C.mono; ctx.fillText(narrow ? 'chance' : 'chance of a sample this far out', 0, 0);
     }
-    function out({ peak, lo, hi }) {
+    function out({ lo1, lo2, hi2 }) {
       $('dM').textContent = st.m; $('dA').textContent = st.a; $('dB').textContent = st.b;
-      const T = st.view !== 'exact', one = st.view === 'one';
-      $('dCap').textContent = {
-        tail: 'Start over and draw one ballot. A vote for Alice turns the curve into a ramp up: an election with more votes for Alice hands out a vote for Alice more often. A vote for Bob gives the mirror image. One ballot tells you something, just not much. As the sample grows, the curve narrows into a peak near the result the sample suggests, and the shaded regions close in from both sides. Statisticians call this curve a p-value function. The elections left unshaded form a confidence interval: with a 1-in-20 cutoff on each side, it\'s a 90% confidence interval for what\'s in the box.',
-        one: 'Left of the peak, this view matches the first one. To the right it climbs to 100% instead of falling, because an election even better for Alice than the sample suggests never needs to be ruled out: she would still have won it. Votes for Bob still count here. They pull the curve to the right and make the tie harder to rule out. Each point on this curve is a one-sided p-value, and the place where the curve crosses the line is a lower confidence bound: with 95% confidence, Alice received at least that many votes. This is the view closest to what an audit actually computes.',
-        exact: 'Start over and draw one ballot. A vote for Alice turns the curve into a ramp: an election with more votes for Alice hands out a vote for Alice more often. One ballot tells you something, just not much. As the sample grows, the curve narrows around the elections that look like the sample. Statisticians call this curve the likelihood.' }[st.view];
-      if (!st.m) { $('dOut').innerHTML = T ? '<p>No ballots drawn yet. An empty sample can\'t surprise anyone, so the curve sits at 100% and nothing is ruled out.</p>'
-        : '<p>No ballots drawn yet. Every election produces an empty sample, so every election fits and the curve is flat.</p>'; return; }
+      if (!st.m) { $('dOut').innerHTML = '<p>No ballots drawn yet. An empty sample can\'t surprise anyone, so nothing is ruled out.</p>'; return; }
       const bal = `${st.m} ballot${st.m === 1 ? '' : 's'}`;
       const suggests = `This sample is ${Math.round(100 * st.a / st.m)}% votes for Alice, so it suggests about <b>${Math.round(N * st.a / st.m)}</b> of the 1,000 ballots in the box have a vote for Alice.`;
-      if (one) {
-        const ruled = lo >= 0 ? `Elections with <b>${lo}</b> or fewer votes for Alice would give a sample with ${st.a} or more of them less than 1 time in 20, so the sample rules them out.` : 'No election is ruled out yet: every one of them would give a sample this good for Alice at least 1 time in 20.';
-        $('dOut').innerHTML = `<p>${suggests}</p><p>${ruled}</p><p>A tie would give a sample with <b>${st.a} or more</b> votes for Alice out of ${bal} <b class="tie">${often(up[TIE])}</b>. ` +
-          (up[TIE] < CUT ? 'The tie is ruled out, and with it every election Bob won.' : 'The tie is still in the running.') + '</p>';
-        return; }
-      const pt = curve[TIE], pr = curve[REP], tt = tail[TIE];
-      if (T) {
-        const parts = [];
-        if (lo >= 0) parts.push(`elections with <b>${lo}</b> or fewer votes for Alice would give a sample with ${st.a} or more of them less than 1 time in 20`);
-        if (hi <= N) parts.push(`elections with <b>${hi}</b> or more${lo >= 0 ? '' : ' votes for Alice'} would give ${st.a} or fewer${lo >= 0 ? '' : ' of them'} less than 1 time in 20`);
-        const ruled = parts.length ? `${parts.join('; ')}. The sample rules ${parts.length > 1 ? 'both groups' : 'them'} out.` : 'No election is ruled out yet: every one of them would give a sample like this at least 1 time in 20.';
-        const tieLine = down[TIE] < up[TIE]
-          ? `A tie would give a sample with <b>${st.a} or fewer</b> votes for Alice out of ${bal} <b class="tie">${often(down[TIE])}</b>. ` + (down[TIE] < CUT ? 'The tie is ruled out, but from Bob\'s side: this sample points to Bob having won.' : 'The tie is still in the running.')
-          : `A tie would give a sample with <b>${st.a} or more</b> votes for Alice out of ${bal} <b class="tie">${often(up[TIE])}</b>. ` + (up[TIE] < CUT ? 'The tie is ruled out, and with it every election Bob won.' : 'The tie is still in the running.');
-        $('dOut').innerHTML = `<p>${suggests}</p><p>${ruled[0].toUpperCase() + ruled.slice(1)}</p><p>${tieLine}</p>`;
-        return; }
-      let rel;
-      if (pt === 0) rel = 'A tie could never produce it.';
-      else { const r = pr / pt; rel = r >= 1 ? `The reported result produces it about <b>${r >= 10 ? Math.round(r).toLocaleString() : r.toFixed(1)} times</b> as often.` : 'The reported result produces it less often than a tie would.'; }
-      $('dOut').innerHTML =
-        `<p>Elections with about <b>${peak}</b> votes for Alice produce this sample most often.</p>` +
-        `<p>A tie produces this exact sample <b class="tie">${often(pt)}</b>; the reported 600–400 result, <b class="rep">${often(pr)}</b>. ${rel}</p>`;
+      const one = lo1 >= 0 ? `The one-sided test rules out elections with <b>${lo1}</b> or fewer votes for Alice.` : 'The one-sided test doesn\'t rule out anything yet.';
+      const two = [lo2 >= 0 ? `<b>${lo2}</b> or fewer` : '', hi2 <= N ? `<b>${hi2}</b> or more` : ''].filter(Boolean);
+      const twoTxt = two.length ? `The two-sided test rules out elections with ${two.join(', and with ')} votes for Alice.` : 'The two-sided test doesn\'t rule out anything yet.';
+      let tie;
+      if (down[TIE] < up[TIE]) tie = `This sample leans toward Bob. A tie would give ${st.a} or fewer votes for Alice out of ${bal} <b class="tie">${often(down[TIE])}</b>. Neither test can rule out the tie in Alice's favor.`;
+      else { const u = up[TIE];
+        tie = `A tie would give a sample with <b>${st.a} or more</b> votes for Alice out of ${bal} <b class="tie">${often(u)}</b>. ` +
+          (u < TWO ? 'That\'s below both lines, so both tests rule out the tie, and with it every election Bob won.'
+            : u < ONE ? 'That\'s below the one-sided line but not the two-sided one: the one-sided test rules out the tie, and the two-sided test needs more ballots.'
+            : 'Neither test rules out the tie yet.'); }
+      $('dOut').innerHTML = `<p>${suggests}</p><p>${one} ${twoTxt}</p><p>${tie}</p>`;
     }
     const render = () => { const r = compute(); chart(r); out(r); };
     const pick = key => { st.box = key; for (const [id, k] of [['dBoxRep', 'rep'], ['dBoxTie', 'tie'], ['dBoxBob', 'bob']]) $(id).setAttribute('aria-pressed', String(k === key));
@@ -977,17 +963,13 @@ sup.fn a:hover { text-decoration: underline; }
     $('dDraw10').addEventListener('click', () => { draw(10); render(); });
     $('dDraw50').addEventListener('click', () => { draw(50); render(); });
     $('dReset').addEventListener('click', () => { refill(); render(); });
-    const view = v => { st.view = v; for (const [id, k] of [['dViewTail', 'tail'], ['dViewOne', 'one'], ['dViewExact', 'exact']]) $(id).setAttribute('aria-pressed', String(k === v)); render(); };
-    $('dViewTail').addEventListener('click', () => view('tail'));
-    $('dViewOne').addEventListener('click', () => view('one'));
-    $('dViewExact').addEventListener('click', () => view('exact'));
     $('dBoxRep').addEventListener('click', () => pick('rep'));
     $('dBoxTie').addEventListener('click', () => pick('tie'));
     $('dBoxBob').addEventListener('click', () => pick('bob'));
     (() => { const cv = $('dCv'), tip = $('dTip');
       const move = e => { if (!geom) return; const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
         const A = Math.round((x - geom.pad.l) / geom.pw * N); if (A < 0 || A > N) { tip.hidden = true; return; }
-        tip.innerHTML = `election: ${A} Alice, ${N - A} Bob<br>${st.view === 'one' ? `${st.a} or more for Alice: ${fmtPct(up[A])}` : st.view === 'tail' ? `${up[A] <= down[A] ? `${st.a} or more` : `${st.a} or fewer`} for Alice: ${fmtPct(tail[A])}` : `this sample: ${fmtPct(curve[A])}`}`; tip.hidden = false;
+        tip.innerHTML = `election: ${A} Alice, ${N - A} Bob<br>${up[A] <= down[A] ? `${st.a} or more` : `${st.a} or fewer`} for Alice: ${fmtPct(tail[A])}`; tip.hidden = false;
         const tw = tip.offsetWidth; tip.style.left = Math.max(0, x + 14 + tw > r.width ? x - 14 - tw : x + 14) + 'px'; tip.style.top = Math.max(0, y - 10) + 'px'; };
       cv.addEventListener('pointermove', move); cv.addEventListener('pointerdown', move); cv.addEventListener('pointerleave', () => tip.hidden = true); })();
     refill(); draw(20);
@@ -1419,7 +1401,7 @@ sup.fn a:hover { text-decoration: underline; }
 
   // ============================================================ E: random samples look like the box
   const FE = (() => {
-    const N = 1000, KEEP = 20, CUT = 0.05, ELS = [['eA300', 300], ['eTie', 500], ['eA600', 600], ['eA980', 980]], SZ = [['eM10', 10], ['eM50', 50], ['eM200', 200]];
+    const N = 1000, KEEP = 20, CUT = 0.025, ELS = [['eA300', 300], ['eTie', 500], ['eA600', 600], ['eA980', 980]], SZ = [['eM10', 10], ['eM50', 50], ['eM200', 200]];
     let M = 10;
     const st = { A: 500, rows: [], n: 0, k: 0, idx: [], box: null };
     const fill = () => { const arr = new Uint8Array(N); arr.fill(1, 0, st.A); st.box = shuffle(arr); };
