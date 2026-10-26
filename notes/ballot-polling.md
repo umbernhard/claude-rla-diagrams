@@ -108,3 +108,7 @@ For six ballots, the chance that Alice won (final count > 3) works out as:
 - M. Lindeman, P. B. Stark and V. S. Yates, "BRAVO: Ballot-polling Risk-limiting Audits to Verify Outcomes," EVT/WOTE '12, 2012. https://www.usenix.org/conference/evtwote12/workshop-program/presentation/lindeman
 - A. Wald, "Sequential Tests of Statistical Hypotheses," Annals of Mathematical Statistics 16(2), 1945 (the SPRT).
 - J. Ville, Étude critique de la notion de collectif, Gauthier-Villars, 1939 (Ville's inequality: a nonnegative martingale starting at 1 reaches 1/α with probability at most α).
+
+## Planned rework (author, 2026-10-25)
+
+- Redo the page to also show ballot polling evidence as one-sided p-values (following the sampling page's "Too good for Alice" view), and explain the other test statistics methods like ALPHA and SHANGRLA rely on and how they work for ballot polling. The sampling page keeps the likelihood view as a preview of the LR/SPRT (BRAVO) approach.
