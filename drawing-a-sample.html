@@ -1,0 +1,898 @@
+<meta charset="utf-8">
+<title>Drawing a Fair Sample</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap">
+<style>
+/* Layout: one reading column of prose, broken by figure panels; every figure is a 2D drawing (paths, counts, bars). Shares the ballot polling page's tokens, plus a color per candidate. */
+:root {
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --ink: #15181d;
+  --ink-2: #4b5260;
+  --ink-3: #79808d;
+  --rule: #dde1e7;
+  --grid: #e9ecf0;
+  --reported: #2a78d6;
+  --tie: #eb6834;
+  --alice: #6b46c1;
+  --bob: #0b8686;
+  --path: #15181d;
+  --good: #1e7d4f;
+  --good-bg: #e3f3ea;
+  --wait: #8a5a00;
+  --wait-bg: #fbf0d9;
+  --focus: #2a78d6;
+  --f-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111317; --panel: #191c21; --ink: #eef0f3; --ink-2: #b7bcc6; --ink-3: #868d99;
+    --rule: #2c3138; --grid: #23272d; --reported: #3987e5; --tie: #d95926; --alice: #a88bf0; --bob: #3fc0bd; --path: #eef0f3;
+    --good: #5cc48e; --good-bg: #16301f; --wait: #e5b453; --wait-bg: #33280f; --focus: #3987e5;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111317; --panel: #191c21; --ink: #eef0f3; --ink-2: #b7bcc6; --ink-3: #868d99;
+  --rule: #2c3138; --grid: #23272d; --reported: #3987e5; --tie: #d95926; --alice: #a88bf0; --bob: #3fc0bd; --path: #eef0f3;
+  --good: #5cc48e; --good-bg: #16301f; --wait: #e5b453; --wait-bg: #33280f; --focus: #3987e5;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font: 400 1rem/1.6 var(--f-body); }
+.wrap { max-width: 60rem; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 2rem 4rem; display: grid; gap: 1.75rem; }
+.prose { max-width: 40rem; display: grid; gap: .1rem; }
+h1 { font: 600 clamp(1.7rem, 4vw, 2.3rem)/1.15 var(--f-display); margin: 0 0 .5rem; text-wrap: balance; letter-spacing: -.01em; }
+h2 { font: 600 1.25rem/1.3 var(--f-display); margin: 0 0 .4rem; text-wrap: balance; }
+.figure h2 { margin: 0; }
+p { margin: 0 0 .75rem; color: var(--ink-2); }
+p strong, p b { color: var(--ink); font-weight: 600; }
+.eyebrow { font: 500 .72rem/1.3 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: .6rem; }
+.who-a { color: var(--alice); font-weight: 600; } .who-b { color: var(--bob); font-weight: 600; }
+.key { display: inline-flex; align-items: center; gap: .35em; white-space: nowrap; color: var(--ink); font-weight: 500; }
+.sw { width: .8em; height: .8em; border-radius: 2px; display: inline-block; }
+.sw.rep { background: var(--reported); } .sw.tie { background: var(--tie); }
+.sw.path { background: var(--path); height: 3px; width: 1em; border-radius: 1px; }
+.sw.bar { background: color-mix(in srgb, var(--reported) 45%, var(--panel)); }
+.sw.dot { background: var(--path); border-radius: 50%; }
+
+.figure { background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; padding: 1rem; display: grid; gap: .8rem; min-width: 0; }
+.figure > p { margin: 0; max-width: 46rem; }
+.row { display: flex; flex-wrap: wrap; gap: .5rem .75rem; align-items: center; justify-content: space-between; }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; flex-wrap: wrap; }
+.seg button { border: 0; border-radius: 0; background: var(--bg); color: var(--ink-2); }
+.seg button[aria-pressed=true] { background: var(--ink); color: var(--bg); }
+button { font: 500 .9rem/1 var(--f-body); color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: .55rem .8rem; cursor: pointer; }
+button.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+button:hover { border-color: var(--ink-3); }
+button:focus-visible, input:focus-visible, summary:focus-visible, a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.actions { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+
+.chips { display: grid; gap: .6rem; }
+.batch { display: grid; gap: .35rem; }
+.balrow { display: flex; flex-wrap: wrap; gap: 3px; }
+.chips-label { font: 500 .72rem/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.bal { font: 500 .8rem/1 var(--f-mono); width: 1.6em; height: 1.6em; display: inline-grid; place-items: center; border-radius: 4px; background: var(--panel); border: 1px solid var(--rule); opacity: .6; }
+.bal.a { color: var(--alice); border-color: color-mix(in srgb, var(--alice) 45%, var(--rule)); }
+.bal.b { color: var(--bob); border-color: color-mix(in srgb, var(--bob) 45%, var(--rule)); }
+.bal.read { opacity: 1; color: var(--panel); }
+.bal.read.a { background: var(--alice); border-color: var(--alice); }
+.bal.read.b { background: var(--bob); border-color: var(--bob); }
+.orders { display: flex; flex-wrap: wrap; gap: .4rem; }
+.order { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); cursor: pointer; }
+.order .bal { opacity: 1; }
+.order[aria-pressed=true] { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+
+.legend { display: flex; flex-wrap: wrap; gap: .4rem 1rem; font-size: .85rem; }
+.canvas-box { position: relative; width: 100%; min-width: 0; }
+canvas { display: block; width: 100%; }
+.pair { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1rem; align-items: center; }
+@media (max-width: 680px) { .pair { grid-template-columns: minmax(0, 1fr); } }
+
+.slider { display: grid; gap: .35rem; }
+.slider label { font: 500 .72rem/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.slider label b { color: var(--ink); font-weight: 500; letter-spacing: 0; }
+input[type=range] { width: 100%; accent-color: var(--ink); }
+
+.readout { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; align-items: center; font: 400 .88rem/1.35 var(--f-mono); font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.readout b { color: var(--ink); font-weight: 500; }
+.pill { font: 500 .8rem/1 var(--f-body); padding: .4rem .65rem; border-radius: 999px; color: var(--wait); background: var(--wait-bg); }
+.pill.a { color: var(--alice); background: color-mix(in srgb, var(--alice) 14%, var(--panel)); }
+.pill.b { color: var(--bob); background: color-mix(in srgb, var(--bob) 14%, var(--panel)); }
+.out { font-size: .95rem; color: var(--ink-2); display: grid; gap: .35rem; max-width: 46rem; }
+.out p { margin: 0; }
+.out b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.out b.rep { color: var(--reported); } .out b.tie { color: var(--tie); }
+.caption { font-size: .9rem; color: var(--ink-2); margin: 0; max-width: 46rem; }
+.tip { position: absolute; pointer-events: none; background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: .4rem .55rem; font: 400 .78rem/1.35 var(--f-mono); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; box-shadow: 0 2px 8px rgb(0 0 0 / .12); }
+sup.fn { font: 500 .7em/0 var(--f-mono); }
+sup.fn a { color: var(--reported); text-decoration: none; padding: 0 .1em; }
+sup.fn a:hover { text-decoration: underline; }
+.refs { max-width: 46rem; display: grid; gap: .4rem; border-top: 1px solid var(--rule); padding-top: 1rem; }
+.refs h2 { font-size: 1.05rem; }
+.refs ol { margin: 0; padding-left: 1.4rem; display: grid; gap: .5rem; color: var(--ink-2); font-size: .88rem; line-height: 1.5; }
+.refs a { color: var(--reported); overflow-wrap: anywhere; }
+.refs li:target { background: color-mix(in srgb, var(--reported) 10%, transparent); border-radius: 4px; }
+.next { display: inline-flex; align-items: center; gap: .5em; font: 600 1rem/1.3 var(--f-body); color: var(--ink); text-decoration: none; border: 1px solid var(--ink); border-radius: 6px; padding: .7rem 1rem; justify-self: start; margin-top: .5rem; }
+.next:hover { background: var(--ink); color: var(--bg); }
+.numpad { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: .35rem; }
+@media (max-width: 520px) { .numpad { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.numpad button { font: 500 1.1rem/1 var(--f-mono); padding: .8rem 0; font-variant-numeric: tabular-nums; }
+.numpad button:disabled { opacity: .45; cursor: default; }
+.numpad button[aria-pressed=true] { background: var(--ink); color: var(--bg); border-color: var(--ink); opacity: 1; }
+.pick { font: 500 .85rem/1 var(--f-mono); font-variant-numeric: tabular-nums; min-width: 3.4em; padding: .4rem .45rem; border-radius: 5px; text-align: center; border: 1px solid var(--rule); background: var(--panel); color: var(--ink); display: inline-grid; gap: .2rem; }
+.pick small { font-size: .65rem; color: var(--ink-3); }
+.pick.prev { color: var(--ink-3); background: var(--bg); }
+.twins { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; }
+@media (max-width: 640px) { .twins { grid-template-columns: minmax(0, 1fr); } }
+.twin { display: grid; gap: .45rem; align-content: start; min-width: 0; }
+.seedbox { font: 500 1rem/1 var(--f-mono); color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: .55rem .6rem; width: 100%; max-width: 24rem; }
+.seedbox:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.pick.hit { border-color: var(--good); background: var(--good-bg); color: var(--good); }
+.pill.go { color: var(--good); background: var(--good-bg); }
+.fine { font-size: .85rem; color: var(--ink-3); }
+/* spot the real shuffle */
+.srows { display: grid; gap: .5rem; }
+.srow { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .35rem .75rem; align-items: center; text-align: left; width: 100%; padding: .6rem .7rem; background: var(--bg); border: 1px solid var(--rule); border-radius: 8px; font: inherit; color: var(--ink); cursor: pointer; }
+.srow:hover:not(:disabled) { border-color: var(--ink-3); }
+.srow:disabled { cursor: default; opacity: 1; }
+.srow .slab { font: 500 .72rem/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.srow .balrow { gap: 3px; }
+.srow .bal { opacity: 1; color: var(--panel); }
+.srow .bal.a { background: var(--alice); border-color: var(--alice); }
+.srow .bal.b { background: var(--bob); border-color: var(--bob); }
+.srow .bal.streak { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--tie); }
+.srow .sstat { grid-column: 2; font: 400 .82rem/1.3 var(--f-mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.srow.picked { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.srow.real { border-color: var(--good); background: var(--good-bg); }
+.srow.real.picked { box-shadow: 0 0 0 1px var(--good); }
+.srow .tag { font: 500 .75rem/1 var(--f-body); padding: .3rem .5rem; border-radius: 999px; margin-left: .4rem; text-transform: none; letter-spacing: 0; }
+.srow .tag.real { color: var(--good); background: var(--panel); }
+.srow .tag.fake { color: var(--ink-3); background: var(--panel); }
+/* random samples look like the box */
+.erows { display: grid; gap: .3rem .5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); }
+.erow { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .75rem; padding: .35rem .5rem; border: 1px solid var(--rule); border-radius: 6px; }
+.erow .bal { opacity: 1; }
+.erow .ecount { font: 400 .82rem/1.2 var(--f-mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.erow.sur { border-color: var(--tie); background: color-mix(in srgb, var(--tie) 8%, var(--panel)); }
+.erow.sur .ecount { color: var(--tie); }
+.who-t { color: var(--tie); font-weight: 600; }
+.erow.wide { flex-direction: column; align-items: stretch; gap: .25rem; }
+.ebar { position: relative; flex: none; width: 100%; height: .9rem; border-radius: 3px; overflow: hidden; background: color-mix(in srgb, var(--bob) 70%, var(--panel)); }
+.ebar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--alice); }
+.ebar u { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--ink); }
+/* ballot manifest figures */
+.mtab { width: 100%; border-collapse: collapse; font-size: .88rem; font-variant-numeric: tabular-nums; }
+.mtab th { font: 500 .7rem/1.2 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); text-align: left; padding: .35rem .5rem; border-bottom: 1px solid var(--rule); }
+.mtab tbody th { font: 500 .88rem/1.35 var(--f-body); letter-spacing: 0; text-transform: none; color: var(--ink); border-bottom: 1px solid var(--grid); vertical-align: top; }
+.mtab td { padding: .4rem .5rem; border-bottom: 1px solid var(--grid); color: var(--ink-2); vertical-align: top; }
+.mtab td.num, .mtab th.num { text-align: right; font-family: var(--f-mono); }
+.mtab td b { color: var(--ink); font-weight: 500; }
+.mtab td small { display: block; color: var(--ink-3); font-size: .78rem; }
+.mtab tr.pending td { color: var(--ink-3); }
+.mtab tr.hit td { background: color-mix(in srgb, var(--reported) 12%, transparent); }
+.mtab tfoot td { border-bottom: 0; font-weight: 600; color: var(--ink); }
+.bal.n { color: var(--ink-3); font-size: .62rem; opacity: 1; transition: border-color .2s, color .2s, background .2s; }
+.bal.n.c { border-color: var(--ink-3); color: var(--ink-2); }
+.bal.n.read { background: var(--reported); border-color: var(--reported); color: var(--panel); }
+.bal.n.was { border-color: var(--reported); color: var(--reported); }
+.mstage { display: grid; gap: .7rem; }
+.mgrp { display: grid; gap: .35rem; }
+.mhead { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .7rem; }
+.mhead button { padding: .35rem .6rem; font-size: .82rem; }
+.mstatus { font: 400 .8rem/1.3 var(--f-body); color: var(--good); }
+.mtag { display: none; }
+.mstage.line { display: flex; flex-wrap: wrap; gap: 3px; align-items: center; }
+.mstage.line .mgrp, .mstage.line .mrow { display: contents; }
+.mstage.line .mhead { display: none; }
+.mstage.line .mtag { display: inline-flex; align-items: center; height: 1.6em; padding: 0 .35rem 0 .4rem; margin-left: .3rem; border-left: 2px solid var(--ink-3); font: 500 .62rem/1 var(--f-mono); letter-spacing: .04em; color: var(--ink-3); white-space: nowrap; }
+.mstage.line .mtag.first { margin-left: 0; }
+.nbig { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem 1rem; }
+.nbig .num { font: 600 1.7rem/1 var(--f-mono); color: var(--reported); font-variant-numeric: tabular-nums; }
+.nbig .where { font-size: .95rem; color: var(--ink-2); }
+.bal.off { opacity: .28; border-style: dashed; }
+.bal.ghost { opacity: 1; border-style: dashed; color: var(--ink-3); background: transparent; }
+.bal.ghost.read { background: var(--tie); border-color: var(--tie); color: var(--panel); border-style: solid; }
+.mrow-note { font: 400 .8rem/1.3 var(--f-body); color: var(--tie); }
+.mrow-note.ok { color: var(--ink-3); }
+/* site-wide warning banner; carries its own colors so it reads the same on every page */
+.disclaimer { --dz-bg: #fff3d1; --dz-ink: #4a2a00; --dz-edge: #b45309; --dz-a: #f2b705; --dz-b: #1d1d1d;
+  background: var(--dz-bg); color: var(--dz-ink); border: 2px solid var(--dz-edge); border-radius: 8px; overflow: hidden; display: grid; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .disclaimer { --dz-bg: #2d1f05; --dz-ink: #fde8b3; --dz-edge: #f59e0b; --dz-b: #0b0b0b; } }
+:root[data-theme="dark"] .disclaimer { --dz-bg: #2d1f05; --dz-ink: #fde8b3; --dz-edge: #f59e0b; --dz-b: #0b0b0b; }
+.disclaimer .dz-stripe { height: 10px; background: repeating-linear-gradient(135deg, var(--dz-a) 0 14px, var(--dz-b) 14px 28px); }
+.disclaimer .dz-body { padding: .8rem 1rem .9rem; display: grid; gap: .35rem; }
+.disclaimer .dz-title { font: 700 .95rem/1.25 var(--f-body, system-ui, sans-serif); letter-spacing: .06em; text-transform: uppercase; margin: 0; color: var(--dz-ink); }
+.disclaimer p { margin: 0; color: var(--dz-ink); font-size: .95rem; line-height: 1.5; max-width: 50rem; }
+.disclaimer a { color: var(--dz-ink); font-weight: 600; }
+</style>
+
+<div class="wrap">
+  <aside class="disclaimer" role="note" aria-labelledby="dzTitle">
+    <div class="dz-stripe" aria-hidden="true"></div>
+    <div class="dz-body">
+      <p class="dz-title" id="dzTitle">Under construction · Made with AI · May contain errors</p>
+      <p>This site is a work in progress and changes often. Much of it was written and coded with the help of an AI model (Claude), and it has not yet been fully checked. The math, the explanations, the citations and the interactive demos may all contain mistakes. Please don't treat it as an authoritative source on election audits. <a href="index.html">All pages</a></p>
+    </div>
+  </aside>
+  <header class="prose">
+    <div class="eyebrow">Risk-limiting audits from the ground up · Part 2: drawing the sample</div>
+    <h1>How do you draw a fair sample of ballots?</h1>
+    <p>The <a href="sampling.html">last part</a> showed what a random sample can say about a box of ballots. All of it rests on one assumption: that the ballots read are a fair random draw from every ballot cast. This page is about how an audit makes that true: mixing, making random numbers people can check, and knowing exactly what you're drawing from.</p>
+  </header>
+
+  <section class="figure" aria-labelledby="aTitle">
+    <h2 id="aTitle">Reading a box that hasn't been mixed</h2>
+    <p>This box holds 40 ballots: 22 with a vote for <span class="who-a">Alice</span> and 18 with a vote for <span class="who-b">Bob</span>. They are still stacked the way they arrived, one precinct after another, and the first precinct leaned toward Bob. Each ballot read moves the path one step: right for Alice, up for Bob. The blue arrow points at the full count.</p>
+    <div class="row">
+      <div class="seg" role="group" aria-label="Order of the ballots">
+        <button id="aBox" type="button" aria-pressed="true">Box order</button>
+        <button id="aShuf" type="button" aria-pressed="false">Shuffled</button>
+      </div>
+      <span id="aPill" class="pill">Nothing read yet</span>
+    </div>
+    <div id="aChips" class="chips"></div>
+    <div class="canvas-box"><canvas id="aCv" role="img" aria-label="Path of the ballots read so far, with an arrow to the full count"></canvas></div>
+    <div class="readout" id="aReadout" aria-live="polite"></div>
+    <div class="actions">
+      <button id="aRead1" class="primary" type="button">Read next ballot</button>
+      <button id="aRead5" type="button">Read 5</button>
+      <button id="aReadAll" type="button">Read the rest</button>
+      <button id="aRestart" type="button">Start over</button>
+    </div>
+    <p id="aNote" class="caption"></p>
+  </section>
+
+  <section class="prose" aria-label="Which ballots, not which order">
+    <p>Notice that the sequence itself was never the problem. Read those same first 12 ballots in any other order and the path ends at the same point, still leaning toward Bob. What went wrong is which ballots made it into the sample, and nothing in the sample warns you.</p>
+    <p>It's like a card game with a badly shuffled deck. Everyone at the table assumes the cards they're dealt are down to luck. If the deck wasn't really shuffled, the hands still look like ordinary hands, and nobody can tell from their own cards that someone has an advantage. An auditor works the same way: the math assumes the ballots read were a fair draw from the box.</p>
+    <p>Shuffling is what makes that assumption true, by giving every set of ballots the same chance of being the one read. Once the set is fair, the order within it doesn't matter: any path to the same point is the same sample, read differently.</p>
+  </section>
+
+  <section class="prose" aria-labelledby="s2">
+    <h2 id="s2">Mix first, then draw</h2>
+    <p>Humans are bad at randomness, so we need help to make sure we are really getting a good mix. Try it yourself.</p>
+  </section>
+
+  <section class="figure" aria-labelledby="rTitle">
+    <h2 id="rTitle">Pick a number between 1 and 10</h2>
+    <p id="rPrompt">Go with your gut. Don't think about it too hard.</p>
+    <div class="numpad" id="rPad" role="group" aria-label="Numbers 1 to 10"></div>
+    <div id="rMsg" class="out" aria-live="polite"></div>
+  </section>
+
+  <section class="figure" aria-labelledby="sTitle">
+    <h2 id="sTitle">Spot the real shuffle</h2>
+    <p>Each row is 20 ballots, read one at a time from a box with as many votes for <span class="who-a">Alice</span> as for <span class="who-b">Bob</span>. Only one row came from a real shuffle. The other three were made up to look random. Which one is real?</p>
+    <div id="sRows" class="srows" role="group" aria-label="Four rows of ballots; pick the one you think came from a real shuffle"></div>
+    <div id="sOut" class="out" aria-live="polite"></div>
+    <div class="row">
+      <div class="actions"><button id="sAgain" type="button">Try another set</button></div>
+      <span id="sScore" class="readout"></span>
+    </div>
+    <p class="caption">The page generates the made-up rows to copy what studies find when people try to write down a random sequence: they switch between the two options more often than chance would, and they avoid long streaks.<sup class="fn" data-ref="falk-konold"><a href="#ref-falk-konold" id="cite-falk-konold" aria-label="Reference 1">1</a></sup><sup class="fn" data-ref="barhillel-wagenaar"><a href="#ref-barhillel-wagenaar" id="cite-barhillel-wagenaar" aria-label="Reference 2">2</a></sup> The real row is a fresh random draw each time, so now and then it looks tame too. Over a few sets, though, it usually has the longest streak.</p>
+  </section>
+
+  <section class="prose" aria-label="Random numbers in a real audit">
+    <p>To make sure we are really getting a good mix, we can use sources of "true" randomness, like rolling a fair die. However, if we had to sample every ballot that way, it would be really painful.</p>
+    <p>To deal with this, we use computers to help. But computers have the opposite problem from people: they're built to do exactly the same thing every time. Tap the camera icon on your phone and you get the camera, not a different app each time. Type 2 + 2 into a calculator and you get 4, today, tomorrow and next year. That predictability is what makes computers useful, and it's the opposite of random.</p>
+    <p>So computers use special programs called pseudo-random number generators (PRNGs), which give a new number every time you ask. Because the computer is still following fixed steps (that's the "pseudo" part), the numbers aren't really random; the generator fakes it. We help it out by giving it a kick from a truly random source, usually by rolling dice to "seed" the PRNG.</p>
+    <p>You've probably used one of these generators without knowing it: the shuffle button in a music app. It also shows how odd real randomness feels. In 2014, Spotify's engineers explained that listeners complained when a truly random shuffle played several songs by the same artist in a row, so Spotify changed shuffle to spread each artist's songs out. Their conclusion: "they don't like perfect randomness."<sup class="fn" data-ref="spotify-shuffle"><a href="#ref-spotify-shuffle" id="cite-spotify-shuffle" aria-label="Reference 3">3</a></sup> That's the made-up rows from the figure above.</p>
+  </section>
+
+  <section class="figure" aria-labelledby="gTitle">
+    <h2 id="gTitle">Two generators, side by side</h2>
+    <p>Each box below feeds a seed to the same pseudo-random number generator. Type anything you like as a seed: a word, your name, a number. The generator turns it into a stream of numbers between 1 and 10, like the ones you picked above. It works by scrambling the seed together with a counter (1, 2, 3, …) and turning each scrambled result into a number. Once the seed is chosen, nothing is random.</p>
+    <div class="twins">
+      <div class="twin">
+        <label for="gSeedA" class="chips-label">Seed A</label>
+        <input id="gSeedA" class="seedbox" type="text" autocomplete="off" spellcheck="false" value="seed">
+        <div id="gOutA" class="balrow" aria-live="polite"></div>
+      </div>
+      <div class="twin">
+        <label for="gSeedB" class="chips-label">Seed B</label>
+        <input id="gSeedB" class="seedbox" type="text" autocomplete="off" spellcheck="false" value="seed">
+        <div id="gOutB" class="balrow" aria-live="polite"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="actions">
+        <button id="gTweak" type="button">Change one character in B</button>
+        <button id="gCopy" type="button">Copy A into B</button>
+        <button id="gMore" type="button">Ask for 10 more</button>
+      </div>
+      <span id="gPill" class="pill"></span>
+    </div>
+    <p id="gNote" class="caption"></p>
+  </section>
+
+  <section class="figure" aria-labelledby="qTitle">
+    <h2 id="qTitle">Guess the next number</h2>
+    <p>This generator has a secret seed. It will show you its numbers one at a time; before each one, guess what it will be. Without the seed, you have nothing to go on.</p>
+    <div class="numpad" id="qPad" role="group" aria-label="Guess a number from 1 to 10"></div>
+    <div id="qHist" class="balrow" aria-live="polite"></div>
+    <div id="qOut" class="out" aria-live="polite"></div>
+    <div id="qReplay" class="twin" hidden>
+      <label for="qSeed" class="chips-label">Type the seed to replay it</label>
+      <input id="qSeed" class="seedbox" type="text" autocomplete="off" spellcheck="false">
+      <div id="qReplayOut" class="balrow"></div>
+    </div>
+    <div class="actions"><button id="qNew" type="button">New secret seed</button></div>
+  </section>
+
+  <section class="prose" aria-label="Seeds in a real audit">
+    <p>In a real audit, then, the shuffle happens on paper rather than by shaking a box. Election offices keep a list of where every ballot is stored, called a ballot manifest, and use the PRNG's numbers to pick ballots from that list. In Colorado, for example, the seed is a number of at least 20 digits, made at a public meeting after Election Day by rolling a ten-sided die once per digit, and members of the public are invited to do the rolling.<sup class="fn" data-ref="co-seed"><a href="#ref-co-seed" id="cite-co-seed" aria-label="Reference 4">4</a></sup> Rhode Island's 2019 audit pilots did the same: observers rolled 20 ten-sided dice in public, which took about 14 minutes.<sup class="fn" data-ref="ri-pilot"><a href="#ref-ri-pilot" id="cite-ri-pilot" aria-label="Reference 5">5</a></sup> The public part matters. If anyone could predict which ballots would be picked, a mistake or a tampered batch could be kept out of the sample. Because the seed is rolled in the open after the election, nobody could have known in advance where the auditor would look.</p>
+  </section>
+
+  <section class="prose" aria-labelledby="sM">
+    <h2 id="sM">Know what you're drawing from</h2>
+    <p>Every box on this page so far came with a known number of ballots. A real election doesn't. Its ballots are spread across hundreds of containers: boxes from each polling place, trays of mail ballots, bags of provisional ballots. Before an audit can draw a random ballot, someone has to know every container that exists and how many ballots are in each one. That list is the ballot manifest. Election offices build it from the records they keep as ballots are handled, not by counting every ballot again, but any entry can be checked by opening the container and counting.</p>
+    <p>A random sample is only random over the list it's drawn from. The dice and the generator pick numbers, and the manifest turns each number into a particular ballot in a particular container. A ballot that isn't on the list can never be picked, no matter what PRNG is used or what the initial seed was. Notice what the manifest doesn't record, too: it says where the ballots are, not how anyone voted.</p>
+  </section>
+
+  <section class="figure" aria-labelledby="mTitle">
+    <h2 id="mTitle">Check a ballot manifest</h2>
+    <p>Here is the manifest for a small election with four containers. Each entry was recorded as the ballots were handled, and matches a record kept separately from the ballots: the poll book voters signed at each polling place, or the log of mail ballot envelopes accepted. Nobody hand counted these ballots to make the list, but anyone can check an entry: tap <b>Count to check</b> to open a container and count it.</p>
+    <table class="mtab" aria-label="Ballot manifest">
+      <thead><tr><th scope="col">Container</th><th scope="col" class="num">Ballots</th><th scope="col">Matches</th><th scope="col">Hand count</th></tr></thead>
+      <tbody id="mRows"></tbody>
+      <tfoot><tr><td>Total</td><td class="num" id="mTot">0</td><td></td><td></td></tr></tfoot>
+    </table>
+    <div id="mStage" class="mstage"></div>
+    <div class="actions">
+      <button id="mAll" type="button">Check the rest</button>
+      <button id="mReset" type="button">Start over</button>
+    </div>
+    <p id="mNote" class="caption" aria-live="polite"></p>
+  </section>
+
+  <section class="prose" aria-labelledby="sN">
+    <h2 id="sN">From a manifest to a sample</h2>
+    <p>Now the seed can do its job. Notice what the manifest above doesn't have: ballot numbers. Nobody writes a number on each ballot. The numbers are made up when the sample is drawn, by imagining every container on the manifest laid end to end, in the manifest's order, and counting along the line.</p>
+  </section>
+
+  <section class="figure" aria-labelledby="nTitle">
+    <h2 id="nTitle">Number the ballots, then draw</h2>
+    <p>Here is the same four-container election, counted and checked. Line the ballots up to give each one a number, then use the seed to draw.</p>
+    <div id="nStage" class="mstage"></div>
+    <div id="nBig" class="nbig" aria-live="polite" hidden></div>
+    <div class="actions" id="nLineActs">
+      <button id="nLine" class="primary" type="button">Line up the ballots and number them</button>
+    </div>
+    <div id="nDrawPart" class="twin" hidden>
+      <label for="nSeed" class="chips-label">Seed, rolled in public</label>
+      <input id="nSeed" class="seedbox" type="text" autocomplete="off" spellcheck="false" value="39108723654082917365">
+      <div class="actions">
+        <button id="nDraw" class="primary" type="button">Draw a ballot</button>
+        <button id="nDraw5" type="button">Draw 5</button>
+        <button id="nReset" type="button">Start over</button>
+      </div>
+      <div id="nPicks" class="balrow"></div>
+    </div>
+    <p id="nNote" class="caption" aria-live="polite"></p>
+    <p class="caption">Draw a few more and you may see several ballots in a row from the same container. That's normal. As the “Spot the real shuffle” figure showed, real randomness is streakier than it feels, and a generator that never repeated a container would be the suspicious one.</p>
+  </section>
+
+  <section class="prose" aria-label="When the manifest is wrong">
+    <p>When the manifest is right, every ballot in the election has the same chance of being drawn. When it's wrong, that stops being true, and nothing in the sample itself will tell you.</p>
+    <p>To see why, take a traditional audit, the kind many states ran before risk-limiting audits: hand count a fixed percentage of the ballots, chosen at random. California's long-standing 1% manual tally, for example, hand counts every ballot from a randomly chosen 1% of precincts.<sup class="fn" data-ref="hall08-improving"><a href="#ref-hall08-improving" id="cite-hall08-improving" aria-label="Reference 6">6</a></sup> The version below draws 10% of the ballots on the manifest, one at a time, to keep it small.</p>
+  </section>
+
+  <section class="figure" aria-labelledby="wTitle">
+    <h2 id="wTitle">A 10% audit with a wrong manifest</h2>
+    <p>This election has six containers and 170 ballots. Counting all of them gives Alice 88 votes and Bob 82. Pick what's wrong with the manifest, then draw samples and watch which ballots ever get picked.</p>
+    <div class="seg" role="group" aria-label="What's wrong with the manifest">
+      <button id="wOk" type="button" aria-pressed="true">Nothing</button>
+      <button id="wMissing" type="button" aria-pressed="false">A box never scanned</button>
+      <button id="wLow" type="button" aria-pressed="false">A count too low</button>
+      <button id="wHigh" type="button" aria-pressed="false">A count too high</button>
+    </div>
+    <div class="legend">
+      <span class="key"><span class="bal a read" aria-hidden="true">A</span>drawn this time</span>
+      <span class="key"><span class="bal b off" aria-hidden="true">B</span>can never be drawn</span>
+      <span class="key"><span class="bal ghost" aria-hidden="true">?</span>listed, but not there</span>
+    </div>
+    <div id="wBoxes" class="chips"></div>
+    <div class="actions">
+      <button id="wDraw" class="primary" type="button">Draw a new 10% sample</button>
+    </div>
+    <div id="wOut" class="out" aria-live="polite"></div>
+    <p id="wNote" class="caption"></p>
+  </section>
+
+  <section class="prose" aria-label="Missing ballots and an independent manifest">
+    <p>Two things follow. First, a ballot that the manifest lists but nobody can find can't simply be skipped. Careful audits treat it as the ballot most damaging to the reported outcome, so a missing ballot can only make the audit harder to pass, never easier.<sup class="fn" data-ref="evil-zombies"><a href="#ref-evil-zombies" id="cite-evil-zombies" aria-label="Reference 7">7</a></sup> Second, the manifest has to be checked against records the voting system didn't produce: how many ballots are in each container, reconciled against how many voters checked in or had a mail ballot accepted.<sup class="fn" data-ref="kir-4"><a href="#ref-kir-4" id="cite-kir-4" aria-label="Reference 8">8</a></sup> A manifest copied from the voting system's own totals can't catch the voting system's own mistakes. If a box is never scanned, like early voting box 2 above, the system's accounting won't flag it, because as far as the system knows, those ballots don't exist. Only independent information, like the voter check-in data, shows that ballots are unaccounted for. The same check also guards against deliberate changes to the system's totals.</p>
+  </section>
+
+  <section class="prose" aria-label="Drawing one at a time">
+    <p>Drawing ballots one at a time doesn't make a sample less fair than grabbing a handful at once. Fifty ballots drawn one by one are just as random as fifty drawn together. Reading them in sequence only lets the audit stop early, as soon as it has seen enough. That doesn't mean every audit stops at the first moment it could. Some jurisdictions deliberately draw more ballots than the math calls for: to make it very likely the audit finishes in a single round instead of going back for more, to meet other requirements in state law (such as a minimum number of ballots to check), or to make sure every county or town in the contest has some ballots to examine, so every local team gets practice. Extra ballots don't weaken the audit, as long as every ballot drawn gets examined and counted.</p>
+  </section>
+
+  <section class="prose" aria-label="What comes next">
+    <p>With a fair draw from an accurate manifest, the math from the <a href="sampling.html">last part</a> applies: each sample is a random draw from the box, and the audit can ask which elections could have produced it. The next part picks up the question that part ended on: how an audit can check as it goes, stop early, and still keep its risk limit.</p>
+    <a class="next" href="ballot-polling.html">Next: ballot polling audits →</a>
+  </section>
+
+  <section class="refs" aria-labelledby="refsT">
+    <h2 id="refsT">References</h2>
+    <p class="fine">See also the <a href="references.html">full reading list</a>.</p>
+    <ol>
+      <li id="ref-falk-konold" data-ref="falk-konold">Ruma Falk and Clifford Konold, <a href="https://doi.org/10.1037/0033-295X.104.2.301">Making sense of randomness: Implicit encoding as a basis for judgment</a>, <i>Psychological Review</i> 104(2):301–318, 1997. <a href="#cite-falk-konold" aria-label="Back to text">↩</a></li>
+      <li id="ref-barhillel-wagenaar" data-ref="barhillel-wagenaar">Maya Bar-Hillel and Willem A. Wagenaar, <a href="https://doi.org/10.1016/0196-8858(91)90029-I">The perception of randomness</a>, <i>Advances in Applied Mathematics</i> 12(4):428–454, 1991. <a href="#cite-barhillel-wagenaar" aria-label="Back to text">↩</a></li>
+      <li id="ref-spotify-shuffle" data-ref="spotify-shuffle">Spotify Engineering, <a href="https://engineering.atspotify.com/2014/02/how-to-shuffle-songs">How to shuffle songs?</a>, February 28, 2014. <a href="#cite-spotify-shuffle" aria-label="Back to text">↩</a></li>
+      <li id="ref-co-seed" data-ref="co-seed">Colorado Secretary of State, <a href="https://coloradosos.gov/pubs/elections/RLA/2024/primary/noticePublicMeeting.html">Notice of Public Meeting to Establish the Risk Limiting Audit Random Seed</a>, June 2024 primary election. <a href="#cite-co-seed" aria-label="Back to text">↩</a></li>
+      <li id="ref-ri-pilot" data-ref="ri-pilot">Rhode Island RLA Working Group, <a href="https://www.brennancenter.org/our-work/research-reports/pilot-implementation-study-risk-limiting-audit-methods-state-rhode-island"><i>Pilot Implementation Study of Risk-Limiting Audit Methods in the State of Rhode Island</i></a>, Brennan Center for Justice, September 2019, pp. 28 and 33. <a href="#cite-ri-pilot" aria-label="Back to text">↩</a></li>
+      <li id="ref-hall08-improving" data-ref="hall08-improving">Joseph Lorenzo Hall, <a href="https://static.usenix.org/events/evt08/tech/full_papers/hall/hall.pdf">Improving the Security, Transparency, and Efficiency of California's 1% Manual Tally Procedures</a>, USENIX EVT 2008. <a href="#cite-hall08-improving" aria-label="Back to text">↩</a></li>
+      <li id="ref-evil-zombies" data-ref="evil-zombies">J.H. Bañuelos and P.B. Stark, <a href="https://arxiv.org/abs/1207.3413">Limiting Risk by Turning Manifest Phantoms into Evil Zombies</a>, preprint, 2012. <a href="#cite-evil-zombies" aria-label="Back to text">↩</a></li>
+      <li id="ref-kir-4" data-ref="kir-4">Democracy Fund, <a href="https://demofund.wpengine.com/wp-content/uploads/2021/02/2021_DF_KnowingItsRight_Part4.pdf"><i>Knowing It’s Right, Part Four: Ballot Accounting Audits Best Practices Guide</i></a>, 2021. <a href="#cite-kir-4" aria-label="Back to text">↩</a></li>
+    </ol>
+  </section>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const css = () => {
+    const s = getComputedStyle(document.documentElement), g = n => s.getPropertyValue(n).trim();
+    return { ink: g('--ink'), ink2: g('--ink-2'), ink3: g('--ink-3'), rule: g('--rule'), grid: g('--grid'), panel: g('--panel'), bg: g('--bg'),
+             rep: g('--reported'), tie: g('--tie'), path: g('--path'), alice: g('--alice'), bob: g('--bob'), mono: g('--f-mono') };
+  };
+  let C = css();
+  const rgba = (hex, a) => { let h = hex.replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join('');
+    const v = parseInt(h, 16); return `rgba(${(v >> 16) & 255},${(v >> 8) & 255},${v & 255},${a})`; };
+
+  // ------------------------------------------------------------- math
+  const LF = [0];
+  const logFact = n => { for (let i = LF.length; i <= n; i++) LF[i] = LF[i - 1] + Math.log(i); return LF[n]; };
+  const lchoose = (n, k) => (k < 0 || k > n) ? -Infinity : logFact(n) - logFact(k) - logFact(n - k);
+  // chance that k draws from a box of N (A for Alice) hold exactly a votes for Alice
+  const hyp = (N, A, k, a) => { const b = k - a; if (a < 0 || b < 0 || a > A || b > N - A) return 0; return Math.exp(lchoose(A, a) + lchoose(N - A, b) - lchoose(N, k)); };
+  logFact(1000);
+  const shuffle = arr => { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = arr[i]; arr[i] = arr[j]; arr[j] = t; } return arr; };
+  const fmtPct = x => { const p = x * 100; if (p === 0) return '0%'; if (p >= 99.95 && p <= 100) return '100%';
+    if (p < 0.01) return x < 1e-9 ? 'less than 1 in a billion' : `1 in ${Number((1 / x).toPrecision(2)).toLocaleString('en-US')}`;
+    return (p >= 10 ? p.toFixed(0) : p >= 1 ? p.toFixed(1) : p.toPrecision(2)) + '%'; };
+  // in a sentence: "12% of the time", "about 1 time in 83,000", "less than 1 time in a billion"
+  const often = x => { const f = fmtPct(x); return f.startsWith('less') ? 'less than 1 time in a billion' : f.startsWith('1 in') ? `about 1 time in ${f.slice(5)}` : `${f} of the time`; };
+
+  // ------------------------------------------------------------- drawing helpers
+  function setup(cv, aspect, maxH) {
+    const w = cv.parentElement.clientWidth, h = Math.min(maxH || 9999, Math.round(w * aspect)), dpr = window.devicePixelRatio || 1;
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    cv.style.height = h + 'px';
+    const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+    return { ctx, w, h };
+  }
+  const niceStep = (span, target) => { const raw = span / target, p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p; return (f < 1.5 ? 1 : f < 3.5 ? 2 : f < 7.5 ? 5 : 10) * p; };
+  const seg = (ctx, p, q) => { ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke(); };
+  const dot = (ctx, p, r, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(p[0], p[1], r, 0, 7); ctx.fill(); };
+  function arrow(ctx, p, q, col, wdt) {
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = wdt; seg(ctx, p, q);
+    const ang = Math.atan2(q[1] - p[1], q[0] - p[0]), s = 11;
+    ctx.beginPath(); ctx.moveTo(q[0], q[1]); ctx.lineTo(q[0] - s * Math.cos(ang - .4), q[1] - s * Math.sin(ang - .4)); ctx.lineTo(q[0] - s * Math.cos(ang + .4), q[1] - s * Math.sin(ang + .4)); ctx.closePath(); ctx.fill();
+  }
+  // the outcome plane: votes for Alice to the right, votes for Bob up, one unit the same length both ways
+  function plane(ctx, w, h, extA, extB, step) {
+    const pad = { l: 46, r: 16, t: 14, b: 44 };
+    const pw = w - pad.l - pad.r, ph = h - pad.t - pad.b, s = Math.min(pw / extA, ph / extB);
+    const ox = pad.l + (pw - s * extA) / 2, oy = pad.t + (ph + s * extB) / 2;
+    const P = (a, b) => [ox + a * s, oy - b * s];
+    ctx.font = '11px ' + C.mono; ctx.lineWidth = 1;
+    for (let v = 0; v <= extA + 1e-9; v += step) {
+      ctx.strokeStyle = C.grid; seg(ctx, P(v, 0), P(v, extB));
+      const t = P(v, 0); ctx.fillStyle = C.ink3; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(v, t[0], t[1] + 6);
+    }
+    for (let v = 0; v <= extB + 1e-9; v += step) {
+      ctx.strokeStyle = C.grid; seg(ctx, P(0, v), P(extA, v));
+      const t = P(0, v); ctx.fillStyle = C.ink3; ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(v, t[0] - 7, t[1]);
+    }
+    ctx.strokeStyle = C.ink3; ctx.lineWidth = 1.5; seg(ctx, P(0, 0), P(extA, 0)); seg(ctx, P(0, 0), P(0, extB));
+    ctx.font = '12px ' + C.mono;
+    { const q = P(extA / 2, 0); ctx.fillStyle = C.alice; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText('votes for Alice →', q[0], q[1] + 23); }
+    { const q = P(0, extB / 2); ctx.save(); ctx.translate(q[0] - 30, q[1]); ctx.rotate(-Math.PI / 2); ctx.fillStyle = C.bob; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.fillText('votes for Bob →', 0, 0); ctx.restore(); }
+    ctx.font = '11px ' + C.mono;
+    return { P, s };
+  }
+  function endLabel(ctx, w, p, txt, col) {
+    ctx.font = '12px ' + C.mono; ctx.fillStyle = col; ctx.textBaseline = 'middle';
+    const tw = ctx.measureText(txt).width;
+    if (p[0] + 10 + tw < w - 2) { ctx.textAlign = 'left'; ctx.fillText(txt, p[0] + 10, p[1]); }
+    else { ctx.textAlign = 'right'; ctx.textBaseline = 'top'; ctx.fillText(txt, p[0] - 4, p[1] + 10); }
+    ctx.font = '11px ' + C.mono;
+  }
+
+
+  // ============================================================ A: an unmixed box
+  const FA = (() => {
+    const P1 = 'BBABBBBABBBBABBA', P2 = 'AAABAAAABAAAAABAAABAABBA', BOX = P1 + P2, NA = 22, NB = 18, N = 40;
+    const st = { mode: 'box', order: BOX, m: 12 };
+    const shuffled = () => shuffle(BOX.split('')).join('');
+    const pts = () => { const p = [[0, 0]]; let a = 0, b = 0; for (let i = 0; i < st.m; i++) { st.order[i] === 'A' ? a++ : b++; p.push([a, b]); } return p; };
+    function chips() {
+      const chip = (c, i) => `<span class="bal ${c === 'A' ? 'a' : 'b'}${i < st.m ? ' read' : ''}">${c}</span>`;
+      $('aChips').innerHTML = st.mode === 'box'
+        ? `<div class="batch"><span class="chips-label">Precinct 1 · 16 ballots</span><div class="balrow">${P1.split('').map((c, i) => chip(c, i)).join('')}</div></div>` +
+          `<div class="batch"><span class="chips-label">Precinct 2 · 24 ballots</span><div class="balrow">${P2.split('').map((c, i) => chip(c, i + P1.length)).join('')}</div></div>`
+        : `<div class="batch"><span class="chips-label">The same 40 ballots, shuffled</span><div class="balrow">${st.order.split('').map(chip).join('')}</div></div>`;
+    }
+    function draw() {
+      const { ctx, w, h } = setup($('aCv'), .78, 400);
+      const { P } = plane(ctx, w, h, NA, NB, 2);
+      ctx.setLineDash([5, 4]); ctx.strokeStyle = C.ink3; ctx.lineWidth = 1; seg(ctx, P(0, 0), P(18, 18)); ctx.setLineDash([]);
+      { const q = P(14, 14); ctx.fillStyle = C.ink3; ctx.textAlign = 'right'; ctx.textBaseline = 'bottom'; ctx.fillText('even split', q[0] - 8, q[1] - 4); }
+      arrow(ctx, P(0, 0), P(NA, NB), rgba(C.rep, .8), 2.5);
+      endLabel(ctx, w, P(NA, NB), 'full count (22, 18)', C.rep);
+      const p = pts();
+      if (p.length > 1) {
+        ctx.strokeStyle = C.path; ctx.lineWidth = 3; ctx.lineJoin = 'round'; ctx.beginPath();
+        p.forEach((q, i) => { const r = P(...q); i ? ctx.lineTo(r[0], r[1]) : ctx.moveTo(r[0], r[1]); }); ctx.stroke();
+      }
+      const e = P(...p[p.length - 1]); dot(ctx, e, 7, C.panel); dot(ctx, e, 5, C.path);
+    }
+    function readout() {
+      const [a, b] = pts()[st.m];
+      $('aReadout').innerHTML = `<span>read <b>${st.m}</b> of ${N}</span><span>Alice <b>${a}</b> · Bob <b>${b}</b></span>` +
+        `<span>Alice's share so far <b>${st.m ? Math.round(100 * a / st.m) + '%' : '–'}</b> (whole box 55%)</span>`;
+      const pill = $('aPill');
+      if (!st.m) { pill.className = 'pill'; pill.textContent = 'Nothing read yet'; }
+      else if (a > b) { pill.className = 'pill a'; pill.textContent = 'Alice ahead so far'; }
+      else if (b > a) { pill.className = 'pill b'; pill.textContent = 'Bob ahead so far'; }
+      else { pill.className = 'pill'; pill.textContent = 'Even so far'; }
+      $('aNote').textContent = st.mode === 'box'
+        ? 'Read in box order, the first precinct makes Bob look like the winner. The path climbs above the even-split line and stays there for 16 ballots, until the second precinct drags it back toward the full count.'
+        : 'Shuffled, the first precinct no longer gets to go first. The path still wanders, and an early stretch can lean either way, but it tends to stay much closer to the arrow. Shuffle a few times and compare.';
+      $('aRestart').textContent = st.mode === 'box' ? 'Start over' : 'Reshuffle';
+    }
+    const render = () => { chips(); draw(); readout(); };
+    const setMode = m => { st.mode = m; st.order = m === 'box' ? BOX : shuffled();
+      $('aBox').setAttribute('aria-pressed', String(m === 'box')); $('aShuf').setAttribute('aria-pressed', String(m !== 'box')); render(); };
+    $('aBox').addEventListener('click', () => setMode('box'));
+    $('aShuf').addEventListener('click', () => setMode('shuf'));
+    $('aRead1').addEventListener('click', () => { st.m = Math.min(N, st.m + 1); render(); });
+    $('aRead5').addEventListener('click', () => { st.m = Math.min(N, st.m + 5); render(); });
+    $('aReadAll').addEventListener('click', () => { st.m = N; render(); });
+    $('aRestart').addEventListener('click', () => { if (st.mode === 'box') st.m = 0; else { st.order = shuffled(); st.m = 12; } render(); });
+    return { render };
+  })();
+
+  // ============================================================ R: pick a number
+  const FR = (() => {
+    const st = { pick: null };
+    const pad = $('rPad');
+    pad.innerHTML = Array.from({ length: 10 }, (_, i) => `<button type="button" data-n="${i + 1}">${i + 1}</button>`).join('');
+    function render() {
+      pad.querySelectorAll('button').forEach(b => { b.disabled = st.pick !== null; b.setAttribute('aria-pressed', +b.dataset.n === st.pick); });
+      if (st.pick === null) { $('rPrompt').textContent = "Go with your gut. Don't think about it too hard."; $('rMsg').innerHTML = ''; return; }
+      $('rPrompt').textContent = 'Got it.';
+      $('rMsg').innerHTML = (st.pick === 7 || st.pick === 2
+        ? `<p>You picked <b>${st.pick}</b>. We guessed you would: 7 and 2 are two of the most popular answers when people are asked this.</p>`
+        : `<p>You picked <b>${st.pick}</b>. We would have guessed 7 or 2, two of the most popular answers when people are asked this.</p>`) +
+        `<p>One pick can't show much on its own. The next figure is a better test.</p>`;
+    }
+    pad.addEventListener('click', e => { const b = e.target.closest('button'); if (!b || st.pick !== null) return; st.pick = +b.dataset.n; render(); });
+    render();
+    return { render };
+  })();
+
+  // ============================================================ S: spot the real shuffle
+  const FS = (() => {
+    const LEN = 20, ROWS = 4, st = { rows: [], real: 0, pick: null, tries: 0, hits: 0 };
+    const real = () => Array.from({ length: LEN }, () => Math.random() < .5 ? 'A' : 'B');
+    // what people tend to write when faking randomness: switch about two times in three, never more than 3 in a row
+    const fake = () => { const out = [Math.random() < .5 ? 'A' : 'B']; let run = 1;
+      while (out.length < LEN) { const prev = out[out.length - 1], sw = run >= 3 || Math.random() < .65, next = sw ? (prev === 'A' ? 'B' : 'A') : prev;
+        run = next === prev ? run + 1 : 1; out.push(next); }
+      return out; };
+    const stats = r => { let best = 1, bi = 0, cur = 1, sw = 0;
+      for (let i = 1; i < r.length; i++) { if (r[i] === r[i - 1]) { cur++; } else { cur = 1; sw++; } if (cur > best) { best = cur; bi = i - cur + 1; } }
+      return { best, from: bi, who: r[bi], sw }; };
+    function deal() { st.real = Math.floor(Math.random() * ROWS); st.rows = Array.from({ length: ROWS }, (_, i) => i === st.real ? real() : fake()); st.pick = null; render(); }
+    function render() {
+      const done = st.pick !== null;
+      $('sRows').innerHTML = st.rows.map((r, i) => {
+        const t = stats(r), isReal = i === st.real;
+        const chips = r.map((c, j) => `<span class="bal ${c === 'A' ? 'a' : 'b'}${done && j >= t.from && j < t.from + t.best ? ' streak' : ''}">${c}</span>`).join('');
+        const tag = done ? (isReal ? '<span class="tag real">real shuffle</span>' : '<span class="tag fake">made up</span>') : '';
+        const stat = done ? `<span class="sstat">longest streak ${t.best} (${t.who === 'A' ? 'Alice' : 'Bob'}) · switches ${t.sw} of ${LEN - 1}</span>` : '';
+        return `<button type="button" class="srow${done && i === st.pick ? ' picked' : ''}${done && isReal ? ' real' : ''}" data-i="${i}"${done ? ' disabled' : ''} aria-label="Row ${i + 1}">
+          <span class="slab">Row ${i + 1}${tag}</span><span class="balrow">${chips}</span>${stat}</button>`;
+      }).join('');
+      const R = stats(st.rows[st.real]);
+      const streak = `a streak of <b>${R.best}</b> votes for ${R.who === 'A' ? 'Alice' : 'Bob'} in a row and switches <b>${R.sw}</b> times out of ${LEN - 1}`;
+      $('sOut').innerHTML = !done ? '<p>Tap the row you think came from a real shuffle.</p>'
+        : st.pick === st.real
+          ? `<p>You found it. Row ${st.real + 1} is the real shuffle: it has ${streak}. The made-up rows switch about two times in three and never run more than 3 in a row.</p>`
+          : `<p>Row ${st.pick + 1} was made up. Row ${st.real + 1} is the real shuffle: it has ${streak}.</p><p>Most people pick a row that switches back and forth a lot, because streaks don't feel random. But in 20 truly random ballots, a streak of 4 or more happens about 3 times out of 4, and a real sequence switches only about half the time.</p>`;
+      $('sScore').innerHTML = st.tries ? `spotted <b>${st.hits} of ${st.tries}</b>` : '';
+    }
+    $('sRows').addEventListener('click', e => { const b = e.target.closest('.srow'); if (!b || st.pick !== null) return;
+      st.pick = +b.dataset.i; st.tries++; if (st.pick === st.real) st.hits++; render(); });
+    $('sAgain').addEventListener('click', deal);
+    deal();
+    return { render };
+  })();
+
+  // ============================================================ the demo PRNG: SHA-256 of "seed,counter", reduced to 1..10
+  const enc = new TextEncoder();
+  async function sha(str) {
+    if (window.crypto && crypto.subtle) return new Uint8Array(await crypto.subtle.digest('SHA-256', enc.encode(str)));
+    let h1 = 0xdeadbeef, h2 = 0x41c6ce57; // fallback: small non-cryptographic hash
+    for (let i = 0; i < str.length; i++) { const c = str.charCodeAt(i); h1 = Math.imul(h1 ^ c, 2654435761); h2 = Math.imul(h2 ^ c, 1597334677); }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return new Uint8Array([h1 >>> 24, h1 >>> 16 & 255, h1 >>> 8 & 255, h1 & 255, h2 >>> 24, h2 >>> 16 & 255, h2 >>> 8 & 255, h2 & 255]);
+  }
+  async function stream(seed, n) {
+    const out = [];
+    for (let i = 1; i <= n; i++) { const b = await sha(seed + ',' + i); let v = 0; for (let j = 0; j < 6; j++) v = (v * 256 + b[j]) % 10; out.push(v + 1); }
+    return out;
+  }
+  const chipsOf = (list, cls) => list.map((v, i) => `<span class="pick ${typeof cls === 'function' ? cls(v, i) : cls || ''}">${v}</span>`).join('');
+
+  // ============================================================ G: two generators
+  const FG = (() => {
+    const st = { n: 20, run: 0 };
+    async function render() {
+      const run = ++st.run, sa = $('gSeedA').value, sb = $('gSeedB').value;
+      const [A, B] = await Promise.all([stream(sa, st.n), stream(sb, st.n)]);
+      if (run !== st.run) return;
+      const match = A.filter((v, i) => v === B[i]).length, same = sa === sb;
+      $('gOutA').innerHTML = chipsOf(A, (v, i) => v === B[i] ? 'hit' : '');
+      $('gOutB').innerHTML = chipsOf(B, (v, i) => v === A[i] ? 'hit' : '');
+      const pill = $('gPill');
+      if (same) { pill.className = 'pill go'; pill.textContent = `Same seed: all ${st.n} match`; }
+      else { pill.className = 'pill'; pill.textContent = `Different seeds: ${match} of ${st.n} match`; }
+      $('gNote').textContent = same
+        ? 'Same seed, same numbers, every time: on any computer, today or next year. Try changing one character in B.'
+        : `Highlighted numbers happen to match in the same position. Two unrelated lists of numbers from 1 to 10 share about 1 in 10 positions by chance, so ${match} of ${st.n} is what you'd expect even when the seeds differ by a single character.`;
+    }
+    $('gTweak').addEventListener('click', () => {
+      const s0 = $('gSeedB').value || 'a', i = Math.floor(Math.random() * s0.length);
+      const pool = /[0-9]/.test(s0[i]) ? '0123456789' : 'abcdefghijklmnopqrstuvwxyz';
+      let d; do { d = pool[Math.floor(Math.random() * pool.length)]; } while (d === s0[i].toLowerCase());
+      if (s0[i] !== s0[i].toLowerCase()) d = d.toUpperCase();
+      $('gSeedB').value = s0.slice(0, i) + d + s0.slice(i + 1); render();
+    });
+    $('gCopy').addEventListener('click', () => { $('gSeedB').value = $('gSeedA').value; render(); });
+    $('gMore').addEventListener('click', () => { st.n = Math.min(60, st.n + 10); render(); });
+    $('gSeedA').addEventListener('input', render); $('gSeedB').addEventListener('input', render);
+    render();
+    return { render };
+  })();
+
+  // ============================================================ Q: guess the next number
+  const FQ = (() => {
+    const WORDS = ['maple', 'harbor', 'violet', 'granite', 'sparrow', 'lantern', 'cedar', 'meadow', 'pebble', 'comet', 'willow', 'canyon'];
+    const ROUNDS = 10, st = { secret: '', seq: [], guesses: [] };
+    const pad = $('qPad');
+    pad.innerHTML = Array.from({ length: 10 }, (_, i) => `<button type="button" data-n="${i + 1}">${i + 1}</button>`).join('');
+    async function fresh() {
+      st.secret = WORDS[Math.floor(Math.random() * WORDS.length)] + '-' + (100 + Math.floor(Math.random() * 900));
+      st.guesses = []; st.seq = await stream(st.secret, ROUNDS);
+      $('qSeed').value = ''; $('qReplayOut').innerHTML = ''; render();
+    }
+    function render() {
+      const k = st.guesses.length, done = k >= ROUNDS;
+      pad.querySelectorAll('button').forEach(b => b.disabled = done);
+      const hits = st.guesses.filter((g, i) => g === st.seq[i]).length;
+      $('qHist').innerHTML = k ? st.guesses.map((g, i) => `<span class="pick ${g === st.seq[i] ? 'hit' : ''}"><small>you ${g}</small>${st.seq[i]}</span>`).join('') : '';
+      $('qOut').innerHTML = !k ? `<p>Round 1 of ${ROUNDS}. What's the first number?</p>`
+        : !done ? `<p>Round ${k + 1} of ${ROUNDS}. You've guessed <b>${hits}</b> right so far.</p>`
+        : `<p>You guessed <b>${hits} of ${ROUNDS}</b>. Blind guessing gets about 1 in 10, so you'd expect around 1. The secret seed was <b>${st.secret}</b>.</p><p>That sequence looked unpredictable, but it was fixed the moment the seed was chosen. Type the seed below and the generator will produce the same ${ROUNDS} numbers again.</p>`;
+      $('qReplay').hidden = !done;
+    }
+    async function replay() {
+      const seed = $('qSeed').value; if (!seed) { $('qReplayOut').innerHTML = ''; return; }
+      const r = await stream(seed, ROUNDS); if (seed !== $('qSeed').value) return;
+      $('qReplayOut').innerHTML = chipsOf(r, (v, i) => v === st.seq[i] ? 'hit' : '') +
+        (seed === st.secret ? ' <span class="pill go">Exactly the same sequence</span>' : '');
+    }
+    pad.addEventListener('click', e => { const b = e.target.closest('button'); if (!b || st.guesses.length >= ROUNDS || !st.seq.length) return; st.guesses.push(+b.dataset.n); render(); });
+    $('qSeed').addEventListener('input', replay);
+    $('qNew').addEventListener('click', fresh);
+    fresh();
+    return { render };
+  })();
+
+
+  // ============================================================ M: build a ballot manifest (counting only)
+  const MBOXES = [
+    { name: 'Precinct 1, Election Day', tag: 'Pct 1', n: 10, check: 'Poll book: 10 voters signed' },
+    { name: 'Precinct 2, Election Day', tag: 'Pct 2', n: 9, check: 'Poll book: 9 voters signed' },
+    { name: 'Early voting, box 1', tag: 'Early', n: 19, check: 'Poll book: 19 voters signed' },
+    { name: 'Mail ballots, tray 1', tag: 'Mail', n: 17, check: 'Envelope log: 17 accepted' }];
+  const calm = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wait = ms => new Promise(r => setTimeout(r, calm() ? 0 : ms));
+  const stageHTML = (prefix, withButtons) => MBOXES.map((b, i) =>
+    `<div class="mgrp" data-b="${i}"><div class="mhead"><span class="chips-label">${b.name}</span>${withButtons ? `<button type="button" data-count="${i}">Count</button>` : ''}<span class="mstatus" id="${prefix}St${i}"></span></div>` +
+    `<div class="balrow mrow"><span class="mtag${i ? '' : ' first'}">${b.tag}</span>${Array.from({ length: b.n }, (_, j) => `<span class="bal n" data-g="${i}" data-j="${j}"></span>`).join('')}</div></div>`).join('');
+
+  const FM = (() => {
+    const st = { done: [], busy: new Set(), run: 0 };
+    function table() {
+      $('mRows').innerHTML = MBOXES.map((b, i) => `<tr><td><b>${b.name}</b></td><td class="num">${b.n}</td><td>${b.check}</td><td>${st.done[i] ? `<b>${b.n}</b> ✓` : st.busy.has(i) ? 'counting…' : '–'}</td></tr>`).join('');
+      $('mTot').textContent = MBOXES.reduce((t, b) => t + b.n, 0);
+      const k = st.done.filter(Boolean).length;
+      $('mAll').hidden = k === MBOXES.length;
+      $('mNote').textContent = k === 0 ? 'Nothing checked yet. The manifest says 55 ballots in all.'
+        : k < MBOXES.length ? `${k} of ${MBOXES.length} containers checked, and every count so far matches the manifest.`
+        : 'Every container holds exactly what the manifest says. Notice what\'s not on the manifest: how anyone voted, or any number for an individual ballot. A manifest only says what containers exist and how many ballots are in each.';
+    }
+    async function count(i) {
+      if (st.done[i] || st.busy.has(i)) return;
+      st.busy.add(i); const run = st.run; table();
+      const btn = $('mStage').querySelector(`[data-count="${i}"]`); if (btn) { btn.disabled = true; btn.textContent = 'Counting…'; }
+      const chips = [...$('mStage').querySelectorAll(`.bal[data-g="${i}"]`)];
+      for (let j = 0; j < chips.length; j++) { if (run !== st.run) return; chips[j].textContent = j + 1; chips[j].classList.add('c'); await wait(45); }
+      await wait(350); if (run !== st.run) return;
+      chips.forEach(c => { c.textContent = ''; });
+      st.busy.delete(i); st.done[i] = true;
+      if (btn) btn.remove();
+      $('mSt' + i).textContent = `${MBOXES[i].n} counted · matches the manifest ✓`; $('mSt' + i).style.color = '';
+      table();
+    }
+    function reset() {
+      st.run++; st.done = []; st.busy.clear();
+      $('mStage').innerHTML = stageHTML('m', true);
+      $('mStage').querySelectorAll('[data-count]').forEach(b => { b.textContent = 'Count to check'; });
+      MBOXES.forEach((b, i) => { $('mSt' + i).textContent = `manifest says ${b.n}`; $('mSt' + i).style.color = 'var(--ink-3)'; });
+      table();
+    }
+    $('mStage').addEventListener('click', e => { const b = e.target.closest('[data-count]'); if (b) count(+b.dataset.count); });
+    $('mAll').addEventListener('click', () => { for (let i = 0; i < MBOXES.length; i++) if (!st.done[i]) count(i); });
+    $('mReset').addEventListener('click', reset);
+    reset();
+    return { render: () => {} };
+  })();
+
+  // ============================================================ N: number the ballots, then draw
+  const FN = (() => {
+    const N = MBOXES.reduce((t, b) => t + b.n, 0);
+    const start = i => MBOXES.slice(0, i).reduce((t, b) => t + b.n, 0);
+    const locate = r => { let i = 0; while (r > start(i + 1)) i++; return { box: i, pos: r - start(i) }; };
+    const st = { phase: 'counted', picks: [], ctr: 0, run: 0 };
+    async function pickNumber(seed, i) { const b = await sha(seed + ',' + i); let v = 0; for (let j = 0; j < 6; j++) v = (v * 256 + b[j]) % N; return v + 1; }
+    const chips = () => [...$('nStage').querySelectorAll('.bal')];
+    function base() {
+      const stage = $('nStage'); stage.className = 'mstage'; stage.innerHTML = stageHTML('n', false);
+      MBOXES.forEach((b, i) => { $('nSt' + i).textContent = `${b.n} ballots`; });
+      chips().forEach(c => { c.textContent = ''; c.classList.add('c'); });
+    }
+    async function lineUp() {
+      const run = ++st.run; st.phase = 'lining'; $('nLine').disabled = true;
+      const stage = $('nStage'), cs = chips();
+      const before = cs.map(c => c.getBoundingClientRect());
+      stage.classList.add('line');
+      if (!calm()) {
+        const after = cs.map(c => c.getBoundingClientRect());
+        cs.forEach((c, k) => { c.style.transition = 'none'; c.style.transform = `translate(${before[k].left - after[k].left}px, ${before[k].top - after[k].top}px)`; });
+        stage.offsetWidth;
+        cs.forEach((c, k) => { c.style.transition = `transform 650ms cubic-bezier(.2,.7,.2,1) ${k * 6}ms`; c.style.transform = ''; });
+        await wait(650 + cs.length * 6);
+      }
+      $('nNote').textContent = 'Now count along the line. The first ballot in the first container is ballot 1, and the numbering carries straight on from one container into the next.';
+      for (let k = 0; k < cs.length; k++) { if (run !== st.run) return; cs[k].style.transition = ''; cs[k].textContent = k + 1; await wait(28); }
+      if (run !== st.run) return;
+      st.phase = 'numbered'; render();
+    }
+    async function draw(k) {
+      const run = ++st.run, seed = $('nSeed').value;
+      for (let t = 0; t < k && st.picks.length < N; t++) {
+        let r; do { r = await pickNumber(seed, ++st.ctr); if (run !== st.run) return; } while (st.picks.includes(r));
+        st.picks.push(r);
+      }
+      render();
+    }
+    function render() {
+      const numbered = st.phase === 'numbered';
+      $('nLineActs').hidden = numbered; $('nDrawPart').hidden = !numbered;
+      if (st.phase === 'counted') { $('nBig').hidden = true; $('nNote').textContent = 'The manifest lists four containers and 55 ballots, but no ballot has a number yet.'; return; }
+      if (!numbered) return;
+      const last = st.picks[st.picks.length - 1];
+      chips().forEach((c, k) => { c.classList.toggle('read', k + 1 === last); c.classList.toggle('was', k + 1 !== last && st.picks.includes(k + 1)); });
+      $('nPicks').innerHTML = st.picks.map(r => { const { box, pos } = locate(r); return `<span class="pick"><small>ballot ${r}</small>${MBOXES[box].tag} #${pos}</span>`; }).join('');
+      if (!last) { $('nBig').hidden = true; $('nNote').textContent = `Every ballot now has a number from 1 to ${N}. The seed and a counter turn into numbers in that range, the same way the generators above made numbers from 1 to 10.`; return; }
+      const { box, pos } = locate(last);
+      $('nBig').hidden = false;
+      $('nBig').innerHTML = `<span class="num">Ballot ${last}</span><span class="where">${MBOXES[box].name}, ballot ${pos} in that container</span>`;
+      let best = 1, bestBox = box, cur = 1;
+      for (let q = 1; q < st.picks.length; q++) { const bq = locate(st.picks[q]).box; cur = bq === locate(st.picks[q - 1]).box ? cur + 1 : 1; if (cur > best) { best = cur; bestBox = bq; } }
+      $('nNote').textContent = `Ballots ${start(box) + 1} to ${start(box + 1)} are in ${MBOXES[box].name}, so the auditor opens that container and counts to its ballot ${pos}. Each of the ${N} ballots had the same 1-in-${N} chance.` +
+        (best >= 3 ? ` So far, ${best} draws in a row came from ${MBOXES[bestBox].name}. Streaks like that are what real randomness looks like.` : '');
+    }
+    function reset() { st.run++; st.phase = 'counted'; st.picks = []; st.ctr = 0; $('nLine').disabled = false; base(); render(); }
+    $('nLine').addEventListener('click', lineUp);
+    $('nDraw').addEventListener('click', () => draw(1));
+    $('nDraw5').addEventListener('click', () => draw(5));
+    $('nReset').addEventListener('click', reset);
+    $('nSeed').addEventListener('input', () => { st.run++; st.picks = []; st.ctr = 0; render(); });
+    reset();
+    return { render: () => {} };
+  })();
+
+  // ============================================================ W: a fixed-percentage audit with a wrong manifest
+  const FW = (() => {
+    // fixed ballot orders inside each container (A = vote for Alice, B = vote for Bob)
+    let seedv = 7;
+    const rnd = () => (seedv = (seedv * 16807) % 2147483647) / 2147483647;
+    const mix = (a, b) => { const arr = [...'A'.repeat(a) + 'B'.repeat(b)]; for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr.join(''); };
+    const BOXES = [
+      { id: 'p1', name: 'Precinct 1, Election Day', ballots: mix(17, 13) },
+      { id: 'p2', name: 'Precinct 2, Election Day', ballots: mix(15, 13) },
+      { id: 'e1', name: 'Early voting, box 1', ballots: mix(16, 14) },
+      { id: 'e2', name: 'Early voting, box 2', ballots: mix(10, 20) },
+      { id: 'm1', name: 'Mail ballots, tray 1', ballots: mix(11, 5) + mix(4, 6) },
+      { id: 'm2', name: 'Mail ballots, tray 2', ballots: mix(15, 11) }];
+    // what the manifest says, per scenario: listed count for each container (null = left off)
+    const SCEN = {
+      ok: { btn: 'wOk', listed: { p1: 30, p2: 28, e1: 30, e2: 30, m1: 26, m2: 26 } },
+      missing: { btn: 'wMissing', listed: { p1: 30, p2: 28, e1: 30, e2: null, m1: 26, m2: 26 } },
+      low: { btn: 'wLow', listed: { p1: 30, p2: 28, e1: 30, e2: 30, m1: 16, m2: 26 } },
+      high: { btn: 'wHigh', listed: { p1: 30, p2: 28, e1: 30, e2: 30, m1: 26, m2: 26 }, removed: { p1: 8 } } };
+    const st = { scen: 'ok', drawn: new Set() };
+    // ballots physically present in each container under the current scenario
+    const present = b => { const r = (SCEN[st.scen].removed || {})[b.id] || 0; return b.ballots.slice(0, b.ballots.length - r); };
+    function slots() { // manifest positions, in manifest order
+      const L = SCEN[st.scen].listed, out = [];
+      BOXES.forEach(b => { const n = L[b.id]; if (n == null) return; const have = present(b);
+        for (let j = 0; j < n; j++) out.push({ box: b.id, j, vote: j < have.length ? have[j] : null }); });
+      return out;
+    }
+    function sample() {
+      const S = slots(), k = Math.ceil(S.length * 0.1), idx = shuffle(S.map((_, i) => i)).slice(0, k);
+      st.drawn = new Set(idx.map(i => S[i].box + ':' + S[i].j));
+    }
+    function render() {
+      const L = SCEN[st.scen].listed, S = slots();
+      Object.entries(SCEN).forEach(([key, sc]) => $(sc.btn).setAttribute('aria-pressed', key === st.scen));
+      $('wBoxes').innerHTML = BOXES.map(b => {
+        const n = L[b.id], have = present(b), total = Math.max(have.length, n || 0);
+        const chips = Array.from({ length: total }, (_, j) => {
+          const hit = st.drawn.has(b.id + ':' + j);
+          if (j >= have.length) return `<span class="bal ghost${hit ? ' read' : ''}" title="listed on the manifest, but not in the container">?</span>`;
+          const v = have[j], off = n == null || j >= n;
+          return `<span class="bal ${v === 'A' ? 'a' : 'b'}${off ? ' off' : ''}${hit ? ' read' : ''}">${v}</span>`;
+        }).join('');
+        const note = n == null ? `<span class="mrow-note">never scanned, so not on the manifest · ${have.length} ballots</span>`
+          : n < have.length ? `<span class="mrow-note">manifest says ${n} · container holds ${have.length}</span>`
+          : n > have.length ? `<span class="mrow-note">manifest says ${n} · container holds ${have.length}</span>`
+          : `<span class="mrow-note ok">manifest says ${n} · container holds ${have.length}</span>`;
+        return `<div class="batch"><span class="chips-label">${b.name}</span>${note}<div class="balrow">${chips}</div></div>`;
+      }).join('');
+      // numbers
+      const all = BOXES.flatMap(b => [...present(b)]), A = all.filter(v => v === 'A').length, T = all.length;
+      const reach = S.filter(x => x.vote), RA = reach.filter(x => x.vote === 'A').length, R = reach.length;
+      const ghosts = S.length - R, k = Math.ceil(S.length * 0.1);
+      let sa = 0, sb = 0, sg = 0; S.forEach(x => { if (!st.drawn.has(x.box + ':' + x.j)) return; x.vote === 'A' ? sa++ : x.vote === 'B' ? sb++ : sg++; });
+      const pct = x => (100 * x).toFixed(1) + '%';
+      $('wOut').innerHTML = (st.scen === 'missing' ? (() => { const sc = BOXES.filter(b => L[b.id] != null).flatMap(b => [...present(b)]), ra = sc.filter(v => v === 'A').length;
+          return `<p>Reported result, from the ballots that were scanned: <b>${ra}</b> for Alice, <b>${sc.length - ra}</b> for Bob. Voters who checked in or had a mail ballot accepted: <b>${T}</b>.</p>`; })() : '') + `<p>The manifest lists <b>${S.length}</b> ballots; the containers hold <b>${T}</b>. A 10% audit draws <b>${k}</b> of the listed ballots.</p>` +
+        `<p>Ballots that could ever be drawn: <b>${R} of ${T}</b>${R < T ? ` (the other ${T - R} have no chance at all)` : ', every one of them'}.${ghosts ? ` Listed ballots that aren't there: <b>${ghosts}</b>.` : ''}</p>` +
+        `<p>Alice's share of the votes: <b>${pct(A / T)}</b> in the whole election, <b class="${Math.abs(RA / R - A / T) > 0.004 ? 'tie' : ''}">${pct(RA / R)}</b> among the ballots the audit can reach. Samples from this manifest average ${pct(RA / R)}.</p>` +
+        `<p>This sample: <b>${sa}</b> for Alice, <b>${sb}</b> for Bob${sg ? `, and <b class="tie">${sg}</b> draw${sg === 1 ? '' : 's'} that point to a ballot that isn't there` : ''}.</p>`;
+      $('wNote').textContent = {
+        ok: 'Every ballot has the same 10% chance of being picked. Draw a few samples: some lean toward Alice and some toward Bob, but on average they match the whole election.',
+        missing: 'Early voting box 2 was never scanned: it was moved into the room of counted ballots by mistake. The voting system never saw its 30 ballots, so they aren\'t in the reported result, and a manifest built from the voting system\'s own totals leaves them off too. Samples from that manifest agree with the reported result, because they\'re drawn from the same 140 ballots. The audit would pass, and nothing in it would hint that 30 ballots were never counted. Only a check against information the voting system didn\'t produce shows the problem: 170 voters checked in or had a mail ballot accepted, but the manifest accounts for only 140.',
+        low: 'Mail tray 1 was recorded as 16 ballots when it holds 26, perhaps because a second bundle was added after it was counted. Only its first 16 ballots are on the list. The other 10 can\'t be drawn, and because they happen to lean toward Bob, the samples lean toward Alice. Nothing in a sample would reveal this.',
+        high: 'The manifest says Precinct 1\'s box holds 30 ballots, but only 22 are there. Draws that land on the missing 8 point to nothing. A traditional audit might just draw again and move on, which hides the fact that 8 ballots have gone missing. A risk-limiting audit counts each of those draws as a vote for the candidate who reportedly lost.'
+      }[st.scen];
+    }
+    Object.entries(SCEN).forEach(([key, sc]) => $(sc.btn).addEventListener('click', () => { st.scen = key; sample(); render(); }));
+    $('wDraw').addEventListener('click', () => { sample(); render(); });
+    sample(); render();
+    return { render };
+  })();
+
+  const renderAll = () => { FR.render(); FA.render(); };
+  renderAll();
+  new ResizeObserver(renderAll).observe(document.querySelector('.wrap'));
+  const recolor = () => { C = css(); renderAll(); };
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', recolor);
+  new MutationObserver(recolor).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>

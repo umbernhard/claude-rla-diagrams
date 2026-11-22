@@ -2,6 +2,14 @@
 
 Last updated 2026-10-15. Page: [`sampling.html`](../sampling.html). It comes before the ballot polling page ([`ballot-polling.html`](../ballot-polling.html)) and links forward to it.
 
+## Split into math and process pages (2026-11-22)
+
+- The author wants the series reframed around elections as statistical objects. The process material (sections 3, 4, 4b, 4c, 4d and "drawing one at a time" below) moved to [`drawing-a-sample.html`](../drawing-a-sample.html), Part 2. This page keeps the math (sections 1, 2, 4e onward). Ballot polling is now Part 3. Reading order: why paper → sampling → drawing the sample → ballot polling.
+- The math page now states the random-sample assumption at the end of "There is no order of voting" and links forward. It has no citations, so its References section was dropped.
+- Both pages still carry the full shared CSS and helper code; prune unused styles later.
+- **Two boards, one box** (added 2026-11-22, after "A box of 100"): the path grid turned on its corner as two Galton boards (bean machines) side by side. Box of 20 (12 Alice, 8 Bob); slider for ballots per sample (1–20); Drop 1 / Drop 100 animate balls (skipped under prefers-reduced-motion). Left board puts each ballot back (every peg 12/20, binomial), right sets it aside (odds (12−a)/(20−a−b), hypergeometric; unreachable pegs not drawn, so at n = 20 it's a diamond ending at 12). Edge thickness = chance of that step; bars = landed balls on a shared y scale; black line = exact pmf × balls. Prose names BRAVO, SuperSimple and MACRO as with-replacement methods (author's correction: audits don't all set ballots aside), citing bravo, super-simple, stark-sharper. The page's "Simplifications" line now makes an exception for the boards.
+  - To check: the Galton sentence has no citation (Galton, *Natural Inheritance*, 1889, describes the board; not yet in the bibliography). Whether to show the odds at each peg as numbers on hover.
+
 ## Why this page exists
 
 - After Mark Lindeman's feedback, the series is aimed at curious non-statisticians (Numberphile / 3Blue1Brown style). It starts as simply as possible, uses only 2D drawings, and doesn't treat the reported result or likelihood ratios as necessary.

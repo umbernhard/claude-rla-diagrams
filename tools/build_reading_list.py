@@ -9,7 +9,7 @@ import html, json, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PAGES = [('why-paper.html', 'Part 0'), ('sampling.html', 'Part 1'), ('ballot-polling.html', 'Part 2')]
+PAGES = [('why-paper.html', 'Part 0'), ('sampling.html', 'Part 1'), ('drawing-a-sample.html', 'Part 2'), ('ballot-polling.html', 'Part 3')]
 
 bib = json.loads((ROOT / 'bib/references.json').read_text())
 entries = {e['key']: e for e in bib['entries']}

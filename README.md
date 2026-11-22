@@ -4,7 +4,7 @@ Interactive diagrams for explaining risk-limiting audits, worked out alongside [
 
 > **Under construction, made with AI.** Much of this site was written and coded with help from an AI model (Claude) and hasn't been fully checked. It may contain errors; every page carries a banner saying so. Pages the author has reviewed (so far, the why-paper page) say so in their banner; the rest are still drafts.
 
-[`index.html`](index.html) is the landing page: it lists the parts in reading order (0 why paper, 1 sampling basics, 2 ballot polling) and the planned pages.
+[`index.html`](index.html) is the landing page: it lists the parts in reading order (0 why paper, 1 sampling basics, 2 drawing the sample, 3 ballot polling) and the planned pages.
 
 ## Why paper
 
@@ -14,20 +14,25 @@ Interactive diagrams for explaining risk-limiting audits, worked out alongside [
 - **Try to change the outcome:** the reader edits electronic records to make Bob win, then hand counts the paper, which finds the true outcome every time. 
 - **Imperfect hand counts and protecting the paper:** a simulation of 1,000 hand counts with misreads shows how rarely honest counting mistakes change a winner, then a section on tampering with paper and chain of custody. The page closes on the cost of full hand counts, leading into the sampling page.
 
-## Sampling basics
+## Sampling basics (the math)
 
-[`sampling.html`](sampling.html) is the starting point for readers new to the statistics:
+[`sampling.html`](sampling.html) treats an election as a statistical object, a fixed box of ballots, and assumes the sample is a fair random draw:
 
 - **An election as a picture:** counting ballots as steps on a grid, and every order of the same ballots ending at the same result.
+- **What a random sample looks like / What a sample can say:** every order of a small election, sampling distributions from many shuffles, and which results could have produced a given sample, ending at the tie and the audit error table.
+
+## Drawing the sample (the process)
+
+[`drawing-a-sample.html`](drawing-a-sample.html) covers how an audit makes the random-sample assumption true (split out of the sampling page on 2026-11-22):
+
 - **Why mix the ballots:** an unshuffled box can mislead a partial read; people are bad at randomness; seeded pseudo-random number generators, with interactive demos.
 - **Know what you're drawing from:** what a ballot manifest is, and checking one by counting a container.
 - **From a manifest to a sample:** lining the ballots up end to end, numbering them, and drawing ballot numbers with a public seed.
 - **When the manifest is wrong:** a fixed-percentage audit with a box never scanned, a count too low, or a count too high.
-- **What a random sample looks like / What a sample can say:** every order of a small election, sampling distributions from many shuffles, and which results could have produced a given sample, ending at the tie.
 
 ## Ballot polling
 
-[`ballot-polling.html`](ballot-polling.html) (part 2, older draft being reworked) shows ballot polling audits as stacks of ballot sequences ("ballot landscapes"):
+[`ballot-polling.html`](ballot-polling.html) (part 3, older draft being reworked) shows ballot polling audits as stacks of ballot sequences ("ballot landscapes"):
 
 - **Six ballots:** every sequence of a 4–2 election drawn as a path, stacked into towers, and compared with a 3–3 tie.
 - **1,000 ballots:** the same steps at scale, where the stacks become a ridge of bell curves.
